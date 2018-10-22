@@ -1,0 +1,394 @@
+% ------------------------------------------------------------------------------
+% TYPO3 CMS 7.5 - What's New - Chapter "TypoScript" (Italian Version)
+%
+% @author	Michael Schams <schams.net>
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		http://typo3.org/download/release-notes/whats-new/
+% @language	Italian
+% ------------------------------------------------------------------------------
+% LTXE-CHAPTER-UID:		f607fb32-7f7b68d8-68d0e69a-16738006
+% LTXE-CHAPTER-NAME:	TypoScript
+% ------------------------------------------------------------------------------
+
+\section{TSconfig \& TypoScript}
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+
+	\begin{center}\huge{Capitolo 2:}\end{center}
+	\begin{center}\huge{\color{typo3darkgrey}\textbf{TSconfig \& TypoScript}}\end{center}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		0fb1df45-1d720827-9d0c1b72-54558365
+% LTXE-SLIDE-ORIGIN:	195a3fa3-207484a7-94e7ce76-c821394c English
+% LTXE-SLIDE-ORIGIN:	c76757e2-fc02b94b-166a8168-d68774c9 German
+% LTXE-SLIDE-TITLE:		Feature #16525: Add conditions to INCLUDE_TYPOSCRIPT
+% LTXE-SLIDE-REFERENCE:	Feature-16525-AddConditionsToINCLUDE_TYPOSCRIPT.rst
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+	\framesubtitle{Condizioni per l'inclusione di TypoScript}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item \texttt{INCLUDE\_TYPOSCRIPT} ha una "condizione" extra (opzionale), con la quale
+			includere i file/directory solamente se la condizione è soddisfatta.
+
+		\begin{lstlisting}
+			// include il file TypoScript solamente con utenti loggati:
+			<INCLUDE_TYPOSCRIPT: source="FILE:EXT:my_extension/Configuration/TypoScript/feuser.ts"
+			  condition="[loginUser = *]">
+
+			// include il file TypoScript in base al contesto dell'applicazione:
+			<INCLUDE_TYPOSCRIPT: source="FILE:EXT:my_extension/Configuration/TypoScript/staging.ts"
+			  condition="applicationContext = /^Production\\/Staging\\/Server\\d+$/">
+		\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		664b10f6-ae21a1ed-403d520b-af94c926
+% LTXE-SLIDE-ORIGIN:	4003d374-92104168-0eb97927-726037fa English
+% LTXE-SLIDE-ORIGIN:	1bde9e8a-82352f02-c5c9f3db-b194cfb1 German
+% LTXE-SLIDE-TITLE:		Feature #28243: Introduce TCA option to disable age display of dates per field
+% LTXE-SLIDE-REFERENCE:	Feature-28243-IntroduceTcaOptionToDisableAgeDisplay.rst
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+	\framesubtitle{TCA-Option: Visualizzazione della scadenza di data}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item L'opzione TCA \texttt{disableAgeDisplay} disabilita la visualizzazione della scadenza\newline
+			\small
+				(per esempio: \texttt{"2015-08-30 (-27 days)"})
+			\normalsize
+
+			\begin{lstlisting}
+				$GLOBALS['TCA']['tt_content']['columns']['date']['config']['disableAgeDisplay'] = true;
+			\end{lstlisting}
+
+		\item Come requisito, il \texttt{type} del campo deve essere \texttt{input}
+			e \texttt{eval} deve essere impostato a \texttt{date}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		b41f0486-aabd8aad-221998a0-f75fd954
+% LTXE-SLIDE-ORIGIN:	68c8a68b-f7e50bf3-dc67e0e5-d3a33fd8 English
+% LTXE-SLIDE-ORIGIN:	c3aa0981-411fcabb-bd9dca10-16f42898 German
+% LTXE-SLIDE-TITLE:		Feature #57632: Include inline language label files with TypoScript (1)
+% LTXE-SLIDE-REFERENCE:	Feature-57632-AddInlineLanguageLabelFilesWithTypoScript.rst
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+	\framesubtitle{Inline Language Label Files con TypoScript (1)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item I file di lingua XLF possono essere letti e convertiti in un array inline
+
+		\item Questo permette ad esempio l'accesso alle label in lingua da JavaScript
+
+		\item I seguenti tre parametri opzionali sono supportati:
+
+			\begin{itemize}
+				\item \texttt{selectionPrefix}:\newline
+					solo le chiavi delle label che iniziano con questo prefisso sono incluse
+				\item \texttt{stripFromSelectionName}:\newline
+					stringa che sarà rimossa dalle chiavi delle label incluse
+				\item \texttt{errorMode}:\newline
+					modalità di errore se il file non verrà trovato:\newline
+					0: scrive in syslog (default), 1: ignora, 3: crea eccezione
+			\end{itemize}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		0ff33c8e-be78baae-f9456a26-ec356842
+% LTXE-SLIDE-ORIGIN:	bb800987-b0e74193-c6ec6370-3b6a062d English
+% LTXE-SLIDE-ORIGIN:	289816f4-411fcabb-0981cabb-bd9dca10 German
+% LTXE-SLIDE-TITLE:		Feature #57632: Include inline language label files with TypoScript (2)
+% LTXE-SLIDE-REFERENCE:	Feature-57632-AddInlineLanguageLabelFilesWithTypoScript.rst
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+	\framesubtitle{Inline Language Label Files con TypoScript (2)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Esempio:
+
+			\begin{lstlisting}
+				page = PAGE
+				page.inlineLanguageLabelFiles {
+				  someLabels = EXT:myExt/Resources/Private/Language/locallang.xlf
+				  someLabels.selectionPrefix = idPrefix
+				  someLabels.stripFromSelectionName = strip_me
+				  someLabels.errorMode = 2
+				}
+			\end{lstlisting}
+
+		\item Output:
+
+			\begin{lstlisting}
+				<script type="text/javascript">
+				/*<![CDATA[*/
+				  var TYPO3 = TYPO3 || {};
+				  TYPO3.lang = {"firstLabel":[{"source":"first Label","target":"erstes Label"}],
+				  "secondLabel":[{"source":"second Label","target":"zweites Label"}]};
+				/*]]>*/
+				</script>
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		c54b49ac-4ce356c9-e0cf813d-6fce1f44
+% LTXE-SLIDE-ORIGIN:	bac61b19-18a4db7b-af13de6c-5dbed67b English
+% LTXE-SLIDE-ORIGIN:	f14c90e2-bf35bf40-e38d74a7-f4a2e973 German
+% LTXE-SLIDE-TITLE:		Feature #59144: Previewing workspace records using Page TSconfig
+% LTXE-SLIDE-REFERENCE:	Feature-59144-PageTSconfigWorkspacePreview.rst
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+	\framesubtitle{Anteprima del Workspace da TSconfig}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item TYPO3 CMS, di default, genera link di anteprima solo per le tabelle \texttt{tt\_content}, \texttt{pages} e
+			\texttt{pages\_language\_overlay}
+
+		\item Questo può ora essere configurato usando PageTSconfig:
+
+			\begin{lstlisting}
+				# use page 123 for previewing workspaces records (in general)
+				options.workspaces.previewPageId = 123
+
+				# use the pid field of each record for previewing (in general)
+				options.workspaces.previewPageId = field:pid
+
+				# use page 123 for previewing workspaces records (for table tx_myext_table)
+				options.workspaces.previewPageId.tx_myext_table = 123
+
+				# use the pid field of each record for previewing (or table tx_myext_table)
+				options.workspaces.previewPageId.tx_myext_table = field:pid
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		368bf9d0-815c64de-21a256ef-9b338658
+% LTXE-SLIDE-ORIGIN:	c4b7358c-07059082-861a3b2d-929e1cc6 English
+% LTXE-SLIDE-ORIGIN:	faeca558-5a675884-a1b77fae-36e316eb German
+% LTXE-SLIDE-TITLE:		Feature #59591: Image quality definable per sourceCollection
+% LTXE-SLIDE-REFERENCE:	Feature-59591-ImageQualityDefinablePerSourceCollection.rst
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+	\framesubtitle{Qualità dell'immagine in \texttt{sourceCollection}}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item La qualità dell'immagine di ogni voce in \texttt{sourceCollection} può essere ora configurata
+
+		\item Questa impostazione ha la precedenza sulla configurazione in Install Tool\newline
+			(registrata nel file \texttt{LocalConfiguration.php})
+
+		\item Esempio:
+
+			\begin{lstlisting}
+				# per immagini retina piccole
+				tt_content.image.20.1.sourceCollection.smallRetina.quality = 80
+
+				# per immagini retina grandi
+				tt_content.image.20.1.sourceCollection.largeRetina.quality = 65
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		6e4eff97-738eaf59-2f41dcf7-b87753d2
+% LTXE-SLIDE-ORIGIN:	ad691a22-7ab387b6-6e00c0aa-e24efd91 English
+% LTXE-SLIDE-ORIGIN:	0073160e-6c95f70d-fcaf008f-3fd84819 German
+% LTXE-SLIDE-TITLE:		Feature #67880: Added count to split
+% LTXE-SLIDE-REFERENCE:	Feature-67880-AddedCountToSplit.rst
+% ------------------------------------------------------------------------------
+% Note: feature #67880 has been introduced in TYPO3 CMS 7.4 already
+% and we mentioned it in the last version of our What's New Slides.
+% It is not clear, why this feature is included in the ChangeLog of
+% 7.5 again (with a slightly different title), but we should have it
+% in our Slides, too.
+
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+	\framesubtitle{Contatore di elementi in una lista}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Una nuova proprietà \texttt{returnCount} è stata aggiunta alla proprietà stdWrap \texttt{split}
+
+		\item Questa permette di contare il numero di elementi di una lista
+
+		\item Il codice seguente restituisce \texttt{9} per esempio:
+
+			\begin{lstlisting}
+				1 = TEXT
+				1 {
+				  value = x,y,z,1,2,3,a,b,c
+				  split.token = ,
+				  split.returnCount = 1
+				}
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		d872948d-3173c88c-4ea51f3b-beae63f7
+% LTXE-SLIDE-ORIGIN:	1a1b3a3f-a12510ef-003db5f4-2fc4f613 English
+% LTXE-SLIDE-ORIGIN:	da2aa521-48abf012-e8b4b95f-0e3f3556 German
+% LTXE-SLIDE-TITLE:		Feature #69602: Simplify handling of backend layouts in frontend (1)
+% LTXE-SLIDE-REFERENCE:	Feature-69602-SimplifyHandlingOfBackendLayoutsInFrontend.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+	\framesubtitle{Interventi su Backend Layout (1)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Gli interventi su backend layout sono stati semplificati per il frontend
+
+		\item La nuova opzione \texttt{pagelayout} può essere usata in TypoScript
+
+		\item Esempio:
+
+			\begin{lstlisting}
+				page.10 = FLUIDTEMPLATE
+				page.10 {
+				  file.stdWrap.cObject = CASE
+				  file.stdWrap.cObject {
+				    key.data = pagelayout
+				    default = TEXT
+				    default.value = EXT:sitepackage/Resources/Private/Templates/Home.html
+				    3 = TEXT
+				    3.value = EXT:sitepackage/Resources/Private/Templates/1-col.html
+				    4 = TEXT
+				    4.value = EXT:sitepackage/Resources/Private/Templates/2-col.html
+				  }
+				}
+			\end{lstlisting}
+
+			\smaller
+				(continua sulla prossima pagina)
+			\normalsize
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		c4d4bff6-373a9a77-63a55796-8c1f185d
+% LTXE-SLIDE-ORIGIN:	4054dec5-eb1750c8-20a10e74-0935b709 English
+% LTXE-SLIDE-ORIGIN:	b95fe8b4-a521da2a-f01248ab-35560e3f German
+% LTXE-SLIDE-TITLE:		Feature #69602: Simplify handling of backend layouts in frontend (2)
+% LTXE-SLIDE-REFERENCE:	Feature-69602-SimplifyHandlingOfBackendLayoutsInFrontend.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+	\framesubtitle{Interventi su Backend Layout (2)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item ...dove \texttt{key.data = pagelayout} sostituisce il codice seguente:
+
+			\begin{lstlisting}
+				field = backend_layout
+				ifEmpty.data = levelfield:-2,backend_layout_next_level,slide
+				ifEmpty.ifEmpty = default
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		9510e232-206be1b8-cd485d57-5f468e1f
+% LTXE-SLIDE-ORIGIN:	07353cea-dac9032f-52a37a42-a261e38a English
+% LTXE-SLIDE-ORIGIN:	6f1f7bb6-b50c019e-29c9be36-7d30c87d German
+% LTXE-SLIDE-TITLE:		Feature #68756: Add config "base" to stdWrap
+% LTXE-SLIDE-REFERENCE:	Feature-68756-AddConfigBaseToStdWrap.rst
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+	\framesubtitle{Varie}
+
+	\begin{itemize}
+
+		\item La proprietà stdWrap \texttt{bytes} è stata inserita in TYPO3 CMS 7.4
+
+		\item La possibilità di impostare la \texttt{base} è stata aggiunta in TYPO3 CMS 7.5,
+			e permette di definire se usare una base 1000 o 1024 per il calcolo
+
+			\begin{lstlisting}
+				bytes.labels = " | K| M| G"
+				bytes.base = 1000
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------

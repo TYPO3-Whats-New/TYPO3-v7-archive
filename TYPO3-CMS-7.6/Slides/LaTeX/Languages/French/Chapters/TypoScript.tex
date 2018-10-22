@@ -1,0 +1,131 @@
+% ------------------------------------------------------------------------------
+% TYPO3 CMS 7.6 - What's New - Chapter "TypoScript" (French Version)
+%
+% @author	Patrick Lobacher <patrick@lobacher.de> and Michael Schams <schams.net>
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		http://typo3.org/download/release-notes/whats-new/
+% @language	French
+% ------------------------------------------------------------------------------
+% LTXE-CHAPTER-UID:		b8fd0ec6-eeb4e126-fcdd7604-74ef6c57
+% LTXE-CHAPTER-NAME:	TypoScript
+% ------------------------------------------------------------------------------
+
+\section{TSconfig \& TypoScript}
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+
+	\begin{center}\huge{Chapitre 2~:}\end{center}
+	\begin{center}\huge{\color{typo3darkgrey}\textbf{TSconfig \& TypoScript}}\end{center}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		ff5f3ebf-850645b1-b55e1a2d-0d8bc1ee
+% LTXE-SLIDE-ORIGIN:	0956a9a6-bb0ea776-0327261b-7722ac16 English
+% LTXE-SLIDE-ORIGIN:	9b8c9003-282b894c-b89ab502-51714d74 German
+% LTXE-SLIDE-TITLE:		Make hardcoded indexed_search parameters configurable via TS
+% LTXE-SLIDE-REFERENCE:	Feature-20875-MakeHardcodedIndexedSearchParametersConfigurableViaTS.rst
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+	\framesubtitle{\texttt{indexed\_search}~: Paramètres}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item Les propriétés TypoScript suivantes sont disponibles pour \texttt{indexed\_search}~:
+
+			\begin{lstlisting}
+				titleCropAfter = 50
+				titleCropSignifier = ...
+				summaryCropAfter = 180
+				summaryCropSignifier =
+				hrefInSummaryCropAfter = 60
+				hrefInSummaryCropSignifier = ...
+				markupSW_summaryMax = 300
+				markupSW_postPreLgd = 60
+				markupSW_postPreLgd_offset = 5
+				markupSW_divider = ...
+			\end{lstlisting}
+
+		\item Les clés peuvent être~:
+			\begin{itemize}
+				\item \texttt{plugin.tx\_indexedsearch.results.}
+				\item \texttt{plugin.tx\_indexedsearch.settings.results.}
+			\end{itemize}
+
+		\item Chacune des propriétés est évaluée avec \texttt{stdWrap}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		e4bf7841-5ebaf2bf-b14d4dee-97657b63
+% LTXE-SLIDE-ORIGIN:	330b8895-6cecc482-88177047-8d65c88b English
+% LTXE-SLIDE-ORIGIN:	9b45a6d0-29e4f664-aa89e6f8-a0dce6e0 German
+% LTXE-SLIDE-TITLE:		Indexed search: Make path separator of search result configurable
+% LTXE-SLIDE-REFERENCE:	Feature-23156-IndexedSearchMakePathSeparatorOfSearchResultConfigurable.rst
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+	\framesubtitle{\texttt{indexed\_search}~: Séparateur de chemin configurable}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Nouvelle option de configuration TypoScript \texttt{breadcrumbWrap} ajoutée
+
+		\item Permet de configurer le séparateur des chemins de page dans les résultats \texttt{indexed\_search}
+
+		\item Supporte la syntaxe TypoScript \textbf{option split}.\newline
+			La configuration par défaut est «~/~»~:\newline
+			\small
+				\texttt{plugin.tx\_indexedsearch.settings.breadcrumbWrap = / || /}
+			\normalsize
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		4b795c9e-d9f601ce-8b8087d3-607bbd4b
+% LTXE-SLIDE-ORIGIN:	ec7822d8-5f3eeeb3-06a2c047-723568f7 English
+% LTXE-SLIDE-ORIGIN:	3076f305-06ba38cb-646d578c-b617df02 German
+% LTXE-SLIDE-TITLE:		Indexed Search: make no_cache parameter for forwardSearchWordsInResultLink configurable
+% LTXE-SLIDE-REFERENCE:	Feature-47613-IndexedSearchMakeNo_cacheParameterForForwardSearchWordsInResultLinkConfigurable.rst
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+	\framesubtitle{\texttt{indexed\_search}~: Paramètre \texttt{no\_cache} configurable}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Nouvelle option de configuration TypoScript ajoutée~:\newline
+			 \texttt{forwardSearchWordsInResultLink.no\_cache}
+
+		\item Contrôle si le paramètre \texttt{no\_cache} doit être ajouté aux liens de page
+			d'\texttt{indexed\_search}
+
+		\begin{lstlisting}
+			// for Indexed Search Extbase plugins
+			plugin.tx_indexedsearch.settings.forwardSearchWordsInResultLink.no_cache = 1
+
+			// for plugins based on AbstractPlugin
+			plugin.tx_indexedsearch.forwardSearchWordsInResultLink.no_cache = 1
+		\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------

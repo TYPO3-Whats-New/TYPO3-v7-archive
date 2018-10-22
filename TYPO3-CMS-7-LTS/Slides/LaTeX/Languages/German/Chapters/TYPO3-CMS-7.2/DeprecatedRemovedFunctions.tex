@@ -1,0 +1,430 @@
+% ------------------------------------------------------------------------------
+% TYPO3 CMS 7.2 - What's New - Chapter "Deprecated Functions" (German Version)
+%
+% @author	Patrick Lobacher <patrick@lobacher.de> and Michael Schams <schams.net>
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		http://typo3.org/download/release-notes/whats-new/
+% @language	German
+% ------------------------------------------------------------------------------
+% LTXE-CHAPTER-UID:		d2a8bce4-b4f96306-c1f769df-3dc9f8fd
+% LTXE-CHAPTER-NAME:	Deprecated Functions
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		cc347f31-9a9ec80f-7264a3b4-01baa9c3
+% LTXE-SLIDE-TITLE:		FormEngine Refactoring (1)
+% LTXE-SLIDE-REFERENCE:	Breaking-65357-DependenciesToFormEngine.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Veraltete/Entfernte Funktionen}
+	\framesubtitle{Refactoring der FormEngine (1)}
+
+	\begin{itemize}
+
+		\item Die FormEngine Klassen wurden einem Refactoring unterzogen, welches Auswirkungen
+			auf Eigenschaften und Methoden der Klassen hat
+
+		\item Viele interne Eigenschaften, wie \small\texttt{FormEngine->\$defaultInputWidth}\normalsize\space
+			oder \small\texttt{FormEngine->\$RTEenabled}\normalsize\space
+			werden ab sofort ignoriert
+
+		\item Die Eigenschaften \small\texttt{FormEngine->\$allowOverrideMatrix}\normalsize\space
+			und \small\texttt{SuggestElement->class}\normalsize\space
+			sind ab TYPO3 CMS 7.2 \textit{protected}
+
+		\item Wenn im TCA \texttt{type=none} gewählt wird, wird nun nicht mehr ein FormEngine
+			Objekt, sondern ein NoneElement Objekt zurückgegeben
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		7872ccf6-b9a536fd-a2e59b42-f508a470
+% LTXE-SLIDE-TITLE:		FormEngine Refactoring (2)
+% LTXE-SLIDE-REFERENCE:	Breaking-65357-DependenciesToFormEngine.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Veraltete/Entfernte Funktionen}
+	\framesubtitle{Refactoring der FormEngine (2)}
+
+	\begin{itemize}
+
+		\item Under anderem sind die folgenden Methoden als \textbf{deprecated} markiert:
+
+			\begin{itemize}
+				\item \texttt{FormEngine->renderWizards()}
+				\item \texttt{FormEngine->dbFileIcons()}
+				\item \texttt{FormEngine->getClipboardElements()}
+				\item \texttt{FormEngine->getSingleField\_typeNone\_render()}
+				\item \texttt{FormEngine->formMaxWidth()}
+				\item \texttt{FormEngine->addItems()}
+				\item \texttt{SuggestElement->init()}
+				\item ...
+			\end{itemize}
+
+		\small
+			\underline{\textbf{Tipp:}}
+			Wenn man auf diese Methoden aufgebaut hat, sollte man das DeprecationLog
+			analysieren, um herauszufinden, wohin diese Methoden portiert wurden
+		\normalsize
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		cc347f31-9a9ec80f-7264a3b4-01baa9c3
+% LTXE-SLIDE-TITLE:		FormEngine Refactoring (3)
+% LTXE-SLIDE-REFERENCE:	Breaking-65357-DependenciesToFormEngine.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Veraltete/Entfernte Funktionen}
+	\framesubtitle{Refactoring der FormEngine (3)}
+
+	\begin{itemize}
+
+		\item Die folgenden Methoden wurden \textbf{umbenannt}:\newline
+
+			\smaller
+				ALT:\tabto{0.8cm}
+					\texttt{\textbackslash
+						TYPO3\textbackslash
+						CMS\textbackslash
+						Backend\textbackslash
+						Form\textbackslash
+						Element\textbackslash
+						SuggestElement}\newline
+				NEU:\tabto{0.8cm}
+					\texttt{\textbackslash
+						TYPO3\textbackslash
+						CMS\textbackslash
+						Backend\textbackslash
+						Form\textbackslash
+						Wizard\textbackslash
+						SuggestWizard}\newline
+
+				ALT:\tabto{0.8cm}
+					\texttt{\textbackslash
+						TYPO3\textbackslash
+						CMS\textbackslash
+						Backend\textbackslash
+						Form\textbackslash
+						Element\textbackslash
+						SuggestDefaultReceiver}\newline
+				NEU:\tabto{0.8cm}
+					\texttt{\textbackslash
+						TYPO3\textbackslash
+						CMS\textbackslash
+						Backend\textbackslash
+						Form\textbackslash
+						Wizard\textbackslash
+						SuggestWizardDefaultReceiver}\newline
+
+				ALT:\tabto{0.8cm}
+					\texttt{\textbackslash
+						TYPO3\textbackslash
+						CMS\textbackslash
+						Backend\textbackslash
+						Form\textbackslash
+						Element\textbackslash
+						VaueSlider}\newline
+				NEU:\tabto{0.8cm}
+					\texttt{\textbackslash
+						TYPO3\textbackslash
+						CMS\textbackslash
+						Backend\textbackslash
+						Form\textbackslash
+						Wizard\textbackslash
+						ValueSliderWizard}\newline
+
+			\normalsize
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		4de2e553-a5dc36d7-f7a5a456-b40ad563
+% LTXE-SLIDE-TITLE:		Deprecated entry point
+% LTXE-SLIDE-REFERENCE: Deprecation-65291-DeprecateLogoutEntryPoint.rst
+% LTXE-SLIDE-REFERENCE: Deprecation-65290-DeprecateDummyEntrypoint.rst
+% LTXE-SLIDE-REFERENCE: Deprecation-65289-DeprecateBrowserEntryPoint.rst
+% LTXE-SLIDE-REFERENCE: Deprecation-65288-DeprecateNewRecordEntryPoint.rst
+% LTXE-SLIDE-REFERENCE: Deprecation-65283-DeprecateShowItemEntryPoint.rst
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-TOPIC:		Deprecate file navigation frame entry point
+% LTXE-SLIDE-TOPIC:		Deprecate dummy entry point
+% LTXE-SLIDE-TOPIC:		Deprecate browser entry point
+% LTXE-SLIDE-TOPIC:		Deprecate "new record" entry point
+% LTXE-SLIDE-TOPIC:		Deprecate show item entry point
+
+\begin{frame}[fragile]
+	\frametitle{Veraltete/Entfernte Funktionen}
+	\framesubtitle{Entry Points im Backend}
+
+	\begin{itemize}
+
+		\item Die folgenden Entry Points im Backend wurden verändert:
+
+			\begin{itemize}
+				\item \texttt{typo3/logout.php}					\tabto{6cm}(\begingroup\color{typo3orange}\texttt{logout}\endgroup)
+				\item \texttt{typo3/alt\_file\_navframe.php}	\tabto{6cm}(\begingroup\color{typo3orange}\texttt{file\_navframe}\endgroup)
+				\item \texttt{typo3/dummy.php}					\tabto{6cm}(\begingroup\color{typo3orange}\texttt{dummy}\endgroup)
+				\item \texttt{typo3/browser.php}				\tabto{6cm}(\begingroup\color{typo3orange}\texttt{browser}\endgroup)
+				\item \texttt{typo3/db\_new.php}				\tabto{6cm}(\begingroup\color{typo3orange}\texttt{db\_new}\endgroup)
+				\item \texttt{typo3/show\_item.php}				\tabto{6cm}(\begingroup\color{typo3orange}\texttt{show\_item}\endgroup)
+			\end{itemize}
+
+		\item Die URLs können wie folgt ermittelt werden:
+
+			\smaller
+				\texttt{\textbackslash
+					TYPO3\textbackslash
+					CMS\textbackslash
+					Backend\textbackslash
+					Utility\textbackslash
+					BackendUtility::getModuleUrl(...)}
+			\normalsize
+
+			Zum Beispiel:
+
+			\smaller
+				\texttt{\textbackslash
+					TYPO3\textbackslash
+					CMS\textbackslash
+					Backend\textbackslash
+					Utility\textbackslash
+					BackendUtility::getModuleUrl('}\begingroup\color{typo3orange}\texttt{logout}\endgroup\texttt{')}
+			\normalsize
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		6639fe18-a732ee85-71599fe4-ca04d113
+% LTXE-SLIDE-TITLE:		Miscellaneous (1)
+% LTXE-SLIDE-REFERENCE: Breaking-65432-ModulUriInGlobalVarRemoved.rst
+% LTXE-SLIDE-REFERENCE: Breaking-65727-DontProvideAccessToLocalpathOfFalFiles.rst
+% LTXE-SLIDE-REFERENCE: Breaking-65922-MoveUnusedTt_contentTcaFieldsToCompatibility6.rst
+% LTXE-SLIDE-REFERENCE: Breaking-65939-BackendLoginRefactoring.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Veraltete/Entfernte Funktionen}
+	\framesubtitle{Diverses (1)}
+
+	\begin{itemize}
+
+		\item URLs zu Backend-Modulen, welche durch \texttt{mod.php} dispatched wurden,
+			werden nun nicht mehr im Array
+			\small\texttt{\$GLOBALS['MCONF']['\_']}\normalsize\space
+			gespeichert, sondern durch
+			\small\texttt{BackendUtility::getModuleUrl()}\normalsize\space
+			erzeugt
+
+		\item Die Möglichkeit, den lokalen Pfad einer FAL-Datei via TypoScript zu ermitteln,
+			wurde \textbf{entfernt}\newline
+			\small(\texttt{a.value.data = file:current:localPath})\normalsize
+
+		\item Die folgenden \texttt{tt\_content} TCA-Felder wurden in die Extension
+			\texttt{EXT:compatibility6} verschoben:
+
+	\end{itemize}
+
+	\vspace{-0.2cm}
+
+	\begin{columns}[T]
+		\begin{column}{.06\textwidth}
+		\end{column}
+		\begin{column}{.47\textwidth}
+			\smaller
+			\begin{itemize}
+				\item \texttt{altText}
+				\item \texttt{imagecaption}
+				\item \texttt{imagecaption\_position}
+			\end{itemize}
+			\normalsize
+		\end{column}
+		\begin{column}{.47\textwidth}
+			\smaller
+			\begin{itemize}
+				\item \texttt{image\_link}
+				\item \texttt{longdescURL}
+				\item \texttt{titleText}
+			\end{itemize}
+			\normalsize
+		\end{column}
+	\end{columns}
+
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		d4930db8-a60f2185-f76b5b45-81700eb6
+% LTXE-SLIDE-TITLE:		Miscellaneous (2)
+% LTXE-SLIDE-REFERENCE: Breaking-65962-WebSVGLibraryAndAPIRemoved.rst
+% LTXE-SLIDE-REFERENCE: Breaking-66286-PageTSconfigOptionsToHideWebInfoModulesRenamed.rst
+% LTXE-SLIDE-REFERENCE: Deprecation-65956-DebugUtilityDebugRows.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Veraltete/Entfernte Funktionen}
+	\framesubtitle{Diverses (2)}
+
+	\begin{itemize}
+
+		\item Die Backend-Benutzeranmeldung wurde einem Refactoring unterzogen und  das Signal
+			\small\texttt{LoginController::SIGNAL\_RenderLoginForm}\normalsize\space
+			\textbf{entfernt}
+
+		\item Außerdem wurden die folgenden Methoden des LoginControllers \textbf{entfernt}:
+
+			\begin{itemize}
+				\item \texttt{LoginController::makeLoginBoxImage}
+				\item \texttt{LoginController::wrapLoginForm}
+				\item \texttt{LoginController::makeLoginNews}
+				\item \texttt{LoginController::makeLoginForm}
+				\item \texttt{LoginController::makeLogoutForm}
+			\end{itemize}
+
+		\item Die Fremd-Bibliothek \texttt{websvg} wurden aus dem TYPO3 CMS Core \textbf{entfernt}.
+			Dazu gehören auch TypoScript Optionen (\texttt{page.javascriptLibs.SVG.*}),
+			und Methoden des PageRenderers, wie z.B. \texttt{\$pageRenderer->loadSvg()}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		aeecaf61-be9f7145-379fc21c-ea9bb38a
+% LTXE-SLIDE-TITLE:		Miscellaneous (3)
+% LTXE-SLIDE-REFERENCE: Breaking-66286-PageTSconfigOptionsToHideWebInfoModulesRenamed.rst
+% LTXE-SLIDE-REFERENCE: Deprecation-65956-DebugUtilityDebugRows.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Veraltete/Entfernte Funktionen}
+	\framesubtitle{Diverses (3)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Folgende Schlüssel unter \texttt{mod.web\_info.menu.function} wurden \textbf{umbenannt}
+			(dies hat vor allem Auswirkungen auf PageTSconfig):
+
+			\begin{lstlisting}
+				tx_cms_webinfo_page -> TYPO3\CMS\Frontend\Controller\PageInformationController
+				tx_cms_webinfo_lang -> TYPO3\CMS\Frontend\Controller\TranslationStatusController
+				tx_belog_webinfo -> TYPO3\CMS\Belog\Module\BackendLogModuleBootstrap
+				tx_infopagetsconfig_webinfo -> TYPO3\CMS\InfoPagetsconfig\Controller\InfoPageTyposcriptConfigController
+				tx_linkvalidator_ModFuncReport -> TYPO3\CMS\Linkvalidator\Report\LinkValidatorReport
+			\end{lstlisting}
+
+		\item Der Parameter \texttt{\$returnHTML} der Methode
+			\small
+				\texttt{\textbackslash
+					TYPO3\textbackslash
+					CMS\textbackslash
+					Core\textbackslash
+					Utility\textbackslash
+					DebugUtility::debugRows()}
+			\normalsize
+			wird nicht mehr verwendet und ist daher als \textbf{deprecated} markiert
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		da4cc9b2-f738e577-893609eb-5b30e144
+% LTXE-SLIDE-TITLE:		Miscellaneous (4)
+% LTXE-SLIDE-REFERENCE: Deprecation-65934-PrefixLocalAnchorsMovedToLegacyExtension.rst
+% LTXE-SLIDE-REFERENCE: Deprecation-65913-checkFileInclude.rst
+% LTXE-SLIDE-REFERENCE: Deprecation-65422-cObjectAliasNames.rst
+% LTXE-SLIDE-REFERENCE: Deprecation-65381-DataHandlerStripslashesValuesProperty.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Veraltete/Entfernte Funktionen}
+	\framesubtitle{Diverses (4)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Die Funktion
+			\small\texttt{config.prefixLocalAnchors}\normalsize\space
+			ist \textbf{deprecated}, ebenso wie die dazugehörigen Methoden
+			im TypoScriptFrontendContoller:
+
+			\small\texttt{prefixLocalAnchorsWithScript()}\normalsize\space
+			und
+			\small\texttt{doLocalAnchorFix()}\normalsize
+
+		\item Die Methode
+			\small\texttt{\$TSFE->checkFileInclude()}\normalsize\space
+			im globalen FrontendController ist \textbf{deprecated}.
+			Man sollte stattdessen den Autoloader oder \texttt{\$TSFE->tmpl->getFileName()}
+			verwenden.
+
+		\item Die beiden cObjects
+			\small\texttt{COBJ\_ARRAY}\normalsize\space
+			(alias für \texttt{COA})
+			und
+			\small\texttt{CASEFUNC}\normalsize\space
+			(alias für \texttt{CASE})
+			wurden in die Extension \texttt{EXT:compatibility6} verschoben
+			(und als \textbf{deprecated} markiert) und stehen somit standardmäßig nicht
+			mehr zur Verfügung).
+
+		\item Die DataHandler Eigenschaft
+			\small\texttt{stripslashes\_values}\normalsize\space
+			wurde als \textbf{deprecated} markiert.
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		e001c2d6-972f3b51-5bad3ca5-e9ccacd5
+% LTXE-SLIDE-TITLE:		Miscellaneous (5)
+% LTXE-SLIDE-REFERENCE: Deprecation-64068-ThumbnailView.rst
+% LTXE-SLIDE-REFERENCE: Deprecation-51360-LinkValidatorSchedulerSettings.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Veraltete/Entfernte Funktionen}
+	\framesubtitle{Diverses (5)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Der "ThumbnailView", sowie \texttt{thumbs.php} und \texttt{BackendUtility::getThumbNail()}
+			sind ab sofort \textbf{deprecated} und werden mit TYPO3 CMS Version 8 \textbf{entfernt}\newline
+			(siehe \texttt{BackendUtility::thumbCode()} zur Inspiration).
+
+		\item Im LinkValidator Scheduler Task ändert sich der Namespace
+			\texttt{mod.tx\_linkvalidator} zu \texttt{mod.linkvalidator}.
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------

@@ -1,0 +1,200 @@
+% ------------------------------------------------------------------------------
+% TYPO3 CMS 7.2 - What's New - Chapter "TypoScript" (English Version)
+%
+% @author	Michael Schams <schams.net>
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		http://typo3.org/download/release-notes/whats-new/
+% @language	English
+% ------------------------------------------------------------------------------
+% LTXE-CHAPTER-UID:		12518a77-2b90a173-4e3f8420-485e0497
+% LTXE-CHAPTER-NAME:	TypoScript
+% ------------------------------------------------------------------------------
+
+\section{TSconfig \& TypoScript}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		ad5f66f0-592f3af2-c3b43ad4-9ccc5d9d
+% LTXE-SLIDE-ORIGIN:	56b025e6-cf380b11-c9d1c009-0b548d6a English
+% LTXE-SLIDE-TITLE:		Add flexible preview URL configuration (1)
+% LTXE-SLIDE-REFERENCE:	Feature-66370-AddFlexiblePreviewUrlConfiguration.rst
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+	\framesubtitle{Flexibele URL voor voorvertoning (1)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item De voorvertoningslink van de knop "opslaan \& bekijken" in de backend kan nu\newline
+			geconfigureerd worden.
+
+		\item Dit wordt vaak gebruikt om blog- of nieuwsrecords vooraf te bekijken maar het
+			is ook mogelijk om andere pagina's te definiëren om normale contentelementen
+			vooraf te bekijken.
+
+			\begin{lstlisting}
+				TCEMAIN.preview {
+				  <tabelnaam> {
+				    previewPageId = 123
+				    useDefaultLanguageRecord = 0
+				    fieldToParameterMap {
+				      uid = tx_myext_pi1[showUid]
+				    }
+				    additionalGetParameters {
+				      tx_myext_pi1[special] = HELLO
+				    }
+				  }
+				}
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		c98d6857-043784e9-21166aed-dfbd3656
+% LTXE-SLIDE-ORIGIN:	6822c376-37649cd8-0acc836a-b856fc61 English
+% LTXE-SLIDE-TITLE:		Add flexible preview URL configuration (2)
+% LTXE-SLIDE-REFERENCE:	Feature-66370-AddFlexiblePreviewUrlConfiguration.rst
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+	\framesubtitle{Flexibele URL voor voorvertoning (2)}
+
+	\begin{itemize}
+		\item \texttt{previewPageId}:\newline
+			\smaller
+				UID van de pagina om het item vooraf te bekijken
+				(bij het ontbreken hiervan wordt de huidige pagina gebruikt)
+			\normalsize
+		\item \texttt{useDefaultLanguageRecord}:\newline
+			\smaller
+				of vertaalde records de UID van het standaard record moeten gebruiken\newline
+				(standaard geactiveerd, waarde: 1)
+			\normalsize
+		\item \texttt{fieldToParameterMap}:\newline
+			\smaller
+				mapping om velden te selecteren van het record dat in de GET-parameters
+				opgenomen moet worden
+			\normalsize
+		\item \texttt{additionalGetParameters}:\newline
+			\smaller
+				toevoegen of overschrijven van alle mogelijke GET-parameters
+			\normalsize
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		2f4860bb-971fe754-88f82ab2-2134d81c
+% LTXE-SLIDE-ORIGIN:	c5dbf3c7-655fc6e4-227a3bf6-f5d89fb1 English
+% LTXE-SLIDE-TITLE:
+% LTXE-SLIDE-REFERENCE:	Feature-59646-AddRteConfigurationPropertyButtonsLinkTypePropertiesTargetDefault.rst
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+	\framesubtitle{RTE Configuratie: Standaard doel}
+
+	\begin{itemize}
+
+		\item eigenschap van RTE-configuratie voor PageTSconfig om een standaard doel in te
+			stellen voor links van een bepaald type\newline
+
+			\small
+				\texttt{buttons.link.[}
+				\textit{type}
+				\texttt{].properties.target.default = ...}
+			\normalsize\newline
+
+		\item Mogelijke linktypes zijn:\newline
+			\small
+				(extra types kunnen door extensies aangevuld worden)
+			\normalsize
+
+			\begin{itemize}
+				\item \texttt{page}
+				\item \texttt{file}
+				\item \texttt{url}
+				\item \texttt{mail}
+				\item \texttt{spec}
+			\end{itemize}
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		7131736c-eafdb039-3ae40019-34c2c179
+% LTXE-SLIDE-ORIGIN:	fd957580-301e4a0a-ad5325f5-ffa024c3 English
+% LTXE-SLIDE-TITLE:		Strip empty HTML tags in HtmlParser
+% LTXE-SLIDE-REFERENCE:	Feature-20555-StripEmptyHtmlTags.rst
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+	\framesubtitle{Lege HTML tags verwijderen in HTMLparser}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item Nieuwe functionaliteit in de HTMLparser om lege tags te verwijderen
+
+			\begin{lstlisting}
+				stdWrap {
+				   // alle lege HTML tags verwijderen
+				   HTMLparser.stripEmptyTags = 1
+				   // alleen lege h2 en h3 tags verwijderen
+				   HTMLparser.stripEmptyTags.tags = h2, h3
+				}
+
+				RTE.default.proc.entryHTMLparser_db {
+				   stripEmptyTags = 1
+				   stripEmptyTags.tags = p
+				   stripEmptyTags.treatNonBreakingSpaceAsEmpty = 1
+				}
+			\end{lstlisting}
+
+			\underline{\textbf{Note:}}
+				Let op: HTMLparser verwijdert standaard alle onbekende tags.\newline
+				Daarom is het misschien nuttig om deze te bewaren:\newline
+				\texttt{HTMLparser.keepNonMatchedTags = 1}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		0479f858-6de96b03-13389faa-7da9d8a3
+% LTXE-SLIDE-ORIGIN:	62960e76-c3dca953-fe5a1070-831633fc English
+% LTXE-SLIDE-TITLE:		Miscellaneous
+% LTXE-SLIDE-REFERENCE:	Feature-63040-AddRteConfigurationPropertyButtonsAbbreviationRemoveFieldsets.rst
+% LTXE-SLIDE-REFERENCE:	commit 31c62f9311ee3d33bf792d548cc4a5fac83aa3d0
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+	\framesubtitle{Allerlei}
+
+	\begin{itemize}
+		\item Nieuwe eigenschap \texttt{buttons.abbreviation.removeFieldsets} in PageTSconfig om het
+			schermpje voor afkortingen te configureren
+
+			\begin{lstlisting}
+				# Mogelijke waarden zijn:
+				# acronym, definedAcronym, abbreviation, definedAbbreviation
+				buttons.abbreviation.removeFieldsets = acronym,definedAcronym
+			\end{lstlisting}
+
+		\item Eigenschap \texttt{inlineLanguageLabel} van het object \texttt{PAGE} kan nu \newline
+			\texttt{LLL:} verwijzingen afhandelen
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------

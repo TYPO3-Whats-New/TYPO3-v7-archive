@@ -1,0 +1,129 @@
+% ------------------------------------------------------------------------------
+% TYPO3 CMS 7.0 - What's New (English Version)
+%
+% @author	Michael Schams <schams.net>
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		http://typo3.org/download/release-notes/whats-new/
+% @language	English
+% ------------------------------------------------------------------------------
+
+% change the default aspect ratio and frame size
+% \documentclass[aspectratio=43]{beamer}
+%
+% specify vertical top alignment globally by the [t] class option:
+% \documentclass[t]{beamer}
+%
+% for single frames, use the same option locally:
+% \begin{frame}[t] ... \end{frame}
+
+\documentclass[t]{beamer}
+
+% suppress navigation bar
+\beamertemplatenavigationsymbolsempty
+
+\mode<presentation>
+{
+	\usetheme{typo3slides}
+}
+
+% global variables
+\title{TYPO3 CMS 7.0 - Sta je novo}
+\subtitle{Sazet prikaz novih opcija, promena i poboljsanja}
+\author{
+	\centerline{Autori:}
+	\centerline{Patrick Lobacher i Michael Schams}
+	\vspace{0.4cm}
+	\centerline{Prevod na srpski:}
+	\centerline{Nena Jelena Radovic i Sinisa Mitrovic}
+}
+
+\date{\today}
+
+\begin{document}
+
+% select TYPO3 Share font
+\sharefont
+
+% ------------------------------------------------------------------------------
+% Title Page
+% ------------------------------------------------------------------------------
+
+\begingroup
+	\setbeamercolor{normal text}{fg=white,bg=typo3orange}
+	\setbeamercolor{title}{fg=white}
+	\setbeamercolor{author}{fg=white}
+	\setbeamertemplate{footline}[default]
+	\begin{frame}
+		\titlepage
+	\end{frame}
+\endgroup
+
+% ------------------------------------------------------------------------------
+% Sadrzaj
+% ------------------------------------------------------------------------------
+
+% between two frames: use \newpage (not \clearpage!) to force a column break:
+% \addtocontents{toc}{\newpage}
+
+\section*{TYPO3 CMS 7.0 - Sta je novo}
+\begin{frame}[fragile]
+	\frametitle{Sadrzaj}
+	\framesubtitle{Sadrzaj}
+
+	\begin{multicols}{2}
+		\tableofcontents
+	\end{multicols}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Poglavlje: Uvod
+% ------------------------------------------------------------------------------
+
+\include{Chapters/Introduction}
+
+% ------------------------------------------------------------------------------
+% Poglavlje 1: Administratorski interfejs 
+% ------------------------------------------------------------------------------
+
+\include{Chapters/BackendUserInterface}
+
+% ------------------------------------------------------------------------------
+% Poglavlje 2: TypoScript
+% ------------------------------------------------------------------------------
+
+\include{Chapters/TypoScript}
+
+% ------------------------------------------------------------------------------
+% Poglavlje 3: Korenite promene 
+% ------------------------------------------------------------------------------
+
+\include{Chapters/InDepthChanges}
+
+% ------------------------------------------------------------------------------
+% Poglavlje 4: Extbase i Fluid
+% ------------------------------------------------------------------------------
+
+\include{Chapters/ExtbaseAndFluid}
+
+% ------------------------------------------------------------------------------
+% Poglavlje 5: Zastarele i izbacene funkcije
+% ------------------------------------------------------------------------------
+
+\include{Chapters/DeprecatedRemovedFunctions}
+
+% ------------------------------------------------------------------------------
+% Poglavlje 6: Izvori i autori
+% ------------------------------------------------------------------------------
+
+\include{Chapters/SourcesAndAuthors}
+
+% ------------------------------------------------------------------------------
+% Chapter: Test/Example Chapter
+% *** DO NOT INCLUDE THIS CHAPTER IN FINAL VERSION! ***
+% ------------------------------------------------------------------------------
+
+%\include{Chapters/TestChapter}
+
+% ------------------------------------------------------------------------------
+\end{document}

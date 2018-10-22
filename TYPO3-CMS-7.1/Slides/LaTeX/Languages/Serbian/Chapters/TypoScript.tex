@@ -1,0 +1,509 @@
+% ------------------------------------------------------------------------------
+% TYPO3 CMS 7.1 - What's New - Chapter "TypoScript" (Serbian Version)
+%
+% @author	Michael Schams <schams.net>
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		http://typo3.org/download/release-notes/whats-new/
+% @language	Serbian
+% ------------------------------------------------------------------------------
+% LTXE-CHAPTER-UID:		d92ab5b9-9ffa4925-30a2e34f-0d6939e5
+% LTXE-CHAPTER-NAME:	TypoScript
+% ------------------------------------------------------------------------------
+
+\section{TSconfig i TypoScript}
+\begin{frame}[fragile]
+	\frametitle{TSconfig i TypoScript}
+
+	\begin{center}\huge{Poglavlje 2:}\end{center}
+	\begin{center}\huge{\color{typo3darkgrey}\textbf{TSconfig i TypoScript}}\end{center}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		b3cf7e1c-946b1f75-cfefde4a-cc701095
+% LTXE-SLIDE-ORIGIN:	a55771e2-74f3a0fc-5be51f93-8b40a5d8 English
+% LTXE-SLIDE-TITLE:		StdWrap for page.headTag
+% LTXE-SLIDE-REFERENCE:	Feature-22086-StdWrapForHeadTag.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{TSconfig i TypoScript}
+	\framesubtitle{StdWrap za page.headTag}
+
+	\begin{itemize}
+		\item TypoScript setting \texttt{page.headTag} sada ima \texttt{stdWrap} funkcionalnost
+
+			\begin{lstlisting}
+				page = PAGE
+				page.headTag = <head>
+				page.headTag.override = <head class="special">
+				page.headTag.override.if {
+		  		  isInList.field = uid
+		  		  value = 24
+				}
+			\end{lstlisting}	
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		2b66714b-389db605-9f1456ca-e2271c88
+% LTXE-SLIDE-ORIGIN:	618eb9ea-56d5a4eb-d5d69d66-cc62f953 English
+% LTXE-SLIDE-TITLE:		Include JavaScript files asynchronously
+% LTXE-SLIDE-REFERENCE:	Feature-28382-AddAsyncPropertyToJavaScriptFiles.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{TSconfig i TypoScript}
+	\framesubtitle{Asinhrono ukljucivanje JavaScript fajlova}
+
+	\begin{itemize}
+		\item JavaScript fajlovi se mogu ucitavati asinhrono
+
+			\begin{lstlisting}
+				page {
+				  includeJS {
+				    jsFile = /path/to/file.js
+				    jsFile.async = 1
+				  }
+				}
+			\end{lstlisting}
+
+		\item Ovo utice na:
+
+			\begin{itemize}
+				\item \texttt{includeJSlibs} / \texttt{includeJSLibs}
+				\item \texttt{includeJSFooterlibs}
+				\item \texttt{includeJS}
+				\item \texttt{includeJSFooter}
+			\end{itemize}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		b03f5a72-aee032bc-9de1a9a3-2cd84a2f
+% LTXE-SLIDE-ORIGIN:	8a6ca08e-cf9ba481-18fd9411-30dd0a0f English
+% LTXE-SLIDE-TITLE:		HMENU item selection via additionalWhere
+% LTXE-SLIDE-REFERENCE:	Feature-46624-AdditionalWhereForMenu.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{TSconfig i TypoScript}
+	\framesubtitle{HMENU izbor stavki uz pomoc \texttt{additionalWhere}}
+
+	\begin{itemize}
+
+		\item TypoScript cObject \texttt{HMENU} ima novu osobinu \texttt{additionalWhere}
+		\item Ovo dozvoljava precizniji upit u bazu (npr. filtriranje)
+
+		\item Primer:
+
+			\begin{lstlisting}
+				lib.authormenu = HMENU
+				lib.authormenu.1 = TMENU
+				lib.authormenu.1.additionalWhere = AND author!=""
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		4aa23f02-1983f345-a37b6f56-939dd75c
+% LTXE-SLIDE-ORIGIN:	e07d1984-117d1212-a1f7fab8-8ea21ebc English
+% LTXE-SLIDE-TITLE:		Additional properties for HMENU browse menus
+% LTXE-SLIDE-REFERENCE:	Feature-57178-SpecialHmenuExcludeSpecialParameters.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{TSconfig i TypoScript}
+	\framesubtitle{Dodatne opcije za \texttt{HMENU} menije}
+
+	\begin{itemize}
+		\item Dve nove opcije za cObject \texttt{HMENU} (opcija "\texttt{special=browse"})\newline
+			kako bi se stavke u meniju finije izabrale:
+		
+			\begin{itemize}
+				\item \texttt{excludeNoSearchPages}
+				\item \texttt{includeNotInMenu}
+			\end{itemize}
+
+		\item Primer:
+
+			\begin{lstlisting}
+				lib.browsemenu = HMENU
+				lib.browsemenu.special = browse
+				lib.browsemenu.special.excludeNoSearchPages = 1
+				lib.browsemenu.includeNotInMenu = 1
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		899bc333-c22fda2a-8d57c762-478c1089
+% LTXE-SLIDE-ORIGIN:	a286a87a-161365ed-5560e66f-e9f1a2ee English
+% LTXE-SLIDE-TITLE:		Multiple HTTP headers
+% LTXE-SLIDE-REFERENCE:	Feature-56236-Multiple-HTTP-Headers-In-Frontend.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{TSconfig i TypoScript}
+	\framesubtitle{Visestruki HTTP hederi}
+
+	\begin{itemize}
+
+		\item HTTP hederi mogu se smestiti kao niz  (\small\texttt{config.additionalHeaders}\normalsize)
+		\item Ovo dozvoljava konfigurisanje vise hedera u isto vreme
+
+			\begin{lstlisting}
+				config.additionalHeaders {
+				  10 {
+				    # header string
+				    header = WWW-Authenticate: Negotiate
+
+				    # (optional) replace previous headers with the same name (default: 1)
+				    replace = 0
+
+				    # (optional) force HTTP response code
+				    httpResponseCode = 401
+				  }
+				  # set second additional HTTP header
+				  20.header = Cache-control: Private
+				}
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		76b0a0b5-2b8d8aa0-36bf8eda-c43cf05c
+% LTXE-SLIDE-ORIGIN:	a296b9b8-9403ef17-30f80f28-2a8a94ce English
+% LTXE-SLIDE-TITLE:		Option "auto" added for config.absRefPrefix
+% LTXE-SLIDE-REFERENCE:	Feature-58366-AutomaticAbsRefPrefix.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{TSconfig i TypoScript}
+	\framesubtitle{Dodata opcija "auto" za config.absRefPrefix}
+
+	\begin{itemize}
+		\item TypoScript setting \texttt{config.absRefPrefix} se moze iskoristiti da dozvoli URL prepisivanje.
+			Kao alternativa za \texttt{config.baseURL} (za konfigurisanje posebnog domena), \texttt{absRefPrefix} moze automatski detektovati osnovu (root) sajta:
+
+			\begin{lstlisting}
+				config.absRefPrefix = auto
+
+				# ...instead of:
+				[ApplicationContext = Production]
+				config.absRefPrefix = /
+
+				[ApplicationContext = Testing]
+				config.absRefPrefix = /my_site_root/
+			\end{lstlisting}
+
+		\smaller
+			Napomena: Ova opcija je takodje sigurna za okruzenja sa vise domena kako bi se izbeglo dupliciranje mehanizma kesiranja
+		\normalsize
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		74536be0-e6eeb2cd-2720737a-00d7b1c6
+% LTXE-SLIDE-ORIGIN:	8210d253-d630446f-ba747ba6-5568843d English
+% LTXE-SLIDE-TITLE:		Two-letter ISO code for sys_language (1)
+% LTXE-SLIDE-REFERENCE:	Feature-61542-AddIsoLanguageKeys.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{TSconfig i TypoScript}
+	\framesubtitle{Dvoslovni ISO kod za sys\_language (1)}
+
+	\begin{itemize}
+		\item Baratanje sa jezicima obavlja se preko rekorda smestenih u DB tabelu
+			\texttt{sys\_language}, koji su najcesce povezani preko \texttt{sys\_language\_uid}
+		\item U TYPO3 CMS 7.1, predstavljen je dvoslovni ISO 639-1:
+
+			\begin{itemize}
+				\item Novo DB polje: \texttt{sys\_language.language\_isocode}
+				\item Nova TypoScript opcija: \texttt{sys\_language\_isocode}
+			\end{itemize}
+
+
+		\vspace{1cm}
+
+		\small
+			Napomena: \textbf{ISO 639} je set standarda Internacionalne Organizacije za Standarde.
+			Lista ISO 639-1 kodova dostupna je na\newline
+			\url{http://en.wikipedia.org/wiki/List_of_ISO_639-1_codes}
+		\normalsize
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		70b6f77d-d575cdbd-27e5b287-8ef164d5
+% LTXE-SLIDE-ORIGIN:	d630446f-ba747ba6-5568843d-8210d253 English
+% LTXE-SLIDE-TITLE:		Two-letter ISO code for sys_language (2)
+% LTXE-SLIDE-REFERENCE:	Feature-61542-AddIsoLanguageKeys.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{TSconfig i TypoScript}
+	\framesubtitle{Dvoslovni ISO kod za sys\_language (2)}
+
+	\begin{itemize}
+		\item Primer:
+
+			\begin{lstlisting}
+				# Danish by default
+				config.sys_language_uid = 0
+				config.sys_language_isocode_default = da
+
+				[globalVar = GP:L = 1]
+				  # ISO code stored in table sys_language (uid 1)
+				  config.sys_language_uid = 1
+				  # overwrite ISO code as required
+				  config.sys_language_isocode = fr
+				[GLOBAL]
+
+				page.10 = TEXT
+				page.10.data = TSFE:sys_language_isocode
+				page.10.wrap = <div class="main" data-language="|">
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		cd262dac-29d315ac-5d76e2b7-a7d6bca7
+% LTXE-SLIDE-ORIGIN:	df2f7fec-fb8bc3b9-446fb779-c409ef27 English
+% LTXE-SLIDE-TITLE:		Custom TypoScript Conditions in Backend
+% LTXE-SLIDE-REFERENCE:	Feature-63600-CustomTypoScriptConditionsInBackend.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{TSconfig i TypoScript}
+	\framesubtitle{Prilagodjeni TypoScript uslovi u administratorskom interfejsu}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+	
+		\item Podrska za prilagodjene uslove za \textbf{korisnicki interfejs} je vec predstavljena u TYPO3 CMS 7.0
+		\item Od TYPO3 CMS 7.1, takodje je moguce koristiti prilagodjene uslove i u \textbf{administratorskom interfejsu}
+		\item Uslov mora biti izveden iz \texttt{AbstractCondition} i da implementira metod \texttt{matchCondition()}
+		\item Primer koriscenja u TypoScript-u: 
+
+			\begin{lstlisting}
+				[BigCompanyName\TypoScriptLovePackage\MyCustomTypoScriptCondition]
+
+				[BigCompanyName\TypoScriptLovePackage\MyCustomTypoScriptCondition = 7]
+
+				[BigCompanyName\TypoScriptLovePackage\MyCustomTypoScriptCondition = 7, != 6]
+
+				[BigCompanyName\TypoScriptLovePackage\MyCustomTypoScriptCondition = {$mysite.myconstant}]
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		542bf4c4-83887e7a-5adc658d-ff70e6fe
+% LTXE-SLIDE-ORIGIN:	b9687dbb-c0502234-7ca16b06-1879fe80 English
+% LTXE-SLIDE-TITLE:		FormEngine: customize icons via PageTSconfig
+% LTXE-SLIDE-REFERENCE:	Feature-35891-AddTCAItemsWithIconsViaPageTSConfig.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{TSconfig i TypoScript}
+	\framesubtitle{Prilagodjavanje ikonica preko PageTSconfig}
+
+	\begin{itemize}
+		\item Par vrednost/labela oznacenog polja vec se moze konfigurisati preko PageTSconfig opcije \texttt{addItems}
+		\item Takodje je sada moguce uticati na izgled \textbf{ikonica} ovih polja 
+
+			\begin{itemize}
+				\item Opcija 1: koristeci \texttt{addItems} i podosobinom \texttt{.icon}
+				\item Opcija 2: koristeci \texttt{altIcons} (sve stavke)
+			\end{itemize}
+
+		\item Primer:
+
+			\begin{lstlisting}
+				TCEFORM.pages.doktype.addItems {
+				  10 = My Label
+				  10.icon = EXT:t3skin/icons/gfx/i/pages.gif
+				}
+				TCEFORM.pages.doktype.altIcons {
+				  10 = EXT:myext/icon.gif
+				}
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		e0977a03-f6b92a1d-44c3c213-b0e7367f
+% LTXE-SLIDE-ORIGIN:	b8794774-4912764b-cd1cc91d-de4396fe English
+% LTXE-SLIDE-TITLE:		Extend element browser with mount points
+% LTXE-SLIDE-REFERENCE:	Feature-50780-AppendElementBrowserMountPoints.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{TSconfig i TypoScript}
+	\framesubtitle{Pretrazivac elemenata prosiren sa mount point-ima}
+
+	\begin{itemize}
+		\item Nova UserTSconfig opcija \texttt{.append} omogucava administratorima da \textbf{dodaju}
+			mount point-e, umesto da zamenjuju konfigurisane DB mount point-e korisnika
+
+		\item Primer:
+
+			\begin{lstlisting}
+				options.pageTree.altElementBrowserMountPoints = 20,31
+				options.pageTree.altElementBrowserMountPoints.append = 1
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		6a48bdfe-5bd72a48-b94f7413-ac764557
+% LTXE-SLIDE-ORIGIN:	04b7f7c0-af900c25-5f16f178-8a94fcca English
+% LTXE-SLIDE-TITLE:		Label override of checkboxes and radio buttons by TSconfig
+% LTXE-SLIDE-REFERENCE:	Feature-58033-AltLabelsForFormEngineCheckboxAndRadioButtons.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{TSconfig i TypoScript}
+	\framesubtitle{Preimenovanje labela cekboksova i radio dugmica}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Labele radio dugmica i cekboksova sada mogu da budu izmenjene
+		\item Primer:
+
+			\begin{lstlisting}
+				// field with a single checkbox (use ".default")
+				TCEFORM.pages.hidden.altLabels.default = new label
+				TCEFORM.pages.hidden.altLabels.default = LLL:path/to/languagefile.xlf:individualLabel
+
+				// field with multiple checkboxes (0, 1, 2, 3...)
+				TCEFORM.pages.l18n_cfg.altLabels.0 = new label of first checkbox
+				TCEFORM.pages.l18n_cfg.altLabels.1 = new label of second checkbox
+				TCEFORM.pages.l18n_cfg.altLabels.2 = new label of third checkbox
+				...
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		0d6aae7f-0ff454a0-0474288e-15820f01
+% LTXE-SLIDE-ORIGIN:	6cdd5010-f7d7d7bd-0a3c74ea-05424fb0 English
+% LTXE-SLIDE-TITLE:		Miscellaneous (1)
+% LTXE-SLIDE-REFERENCE: Feature-xxxxx ... UserTSconfig-width-and-height-of-element-browser
+% LTXE-SLIDE-REFERENCE: Feature-59646-AddRteConfigurationPropertyButtonsLinkTypePropertiesTargetDefault.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{TSconfig i TypoScript}
+	\framesubtitle{Razno (1)}
+
+	\begin{itemize}
+		\item Sirina i visina pretrazivaca elemenata se moze konfigurisati pomocu UserTSconfig:
+
+			\begin{lstlisting}
+				options.popupWindowSize = 400x900
+				options.RTE.popupWindowSize = 200x200
+			\end{lstlisting}
+
+
+		\item PageTSconfig: nova opcija za konfigurisanje RTE-a se moze iskoristit da se postave posrazumevani target-i za linkove odabranog tipa:
+
+			\begin{lstlisting}
+				buttons.link.[type].properties.target.default
+			\end{lstlisting}
+
+			Gde \texttt{[type]} moze bit \texttt{page}, \texttt{file}, \texttt{url}, \texttt{mail} ili \texttt{spec}\newline
+			(prosirenja mogu omoguciti dodatne tipove)
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		e42006d1-4548d618-6a0ddecd-b1303f12
+% LTXE-SLIDE-ORIGIN:	80595308-128c5961-8ae4cf89-8611ce66 English
+% LTXE-SLIDE-TITLE:		Miscellaneous (2)
+% LTXE-SLIDE-REFERENCE:	Feature-16794-MakeSectionLinkingForIndexedSearchResultsConfigurable.rst
+% LTXE-SLIDE-REFERENCE: Feature-20767-getDataByNestedKey.rst
+% LTXE-SLIDE-REFERENCE: Feature-33491-StdWrapForTitleTag.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{TSconfig i TypoScript}
+	\framesubtitle{Razno (2)}
+
+	\begin{itemize}
+
+		\item Naslovi rezultata indeksirane pretrage po podrazumevanim podesavanjima su linkovi. 
+			Sada je moguce onesposobiti ove linkove i naslove prikazati kao obican tekst
+
+			\begin{lstlisting}
+				plugin.tx_indexedsearch.linkSectionTitles = 0
+			\end{lstlisting}
+
+		\item \texttt{getData} sada moze da pristupi podatcima \texttt{polja} (ne samo nizovi
+			\texttt{GPVar} i \texttt{TSFE}):
+		
+			\begin{lstlisting}
+				10 = TEXT
+				10.data = field:fieldname|level1|level2
+			\end{lstlisting}
+
+		\item TypoScript podesavanje \texttt{config.pageTitle} sada ima \texttt{stdWrap} funkcionalnost
+
+			\begin{lstlisting}
+				# make value of <title> upper case
+				page = PAGE
+				page.config.pageTitle.case = upper
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------

@@ -1,0 +1,175 @@
+% ------------------------------------------------------------------------------
+% TYPO3 CMS 7.6 - What's New - Chapter "Extbase & Fluid" (German Version)
+%
+% @author	Patrick Lobacher <patrick@lobacher.de> and Michael Schams <schams.net>
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		http://typo3.org/download/release-notes/whats-new/
+% @language	German
+% ------------------------------------------------------------------------------
+% LTXE-CHAPTER-UID:		cfcf5377-f3e96f39-d1ba01e9-2f341646
+% LTXE-CHAPTER-NAME:	Extbase & Fluid
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		78012a67-036705de-daefb092-e87adffa
+% LTXE-SLIDE-TITLE:		Relations to the same table in Extbase
+% LTXE-SLIDE-REFERENCE:	Feature-27057-RelationsToTheSameTableInExtbase.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+	\framesubtitle{Relationen zu gleichen Tabellen}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Es nun möglich ein Domain Model zu verwenden, in der ein Objekt eine
+			Relation zu einem anderen Objekt der selben Klasse hat
+
+			\begin{lstlisting}
+				namespace \Vendor\Extension\Domain\Model;
+				class A {
+				  /**
+				   * @var \Vendor\Extension\Domain\Model\A
+				   */
+				  protected $parent;
+				}
+			\end{lstlisting}
+
+			\begin{lstlisting}
+				namespace \Vendor\Extension\Domain\Model;
+				class A {
+				  /**
+				   * @var \Vendor\Extension\Domain\Model\B
+				   */
+				  protected $x;
+
+				  /**
+				   * @var \Vendor\Extension\Domain\Model\B
+				   */
+				  protected $y;
+				}
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		0c279898-ab69247f-502eb397-6817d02b
+% LTXE-SLIDE-TITLE:		Added absolute url option to uri.image and image viewHelper
+% LTXE-SLIDE-REFERENCE:	Feature-64286-AddedAbsoluteUrlOptionToUriimageAndImageViewHelper.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+	\framesubtitle{\texttt{absolute} Option für Image-ViewHelper}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Der ImageViewhelper und Uri/ImageViewHelper haben nun eine Option \texttt{absolute},
+			mit der eine absolute URL ausgegeben werden kann.
+
+		\item Beispiel 1 (\texttt{ImageViewhelper}):
+
+			\begin{lstlisting}
+				<f:image image="{file}" width="400" height="375" absolute="1" ></f:image>
+
+				// Ausgabe
+				<img alt="alt set in image record"
+				  src="http://www.mydomain.com/fileadmin/_processed_/323223424.png"
+				  width="400" height="375" />
+			\end{lstlisting}
+
+		\item Beispiel 2 (\texttt{Uri/ImageViewHelper}):
+
+			\begin{lstlisting}
+				<f:uri.image image="{file}" width="400" height="375" absolute="1" ></f:uri>
+
+				// Ausgabe
+				http://www.mydomain.com/fileadmin/_processed_/323223424.png
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		b880b0d8-83956e2a-0a594f16-7f4eb357
+% LTXE-SLIDE-TITLE:		ViewHelper to strip whitespace between HTML tags
+% LTXE-SLIDE-REFERENCE:	Feature-70170-ViewHelperToStripWhitespaceBetweenHTMLTags.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+	\framesubtitle{ViewHelper um Whitespaces in HTML zu entfernen}
+
+	\begin{itemize}
+
+		\item Es wurde ein ViewHelper \texttt{spaceless} eingeführt, um überflüssige
+			Leerzeichen zwischen HTML-Tages zu entfernen. Beispiel:
+
+			\begin{lstlisting}
+				<f:spaceless>
+				<div>
+				    <div>
+				        <div>text
+
+				text</div>
+				</div>
+				</div>
+			\end{lstlisting}
+
+		\item Ausgabe:
+
+			\begin{lstlisting}
+				<div><div><div>text
+
+				text</div></div></div>
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		84d3095f-75b5a68a-b9591a53-f34d8ecb
+% LTXE-SLIDE-TITLE:		Respect rootLevel configuration in extbase queries
+% LTXE-SLIDE-REFERENCE:	Breaking-63406-RespectRootlevelConfigurationinExtbaseQueries.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+	\framesubtitle{RootLevel Konfiguration}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\small\ttfamily}
+
+	\begin{itemize}
+
+		\item Der RootLevel einer Tabelle kann nun im TCA konfiguriert werden\newline
+			\small(damit wird festgelegt, wo die zugehörigen Datensätze gesucht werden)\normalsize
+
+			\begin{itemize}
+				\item \texttt{0}: Nur im Seitenbaum
+				\item \texttt{1}: Nur auf der Root-Seite (PID 0)
+				\item \texttt{-1}: In beiden
+			\end{itemize}
+
+		\item Zudem muss das TCA konfiguriert werden:\newline
+			\tiny
+				\texttt{\$GLOBALS['TCA']['tx\_myext\_domain\_model\_record']['ctrl']['rootLevel'] = -1;}
+			\normalsize
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------

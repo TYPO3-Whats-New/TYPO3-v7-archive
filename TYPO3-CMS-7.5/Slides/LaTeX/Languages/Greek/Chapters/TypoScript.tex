@@ -1,0 +1,416 @@
+% ------------------------------------------------------------------------------
+% TYPO3 CMS 7.5 - What's New - Chapter "TypoScript" (Greek Version)
+%
+% @author	Angeliki Plati <ag.plati@gmail.com>
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		http://typo3.org/download/release-notes/whats-new/
+% @language	Greek
+% ------------------------------------------------------------------------------
+% LTXE-CHAPTER-UID:		f607fb32-7f7b68d8-68d0e69a-16738006
+% LTXE-CHAPTER-NAME:	TypoScript
+% ------------------------------------------------------------------------------
+
+\section{TSconfig \& TypoScript}
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+
+	\begin{center}\huge{\greektext Κεφάλαιο 2:}\end{center}
+	\begin{center}\huge{\color{typo3darkgrey}\textbf{TSconfig \& TypoScript}}\end{center}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		18efb075-0c926938-655e6359-a835d587
+% LTXE-SLIDE-ORIGIN:	195a3fa3-207484a7-94e7ce76-c821394c English
+% LTXE-SLIDE-ORIGIN:	c76757e2-fc02b94b-166a8168-d68774c9 German
+% LTXE-SLIDE-TITLE:		Feature #16525: Add conditions to INCLUDE_TYPOSCRIPT
+% LTXE-SLIDE-REFERENCE:	Feature-16525-AddConditionsToINCLUDE_TYPOSCRIPT.rst
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+	\framesubtitle{\greektext Συνθήκες για Συμπεριλήψεις \latintext TypoScript}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item \greektext Το \latintext \texttt{INCLUDE\_TYPOSCRIPT} \greektext έχει τώρα μία επιπλέον (προαιρετική)
+		ιδιότητα \latintext "condition", \greektext η οποία συμπεριλαμβάνει το αρχείο/ευρετήριο, μόνο εάν η συνθήκη ικανοποιείται
+
+		\latintext \begin{lstlisting}
+			// symperilamvanei TypoScript, mono ean o xrhsths einai syndedemenos:
+			\latintext <INCLUDE_TYPOSCRIPT: source="FILE:EXT:my_extension/Configuration/TypoScript/feuser.ts"
+			  condition="[loginUser = *]">
+
+			// symperilamvanei TypoScript analoga me to periexomeno ths efarmoghs:
+			<INCLUDE_TYPOSCRIPT: source="FILE:EXT:my_extension/Configuration/TypoScript/staging.ts"
+			  condition="applicationContext = /^Production\\/Staging\\/Server\\d+$/">
+		\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		b5c834fe-1b18e94f-11883f6b-bc3f075f
+% LTXE-SLIDE-ORIGIN:	4003d374-92104168-0eb97927-726037fa English
+% LTXE-SLIDE-ORIGIN:	1bde9e8a-82352f02-c5c9f3db-b194cfb1 German
+% LTXE-SLIDE-TITLE:		Feature #28243: Introduce TCA option to disable age display of dates per field
+% LTXE-SLIDE-REFERENCE:	Feature-28243-IntroduceTcaOptionToDisableAgeDisplay.rst
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+	\framesubtitle{\greektext Επιλογή-\latintext TCA: \greektext Εμφάνιση \latintext Offset \greektext Ημερομηνίας}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item \greektext Η επιλογή \latintext TCA \texttt{disableAgeDisplay} \greektext απενεργοποιεί την εμφάνιση
+		της ηλικίας \newline
+			\small
+				(\greektext για παράδειγμα: \texttt{"2015-08-30 (-27 ημέρες)"})
+			\normalsize
+
+			\latintext \begin{lstlisting}
+				$GLOBALS['TCA']['tt_content']['columns']['date']['config']['disableAgeDisplay'] = true;
+			\end{lstlisting}
+
+		\item \greektext Ως προϋπόθεση, το \latintext\texttt{type} \greektext του πεδίου πρέπει να είναι \latintext \texttt{input}
+			\greektext και το \latintext \texttt{eval} \greektext πρέπει να έχει τεθεί σε \latintext \texttt{date}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		1509ec21-09d3d807-f3ed846e-a1c1960e
+% LTXE-SLIDE-ORIGIN:	68c8a68b-f7e50bf3-dc67e0e5-d3a33fd8 English
+% LTXE-SLIDE-ORIGIN:	c3aa0981-411fcabb-bd9dca10-16f42898 German
+% LTXE-SLIDE-TITLE:		Feature #57632: Include inline language label files with TypoScript (1)
+% LTXE-SLIDE-REFERENCE:	Feature-57632-AddInlineLanguageLabelFilesWithTypoScript.rst
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+	\framesubtitle{\greektext Ενσωματωμένα Αρχεία Ετικετών Γλώσσας με \latintext TypoScript (1)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item \greektext Τα \latintext XLF \greektext αρχεία γλώσσας μπορούν να διαβαστούν και να
+		τροποποιηθούν σε έναν ενσωματωμένο πίνακα
+
+		\item \greektext Αυτό ενεργοποιεί την πρόσβαση στις ετικέτες γλωσσών με \latintext JavaScript \greektext για παράδειγμα
+
+		\item \greektext Υποστηρίζονται οι 3 ακόλουθες προαιρετικές παράμετροι:
+
+			\begin{itemize}
+				\item \latintext\texttt{selectionPrefix}:\newline
+					\greektext μόνο κλειδιά ετικετών που ξεκινούν με αυτό το πρόθεμα θα συμπεριληφθούν
+				\item \latintext\texttt{stripFromSelectionName}:\newline
+					\greektext η γραμματοσειρά που θα αφαιρεθεί από οποιοδήποτε συμπεριληφθέν κλειδί ετικέτας
+			\end{itemize}
+
+	\end{itemize}
+
+\end{frame}
+
+
+
+
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+	\framesubtitle{\greektext Ενσωματωμένα Αρχεία Ετικετών Γλώσσας με \latintext TypoScript (2)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+			\item \latintext\texttt{errorMode}:\newline
+				\greektext η κατάσταση σφάλματος αν το αρχείο δε μπόρεσε να βρεθεί:\newline
+				\latintext 0: syslog entry (default), 1: ignore, 3: throw an exception
+	\end{itemize}
+
+\end{frame}
+
+
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		7435c47b-d73d8f16-d27c2c25-8a347913
+% LTXE-SLIDE-ORIGIN:	bb800987-b0e74193-c6ec6370-3b6a062d English
+% LTXE-SLIDE-ORIGIN:	289816f4-411fcabb-0981cabb-bd9dca10 German
+% LTXE-SLIDE-TITLE:		Feature #57632: Include inline language label files with TypoScript (2)
+% LTXE-SLIDE-REFERENCE:	Feature-57632-AddInlineLanguageLabelFilesWithTypoScript.rst
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+	\framesubtitle{\greektext Ενσωματωμένα Αρχεία Ετικετών Γλώσσας με \latintext TypoScript (3)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item \greektext Παράδειγμα:
+
+			\latintext\begin{lstlisting}
+				page = PAGE
+				page.inlineLanguageLabelFiles {
+				  someLabels = EXT:myExt/Resources/Private/Language/locallang.xlf
+				  someLabels.selectionPrefix = idPrefix
+				  someLabels.stripFromSelectionName = strip_me
+				  someLabels.errorMode = 2
+				}
+			\end{lstlisting}
+
+		\item \latintext Output:
+
+			\latintext\begin{lstlisting}
+				<script type="text/javascript">
+				/*<![CDATA[*/
+				  var TYPO3 = TYPO3 || {};
+				  TYPO3.lang = {"firstLabel":[{"source":"first Label","target":"erstes Label"}],
+				  "secondLabel":[{"source":"second Label","target":"zweites Label"}]};
+				/*]]>*/
+				</script>
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		48da4fef-e18e7ae6-cf7f2bb4-cbaaaf23
+% LTXE-SLIDE-ORIGIN:	bac61b19-18a4db7b-af13de6c-5dbed67b English
+% LTXE-SLIDE-ORIGIN:	f14c90e2-bf35bf40-e38d74a7-f4a2e973 German
+% LTXE-SLIDE-TITLE:		Feature #59144: Previewing workspace records using Page TSconfig
+% LTXE-SLIDE-REFERENCE:	Feature-59144-PageTSconfigWorkspacePreview.rst
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+	\framesubtitle{\greektext Προεπισκόπηση του Χώρου Εργασίας με \latintext TSconfig}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item \greektext Το \latintext TYPO3 CMS \greektext παράγει συνδέσμους προεπισκόπησης
+		μόνο για πίνακες \latintext \texttt{tt\_content}, \texttt{pages} \greektext και \latintext
+			\texttt{pages\_language\_overlay} \greektext εκ προεπιλογής
+
+		\item \greektext Αυτό μπορεί τώρα να ρυθμιστεί χρησιμοποιώντας \latintext PageTSconfig:
+
+			\latintext\begin{lstlisting}
+				# xrhsimopoihse th sel. 123 gia proepiskophsh eggrafwn workspaces (genika)
+				options.workspaces.previewPageId = 123
+
+				# xrhsimopoihse to pid kathe eggrafhs gia proepiskophsh (genika)
+				options.workspaces.previewPageId = field:pid
+
+				# xrhsimopoihse th sel. 123 gia proepiskophsh eggrafwn workspaces (gia pinaka tx_myext_table)
+				options.workspaces.previewPageId.tx_myext_table = 123
+
+				# xrhsimopoihse to pid kathe eggrafhs gia proepiskophsh (gia pinaka tx_myext_table)
+				options.workspaces.previewPageId.tx_myext_table = field:pid
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		5a584050-0aa2ce2a-fec95a6f-fbcc5a1e
+% LTXE-SLIDE-ORIGIN:	c4b7358c-07059082-861a3b2d-929e1cc6 English
+% LTXE-SLIDE-ORIGIN:	faeca558-5a675884-a1b77fae-36e316eb German
+% LTXE-SLIDE-TITLE:		Feature #59591: Image quality definable per sourceCollection
+% LTXE-SLIDE-REFERENCE:	Feature-59591-ImageQualityDefinablePerSourceCollection.rst
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+	\framesubtitle{\greektext Ποιότητα Εικόνας της \latintext\texttt{sourceCollection}}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item \greektext Η ποιότητα εικόνας κάθε μίας καταχώρισης της \latintext\texttt{sourceCollection} μπορεί τώρα να διαμορφωθεί
+
+		\item \greektext Αυτή η ρύθμιση έχει προτεραιότητα έναντι της διαμόρφωσης στο \latintext Install Tool\newline
+			\greektext (όπως είναι αποθηκευμένη στο αρχείο \latintext \texttt{LocalConfiguration.php})
+
+		\item \greektext Παράδειγμα:
+
+			\latintext\begin{lstlisting}
+				# gia mikres eikones retina
+				tt_content.image.20.1.sourceCollection.smallRetina.quality = 80
+
+				# gia megales eikones retina
+				tt_content.image.20.1.sourceCollection.largeRetina.quality = 65
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		bba914f9-1069b1c8-2e8b1218-652c67d4
+% LTXE-SLIDE-ORIGIN:	ad691a22-7ab387b6-6e00c0aa-e24efd91 English
+% LTXE-SLIDE-ORIGIN:	0073160e-6c95f70d-fcaf008f-3fd84819 German
+% LTXE-SLIDE-TITLE:		Feature #67880: Added count to split
+% LTXE-SLIDE-REFERENCE:	Feature-67880-AddedCountToSplit.rst
+% ------------------------------------------------------------------------------
+% Note: feature #67880 has been introduced in TYPO3 CMS 7.4 already
+% and we mentioned it in the last version of our What's New Slides.
+% It is not clear, why this feature is included in the ChangeLog of
+% 7.5 again (with a slightly different title), but we should have it
+% in our Slides, too.
+
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+	\framesubtitle{\greektext Καταμέτρηση Στοιχείων σε μία Λίστα}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item \greektext Μία νέα ιδιότητα \latintext \texttt{returnCount} \greektext έχει προστεθεί στην ιδιότητα \latintext stdWrap \texttt{split}
+
+		\item \greektext Αυτό επιτρέπει την καταμέτρηση του αριθμού των στοιχείων σε μία λίστα διαχωρισμένη με κόμματα
+
+		\item \greektext Ο ακόλουθος κώδικας επιστρέφει \latintext \texttt{9} \greektext για παράδειγμα:
+
+			\latintext\begin{lstlisting}
+				1 = TEXT
+				1 {
+				  value = x,y,z,1,2,3,a,b,c
+				  split.token = ,
+				  split.returnCount = 1
+				}
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		1ff388eb-1dac22f7-8870ba6f-04cf01db
+% LTXE-SLIDE-ORIGIN:	1a1b3a3f-a12510ef-003db5f4-2fc4f613 English
+% LTXE-SLIDE-ORIGIN:	da2aa521-48abf012-e8b4b95f-0e3f3556 German
+% LTXE-SLIDE-TITLE:		Feature #69602: Simplify handling of backend layouts in frontend (1)
+% LTXE-SLIDE-REFERENCE:	Feature-69602-SimplifyHandlingOfBackendLayoutsInFrontend.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+	\framesubtitle{\greektext Διαχείριση των \latintext Backend Layouts (1)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item \greektext Η διαχείριση των \latintext backend layouts \greektext έχει απλοποιηθεί
+		για το \latintext frontend
+
+		\item \greektext Η νέα επιλογή \latintext \texttt{pagelayout} \greektext μπορεί να χρησιμοποιηθεί στην \latintext TypoScript
+
+		\item \greektext Παράδειγμα:
+
+			\latintext\begin{lstlisting}
+				page.10 = FLUIDTEMPLATE
+				page.10 {
+				  file.stdWrap.cObject = CASE
+				  file.stdWrap.cObject {
+				    key.data = pagelayout
+				    default = TEXT
+				    default.value = EXT:sitepackage/Resources/Private/Templates/Home.html
+				    3 = TEXT
+				    3.value = EXT:sitepackage/Resources/Private/Templates/1-col.html
+				    4 = TEXT
+				    4.value = EXT:sitepackage/Resources/Private/Templates/2-col.html
+				  }
+				}
+			\end{lstlisting}
+
+			\smaller
+				(\greektext η συνέχεια στην επόμενη σελίδα)
+			\normalsize
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		5cd398d0-7b1ef88e-15fd6100-14b63de6
+% LTXE-SLIDE-ORIGIN:	4054dec5-eb1750c8-20a10e74-0935b709 English
+% LTXE-SLIDE-ORIGIN:	b95fe8b4-a521da2a-f01248ab-35560e3f German
+% LTXE-SLIDE-TITLE:		Feature #69602: Simplify handling of backend layouts in frontend (2)
+% LTXE-SLIDE-REFERENCE:	Feature-69602-SimplifyHandlingOfBackendLayoutsInFrontend.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+	\framesubtitle{\greektext Διαχείριση των \latintext Backend Layouts (2)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item \greektext ...όπου \latintext \texttt{key.data = pagelayout} \greektext αντικαθιστά τον ακόλουθο κώδικα:
+
+			\latintext \begin{lstlisting}
+				field = backend_layout
+				ifEmpty.data = levelfield:-2,backend_layout_next_level,slide
+				ifEmpty.ifEmpty = default
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		0f182eed-510584df-c75ab612-55609979
+% LTXE-SLIDE-ORIGIN:	07353cea-dac9032f-52a37a42-a261e38a English
+% LTXE-SLIDE-ORIGIN:	6f1f7bb6-b50c019e-29c9be36-7d30c87d German
+% LTXE-SLIDE-TITLE:		Feature #68756: Add config "base" to stdWrap
+% LTXE-SLIDE-REFERENCE:	Feature-68756-AddConfigBaseToStdWrap.rst
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+	\framesubtitle{\greektext Διάφορα}
+
+	\begin{itemize}
+
+		\item \greektext Η λειτουργία \latintext stdWrap \texttt{bytes} \greektext έχει προστεθεί στο \latintext TYPO3 CMS 7.4
+
+		\item \greektext Η δυνατότητα να τεθεί η \latintext \texttt{base} \greektext έχει προστεθεί στο \latintext TYPO3 CMS 7.5,
+			\greektext η οποία επιτρέπει να προσδιοριστεί αν θα χρησιμοποιηθεί μία βάση του
+			 1000 ή του 1024 για τον υπολογισμό
+			\latintext\begin{lstlisting}
+				bytes.labels = " | K| M| G"
+				bytes.base = 1000
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------

@@ -1,0 +1,310 @@
+% ------------------------------------------------------------------------------
+% TYPO3 CMS 7.5 - What's New - Chapter "Extbase & Fluid" (Greek Version)
+%
+% @author	Angeliki Plati <ag.plati@gmail.com>
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		http://typo3.org/download/release-notes/whats-new/
+% @language	Greek
+% ------------------------------------------------------------------------------
+% LTXE-CHAPTER-UID:		c9b2e403-e06bb691-ce202054-149c5089
+% LTXE-CHAPTER-NAME:	Extbase & Fluid
+% ------------------------------------------------------------------------------
+
+\section{Extbase \& Fluid}
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+
+	\begin{center}\huge{\greektext Κεφάλαιο 4:}\end{center}
+	\begin{center}\huge{\color{typo3darkgrey}\textbf{Extbase \& Fluid}}\end{center}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		b36cf326-26f41d94-093afaff-5d3c76e9
+% LTXE-SLIDE-ORIGIN:	8bf4a04e-9453b098-84fa7616-1df8ea8f English
+% LTXE-SLIDE-ORIGIN:	7528691a-d33af3f4-edab28ae-ba7c8016 German
+% LTXE-SLIDE-TITLE:		Severity-filtering for FlashMessageQueue
+% LTXE-SLIDE-REFERENCE:	Feature-7098-SeverityFilteringForFlashMessageQueue.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+	\framesubtitle{\greektext Φιλτράρισμα σύμφωνα με την Κρισιμότητα για την \latintext FlashMessageQueue}
+
+	\begin{itemize}
+
+		\item \greektext Στο \latintext TYPO3 CMS < 7.5, \greektext\underline{όλα} τα μηνύματα
+		της \latintext FlashMessageQueue \greektext μπορούν μόνο να προσκομιστούν ή/και να αφαιρεθούν
+
+		\item \greektext Στο \latintext TYPO3 CMS >= 7.5, \greektext αυτό μπορεί να γίνει
+		  για έναν συγκεκριμένο βαθμό κρισιμότητας:
+
+			\latintext\begin{lstlisting}
+				FlashMessageQueue::getAllMessages($severity);
+				FlashMessageQueue::getAllMessagesAndFlush($severity);
+				FlashMessageQueue::removeAllFlashMessagesFromSession($severity);
+				FlashMessageQueue::clear($severity);
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		ad6b72eb-d3d44749-974bc467-2b3704a4
+% LTXE-SLIDE-ORIGIN:	1728dca6-0c88a636-5dc7cc00-dfa3266f English
+% LTXE-SLIDE-ORIGIN:	484e03e4-cb7828c2-8bf31f48-cabf004a German
+% LTXE-SLIDE-TITLE:		Query support for BETWEEN added
+% LTXE-SLIDE-REFERENCE:	Feature-47812-QuerySupportForBETWEENAdded.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+	\framesubtitle{\greektext Προσθήκη Υποστήριξης \latintext Query \greektext για \latintext "\texttt{between}"}
+
+	\begin{itemize}
+
+		\item \greektext Υποστήριξη για \latintext \texttt{between} \greektext έχει προστεθεί
+		 στο αντικείνο \latintext Extbase Query
+
+		\item \greektext Δεν υπάρχει κάποιο πλεονέκτημα επίδοσης λόγω του ότι το \latintext
+		DBMS \greektext μετατρέπει το \latintext"\texttt{between}" \greektext
+		εσωτερικά ούτως ή άλλως: \latintext\texttt{min <= expr AND expr <= max}
+
+		\item \greektext Το νέο χαρακτηριστικό του \latintext Extbase \greektext
+		αναπαράγει τη συμπεριφορά του \latintext DBMS \greektext μέσω της κατασκευής μίας λογικής συνθήκης \latintext \texttt{AND},
+		\greektext και έτσι αυτό λειτουργεί σε όλα τα \latintext DBMS
+
+			\latintext\begin{lstlisting}
+				$query->matching(
+				  $query->between('uid', 3, 5)
+				);
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		b3843d8a-21da5382-9cc5d767-d2bcd9d4
+% LTXE-SLIDE-ORIGIN:	0f2d87b1-c907b8a6-44612e51-e84e6490 English
+% LTXE-SLIDE-ORIGIN:	12b78f4c-7291d788-ea865da7-e6501a2e German
+% LTXE-SLIDE-TITLE:		Added support for multiple FlashMessage queues
+% LTXE-SLIDE-REFERENCE:	Feature-64726-UsingArbitraryFlashmessageQueues.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+	\framesubtitle{\greektext Πολλαπλές Ουρές \latintext FlashMessage}
+
+	\begin{itemize}
+
+		\item \greektext Είναι τώρα δυνατό να υλοποιηθούν πολλαπλές \latintext FlashMessageQueues:
+
+			\latintext\begin{lstlisting}
+				$queueIdentifier = 'myQueue';
+				$this->controllerContext->getFlashMessageQueue($queueIdentifier);
+			\end{lstlisting}
+
+		\item \greektext Πρόσβαση χρησιμοποιώντας \latintext Fluid \greektext λειτουργεί ως εξής:
+
+			\latintext\begin{lstlisting}
+				<f:flashMessages queueIdentifier="myQueue" ></f:flashMessages>
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		ac904c62-71660900-47a0c4ae-3cce00de
+% LTXE-SLIDE-ORIGIN:	6915482b-a7f5bd30-f04b3dc6-d94a5f2a English
+% LTXE-SLIDE-ORIGIN:	2f1002c1-6bde766c-3b1ad500-ab9ccf0c German
+% LTXE-SLIDE-TITLE:		Introduced MediaViewHelper (1)
+% LTXE-SLIDE-REFERENCE:	Feature-66366-IntroducedMediaViewHelper.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+	\framesubtitle{ViewHelper \greektext Μέσων (1)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item \greektext Προκειμένου να εμφανιστεί εύκολα ένα \latintext video, audio \greektext και όλοι οι άλλοι
+		τύποι αρχείων με μία εγγεγραμμένη κλάση \latintext Renderer \greektext στο \latintext frontend,
+		 \greektext έχει υλοποιηθεί ένας \latintext \texttt{MediaViewHelper}
+
+		\item \greektext Ο \latintext\texttt{MediaViewHelper} \greektext αρχικά ελέγχει
+		αν υπάρχει κάποιος \latintext Renderer \greektext για το δοθέν αρχείο - αν όχι,
+		εμφανίζει μία εικόνα
+
+		\item \greektext Παραδείγματα:
+
+			\latintext\begin{lstlisting}
+				<code title="Image Object">
+				  <f:media file="{file}" width="400" height="375" ></f:media>
+				</code>
+
+				<output>
+				  <img alt="alt set in image record" src="fileadmin/_processed_/323223424.png"
+				    width="396" height="375" />
+				</output>
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		cc2f40b5-141261a4-0d42cc0b-f775377a
+% LTXE-SLIDE-ORIGIN:	8bd8314d-631b7ae9-3102867f-804046fa English
+% LTXE-SLIDE-ORIGIN:	73fe507d-772b6011-7457429b-4039dd5c German
+% LTXE-SLIDE-TITLE:		Introduced MediaViewHelper (2)
+% LTXE-SLIDE-REFERENCE:	Feature-66366-IntroducedMediaViewHelper.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+	\framesubtitle{ViewHelper \greektext Μέσων (2)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item \greektext Παραδείγματα (συνέχεια):
+
+			\latintext\begin{lstlisting}
+				<code title="MP4 Video Object">
+				  <f:media file="{file}" width="400" height="375" ></f:media>
+				</code>
+
+				<output>
+				  <video width="400" height="375" controls>
+				    <source src="fileadmin/user_upload/my-video.mp4" type="video/mp4">
+				  </video>
+				</output>
+
+				<code title="MP4 Video Object with loop and autoplay option set">
+				  <f:media file="{file}" width="400" height="375"
+				    additionalConfig="{loop: '1', autoplay: '1'}" ></f:media>
+				</code>
+
+				<output>
+				  <video width="400" height="375" controls loop>
+				    <source src="fileadmin/user_upload/my-video.mp4" type="video/mp4">
+				  </video>
+				</output>
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		fa59c1f4-179a8cdf-c332302a-88f341e4
+% LTXE-SLIDE-ORIGIN:	5d858cf5-81f4cf18-1b13e093-6a00c98a English
+% LTXE-SLIDE-ORIGIN:	2abe5d2e-c1c7e93b-c86559da-81196fdb German
+% LTXE-SLIDE-TITLE:		Adopt form to support the Extbase/ Fluid MVC stack (1)
+% LTXE-SLIDE-REFERENCE:	Feature-69401-AdoptFormToSupportTheExtbaseFluidMVCStack.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+	\framesubtitle{\greektext Επέκταση Συστήματος \latintext \texttt{form} (1)}
+
+	\begin{itemize}
+
+		\item \greektext Η επέκταση συστήματος \latintext \texttt{form} \greektext
+		(συμπεριλαμβανομένου του προσαρμοσμένου μοντέλου δεδομένων, της λογικής του \latintext
+		controller,\greektext της επικύρωσης ιδιοτήτων, των \latintext views \greektext και του \latintext templating)
+		\greektext έχει υιοθετηθεί για την υποστήριξη της στοίβας
+			του \latintext Extbase/Fluid MVC
+
+		\item \greektext Αυτό επιτρέπει καλύτερη προσαρμογή και έλεγχο
+		της παραγόμενης συμπεριφοράς και του \latintext markup, \greektext απλώς με την τροποποίηση των
+		\latintext Fluid templates \greektext ή με την αξιοποίηση προσαρμοσμένης λογικής \latintext view helper
+
+		\item \greektext Κάθε στοιχείο φόρμας χρησιμοποιεί το δικό του \latintext Partial, \greektext
+		το οποίο μπορεί επίσης να διαμορφωθεί με την επιλογή \latintext TypoScript \texttt{partialPath = ...}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		33480c2e-4845cd0f-b4ebcff3-383cb36f
+% LTXE-SLIDE-ORIGIN:	20c7837c-5b841f21-fb3ead22-265aebe4 English
+% LTXE-SLIDE-ORIGIN:	d45facb0-73989d92-ffbc7c2b-46f583ba German
+% LTXE-SLIDE-TITLE:		Adopt form to support the Extbase/ Fluid MVC stack (2)
+% LTXE-SLIDE-REFERENCE:	Feature-69401-AdoptFormToSupportTheExtbaseFluidMVCStack.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+	\framesubtitle{\greektext Επέκταση Συστήματος \latintext \texttt{form} (2)}
+
+	\begin{itemize}
+
+		\item \greektext Υπάρχουν οι τρεις ακόλουθοι νέοι \latintext ViewHelpers:
+
+			\begin{itemize}
+				\item \latintext\texttt{AggregateSelectOptionsViewHelper} (\greektext για ετικέτες \latintext optgroup)
+				\item \latintext\texttt{SelectViewHelper} (\greektext για ετικέτες \latintext optgroup)
+				\item \latintext\texttt{PlainMailViewHelper} (\greektext για την εμφάνιση \latintext mail \greektext απλού κειμένου)
+			\end{itemize}
+
+		\item \greektext Επιπρόσθετα, υπάρχουν τρεις \latintext Views:
+
+			\begin{itemize}
+				\item \latintext\texttt{show} (\greektext η ίδια η φόρμα)
+				\item \latintext\texttt{confirmation} (\greektext η σελίδα επιβεβαίωσης)
+				\item \latintext\texttt{postProcessor}/\texttt{mail} (\greektext το \latintext email)
+			\end{itemize}
+
+		\item \greektext Τα μονοπάτια των \latintext template \greektext και η ορατότητα των πεδίων μπορεί να
+		προσαρμοσθεί για κάθε \latintext View \greektext ξεχωριστά
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		59937107-8a77710a-147d5f29-44bc4304
+% LTXE-SLIDE-ORIGIN:	20b68c91-1b501686-f97f7b55-0822d9d1 English
+% LTXE-SLIDE-ORIGIN:	cd99ea8c-e6234f0f-caf559ed-c3f825c0 German
+% LTXE-SLIDE-TITLE:		Add annotation for CLI only commands
+% LTXE-SLIDE-REFERENCE:	Feature-68746-AddAnnotationForCLIOnlyCommands.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+	\framesubtitle{\greektext Επισήμανση \latintext \texttt{@cli}}
+
+	\begin{itemize}
+
+		\item \greektext Με τη χρήση του νέας επισήμανσης \latintext \texttt{@cli}, \greektext οι εντολές
+		σε έναν \latintext Extbase CommandController \greektext μπορούν να μαρκαριστούν ως
+		\latintext CLI-\greektextεντολές μόνο
+
+		\item \greektext Αυτές οι εντολές εξαιρούνται από την επιλογή της εντολής \latintext scheduler
+
+		\item \greektext Τυπικές περιπτώσεις χρήσης είναι εντολές όπως
+		\latintext \texttt{extbase:help:help} \greektext για παράδειγμα
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------

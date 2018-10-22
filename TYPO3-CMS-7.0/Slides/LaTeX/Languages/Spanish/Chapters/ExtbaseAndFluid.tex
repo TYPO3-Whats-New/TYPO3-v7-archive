@@ -1,0 +1,178 @@
+% ------------------------------------------------------------------------------
+% TYPO3 CMS 7.0 - What's New - Chapter "Extbase & Fluid" (Spanish Version)
+%
+% @author	Michael Schams <schams.net>
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		http://typo3.org/download/release-notes/whats-new/
+% @language	Spanish
+% ------------------------------------------------------------------------------
+% LTXE-CHAPTER-UID:		65da0b75-5bf595aa-c128f237-654ce5a3
+% LTXE-CHAPTER-NAME:	Extbase & Fluid
+% ------------------------------------------------------------------------------
+
+\section{Extbase \& Fluid}
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+
+	\begin{center}\huge{Capítulo 4:}\end{center}
+	\begin{center}\huge{\color{typo3darkgrey}\textbf{Extbase \& Fluid}}\end{center}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		bde04e83-cd5e10f4-6f393414-17ff240d
+% LTXE-SLIDE-ORIGIN:	aba42e5a-136183fe-58e36ebd-bfab3106 English
+% LTXE-SLIDE-TITLE:		Template Path Fallback
+% LTXE-SLIDE-REFERENCE:	http://forge.typo3.org/issues/61361
+% LTXE-SLIDE-REFERENCE:	http://forge.typo3.org/issues/39868
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+	\framesubtitle{Plantilla de Ruta Alternativa}
+
+	\lstset{
+		basicstyle=\tiny\ttfamily
+	}
+
+	\begin{itemize}
+		\item \texttt{Fluid Standalone View} así como también el objeto \texttt{FLUIDTEMPLATE} soportan las rutas alternativas de plantillas ahora
+
+			\begin{lstlisting}
+				page.10 = FLUIDTEMPLATE
+				page.10.file = EXT:myextension/Resources/Private/Templates/Main.html
+				page.10.partialRootPaths {
+				  10 = EXT:myextension/Resources/Private/Partials
+				  20 = EXT:fallback/Resources/Private/Partials
+				}
+			\end{lstlisting}
+
+		\item Si se usa una opción nueva y antigua (por ejemplo, \texttt{partialRootPaths} and \texttt{partialRootPath}),
+			la ruta establecida por la opción está en primera posición (index = 0)
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		b4a487a7-e4519670-53bbb0c3-e87e42fb
+% LTXE-SLIDE-ORIGIN:	8deb15a5-bff46e9f-ad676c73-427ca720 English
+% LTXE-SLIDE-TITLE:		Typolink ViewHelper
+% LTXE-SLIDE-REFERENCE:	https://forge.typo3.org/issues/59396
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+	\framesubtitle{Typolink ViewHelper}
+
+	\lstset{
+		basicstyle=\tiny\ttfamily
+	}
+
+	\begin{itemize}
+		\item Un nuevo Typolink ViewHelper puede analizar la cadena \texttt{typolink}, creada por el Link-Wizard y RTE
+
+			\begin{lstlisting}
+				<f:link.typolink parameter="{link}" target="_blank" class="ico-class" title="some title" additionalAttributes="{type:'button'}">
+			\end{lstlisting}
+
+			\texttt{link} puede contener:
+			\begin{lstlisting}
+				42 _blank - "This is the link title" &foo=bar
+			\end{lstlisting}
+
+			Salida:
+			\begin{lstlisting}
+				<a href="index.php?id=42&foo=bar" title="This is the title" target="_blank" class="ico-class" type="button">
+			\end{lstlisting}
+
+			Nota: sólo \texttt{parameter} es requerido, lo demás es opcional
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		3bba0efe-0c6a1ed0-fd756194-5ea75a07
+% LTXE-SLIDE-ORIGIN:	143bb339-be7e8e0b-e354de35-3591d05a English
+% LTXE-SLIDE-TITLE:		Generic data-* Attribute
+% LTXE-SLIDE-REFERENCE:	https://forge.typo3.org/issues/61351
+% ------------------------------------------------------------------------------
+
+
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+	\framesubtitle{Atributo data-* genérico}
+
+%	\lstset{
+%		basicstyle=\tiny\ttfamily
+%	}
+
+	\begin{itemize}
+		\item Todos los ViewHelpers, con salida HTML tags, ahora soportan el atributo HTML5 \texttt{data-*}
+		\item Una matriz pasada como \texttt{data} es transformada y el par clave/valor crea el atributo:
+			\texttt{data-\begingroup\color{typo3orange}key\endgroup
+				="\begingroup\color{typo3orange}value\endgroup
+				"}\newline
+
+			Ejemplo:
+			\begin{lstlisting}
+				<f:form.textfield data="{foo: 'bar', baz: 'foos'}" />
+			\end{lstlisting}
+
+			Salida:
+			\begin{lstlisting}
+				<input data-foo="bar" data-baz="foos" ... />
+			\end{lstlisting}
+		
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		0c09c1c2-3c94d25f-481ba4f8-9bf9eaf7
+% LTXE-SLIDE-ORIGIN:	c5e5ddfc-f68f277a-3e0bb2b1-623f3e49 English
+% LTXE-SLIDE-TITLE:		Class Tag Values Via Reflection
+% LTXE-SLIDE-REFERENCE:	https://forge.typo3.org/issues/60822
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+	\framesubtitle{Valores de etiqueta de clase usando Reflection}
+
+	\lstset{
+		basicstyle=\tiny\ttfamily
+	}
+
+	\begin{itemize}
+		\item Extbase Reflection Service puede retornar las etiquetas y anotaciones que han sido añadidas a una clase\newline
+
+			Ejemplo:
+			\begin{lstlisting}
+				/**
+				 * @SomeClassAnnotation A value
+				 */
+				class MyClass {
+				}
+			\end{lstlisting}
+
+			Se puede acceder a la anotación mediante:
+			\begin{lstlisting}
+				$service = new \TYPO3\CMS\Extbase\Reflection\ReflectionService();
+
+				// Returns all tags and their values the specified class is tagged with
+				$classValues = $service->getClassTagsValues('MyClass');
+
+				// Returns the values of the specified class tag
+				$classValue = $service->getClassTagValue('MyClass', 'SomeClassAnnotation');
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------

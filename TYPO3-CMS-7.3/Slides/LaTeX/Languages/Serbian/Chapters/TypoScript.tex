@@ -1,0 +1,227 @@
+% ------------------------------------------------------------------------------
+% TYPO3 CMS 7.3 - What's New - Chapter "TypoScript" (English Version)
+%
+% @author	Michael Schams <schams.net>
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		http://typo3.org/download/release-notes/whats-new/
+% @language	English
+% ------------------------------------------------------------------------------
+% LTXE-CHAPTER-UID:		e8cc33e1-d7bdb74f-0421b75f-7be06b19
+% LTXE-CHAPTER-NAME:	TypoScript
+% ------------------------------------------------------------------------------
+
+\section{TSconfig i TypoScript}
+\begin{frame}[fragile]
+	\frametitle{TSconfig i TypoScript}
+
+	\begin{center}\huge{Poglavlje 2:}\end{center}
+	\begin{center}\huge{\color{typo3darkgrey}\textbf{TSconfig i TypoScript}}\end{center}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		cc4763fc-75eb053e-7fecb9ef-40ff10d1
+% LTXE-SLIDE-ORIGIN:	f8419191-d59094a8-01e156a1-908dac0f English
+% LTXE-SLIDE-ORIGIN:	56b025e6-cf380b11-c9d1c009-0b548d6a German
+% LTXE-SLIDE-TITLE:		Feature #63561: Add TypoScript stdWrap strtotime
+% LTXE-SLIDE-REFERENCE:	Feature-63561-AddTypoScriptStdWrapStrtotime.rst
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{TSconfig i TypoScript}
+	\framesubtitle{Nova stdWrap funkcija \texttt{strtotime}}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Nova TypoScript stdWrap osobina \texttt{strtotime} dozvoljava konverziju
+		formatiranih datuma u Unix timestamps, npr. kako bi se izvrsila kalkulacija datuma
+
+		\item Validne vrednosti su \texttt{1} ili bilo koji time string koji je iskoriscen
+		kao prvi argument PHP funkcije \texttt{strtotime()}
+
+			\begin{lstlisting}
+				date_as_timestamp = TEXT
+				date_as_timestamp {
+				  value = 2015-04-15
+				  strtotime = 1
+				}
+
+				next_weekday = TEXT
+				next_weekday {
+				  data = GP:selected_date
+				  strtotime = + 2 weekdays
+				  strftime = %Y-%m-%d
+				}
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		f7e60cb9-35693e72-e1308e80-0373ec0e
+% LTXE-SLIDE-ORIGIN:	687af5fc-b201bac6-e4ad678b-392fb9f8 English
+% LTXE-SLIDE-ORIGIN:	c5dbf3c7-655fc6e4-227a3bf6-f5d89fb1 German
+% LTXE-SLIDE-TITLE:		Feature #65250: TypoScript condition add GPmerged
+% LTXE-SLIDE-REFERENCE:	Feature-65250-TypoScriptConditionAddGPmerged.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{TSconfig i TypoScript}
+	\framesubtitle{\texttt{GPmerged} u uslovima}
+
+	\begin{itemize}
+
+		\item Koriscenje \text{GP} u TypoScript vraca samo \text{POST} promenljivu,
+		u zahtevima koji sadrze i \text{POST} \underline{i}
+			\text{GET} promenljive
+
+		\item Nova opcija \texttt{GPmerged} spaja obe metode i vraca rezultat
+
+			\begin{lstlisting}
+				[globalVar = GPmerged:tx_demo|foo = 1]
+				  page.90 = TEXT
+				  page.90.value = DEMO
+				[global]
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		6368b3cf-6119953f-c4601b98-a3d7c766
+% LTXE-SLIDE-ORIGIN:	2901d1f6-3d8e9a15-ad0268f1-4e30c04b English
+% LTXE-SLIDE-ORIGIN:	05b2f338-7bcb651f-a4cebabd-2c677a20 German
+% LTXE-SLIDE-TITLE:		Feature #66697: Add uppercamelcase and lowercamelcase to stdWrap.case
+% LTXE-SLIDE-REFERENCE:	Feature-66697-AddUppercamelcaseAndLowercamelcaseToStdWrap.case.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{TSconfig i TypoScript}
+	\framesubtitle{Nove opcije za \texttt{stdWrap.case}}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Opcije  \texttt{uppercamelcase} i \texttt{lowercamelcase} su dodate u
+			\texttt{stdWrap.case}
+
+		\item Primer:
+
+			\begin{lstlisting}
+				tt_content = CASE
+				tt_content {
+				  key.field = CType
+				  my_custom_ctype =< lib.userContent
+				  my_custom_ctype {
+				    file = EXT:site_base/Resources/Private/Templates/SomeOtherTemplate.html
+				    settings.extraParam = 1
+				  }
+				  default =< lib.userContent
+				  default {
+				    file = TEXT
+				    file.field = CType
+				    file.stdWrap.case = uppercamelcase
+				    file.wrap = EXT:site_base/Resources/Private/Templates/|.html
+				  }
+				}
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		e278c6b5-9dd23a7f-3563abcd-81755e9f
+% LTXE-SLIDE-ORIGIN:	72bacec0-2fa0303b-33c4c4d6-a3bc0857 English
+% LTXE-SLIDE-ORIGIN:	cd745fc5-b8bd6483-ba1cf2a5-0ebf4310 German
+% LTXE-SLIDE-TITLE:		Feature #66698: Add integrity property to JavaScript files (1)
+% LTXE-SLIDE-REFERENCE:	Feature-66698-AddIntegrityPropertyToJavaScriptFiles.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{TSconfig i TypoScript}
+	\framesubtitle{Osobina \texttt{integrity} je dodata za JavaScript fajlove (1)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Osobina \texttt{integrity} je dodata za ukljucivanje JavaScript fajlova
+			 da bi mogao da se postavi SRI hash koji omogucava verifikaciju resursa\newline
+			(SRI: Sub-Resource Integrity, pogledati sledeci slajd)
+
+		\item Ovo utice na osobine TypoScript PAGE \texttt{page.includeJSLibs},
+			\texttt{page.includeJSFooterlibs}, \texttt{ includeJS} i \texttt{includeJSFooter}
+
+		\item Primer:
+
+			\begin{lstlisting}
+				page {
+				  includeJS {
+				    jQuery = https://code.jquery.com/jquery-1.11.3.min.js
+				    jquery.external = 1
+				    jQuery.disableCompression = 1
+				    jQuery.excludeFromConcatenation = 1
+				    jQuery.integrity = sha256-7LkWEzqTdpEfELxcZZlS6wAx5Ff13zZ83lYO2/ujj7g=
+				  }
+				}
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		30b2ee19-add8cbb8-65be8300-e88a7ae9
+% LTXE-SLIDE-ORIGIN:	bf190d17-80b961a2-a0c001d4-6ee48dfe English
+% LTXE-SLIDE-ORIGIN:	b8bd6483-cd745fc5-ba1cf2a5-0ebf4310 German
+% LTXE-SLIDE-TITLE:		Feature #66698: Add integrity property to JavaScript files (2)
+% LTXE-SLIDE-REFERENCE:	Feature-66698-AddIntegrityPropertyToJavaScriptFiles.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{TSconfig i TypoScript}
+	\framesubtitle{Osobina \texttt{integrity} je dodata za JavaScript fajlove (2)}
+
+	% decrease font size for code listing
+	%\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item SRI je W3C specifikacija koja dozvoljava web developerima da budu sigurni
+			da resursi sa drugih servera nisu menjani
+
+		\item Generisanje integriti hash-a:
+
+			\begin{itemize}
+				\item Opcija 1: \url{https://srihash.org}
+				\item Opcija 2: koriscenjem sledece shell komande
+			\end{itemize}
+
+			\begin{lstlisting}
+				cat FILENAME.js | openssl dgst -sha256 -binary | openssl enc -base64 -A
+			\end{lstlisting}
+
+		\item Detaljnije:
+
+			\begin{itemize}
+				\item \url{http://www.w3.org/TR/SRI/}
+			\end{itemize}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------

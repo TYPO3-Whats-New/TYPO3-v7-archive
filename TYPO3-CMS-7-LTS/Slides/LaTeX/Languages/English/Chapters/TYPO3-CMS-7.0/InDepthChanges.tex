@@ -1,0 +1,415 @@
+% ------------------------------------------------------------------------------
+% TYPO3 CMS 7.0 - What's New - Chapter "In-Depth Changes" (English Version)
+%
+% @author	Michael Schams <schams.net>
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		http://typo3.org/download/release-notes/whats-new/
+% @language	English
+% ------------------------------------------------------------------------------
+% LTXE-CHAPTER-UID:		a4c85165-008af32f-d6bdb700-43104095
+% LTXE-CHAPTER-NAME:	In-Depth Changes
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		b47dd2a2-952b3dd2-b9ceecce-ab8630bc
+% LTXE-SLIDE-ORIGIN:	xxxxxxxx-xxxxxxxx-xxxxxxxx-xxxxxxxx
+% LTXE-SLIDE-TITLE:		Integration of jQuery UI version 1.11.2
+% LTXE-SLIDE-REFERENCE:	https://forge.typo3.org/issues/62916
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{In-Depth Changes}
+	\framesubtitle{Integration of jQuery UI version 1.11.2}
+
+	\begin{itemize}
+		\item jQuery UI 1.11 supports AMD
+			(\href{http://en.wikipedia.org/wiki/Asynchronous_module_definition}{Asynchronous Module Definition}),
+			which loads JavaScript files only, when they are needed (performance boost)
+
+    	\item jQuery UI 1.11 replaces jQuery UI 1.10 + Scriptaculous in TYPO3 CMS 7.0
+
+    	\item Only core and interaction components are included, which are required
+    		to replace ExtJS und Scriptaculous
+
+    	\item Widgets are not included (but those of Twitter Bootstrap are used,
+    		such as: DatePicker, Spinner, Dialog, Buttons, Tabs, Tooltip)
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		66a996e1-bcfe7442-d44f59c8-d3495d4e
+% LTXE-SLIDE-ORIGIN:	xxxxxxxx-xxxxxxxx-xxxxxxxx-xxxxxxxx
+% LTXE-SLIDE-TITLE:		Registry for File Rendering Classes
+% LTXE-SLIDE-REFERENCE:	https://forge.typo3.org/issues/61800
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{In-Depth Changes}
+	\framesubtitle{Registry for File Rendering Classes}
+
+	\lstset{
+		basicstyle=\tiny\ttfamily
+	}
+
+	\begin{itemize}
+		\item In order to be able to render all kinds of media files,
+			a file rendering registry has been implemented.\newline
+			This happens as follows (e.g. Video, MPEG, AVI, WAV, etc.):
+
+		\begin{lstlisting}
+			<?php
+			namespace ...;
+
+			class NameTagRenderer implements FileRendererInterface {
+			  protected $possibleMimeTypes = array('audio/mpeg', 'audio/wav', ...);
+			  public function getPriority() {
+			    return 1; // priority: the higher, the more important (max: 100)
+			  }
+			  public function canRender(FileInterface $file) {
+			    return in_array($file->getMimeType(), $this->possibleMimeTypes, TRUE);
+			  }
+			  public function render(FileInterface $file, $width, $height, array $options = array(), $usedPathsRelativeToCurrentScript = FALSE) {
+			    ...
+
+			    return 'HTML code';
+			  }
+			}
+		\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		2c97df27-58f83c0c-2a7532ce-73ba3bd5
+% LTXE-SLIDE-ORIGIN:	xxxxxxxx-xxxxxxxx-xxxxxxxx-xxxxxxxx
+% LTXE-SLIDE-TITLE:		TCA: Validate Email Addresses
+% LTXE-SLIDE-REFERENCE:	https://forge.typo3.org/issues/62147
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{In-Depth Changes}
+	\framesubtitle{TCA: Validate Email Addresses}
+
+	\lstset{
+		basicstyle=\tiny\ttfamily
+	}
+
+	\begin{itemize}
+
+		\item New function "email" checks, if value entered is a valid email address
+		\item If check fails, a Flash message appears
+		\item Example:
+
+		\begin{lstlisting}
+			'emailaddress' => array(
+			  'exclude' => 1,
+			  'label' => 'LLL:EXT:myextension/Resources/Private/Language/locallang_db.xlf:tx_myextension
+		 	  'config' => array(
+			      'type' => 'input',
+			      'size' => 30,
+			      'eval' => 'email,trim'
+			  ),
+			)
+		\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		08cf25ed-0cba243f-e0738567-598b1534
+% LTXE-SLIDE-ORIGIN:	xxxxxxxx-xxxxxxxx-xxxxxxxx-xxxxxxxx
+% LTXE-SLIDE-TITLE:		AbstractCondition For Custom TypoScript Conditions
+% LTXE-SLIDE-REFERENCE:	https://forge.typo3.org/issues/61489
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{In-Depth Changes}
+	\framesubtitle{AbstractCondition For Custom TypoScript Conditions}
+
+	\lstset{
+		basicstyle=\tiny\ttfamily
+	}
+
+	\begin{itemize}
+		\item Custom TypoScript conditions can be derived from an AbstractCondition
+
+		\begin{lstlisting}
+			class TestCondition
+			  extends \TYPO3\CMS\Core\Configuration\TypoScript\ConditionMatching\AbstractCondition {
+
+			  public function matchCondition(array $conditionParameters) {
+ 			    if ($conditionParameters[0] === '= 7' && $conditionParameters[1] === '!= 6') {
+			      throw new TestConditionException('All Ok', 1411581139);
+			    }
+			  }
+			}
+		\end{lstlisting}
+
+		\item The appropriate TypoScript code as follows:
+
+		\begin{lstlisting}
+			[Vendor\Package\TestCondition]
+			[Vendor\Package\TestCondition = 7]
+			[Vendor\Package\TestCondition = 7, != 6]
+		\end{lstlisting}
+
+		\item Operators, which should be available, are defined in the class
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		c137d1cf-7ce68dbe-8149deb5-19fe62bb
+% LTXE-SLIDE-ORIGIN:	xxxxxxxx-xxxxxxxx-xxxxxxxx-xxxxxxxx
+% LTXE-SLIDE-TITLE:		Signal for IconUtility HTML tag manipulation
+% LTXE-SLIDE-REFERENCE:	https://forge.typo3.org/issues/61289
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{In-Depth Changes}
+	\framesubtitle{Signal for IconUtility HTML Tag Manipulation}
+
+	\lstset{
+		basicstyle=\tiny\ttfamily
+	}
+
+	\begin{itemize}
+
+		\item New signal to manipulate the IconUtility HTML tag for sprite icons:
+
+		\begin{lstlisting}
+			dispatch(
+			  'TYPO3\\CMS\\Backend\\Utility\\IconUtility',
+			  'buildSpriteHtmlIconTag',
+			  array($tagAttributes, $innerHtml, $tagName)
+			);
+		\end{lstlisting}
+
+		\item Method call:
+
+		\begin{lstlisting}
+			TYPO3\CMS\Backend\Utility\IconUtility\buildSpriteHtmlIconTag
+		\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		6713b880-9410d0a5-ef04d276-7bb989ba
+% LTXE-SLIDE-ORIGIN:	xxxxxxxx-xxxxxxxx-xxxxxxxx-xxxxxxxx
+% LTXE-SLIDE-TITLE:		Signal Slots to SoftReferenceIndex
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{In-Depth Changes}
+	\framesubtitle{Signal Slots to SoftReferenceIndex}
+
+	\lstset{
+		basicstyle=\tiny\ttfamily
+	}
+
+	\begin{itemize}
+		\item
+			\smaller
+				Two new signal slot dispatch calls in SoftReferenceIndex:
+			\normalsize
+
+		\begin{lstlisting}
+			protected function emitGetTypoLinkParts(
+			  $linkHandlerFound, $finalTagParts, $linkHandlerKeyword, $linkHandlerValue) {
+			  return $this->getSignalSlotDispatcher()->dispatch(
+			    get_class($this),
+			    'getTypoLinkParts',
+			    array($linkHandlerFound, $finalTagParts, $linkHandlerKeyword, $linkHandlerValue)
+			  );
+			}
+			protected function emitSetTypoLinkPartsElement(
+			  $linkHandlerFound, $tLP, $content, $elements, $idx, $tokenID) {
+			  return $this->getSignalSlotDispatcher()->dispatch(
+			    get_class($this),
+			    'setTypoLinkPartsElement',
+			    array($linkHandlerFound, $tLP, $content, $elements, $idx, $tokenID, $this)
+			  );
+			}
+		\end{lstlisting}
+
+		\item
+			\smaller
+				Called in:
+			\normalsize
+
+			\begin{lstlisting}
+				TYPO3\CMS\Core\Database\SoftReferenceIndex->findRef_typolink
+				TYPO3\CMS\Core\Database\SoftReferenceIndex->getTypoLinkParts
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		d743b8cf-4924c9ca-7e1d330c-3b101461
+% LTXE-SLIDE-ORIGIN:	xxxxxxxx-xxxxxxxx-xxxxxxxx-xxxxxxxx
+% LTXE-SLIDE-TITLE:		afterPersistObjetct Signal Slot
+% LTXE-SLIDE-REFERENCE:	https://forge.typo3.org/issues/59986
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{In-Depth Changes}
+	\framesubtitle{afterPersistObjetct Signal Slot}
+
+	\lstset{
+		basicstyle=\tiny\ttfamily
+	}
+
+	\begin{itemize}
+
+		\item New afterPersistObject signal slot emits for the aggregate root after persisting all other objects
+
+			\begin{lstlisting}
+				protected function emitAfterPersistObjectSignal(DomainObjectInterface $object) {
+				  $this->signalSlotDispatcher->dispatch(__CLASS__, 'afterPersistObject', array($object));
+				}
+			\end{lstlisting}
+
+		\item Called in:
+
+			\begin{lstlisting}
+				TYPO3\CMS\Extbase\Persistence\Generic\Backend->persistObject
+			\end{lstlisting}
+
+		\item The same signal is emitted in the persistObject method in the AbstractBackend class in Flow
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		17ea6530-0ec1ad3e-8e7d9d24-1d5b64aa
+% LTXE-SLIDE-ORIGIN:	xxxxxxxx-xxxxxxxx-xxxxxxxx-xxxxxxxx
+% LTXE-SLIDE-TITLE:		Signal in loadBaseTca
+% LTXE-SLIDE-REFERENCE:	https://forge.typo3.org/issues/57863
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{In-Depth Changes}
+	\framesubtitle{Signal in loadBaseTca}
+
+	\lstset{
+		basicstyle=\tiny\ttfamily
+	}
+
+	\begin{itemize}
+		\item To improve performance in the backend context,
+			the complete TCA can be cached now (not only parts of it)
+
+		\begin{lstlisting}
+			protected function emitTcaIsBeingBuiltSignal(array $tca) {
+			  list($tca) = static::getSignalSlotDispatcher()->dispatch(
+			    __CLASS__,
+			    'tcaIsBeingBuilt',
+			    array($tca)
+			  );
+			  $GLOBALS['TCA'] = $tca;
+			}
+		\end{lstlisting}
+
+		\item Called in:
+
+			\begin{lstlisting}
+				TYPO3\CMS\Core\Utility\ExtensionManagementUtility\Backend->buildBaseTcaFromSingleFiles
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		2fd6c25c-5f7952da-1406b74c-e0ff5e67
+% LTXE-SLIDE-ORIGIN:	xxxxxxxx-xxxxxxxx-xxxxxxxx-xxxxxxxx
+% LTXE-SLIDE-TITLE:		API to Add Cached TCA Changes
+% LTXE-SLIDE-REFERENCE:	https://forge.typo3.org/issues/57942
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{In-Depth Changes}
+	\framesubtitle{API to Add Cached TCA Changes}
+
+	\begin{itemize}
+		\item PHP files in \texttt{extkey/Configuration/TCA/Overrides/}
+			are executed directly after the TCA cache has been built
+
+		\item These files may only include code, which manipulates the TCA,\newline
+			such as: \texttt{addTCAColumns} or \texttt{addToAllTCATypes}
+
+		\item This feature gives backend requests a performance boost, once extensions start using these files
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		89fbd845-3952a157-98d97fc4-4244a2d4
+% LTXE-SLIDE-ORIGIN:	xxxxxxxx-xxxxxxxx-xxxxxxxx-xxxxxxxx
+% LTXE-SLIDE-TITLE:		Read-only File Mounts
+% LTXE-SLIDE-REFERENCE:	https://forge.typo3.org/issues/49391
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{In-Depth Changes}
+	\framesubtitle{Read-only File Mounts}
+
+	\begin{itemize}
+
+		\item File mounts can be configured as "read only" (again)
+		\item This was already possible in TYPO3 CMS 4.x, but silently dropped in 6.x
+		\item Example: add folder "test" of storage UID 3 as a read-only mount in the File List and Element Browser.\newline
+
+			\smaller\texttt{options.folderTree.altElementBrowserMountPoints = 3:/test}\normalsize\newline
+
+			If no storage is configured, it is assumed that the folder is in the default storage.
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		b964bc6b-27cd32e7-bda8cc3e-8bea33ca
+% LTXE-SLIDE-ORIGIN:	xxxxxxxx-xxxxxxxx-xxxxxxxx-xxxxxxxx
+% LTXE-SLIDE-TITLE:		Miscellaneous
+% LTXE-SLIDE-REFERENCE:	https://forge.typo3.org/issues/62993
+% LTXE-SLIDE-REFERENCE:	https://forge.typo3.org/issues/61185
+% LTXE-SLIDE-REFERENCE:	https://forge.typo3.org/issues/58365
+% LTXE-SLIDE-REFERENCE:	https://forge.typo3.org/issues/59830
+% LTXE-SLIDE-REFERENCE:	https://forge.typo3.org/issues/62857
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{In-Depth Changes}
+	\framesubtitle{Miscellaneous}
+
+	\begin{itemize}
+		\item jQuery has been updated from version 1.11.0 to version 1.11.1
+		\item Datatables has been updated from version 1.9.4 to version 1.10.2
+		\item Some old, unused variables have been removed from \texttt{EM\_CONF}
+		\item Extension icons can be in SVG image format now (\texttt{ext\_icon.svg})
+		\item Passing a wrong eID identifier results in an exception now
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------

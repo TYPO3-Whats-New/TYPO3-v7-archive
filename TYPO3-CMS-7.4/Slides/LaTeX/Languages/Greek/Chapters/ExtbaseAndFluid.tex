@@ -1,0 +1,135 @@
+% ------------------------------------------------------------------------------
+% TYPO3 CMS 7.4 - What's New - Chapter "Extbase & Fluid" (Greek Version)
+%
+% @author	Angeliki Plati <ag.plati@gmail.com>
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		http://typo3.org/download/release-notes/whats-new/
+% @language	Greek
+% ------------------------------------------------------------------------------
+% LTXE-CHAPTER-UID:		d1a9ab65-989c4bc7-f84807fd-d96febe7
+% LTXE-CHAPTER-NAME:	Extbase & Fluid
+% ------------------------------------------------------------------------------
+
+\section{Extbase \& Fluid}
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+
+	\begin{center}\huge{\greektext Κεφάλαιο 5:}\end{center}
+	\begin{center}\huge{\color{typo3darkgrey}\textbf{Extbase \& Fluid}}\end{center}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		e8ee7823-36f48614-31a9d1b9-58434807
+% LTXE-SLIDE-ORIGIN:	235ca4ed-fafe968a-814d4bd4-a8f936d0 English
+% LTXE-SLIDE-ORIGIN:	7b7e03da-55cc30d6-8f375c39-c82ffc4f German
+% LTXE-SLIDE-TITLE:		Feature #66070: Configure anchor for pagination widget
+% LTXE-SLIDE-REFERENCE:	Feature-66070-ConfigureSectionForPaginationWidget.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+	\framesubtitle{\latintext Anchor \greektext για το \latintext Widget \greektext Σελιδοποίησης}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item \greektext Αυτή το ένα χαρακτηριστικό επιτρέπει την προσθήκη ενός κλειδιού
+		\latintext \texttt{section} \greektext στη σύνθεση ενός \latintext Fluid widget \greektext σελιδοποίησης
+
+		\item \greektext Το \latintext anchor \greektext προσάπτεται σε κάθε \latintext link \greektext του \latintext widget \greektext σελιδοποίησης
+
+		\item \greektext Ο ακόλουθος κώδικος προσθέτει ένα \latintext anchor \texttt{\#archive}:
+
+			\latintext \begin{lstlisting}
+				<f:widget.paginate objects="{plantpestWarnings}" as="paginatedWarnings"
+				  configuration="{section: 'archive', itemsPerPage: 10, insertAbove: 0, insertBelow: 1,
+				  maximumNumberOfLinks: 10}">
+
+				   [...]
+
+				</f:widget.paginate>
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		bdbdb1a8-760ad2e4-3cb94675-d6fc5e7c
+% LTXE-SLIDE-ORIGIN:	db9ef18b-234cf92c-ef6869a5-248692f4 English
+% LTXE-SLIDE-ORIGIN:	3356cd43-6aa02ac1-54fd276d-0c509286 German
+% LTXE-SLIDE-TITLE:		Feature #68022: Added base date attribute to DateViewHelper
+% LTXE-SLIDE-REFERENCE:	Feature-68022-AddedBaseDateAttributeToDateViewHelper.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+	\framesubtitle{\greektext Ιδιότητα \latintext \texttt{base} \greektext για τον \latintext DateViewHelper}
+
+	% decrease font size for code listing
+	%\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item \greektext Ο \latintext DateViewHelper \greektext έχει επεκταθεί με μία προαιρετική ιδιότητα που ονομάζεται \latintext \texttt{base}
+		\item \greektext Η ιδιότητα μπορεί να χρησιμοποιηθεί για τον υπολογισμό προδιαγραφών σχετικού χρόνου για ημερομηνίες
+		\item \greektext Αν η ημερομηνία είναι αντικείμενο \latintext DateTime, \greektext η \latintext \texttt{base} \greektext παραβλέπεται
+		\item \greektext Το ακόλουθο παράδειγμα επιστρέφει "2016", αν το \latintext \texttt{dateObject} \greektext είναι ημερομηνία του 2017:
+
+			\latintext \begin{lstlisting}
+				<f:format.date format="Y" base="{dateObject}">-1 year</f:format.date>
+			\end{lstlisting}
+
+		\small
+			(\greektext βλ. \latintext \href{http://www.php.net/manual/en/datetime.formats.relative.php}{PHP documentation} \greektext για λίστα έγκυρων τιμών)
+		\normalsize
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		c54eb318-486efcc6-f5b5ae65-745b7a18
+% LTXE-SLIDE-ORIGIN:	aa476541-0e34625d-a79996ee-ecbf2e62 English
+% LTXE-SLIDE-ORIGIN:	097a17c3-6c43ed7b-3f2db1ff-35b37660 German
+% LTXE-SLIDE-TITLE:		Breaking #67890: Redesign FluidTemplateDataProcessorInterface to DataProcessorInterface
+% LTXE-SLIDE-REFERENCE:	Breaking-67890-RedesignFluidTemplateDataProcessorInterfaceToDataProcessorInterface.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+	\framesubtitle{\greektext Επιλογή \latintext \texttt{dataProcessing} \greektext για \latintext FLUIDTEMPLATE}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item \greektext Στο \latintext TYPO3 CMS 7.3,\greektext η επιλογή \latintext \texttt{dataProcessing} \greektext για το \latintext
+		cObject \texttt{FLUIDTEMPLATE} \greektext έχει προστεθεί
+
+		\item \greektext Η \latintext \texttt{FluidTemplateDataProcessorInterface} \greektext έχει αναδιαμορφωθεί σε \latintext \texttt{DataProcessorInterface},
+			\greektext πράγμα το οποίο επηρεάζει και τη μέθοδο \latintext \texttt{process()}
+
+			\latintext \begin{lstlisting}
+				public function process(
+				  ContentObjectRenderer $cObj,
+				  array $contentObjectConfiguration,
+				  array $processorConfiguration,
+				  array $processedData
+				);
+			\end{lstlisting}
+
+	\end{itemize}
+
+	\breakingchange
+
+\end{frame}
+
+% ------------------------------------------------------------------------------

@@ -1,0 +1,401 @@
+% ------------------------------------------------------------------------------
+% TYPO3 CMS 7.4 - What's New - Chapter "In-Depth Changes" (English Version)
+%
+% @author	Michael Schams <schams.net>
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		http://typo3.org/download/release-notes/whats-new/
+% @language	English
+% ------------------------------------------------------------------------------
+% LTXE-CHAPTER-UID:		9a69925b-ed88557b-d362988a-940ed520
+% LTXE-CHAPTER-NAME:	In-Depth Changes
+% ------------------------------------------------------------------------------
+
+\section{In-Depth Changes}
+\begin{frame}[fragile]
+	\frametitle{In-Depth Changes}
+
+	\begin{center}\huge{Chapter 4:}\end{center}
+	\begin{center}\huge{\color{typo3darkgrey}\textbf{In-Depth Changes}}\end{center}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		5fa3f922-971c07f7-2ec96457-63394b8b
+% LTXE-SLIDE-ORIGIN:	5cfc1d44-3d6f3d87-789957ab-655f357d German
+% LTXE-SLIDE-TITLE:		Breaking #65305: DriverInterface has been extended
+% LTXE-SLIDE-REFERENCE:	Breaking-65305-AddFunctionsToDriverInterface.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{In-Depth Changes}
+	\framesubtitle{Driver Interface}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item The following methods have been added to \texttt{DriverInterface}:
+
+			\begin{itemize}
+				\item \texttt{getFolderInFolder}
+				\item \texttt{getFileInFolder}
+			\end{itemize}
+
+		\item Every FAL driver should implement these new methods:
+
+			\begin{columns}[T]
+				\begin{column}{.07\textwidth}
+                \end{column}
+				\begin{column}{.465\textwidth}
+
+					\begin{lstlisting}
+						public function getFoldersInFolder(
+						  $folderIdentifier,
+						  $start = 0,
+						  $numberOfItems = 0,
+						  $recursive = FALSE,
+						  array $folderNameFilterCallbacks = array(),
+						  $sort = '',
+						  $sortRev = FALSE
+						);
+					\end{lstlisting}
+
+                \end{column}
+				\begin{column}{.465\textwidth}
+
+					\begin{lstlisting}
+						public function getFileInFolder(
+						  $fileName,
+						  $folderIdentifier
+						);
+					\end{lstlisting}
+
+				\end{column}
+			\end{columns}
+
+	\end{itemize}
+
+	\breakingchange
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		603042c6-c0caed8e-a6565d08-09528be6
+% LTXE-SLIDE-ORIGIN:	b719be34-650cf0d2-13ac26aa-dd3a4bbd German
+% LTXE-SLIDE-TITLE:		Feature #22175: Support IEC/SI units in file size formatting
+% LTXE-SLIDE-REFERENCE:	Feature-22175-SupportIecSiUnitsInFileSizeFormatting.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{In-Depth Changes}
+	\framesubtitle{IEC/SI Support in File Size Formatting}
+
+	% decrease font size for code listing
+	%\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item File size formatting supports two keywords additionally to the list of labels now:
+
+			\begin{itemize}
+				\item \small\texttt{iec} (default)\newline
+					\small(power of 2, labels: \texttt{| Ki| Mi| Gi| Ti| Pi| Ei| Zi| Yi})\normalsize
+				\item \small\texttt{si}\newline
+					\small(power of 10, labels: \texttt{| k| M| G| T| P| E| Z| Y})\normalsize
+			\end{itemize}
+
+		\item Set formating in TypoScript for example:\newline
+			\texttt{bytes.labels = iec}
+
+		\begin{lstlisting}
+			echo GeneralUtility::formatSize(85123);
+			// => before "83.1 K"
+			// => now "83.13 Ki"
+		\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		be6e3997-48f241bd-be7fb0f4-6fcded3f
+% LTXE-SLIDE-ORIGIN:	c5766b9f-4acc2f8d-dcadf0be-299ed259 German
+% LTXE-SLIDE-TITLE:		Feature #67293: Dependency ordering service (1)
+% LTXE-SLIDE-REFERENCE:	Feature-67293-DependencyOrderingService.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{In-Depth Changes}
+	\framesubtitle{Dependency Ordering Service (1)}
+
+	\begin{itemize}
+
+		\item In many cases it is necessary to create a sorted list of items from a set of "dependencies".
+			The ordered list is then used to execute actions in the given order.
+
+		\item Some examples where the TYPO3 core uses this are:
+
+			\begin{itemize}
+				\item hook execution order,
+				\item extension loading order,
+				\item listing of menu items,
+				\item etc.
+			\end{itemize}
+
+		\item The \texttt{DependencyResolver} has been re-worked and provides a
+			\texttt{DependencyOrderingService} now
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		2fd8356d-45429468-7de53ebf-4c674627
+% LTXE-SLIDE-ORIGIN:	4acc2f8d-6b9fc576-f0bedcad-d259299e German
+% LTXE-SLIDE-TITLE:		Feature #67293: Dependency ordering service (2)
+% LTXE-SLIDE-REFERENCE:	Feature-67293-DependencyOrderingService.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{In-Depth Changes}
+	\framesubtitle{Dependency Ordering Service (2)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Usage:
+
+			\begin{lstlisting}
+				$GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['someExt']['someHook'][<some id>] = [
+				  'handler' => someClass::class,
+				  'runBefore' => [ <some other ID> ],
+				  'runAfter' => [ ... ],
+				  ...
+				];
+			\end{lstlisting}
+
+		\item Example:
+
+			\begin{lstlisting}
+				$hooks = $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['someExt']['someHook'];
+				$sorted = GeneralUtility:makeInstance(DependencyOrderingService::class)->orderByDependencies(
+				  $hooks, 'runBefore', 'runAfter'
+				);
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		18e5e8ba-e691a20f-3a6f211c-7c855633
+% LTXE-SLIDE-ORIGIN:	3752346f-1d6aa26b-4b3dd1a7-f142d76b German
+% LTXE-SLIDE-TITLE:		Feature #56644: Hook for InlineRecordContainer::checkAccess()
+% LTXE-SLIDE-REFERENCE:	Feature-56644-AddHookToInlineRecordContainerCheckAccess.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{In-Depth Changes}
+	\framesubtitle{Hooks and Signals (1)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Hook to post-process \texttt{InlineRecordContainer::checkAccess} results has been added
+
+		\item \texttt{InlineRecordContainer::checkAccess} can be used to check the access to related inline records
+
+		\item The following code registers the hook:
+
+			\begin{lstlisting}
+				$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tceforms_inline.php']
+				  ['checkAccess'][] = 'My\\Package\\HookClass->hookMethod';
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		661cdcf3-cd43fd27-06ab1889-a7a22ea6
+% LTXE-SLIDE-ORIGIN:	158946bb-f31ee48e-ee6d0762-6cac7a12 German
+% LTXE-SLIDE-TITLE:		Feature #59231: Hook for AbstractUserAuthentication::checkAuthentication()
+% LTXE-SLIDE-REFERENCE:	Feature-59231-AddHookToAbstractUserAuthenticationCheckAuthentication.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{In-Depth Changes}
+	\framesubtitle{Hooks and Signals (2)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Hook to post-process login failures in \texttt{AbstractUserAuthentication::checkAuthentication}
+			has been added
+
+		\item Process stalls for 5 seconds in case of a failed login by default
+
+		\item Using this new hook, alternative solutions could be implemented
+			(e.g. to prevent brute force attacks)
+
+		\item The following code registers the hook:
+
+			\begin{lstlisting}
+				$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_userauth.php']
+				  ['postLoginFailureProcessing'][] = 'My\\Package\\HookClass->hookMethod';
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		7cafd821-40468370-4a3daa2a-efdb473f
+% LTXE-SLIDE-ORIGIN:	cfa748d2-7c412900-462446d1-14dd41e4 German
+% LTXE-SLIDE-TITLE:		Feature #67228 and #68047
+% LTXE-SLIDE-REFERENCE:	Feature-67228-EmitSignalWhenAnIndexRecordIsMarkedAsMissing.rst
+% LTXE-SLIDE-REFERENCE:	Feature-68047-EmitASignalForEachMappedObject.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{In-Depth Changes}
+	\framesubtitle{Hooks and Signals (3)}
+
+	\begin{itemize}
+
+		\item New signal \texttt{recordMarkedAsMissing} is emitted when the FAL indexer encounters a
+			\texttt{sys\_file} record which does not have a corresponding filesystem entry and marks it as
+			missing. The signal passes the \texttt{sys\_file} record UID.
+
+		\item This is useful in extensions which provide or extend file management capabilities such as
+			versioning, synchronizations, recovery, etc.
+
+		\item Signal \texttt{afterMappingSingleRow} is emitted whenever the DataMapper creates an object
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		a1ba770c-9d79e259-d64ab6a4-453c16b1
+% LTXE-SLIDE-ORIGIN:	24a6aa34-aa43c7ad-29712401-32d010f3 German
+% LTXE-SLIDE-TITLE:		Breaking #55759: HTML (e.g. double quotes) in link titles
+% LTXE-SLIDE-REFERENCE:	Breaking-55759-HTMLInLinkTitlesNotWorkingAnymore.rst
+% ------------------------------------------------------------------------------
+% Breaking #55759: HTML (e.g. double quotes) in link titles
+
+\begin{frame}[fragile]
+	\frametitle{In-Depth Changes}
+	\framesubtitle{HTML in TypoLink Titles}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Quotes in TypoLink titles are \textit{escaped} automatically now
+		\item This means, instances where HTML codes are already escaped manually,
+			will break the frontend output in TYPO CMS 7.4
+
+			Before:\tabto{1.8cm}'\texttt{Some \&quot;special\&quot; title}'\newline
+			Becomes:\tabto{1.8cm}'\texttt{Some \&amp;quot;special\&amp;quot; title}'
+
+		\item It is recommended to avoid escaping, due to the fact that TYPO3 takes care of escaping
+			HTML in TypoLink titles now
+
+	\end{itemize}
+
+	\breakingchange
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		30299840-02ec336c-0977320a-98f21078
+% LTXE-SLIDE-ORIGIN:	8c2cf004-beb3b185-c41a8d75-35b4410a German
+% LTXE-SLIDE-TITLE:		Breaking #56133 and #52705 - Miscellaneous (1)
+% LTXE-SLIDE-REFERENCE:	Breaking-56133-NewBeUserPermissionFilesReplace.rst
+% LTXE-SLIDE-REFERENCE:	Breaking-52705-DefaultLogConfigurationIsChanged.rst
+% ------------------------------------------------------------------------------
+% Feature #56133: New BE user permission "Files: replace"
+% Breaking #52705: Default log configuration is changed
+
+\begin{frame}[fragile]
+	\frametitle{In-Depth Changes}
+	\framesubtitle{Miscellaneous (1)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item By configuring the backend user permission \texttt{Files->replace}, users can be
+			allowed to or prevented from replacing Files in module Filelist
+
+		% note: item above is classified as a breaking change, but I can not see why (Michael)
+		% \breackingchange
+
+		\item A hash is used in the filename of files, generated by the FileWriter,
+			if no other log file has been configured
+
+			\begin{itemize}
+				\item before:\tabto{1.2cm}\texttt{typo3temp/logs/typo3.log}
+				\item now:\tabto{1.2cm}\texttt{typo3temp/logs/typo3\_<hash>.log}
+			\end{itemize}
+
+			\small(value \texttt{<hash>} is calculated based on the encryption key)\normalsize
+
+		% note: item above is classified as a breaking change, but I can not see why (Michael)
+		% \breackingchange
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		fe577b08-f30526e0-2d631fe7-642122be
+% LTXE-SLIDE-ORIGIN:	10f3aa43-c7ad32d0-29712401-aa3424a6 German
+% LTXE-SLIDE-TITLE:		Miscellaneous (2)
+% LTXE-SLIDE-REFERENCE:	unknown
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{In-Depth Changes}
+	\framesubtitle{Miscellaneous (2)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Classes used in hooks have to follow the autoloading mechanism
+		\item Therefore the hook definition can be shortened now:
+
+		\begin{lstlisting}
+			$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['tce']['formevals']
+			  [\TYPO3\CMS\Saltedpasswords\Evaluation\FrontendEvaluator::class] = '';
+		\end{lstlisting}
+
+	\end{itemize}
+
+	\breakingchange
+
+\end{frame}
+
+% ------------------------------------------------------------------------------

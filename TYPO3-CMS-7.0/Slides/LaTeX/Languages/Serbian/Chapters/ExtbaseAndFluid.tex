@@ -1,0 +1,178 @@
+% ------------------------------------------------------------------------------
+% TYPO3 CMS 7.0 - What's New - Chapter "Extbase & Fluid" (English Version)
+%
+% @author	Michael Schams <schams.net>
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		http://typo3.org/download/release-notes/whats-new/
+% @language	English
+% ------------------------------------------------------------------------------
+% LTXE-CHAPTER-UID:		13ac0b3d-58126d63-7b57e006-b5afb1c0
+% LTXE-CHAPTER-NAME:	Extbase & Fluid
+% ------------------------------------------------------------------------------
+
+\section{Extbase i Fluid}
+\begin{frame}[fragile]
+	\frametitle{Extbase i Fluid}
+
+	\begin{center}\huge{Poglavlje 4:}\end{center}
+	\begin{center}\huge{\color{typo3darkgrey}\textbf{Extbase i Fluid}}\end{center}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		05dd1cd6-b9053fd8-71e942d6-e0062edf
+% LTXE-SLIDE-ORIGIN:	aba42e5a-136183fe-58e36ebd-bfab3106 English
+% LTXE-SLIDE-TITLE:		Template Path Fallback
+% LTXE-SLIDE-REFERENCE:	http://forge.typo3.org/issues/61361
+% LTXE-SLIDE-REFERENCE:	http://forge.typo3.org/issues/39868
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Extbase i Fluid}
+	\framesubtitle{Rezervne putanje za sablone}
+
+	\lstset{
+		basicstyle=\tiny\ttfamily
+	}
+
+	\begin{itemize}
+		\item \texttt{Fluid Standalone View} kao i TypoScript objekat \texttt{FLUIDTEMPLATE} sada podrzava rezervne putanje za sablone
+
+			\begin{lstlisting}
+				page.10 = FLUIDTEMPLATE
+				page.10.file = EXT:myextension/Resources/Private/Templates/Main.html
+				page.10.partialRootPaths {
+				  10 = EXT:myextension/Resources/Private/Partials
+				  20 = EXT:fallback/Resources/Private/Partials
+				}
+			\end{lstlisting}
+
+		\item Ako se koriste stara i nova opcija (na primer \texttt{partialRootPaths} i \texttt{partialRootPath}),
+			putanja koja pocinje opcijom je na prvoj poziciji (index = 0)
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		83d37e9d-58708ca3-e2cce91f-5385527a
+% LTXE-SLIDE-ORIGIN:	8deb15a5-bff46e9f-ad676c73-427ca720 English
+% LTXE-SLIDE-TITLE:		Typolink ViewHelper
+% LTXE-SLIDE-REFERENCE:	https://forge.typo3.org/issues/59396
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Extbase i Fluid}
+	\framesubtitle{Typolink ViewHelper}
+
+	\lstset{
+		basicstyle=\tiny\ttfamily
+	}
+
+	\begin{itemize}
+		\item Novi Typolink ViewHelper moze da parsira i analizira \texttt{typolink} string, napravljen pomocu  Link-Wizard-a i RTE
+
+			\begin{lstlisting}
+				<f:link.typolink parameter="{link}" target="_blank" class="ico-class" title="some title" additionalAttributes="{type:'button'}">
+			\end{lstlisting}
+
+			\texttt{link} moze da sadrzi:
+			\begin{lstlisting}
+				42 _blank - "This is the link title" &foo=bar
+			\end{lstlisting}
+
+			Rezultat:
+			\begin{lstlisting}
+				<a href="index.php?id=42&foo=bar" title="This is the title" target="_blank" class="ico-class" type="button">
+			\end{lstlisting}
+
+			Napomena: samo je \texttt{parameter} obavezan, ostatak je opcionalan
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		a02c4f3d-c78155b8-14d7939d-49d29a89
+% LTXE-SLIDE-ORIGIN:	143bb339-be7e8e0b-e354de35-3591d05a English
+% LTXE-SLIDE-TITLE:		Generic data-* Attribute
+% LTXE-SLIDE-REFERENCE:	https://forge.typo3.org/issues/61351
+% ------------------------------------------------------------------------------
+
+
+\begin{frame}[fragile]
+	\frametitle{Extbase i Fluid}
+	\framesubtitle{Generic data-* Attribute}
+
+%	\lstset{
+%		basicstyle=\tiny\ttfamily
+%	}
+
+	\begin{itemize}
+		\item Svi ViewHelper-i, koji kao rezultat vracaju HTML tagove sada podrzavaju \texttt{data-*} atribute
+		\item Niz prosledjen kao \texttt{data} se transformise i key/value par gradi atribute:
+			\texttt{data-\begingroup\color{typo3orange}key\endgroup
+				="\begingroup\color{typo3orange}value\endgroup
+				"}\newline
+
+			Primer:
+			\begin{lstlisting}
+				<f:form.textfield data="{foo: 'bar', baz: 'foos'}" />
+			\end{lstlisting}
+
+			Rezultat:
+			\begin{lstlisting}
+				<input data-foo="bar" data-baz="foos" ... />
+			\end{lstlisting}
+		
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		0095e60c-62fb5f18-9f2f5eec-ab45c75e
+% LTXE-SLIDE-ORIGIN:	c5e5ddfc-f68f277a-3e0bb2b1-623f3e49 English
+% LTXE-SLIDE-TITLE:		Class Tag Values Via Reflection
+% LTXE-SLIDE-REFERENCE:	https://forge.typo3.org/issues/60822
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Extbase i Fluid}
+	\framesubtitle{Class Tag Values kroz Reflection}
+
+	\lstset{
+		basicstyle=\tiny\ttfamily
+	}
+
+	\begin{itemize}
+		\item Extbase Reflection Service moze vracati tagove i anotacije koje se dodaju klasi\newline
+
+			Primer:
+			\begin{lstlisting}
+				/**
+				 * @SomeClassAnnotation A value
+				 */
+				class MyClass {
+				}
+			\end{lstlisting}
+
+			Anotaciji se moze pristupiti na sledeci nacin:
+			\begin{lstlisting}
+				$service = new \TYPO3\CMS\Extbase\Reflection\ReflectionService();
+
+				// Returns all tags and their values the specified class is tagged with
+				$classValues = $service->getClassTagsValues('MyClass');
+
+				// Returns the values of the specified class tag
+				$classValue = $service->getClassTagValue('MyClass', 'SomeClassAnnotation');
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------

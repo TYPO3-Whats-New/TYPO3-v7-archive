@@ -1,0 +1,229 @@
+% ------------------------------------------------------------------------------
+% TYPO3 CMS 7.0 - What's New - Chapter "TypoScript" (Russian Version)
+%
+% @author	Michael Schams <schams.net>
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		http://typo3.org/download/release-notes/whats-new/
+% @language	Russian
+% ------------------------------------------------------------------------------
+% LTXE-CHAPTER-UID:		51377f37-5101c46b-3902bf34-2dabba0f
+% LTXE-CHAPTER-NAME:	TypoScript
+% ------------------------------------------------------------------------------
+
+\section{TSconfig и TypoScript}
+\begin{frame}[fragile]
+	\frametitle{TSconfig и TypoScript}
+
+	\begin{center}\huge{Глава 2:}\end{center}
+	\begin{center}\huge{\color{typo3darkgrey}\textbf{TSconfig и TypoScript}}\end{center}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		f711228c-a8dbde27-e407b534-66490859
+% LTXE-SLIDE-ORIGIN:	c65cc12d-2f8c9d53-37d6577f-8a2f8357 English
+% LTXE-SLIDE-TITLE:		TSconfig Available to Link Checkers
+% LTXE-SLIDE-REFERENCE:	https://forge.typo3.org/issues/54518
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{TSconfig и TypoScript}
+	\framesubtitle{TSConfig доступен при проверке ссылое}
+
+	\begin{itemize}
+		\item Настройка TSconfig читается
+
+			\begin{itemize}
+				\item либо из внутреннего интерфейса (если используется Linkvalidator)
+				\item либо из настроек задач планировщика
+			\end{itemize}
+
+		\item Пример: TSconfig, который может быть прочитан Linkchecker:
+
+			\lstinline!mod.linkvalidator.mychecker.myvar = 1!
+
+		\item TSconfig затем доступен в виде \texttt{\$this->tsConfig}
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		9cecfaac-4a21e8aa-6390133c-10064163
+% LTXE-SLIDE-ORIGIN:	1d38328d-a7245bbe-1b380ab3-88ea4885 English
+% LTXE-SLIDE-TITLE:		Linkcheck: Report Deleted Records
+% LTXE-SLIDE-REFERENCE:	https://forge.typo3.org/issues/54519
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{TSconfig и TypoScript}
+	\framesubtitle{Linkcheck: отчёт об удалённых записях}
+
+	\begin{itemize}
+		\item В TYPO3 CMS < 7.0, linkhandler только лишь предупреждал о не существующих или удалённых записях
+		\item Начиная с TYPO3 CMS >=  7.0, следующие настройки TSconfig включают предупреждения, если ссылки указывают на
+		несуществующие записи:
+
+			\lstinline!mod.linkvalidator.linkhandler.reportHiddenRecords = 1!
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		78d1ef9d-6c648f07-ecbc74ec-1ebf6206
+% LTXE-SLIDE-ORIGIN:	a27d2c0a-410cbfc8-50f176e2-027ce416 English
+% LTXE-SLIDE-TITLE:		RTE: Multiple CSS Classes Per Style
+% LTXE-SLIDE-REFERENCE:	https://forge.typo3.org/issues/51905
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{TSconfig и TypoScript}
+	\framesubtitle{RTE: несколько классов CSS для стиля}
+
+	\begin{itemize}
+		\item Современным технологиям, вроде Twitter Bootstrap, требуется несколько классов CSS для тега HTML\newline
+			\small Например: \texttt{<a class="btn btn-danger">Внимание</a>}\normalsize
+		\item Теперь поддерживается несколько CSS классов, то есть редакторам нужно будет выбрать лишь один стиль
+
+			\begin{lstlisting}
+				RTE.classes.[ *classname* ] {
+				  .requires = list of CSS classes
+				}
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		e1281447-104b6b59-f3cd57dc-e9e7bc38
+% LTXE-SLIDE-ORIGIN:	e11a6c09-1eb3eaf7-6cebbee9-febef6ba English
+% LTXE-SLIDE-TITLE:		RTE: Configure CSS Class As Not-Selectable
+% LTXE-SLIDE-REFERENCE:	https://forge.typo3.org/issues/58122
+% LTXE-SLIDE-REFERENCE:	https://forge.typo3.org/issues/51905
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{TSconfig и TypoScript}
+	\framesubtitle{RTE: настройка CSS класса, как не выбираемого}
+
+	\begin{itemize}
+		\item Теперь возможно настроить классы CSS как "не выбираемые"
+
+			\begin{lstlisting}
+				// value "1" means, class is selectable
+				// value "0" makes it not-selectable
+				RTE.classes.[ *classname* ] {
+				  .selectable = 1
+				}
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		c6ec59b8-a7747639-64b584ea-1a9d49ca
+% LTXE-SLIDE-ORIGIN:	e607c36f-e1be31da-05ace0c5-991e6e42 English
+% LTXE-SLIDE-TITLE:		RTE: Include Multiple CSS Files
+% LTXE-SLIDE-REFERENCE:	https://forge.typo3.org/issues/50039
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{TSconfig и TypoScript}
+	\framesubtitle{RTE: включение нескольких файлов CSS}
+
+	\begin{itemize}
+		\item Теперь возможно включить несколько файлов CSS
+
+			\begin{lstlisting}
+				RTE.default.contentCSS {
+				  file1 = fileadmin/rte_stylesheet1.css
+				  file2 = fileadmin/rte_stylesheet2.css
+				}
+			\end{lstlisting}
+
+		\item Без указания на какой-либо файл CSS, будет подключаться файл по умолчанию:\newline
+			\texttt{typo3/sysext/rtehtmlarea/res/contentcss/default.css}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		08ea0088-f0bf545f-180a6adc-fba0f81c
+% LTXE-SLIDE-ORIGIN:	c9d0ad7d-2c5aee11-79878250-9e8ce110 English
+% LTXE-SLIDE-TITLE:		Exception Handling When cObjects Are Rendered (1)
+% LTXE-SLIDE-REFERENCE:	https://forge.typo3.org/issues/47919
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{TSconfig и TypoScript}
+	\framesubtitle{Обработка исключений при обработке cObjects (1)}
+
+	\begin{itemize}
+		\item В TYPO3 CMS < 7.0, при ошибке в процессе обработки объектов содержимого(например, \texttt{USER}), ошибка
+		сказывалась на всём внешнем интерфейсе - но не работал
+		\item Начиная с TYPO3 CMS >= 7.0, были разработаны обработки исключений, что позволяет вывести сообщение вместо объекта
+		 cObject с ошибкой
+	\end{itemize}
+
+%	*TODO* it would be so nice, if someone could create a screenshot of this scenario!
+%
+%	\begin{figure}\vspace*{-0.3cm}
+%		\includegraphics[width=0.90\linewidth]{TypoScript/cObjectExceptionHandling.png}
+%	\end{figure}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		21364423-bb3a7783-c382e9f2-489f48bc
+% LTXE-SLIDE-ORIGIN:	1132ffa6-a06b7448-0b59e149-a28c2d43 English
+% LTXE-SLIDE-TITLE:		Exception Handling When cObjects Are Rendered (2)
+% LTXE-SLIDE-REFERENCE:	https://forge.typo3.org/issues/47919
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{TSconfig и TypoScript}
+	\framesubtitle{Обработка исключений при обработке cObjects (2)}
+	
+	\lstset{
+		basicstyle=\tiny\ttfamily
+	}
+	
+	\begin{lstlisting}
+		# default exception handler (activated in context "production")
+		config.contentObjectExceptionHandler = 1
+
+		# configuration of a class for the exception handling
+		config.contentObjectExceptionHandler =
+		  TYPO3\CMS\Frontend\ContentObject\Exception\ProductionExceptionHandler
+
+		# customised error message (show random error code)
+		config.contentObjectExceptionHandler.errorMessage = Oops an error occurred. Code: %s
+
+		# configuration of exception codes, which are not dealt with
+		tt_content.login.20.exceptionHandler.ignoreCodes.10 = 1414512813
+
+		# deactivation of exception handling for a specific plugins or content objects
+		tt_content.login.20.exceptionHandler = 0
+
+		# ignoreCodes and errorMessage can be configured globally...
+		config.contentObjectExceptionHandler.errorMessage = Oops an error occurred. Code: %s
+		config.contentObjectExceptionHandler.ignoreCodes.10 = 1414512813
+
+		# ...or locally for individual content objects
+		tt_content.login.20.exceptionHandler.errorMessage = Oops an error occurred. Code: %s
+		tt_content.login.20.exceptionHandler.ignoreCodes.10 = 1414512813
+	\end{lstlisting}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------

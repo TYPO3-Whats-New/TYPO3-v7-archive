@@ -1,0 +1,711 @@
+% ------------------------------------------------------------------------------
+% TYPO3 CMS 7.5 - What's New - Chapter "In-Depth Changes" (German Version)
+%
+% @author	Patrick Lobacher <patrick@lobacher.de> and Michael Schams <schams.net>
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		http://typo3.org/download/release-notes/whats-new/
+% @language	German
+% ------------------------------------------------------------------------------
+% LTXE-CHAPTER-UID:		b8f1c138-2fb2f5ce-15d1ffc0-e80171e2
+% LTXE-CHAPTER-NAME:	In-Depth Changes
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		03be70bc-886235ca-10f0cef5-6b33fe60
+% LTXE-SLIDE-TITLE:		Fluid-based Content Elements Introduced (1)
+% LTXE-SLIDE-REFERENCE:	Feature-38732-Fluid-basedContentElementsIntroduced.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Änderungen im System}
+	\framesubtitle{Fluid-basierte Inhaltselemente (1)}
+
+	\begin{itemize}
+
+		\item Es wurde eine Alternative zur Extension \textit{CSS Styled Content} geschaffen:\newline
+			\textbf{"Fluid-based Content Elements"}
+
+		\item Hier werden anstelle von TypoScript Fluid-Templates für das Rendering von Inhalten verwendet
+
+		\item Dazu müssen die folgenden beiden static-Templates eingebunden werden:
+
+			\begin{itemize}
+				\item Content Elements (\texttt{fluid\_styled\_content})
+				\item Content Elements CSS (optional) (\texttt{fluid\_styled\_content})
+			\end{itemize}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		bb7124ec-4658414b-757ca8ca-f0addee3
+% LTXE-SLIDE-TITLE:		Fluid-based Content Elements Introduced (2)
+% LTXE-SLIDE-REFERENCE:	Feature-38732-Fluid-basedContentElementsIntroduced.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Änderungen im System}
+	\framesubtitle{Fluid-basierte Inhaltselemente (2)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Zusätzlich muss das PageTSconfig Template \texttt{Fluid-based Content Elements fluid\_styled\_content}
+			in den Seiteneigenschaften eingebunden werden, damit der New-Content-Element Wizard entsprechend
+			angepasst wird
+
+		\item Eigene Fluid-Templates können wie folgt festgelegt werden:
+
+			\begin{lstlisting}
+				lib.fluidContent.templateRootPaths.50 = EXT:site_example/Resources/Private/Templates/
+				lib.fluidContent.partialRootPaths.50 = EXT:site_example/Resources/Private/Partials/
+				lib.fluidContent.layoutRootPaths.50 = EXT:site_example/Resources/Private/Layouts/
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		04cd65d3-e013813d-d2eac450-7d3a79a8
+% LTXE-SLIDE-TITLE:		Fluid-based Content Elements Introduced (3)
+% LTXE-SLIDE-REFERENCE:	Feature-38732-Fluid-basedContentElementsIntroduced.rst
+% LTXE-SLIDE-REFERENCE:	Important-67954-MigrateCTypesTextImageAndTextpicToTextmedia.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Änderungen im System}
+	\framesubtitle{Fluid-basierte Inhaltselemente (3)}
+
+	\begin{itemize}
+
+		\item Um eine Installation auf die neue Struktur zu migrieren, kann man wie folgt vorgehen:
+
+			\begin{itemize}
+
+				\item Deinstallieren der Extension \texttt{css\_styled\_content}
+
+				\item Installieren der Extension \texttt{fluid\_styled\_content}
+
+				\item Nun ist ein "Upgrade Wizard" im Install Tool verfügbar,
+					der die Migration der Inhaltselemente \texttt{text}, \texttt{image}
+					und \texttt{textpic} in \texttt{textmedia}, durchführt
+
+			\end{itemize}
+	\end{itemize}
+
+\end{frame}
+
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		8807e1a0-2b3fadac-ac842970-b85e5130
+% LTXE-SLIDE-TITLE:		Add SELECTmmQuery method to DatabaseConnection
+% LTXE-SLIDE-REFERENCE:	Feature-19494-AddSELECTmmQueryMethodToDatabaseConnection.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Änderungen im System}
+	\framesubtitle{SELECTmmQuery Methode für Datenbank-Zugang}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Bislang enthielt die Datenbank-Klasse die Methode \texttt{exec\_SELECT\_mm\_query},
+			die die Datenbank-Abfrage direkt ausführte
+
+		\item Nun wurde die Generierung des Queries (\textit{Query-Building}) und Ausführung getrennt,
+			indem die Methode \texttt{SELECT\_mm\_query} hinzugefügt wurde
+
+			\begin{lstlisting}
+				$query = SELECT_mm_query('*', 'table1', 'table1_table2_mm', 'table2', 'AND table1.uid = 1',
+				'', 'table1.title DESC');
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		398fdcb2-1cc9a862-42e59a09-e4ed65ba
+% LTXE-SLIDE-TITLE:		Scheduler task to optimize database tables
+% LTXE-SLIDE-REFERENCE:	Feature-25341-SchedulerTaskToOptimizeDatabaseTables.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Änderungen im System}
+	\framesubtitle{Scheduler Task zur Datenbank-Optimierung}
+
+	\begin{itemize}
+
+		\item Es wurde ein Scheduler Task implementiert, der die Datenbank via MySQL-Kommando
+			\texttt{OPTIMIZE TABLE} optimiert
+
+		\item Optimiert werden können lediglich Tabellen vom Typ\newline
+			\texttt{MyISAM}, \texttt{InnoDB} und \texttt{ARCHIVE}
+
+		\item DBAL wird nicht unterstützt
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		f9cbeb69-d08efdaf-a8c00d48-353f667e
+% LTXE-SLIDE-TITLE:		Improved handling of online media (1)
+% LTXE-SLIDE-REFERENCE:	Feature-61799-ImprovedHandlingOfOnlineMedia.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Änderungen im System}
+	\framesubtitle{Online Medien Unterstützung (1)}
+
+	\begin{itemize}
+
+		\item Der Core wurde um eine externe Medien-Unterstützung erweitert\newline
+			\small
+				(exemplarisch für YouTube- und Vimeo-Videos)
+			\normalsize
+
+		\item Diese kann (z.B. im Inhaltselement \textbf{"Text \& Media"}) als URL
+			eingeben werden. Anschließend wird die Resource wie eine interne Datei integriert.
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		76e87d6a-cd1ebbf9-9a4d49ec-49cc569f
+% LTXE-SLIDE-TITLE:		Improved handling of online media (2)
+% LTXE-SLIDE-REFERENCE:	Feature-61799-ImprovedHandlingOfOnlineMedia.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Änderungen im System}
+	\framesubtitle{Online Medien Unterstützung (2)}
+
+	Folgende YouTube/Vimeo URLs sind möglich:
+	\vspace{0.4cm}
+
+	\begin{columns}[T]
+		\begin{column}{.52\textwidth}
+			\smaller
+				\tabto{0.2cm}\texttt{youtu.be/<code>}\newline
+				\tabto{0.2cm}\texttt{www.youtube.com/watch?v=<code>}\newline
+				\tabto{0.2cm}\texttt{www.youtube.com/v/<code>}\newline
+				\tabto{0.2cm}\texttt{www.youtube-nocookie.com/v/<code>}\newline
+				\tabto{0.2cm}\texttt{www.youtube.com/embed/<code>}\newline
+		\end{column}
+		\begin{column}{.48\textwidth}
+			\vspace{-0.25cm}\smaller
+				\texttt{vimeo.com/<code>}\newline
+				\texttt{player.vimeo.com/video/<code>}\newline
+		\end{column}
+	\end{columns}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		aef8746a-e1babbc9-4dd74eec-cf379dae
+% LTXE-SLIDE-TITLE:		Improved handling of online media (3)
+% LTXE-SLIDE-REFERENCE:	Feature-61799-ImprovedHandlingOfOnlineMedia.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Änderungen im System}
+	\framesubtitle{Online Medien Unterstützung (3)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Der Zugriff per Fluid kann z.B. wie folgt durchgeführt werden:
+
+		\begin{lstlisting}
+			<!-- enable js api and set no-cookie support for YouTube videos -->
+			<f:media file="{file}" additionalConfig="{enablejsapi:1, 'no-cookie': true}" ></f:media>
+
+			<!-- show title and uploader for YouTube and Vimeo before video starts playing -->
+			<f:media file="{file}" additionalConfig="{showinfo:1}" ></f:media>
+		\end{lstlisting}
+
+		\item Für YouTube existieren folgende Optionen:\newline
+			\small
+				\texttt{autoplay}, \texttt{controls}, \texttt{loop}, \texttt{enablejsapi}, \texttt{showinfo}, \texttt{no-cookie}
+			\normalsize
+		\item Für Vimeo existieren folgende Optionen:\newline
+			\small
+				\texttt{autoplay}, \texttt{loop}, \texttt{showinfo}
+			\normalsize
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		9ed71aaa-a7615392-78f0ac0c-f9bd7400
+% LTXE-SLIDE-TITLE:		Improved handling of online media (4)
+% LTXE-SLIDE-REFERENCE:	Feature-61799-ImprovedHandlingOfOnlineMedia.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Änderungen im System}
+	\framesubtitle{Online Medien Unterstützung (4)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Für einen eigenen Media-Service benötigt man eine
+			\small\texttt{OnlineMediaHelper}\normalsize\space Klasse, welche das
+			\small\texttt{OnlineMediaHelperInterface}\normalsize\space implementiert, sowie eine
+			\small\texttt{FileRenderer}\normalsize\space Klasse, die das
+			\small\texttt{FileRendererInterface}\normalsize\space implementiert
+
+			\begin{lstlisting}
+				// Registrierung eines eigenen Online-Video-Services
+				$GLOBALS['TYPO3_CONF_VARS']['SYS']['OnlineMediaHelpers']['myvideo'] =
+				  \MyCompany\Myextension\Helpers\MyVideoHelper::class;
+
+				$rendererRegistry = \TYPO3\CMS\Core\Resource\Rendering\RendererRegistry::getInstance();
+				$rendererRegistry->registerRendererClass(
+				  \MyCompany\Myextension\Rendering\MyVideoRenderer::class
+				);
+
+				// Registrierung eines eigenen Mime-Types
+				$GLOBALS['TYPO3_CONF_VARS']['SYS']['FileInfo']['fileExtensionToMimeType']['myvideo'] =
+				  'video/myvideo';
+
+				// Registrierung einer eigenen Datei-Extension
+				$GLOBALS['TYPO3_CONF_VARS']['SYS']['mediafile_ext'] .= ',myvideo';
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		c675e3a8-9a429b0b-61a4a603-d5b0740f
+% LTXE-SLIDE-TITLE:		Unified Backend Routing
+% LTXE-SLIDE-REFERENCE:	Feature-65493-BackendRouting.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Änderungen im System}
+	\framesubtitle{Backend Routing}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Es wurde eine neue Routing Komponente zum TYPO3-Backend hinzugefügt,
+			welche verschiedene Aufrufe handhaben kann\newline
+			\small
+				(z.B. \texttt{http://www.example.com/typo3/document/edit})
+			\normalsize
+
+		\item Die Routen werden in folgender Datei definiert:\newline
+			\small
+				\texttt{Configuration/Backend/Routes.php}
+			\normalsize
+
+			\begin{lstlisting}
+				return [
+				  'myRouteIdentifier' => [
+				    'path' => '/document/edit',
+				    'controller' => Acme\MyExtension\Controller\MyExampleController::class . '::methodToCall'
+				  ]
+				];
+			\end{lstlisting}
+
+		\item Die Methode erhält das Response- und Request-Objekt:
+
+			\begin{lstlisting}
+				public function methodToCall(ServerRequestInterface $request, ResponseInterface $response) {
+				  ...
+				}
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		df56086a-498ae937-9b2bf393-a95828f3
+% LTXE-SLIDE-TITLE:		Autoload definition can be provided in ext_emconf.php
+% LTXE-SLIDE-REFERENCE:	Feature-68700-AutoloadDefinitionCanBeProvidedInExt_emconfphp.rst
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{Änderungen im System}
+	\framesubtitle{Autoload Definition in \texttt{ext\_emconf.php}}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Zusätzlich zur Datei \texttt{composer.json} können nun Autoload-Definitionen
+			in der Datei \texttt{ext\_emconf.php} hinterlegt werden
+
+		\item Das hat den Vorteil, dass nicht die gesamte Extension nach Klassen gescannt wird
+
+			\begin{lstlisting}
+				$EM_CONF[$_EXTKEY] = array (
+				  'title' => 'Extension Skeleton for TYPO3 CMS 7',
+				  ...
+				'autoload' =>
+				  array(
+				    'psr-4' => array(
+				      'Helhum\\ExtScaffold\\' => 'Classes'
+				    )
+				  )
+				);
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		137a9fca-b6558571-346141d2-9304a223
+% LTXE-SLIDE-TITLE:		Icon-Factory (1)
+% LTXE-SLIDE-REFERENCE:	Feature-68741-IntroduceNewIconFactoryAsBaseForReplaceTheIconSkinningAPI.rst
+% LTXE-SLIDE-REFERENCE:	Feature-69095-IntroduceIconStateForIconFactory.rst
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{Änderungen im System}
+	\framesubtitle{Neue Icon-Factory (1)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Die Logik, um mit Icons, Größen und Overlays zu arbeiten, wurde in die neue \texttt{IconFactory} ausgelagert
+
+		\item Es gibt drei "IconProvider": \texttt{BitmapIconProvider}, \texttt{FontawesomeIconProvider}
+			und \texttt{SvgIconProvider}
+
+		\item Die Registrierung eines Icons erfolgt folgendermaßen:
+
+			\begin{lstlisting}
+				IconRegistry::registerIcon($identifier, $iconProviderClassName, array $options = array());
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		6b59b4c7-21a7ff5c-4e67b53d-e4509355
+% LTXE-SLIDE-TITLE:		Icon-Factory (2)
+% LTXE-SLIDE-REFERENCE:	Feature-68741-IntroduceNewIconFactoryAsBaseForReplaceTheIconSkinningAPI.rst
+% LTXE-SLIDE-REFERENCE:	Feature-69095-IntroduceIconStateForIconFactory.rst
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{Änderungen im System}
+	\framesubtitle{Neue Icon-Factory (2)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Anwendung:
+
+			\begin{lstlisting}
+				$iconFactory = GeneralUtility::makeInstance(IconFactory::class);
+				$iconFactory->getIcon(
+				  $identifier,
+				  Icon::SIZE_SMALL,
+				  $overlay,
+				  IconState::cast(IconState::STATE_DEFAULT)
+				)->render();
+			\end{lstlisting}
+
+		\item Zulässige Werte für \texttt{Icon::SIZE\_...} sind:\newline
+			\small\texttt{SIZE\_SMALL}, \texttt{SIZE\_DEFAULT} und \texttt{SIZE\_LARGE}\normalsize
+			\vspace{0.4cm}
+
+		\item Zulässige Werte für \texttt{Icon::STATE\_...} sind:\newline
+			\small\texttt{STATE\_DEFAULT} und \texttt{STATE\_DISABLED}\normalsize
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		21a7eeb5-b4c7ff5c-b53de450-4e679355
+% LTXE-SLIDE-TITLE:		Icon-Factory (3)
+% LTXE-SLIDE-REFERENCE:	Feature-68741-IntroduceNewIconFactoryAsBaseForReplaceTheIconSkinningAPI.rst
+% LTXE-SLIDE-REFERENCE:	Feature-69095-IntroduceIconStateForIconFactory.rst
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{Änderungen im System}
+	\framesubtitle{Neue Icon-Factory (3)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Der Core stellt einen eigenen ViewHelper zur Verfügung, um Icons anzuzeigen:
+
+			\begin{lstlisting}
+				{namespace core = TYPO3\CMS\Core\ViewHelpers}
+
+				<core:icon identifier="my-icon-identifier"></core:icon>
+
+				<!-- use the "small" size if none given ->
+				<core:icon identifier="my-icon-identifier"></core:icon>
+				<core:icon identifier="my-icon-identifier" size="large"></core:icon>
+				<core:icon identifier="my-icon-identifier" overlay="overlay-identifier"></core:icon>
+
+				<core:icon identifier="my-icon-identifier" size="default" overlay="overlay-identifier">
+				</core:icon>
+
+				<core:icon identifier="my-icon-identifier" size="large" overlay="overlay-identifier">
+				</core:icon>
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		d9de708f-474f2f36-c104b01c-0d23a352
+% LTXE-SLIDE-TITLE:		Signal for pre processing linkvalidator records
+% LTXE-SLIDE-REFERENCE:	Feature-52217-SignalForPreProcessingLinkvalidatorRecords.rst
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{Änderungen im System}
+	\framesubtitle{Hooks und Signals (1)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Es wurde ein Signal im LinkValidator zugefügt, welches die zusätzliche
+			Verarbeitung eines Eintrages möglich macht\newline
+			\small
+				(z.B. um Daten aus der Plugin-Konfiguration zu ermitteln o.ä.).
+			\normalsize
+
+		\item Der Hook kann wie folgt in der Datei \texttt{ext\_localconf.php} registriert werden:
+
+			\begin{lstlisting}
+				$signalSlotDispatcher = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(
+				  \TYPO3\CMS\Extbase\SignalSlot\Dispatcher::class
+				);
+				$signalSlotDispatcher->connect(
+				  \TYPO3\CMS\Linkvalidator\LinkAnalyzer::class,
+				  'beforeAnalyzeRecord',
+				  \Vendor\Package\Slots\RecordAnalyzerSlot::class,
+				  'beforeAnalyzeRecord'
+				);
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		bcb8ef73-b8669a17-102da209-5f5c9adc
+% LTXE-SLIDE-TITLE:		Replaced JumpURL features with hooks (1)
+% LTXE-SLIDE-REFERENCE:	Breaking-52156-ReplaceJumpUrlWithHooks.rst
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{Änderungen im System}
+	\framesubtitle{JumpUrl als System-Extension (1)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Die Erzeugung und das Handling von JumpURLs wurde aus der Frontend-Extension
+			entfernt und zur neuen System-Extension \texttt{jumpurl} verschoben
+
+		\item Hook zur Manipulation von \textbf{URLs} in der Datei \texttt{ext\_localconf.php}:
+
+			\begin{lstlisting}
+				$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['urlProcessing']['urlHandlers']
+				  ['myext_myidentifier']['handler'] = \Company\MyExt\MyUrlHandler::class;
+
+				// Die Klasse muss das UrlHandlerInterface implementieren
+				class MyUrlHandler implements \TYPO3\CMS\Frontend\Http\UrlHandlerInterface {
+				  ...
+				}
+			\end{lstlisting}
+
+	\end{itemize}
+
+	\breakingchange
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		ecb8fef3-69b86a17-02da2109-9adc5f5c
+% LTXE-SLIDE-TITLE:		Replaced JumpURL features with hooks (2)
+% LTXE-SLIDE-REFERENCE:	Breaking-52156-ReplaceJumpUrlWithHooks.rst
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{Änderungen im System}
+	\framesubtitle{JumpUrl als System-Extension (2)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Handling von \textbf{Links} in der Datei \texttt{ext\_localconf.php}:
+			\normalsize
+
+			\begin{lstlisting}
+				$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['urlProcessing']['urlProcessors']
+				  ['myext_myidentifier']['processor'] = \Company\MyExt\MyUrlProcessor::class;
+
+				// Die Klasse muss das UrlProcessorInterface implementieren
+				class MyUrlProcessor implements \TYPO3\CMS\Frontend\Http\UrlProcessorInterface {
+				  ...
+				}
+			\end{lstlisting}
+
+	\end{itemize}
+
+	\breakingchange
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		08a70f0f-528daf11-ee485c29-d9707f25
+% LTXE-SLIDE-TITLE:		Kommandozeilenaufruf (CLI)
+% LTXE-SLIDE-REFERENCE:	Feature-67056-AddOptionToDisableMoveButtonsTCAGroupType.rst
+% LTXE-SLIDE-REFERENCE:	Feature-67875-OverrideCategoryRegistryEntry.rst
+% LTXE-SLIDE-REFERENCE:	Feature-68804-ColoredOutputForCLI-relevantErrorMessages.rst
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{Änderungen im System}
+	\framesubtitle{Kommandozeilenaufruf (CLI)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Sollte es beim Aufruf von \texttt{typo3/cli\_dispatch.phpsh} zu Fehlern kommen,
+			so werden diese farbig dargestellt
+
+		\item CommandController können nun auch in Unterordnern liegen
+
+		\item Beispiel:\newline
+
+			Controller in Datei:\newline
+			\smaller\texttt{my\_ext/Classes/Command/Hello/WorldCommandController.php}\normalsize\newline
+			...kann im CLI wie folgt aufgerufen werden:\newline
+			\smaller\texttt{typo3/cli\_dispatch.sh extbase my\_ext:hello:world <arguments>}\normalsize
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		a708daf1-e48f525c-7010fe7f-2529d9e4
+% LTXE-SLIDE-TITLE:		Diverse Änderungen (1)
+% LTXE-SLIDE-REFERENCE:	Feature-68804-ColoredOutputForCLI-relevantErrorMessages.rst
+% LTXE-SLIDE-REFERENCE:	Feature-69512-SupportTyposcriptFilesAsTextFileType.rst
+% LTXE-SLIDE-REFERENCE:	Feature-69543-IntroducedGLOBALSTYPO3_CONF_VARSSYSmediafile_ext.rst
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{Änderungen im System}
+	\framesubtitle{Diverse Änderungen (1)}
+
+	\begin{itemize}
+
+		\item Die Verschieben-Buttons beim TCA-Type \texttt{group} können
+			nun mit der TCA-Option \texttt{hideMoveIcons = TRUE} deaktiviert werden
+
+		\item Die Funktion \texttt{makeCategorizable()} kann nun überschrieben werden,
+			sofern diese vorher bereits aufgerufen wurde (z.B. für \texttt{tt\_content}).
+
+		\item Beispiel:
+
+			\begin{lstlisting}
+				\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::makeCategorizable(
+				  'css_styled_content', 'tt_content', 'categories', array(), TRUE
+				);
+			\end{lstlisting}
+
+			\small
+				Der letzte Parameter steuert das Überschreiben (hier: \texttt{TRUE}).\newline
+				Standardmäßig ist der Wert \texttt{FALSE}.
+			\normalsize
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		d52d6418-554d801f-352b85cb-54046d28
+% LTXE-SLIDE-TITLE:		Diverse Änderungen (2)
+% LTXE-SLIDE-REFERENCE:	Feature-69730-IntroduceUniqueIdGenerator.rst
+% LTXE-SLIDE-REFERENCE:	Important-68758-CommandControllersAllowedInSubfolders.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Änderungen im System}
+	\framesubtitle{Diverse Änderungen (2)}
+
+	% decrease font size for code listing
+	%\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Es gibt nun eine Funktion, um eine Unique-ID zu erzeugen
+
+			\begin{lstlisting}
+				$uniqueId = \TYPO3\CMS\Core\Utility\StringUtility::getUniqueId('Prefix');
+			\end{lstlisting}
+
+		\item Als Plaintext Dateiendung wurde \texttt{typoscript} hinzugefügt
+
+		\item Es gibt nun eine neue Konfigurations-Option, die regelt, welche Dateiendungen
+			als Media-Dateien interpretiert werden:
+
+			\begin{lstlisting}
+				$GLOBALS['TYPO3_CONF_VARS']['SYS']['mediafile_ext'] =
+				  'gif,jpg,jpeg,bmp,png,pdf,svg,ai,mov,avi';
+			\end{lstlisting}
+
+	\end{itemize}
+
+	\breakingchange
+
+\end{frame}
+
+% ------------------------------------------------------------------------------

@@ -1,0 +1,122 @@
+% ------------------------------------------------------------------------------
+% TYPO3 CMS 7.4 - What's New - Chapter "Extbase & Fluid" (German Version)
+%
+% @author	Patrick Lobacher <patrick@lobacher.de> and Michael Schams <schams.net>
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		http://typo3.org/download/release-notes/whats-new/
+% @language	German
+% ------------------------------------------------------------------------------
+% LTXE-CHAPTER-UID:		d1a9ab65-989c4bc7-f84807fd-d96febe7
+% LTXE-CHAPTER-NAME:	Extbase & Fluid
+% ------------------------------------------------------------------------------
+
+\section{Extbase \& Fluid}
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+
+	\begin{center}\huge{Kapitel 5:}\end{center}
+	\begin{center}\huge{\color{typo3darkgrey}\textbf{Extbase \& Fluid}}\end{center}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		7b7e03da-55cc30d6-8f375c39-c82ffc4f
+% LTXE-SLIDE-TITLE:		Feature #66070: Configure anchor for pagination widget
+% LTXE-SLIDE-REFERENCE:	Feature-66070-ConfigureSectionForPaginationWidget.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+	\framesubtitle{Section-Anker für Pagination Widget}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Es ist nun möglich einen Section-Anker im Pagination Widget zu verwenden
+		\item Dazu gibt es den Schlüssel \texttt{section} im Attribut \texttt{configuration}
+
+		\item Im folgenden Beispiel wird der Anker \texttt{\#archive} an jeden Widget-Link angehängt:
+
+			\begin{lstlisting}
+				<f:widget.paginate objects="{plantpestWarnings}" as="paginatedWarnings"
+				  configuration="{section: 'archive', itemsPerPage: 10, insertAbove: 0, insertBelow: 1,
+				  maximumNumberOfLinks: 10}">
+
+				   [...]
+
+				</f:widget.paginate>
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		3356cd43-6aa02ac1-54fd276d-0c509286
+% LTXE-SLIDE-TITLE:		Feature #68022: Added base date attribute to DateViewHelper
+% LTXE-SLIDE-REFERENCE:	Feature-68022-AddedBaseDateAttributeToDateViewHelper.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+	\framesubtitle{Attribut \texttt{base} für Date-ViewHelper}
+
+	% decrease font size for code listing
+	%\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Der Date-ViewHelper wurde um das optionale Attribut \texttt{base} ergänzt
+		\item Damit kann man relative Berechnungen durchführen
+		\item Wird das Datum als DateTime angegeben, wird \texttt{base} ignoriert
+		\item Erlaubte Werte: siehe \href{http://www.php.net/manual/en/datetime.formats.relative.php}{PHP Dokumentation}
+		\item Das folgende Beispiel gibt "2016" zurück, wenn das Objekt "dateObject" ein beliebiges Datum in 2017 enthält:
+
+			\begin{lstlisting}
+				<f:format.date format="Y" base="{dateObject}">-1 year</f:format.date>
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		097a17c3-6c43ed7b-3f2db1ff-35b37660
+% LTXE-SLIDE-TITLE:		Breaking #67890: Redesign FluidTemplateDataProcessorInterface to DataProcessorInterface
+% LTXE-SLIDE-REFERENCE:	Breaking-67890-RedesignFluidTemplateDataProcessorInterfaceToDataProcessorInterface.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+	\framesubtitle{\texttt{dataProcessing} bei FLUIDTEMPLATE}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Mit TYPO3 CMS 7.3 wurde die Option \texttt{dataProcessing} beim Content-Objekt \texttt{FLUIDTEMPLATE} eingeführt
+
+		\item Hierfür ändert sich das zu implementierende Interface von \texttt{FluidTemplateDataProcessorInterface} in \texttt{DataProcessorInterface} und damit auch die Methode \texttt{process()}
+
+			\begin{lstlisting}
+				public function process(
+				  ContentObjectRenderer $cObj,
+				  array $contentObjectConfiguration,
+				  array $processorConfiguration,
+				  array $processedData
+				);
+			\end{lstlisting}
+
+	\end{itemize}
+
+	\breakingchange
+
+\end{frame}
+
+% ------------------------------------------------------------------------------

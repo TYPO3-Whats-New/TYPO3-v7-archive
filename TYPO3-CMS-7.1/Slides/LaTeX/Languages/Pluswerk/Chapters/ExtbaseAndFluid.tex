@@ -1,0 +1,147 @@
+% ------------------------------------------------------------------------------
+% TYPO3 CMS 7.1 - What's New - Chapter "Extbase & Fluid" (Pluswerk Version)
+%
+% @author	Patrick Lobacher <patrick@lobacher.de>
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		http://typo3.org/download/release-notes/whats-new/
+% @language	German
+% ------------------------------------------------------------------------------
+% LTXE-CHAPTER-UID:		7b0b9a18-6df803cd-8b5e7778-87e587d9
+% LTXE-CHAPTER-NAME:	Chapter: Extbase & Fluid
+% ------------------------------------------------------------------------------
+
+\section{Extbase \& Fluid}
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+
+	\begin{center}\huge{Kapitel 4:}\end{center}
+	\begin{center}\huge{\color{typo3darkgrey}\textbf{Extbase \& Fluid}}\end{center}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		2171a8ad-23e47eea-3074ccf5-14480fc1
+% LTXE-SLIDE-TITLE:		PaginateViewHelper mit Nicht-Query-Daten
+% LTXE-SLIDE-REFERENCE:	Feature-34944-PaginateHandleNonQueryResultObjects.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+	\framesubtitle{PaginateViewHelper mit Nicht-Query-Daten}
+
+	\lstset{
+		basicstyle=\tiny\ttfamily
+	}
+
+	\begin{itemize}
+
+		\item Der Paginate-ViewHelper unterstützt nun folgende Input-Werte:
+		\begin{itemize}
+			\item QueryResultInterface
+			\item ObjectStorage
+			\item ArrayAccess
+			\item array
+		\end{itemize}
+
+		\begin{lstlisting}
+			<f:widget.paginate objects="{blogs}" as="paginatedBlogs">
+				<f:for each="{paginatedBlogs}" as="blog">
+					<h4>{blog.title}</h4>
+				</f:for>
+			</f:widget.paginate>
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		6fe9e0e9-09053753-a70dca26-8687a067
+% LTXE-SLIDE-TITLE:		ContainerViewHelper kann RequireJS Module laden
+% LTXE-SLIDE-REFERENCE:	Feature-63913-AllowRequireJsModulesForContainerViewHelper.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+	\framesubtitle{ContainerViewHelper kann RequireJS Module laden}
+
+	\lstset{
+		basicstyle=\tiny\ttfamily
+	}
+
+	\begin{itemize}
+		\item Der ContainerViewHelper kann RequireJS Module via \texttt{includeRequireJsModules} Attribut laden
+
+		\begin{lstlisting}
+			<f:be.container pageTitle="Extension Module" loadJQuery="true"
+				includeRequireJsModules="{
+					0:'TYPO3/CMS/Extension/Module',
+					1:'TYPO3/CMS/Extension/Module2',
+					2:'TYPO3/CMS/Extension/Module3',
+					3:'TYPO3/CMS/Extension/Module4'
+			}">
+		\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		44965a25-badc7693-b249474b-26e425f0
+% LTXE-SLIDE-TITLE:		PaginateViewHelper mit Nicht-Query-Daten
+% LTXE-SLIDE-REFERENCE:	Feature-56529-SupportHasInArrayObject.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+	\framesubtitle{Methode has() im Objekt-Zugriff}
+
+	\lstset{
+		basicstyle=\tiny\ttfamily
+	}
+
+	\begin{itemize}
+
+		\item Es gibt bereits die Objekt-Zugriffe:
+		\begin{itemize}
+			\item isProperty()
+			\item getProperty()
+		\end{itemize}
+		für die Verwendung in Fluid von \texttt{object.property} bzw. \texttt{object.isProperty}.
+
+		\item Nun gibt es neu \texttt{hasProperty()} - hier wird die Methode \texttt{\$object->hasProperty()} aufgerufen, wenn man in Fluid \texttt{object.hasProperty} verwendet.
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		4ff520f0-65ac1ddd-35fd5be5-1a22f4d3
+% LTXE-SLIDE-TITLE:		Diverse
+% LTXE-SLIDE-REFERENCE:	Feature-47666-AttributeMulitpleForFormUploadViewhelper.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+	\framesubtitle{Diverse}
+
+	\lstset{
+		basicstyle=\tiny\ttfamily
+	}
+
+	\begin{itemize}
+		\item Der FormUpload-ViewHelper kann nun mehrere Dateien über die Eigenschaft \texttt{multiple} aufnehmen. Für das Property-Mapping muss ein eigener TypeConverter erstellt werden
+		\begin{lstlisting}
+			<f:form.upload property="files" multiple="multiple" />
+		\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+
+
+% ------------------------------------------------------------------------------

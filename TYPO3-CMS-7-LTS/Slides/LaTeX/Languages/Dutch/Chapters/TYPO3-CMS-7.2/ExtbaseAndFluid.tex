@@ -1,0 +1,106 @@
+% ------------------------------------------------------------------------------
+% TYPO3 CMS 7.2 - What's New - Chapter "Extbase & Fluid" (English Version)
+%
+% @author	Michael Schams <schams.net>
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		http://typo3.org/download/release-notes/whats-new/
+% @language	English
+% ------------------------------------------------------------------------------
+% LTXE-CHAPTER-UID:		7895b9cc-5939ed80-62e6d9b9-bcb40d5e
+% LTXE-CHAPTER-NAME:	Chapter: Extbase & Fluid
+% ------------------------------------------------------------------------------
+
+\section{Extbase \& Fluid}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		0e845057-19915842-1aa41f4b-892e0268
+% LTXE-SLIDE-ORIGIN:	44467f9a-abe64946-3da2bf4c-5bd094eb English
+% LTXE-SLIDE-TITLE:		Introduce callouts to replace content alerts
+% LTXE-SLIDE-REFERENCE:	Feature-66077-IntroduceCalloutsToReplaceContentAlerts.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+	\framesubtitle{Callouts vs. FlashMessages}
+
+	\begin{itemize}
+
+		\item Callouts (content-info-blokken) vervangen FlashMessages op diverse plaatsen
+			in de backend om contextuele informatie af te beelden
+
+		\item Dit vereist een nieuwe Fluid ViewHelper \texttt{be.infobox}:
+
+			\begin{lstlisting}
+				<f:be.infobox title="Titel van bericht">
+				   inhoud van blok
+				</f:be.infobox>
+
+				<f:be.infobox
+				   title="Titel van bericht"
+				   message="inhoud van blok"
+				   state="-2"
+				   iconName="check"
+				   disableIcon="TRUE" />
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		d684d292-81e5b43c-7b4ae243-2c47c5ed
+% LTXE-SLIDE-ORIGIN:	b5ee213c-b04df592-d31ed084-b94e0f58 English
+% LTXE-SLIDE-TITLE:		FormatCaseViewHelper
+% LTXE-SLIDE-REFERENCE: Feature-58621-FormatCaseViewHelper.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+	\framesubtitle{format.case ViewHelper}
+
+	\begin{itemize}
+
+		\item Nieuwe ViewHelper \texttt{format.case} wijzigt het hoofdlettergebruik van teksten:
+			\begin{itemize}
+				\item \texttt{upper}: zet een tekst om naar "HOOFDLETTERS"
+				\item \texttt{lower}: zet een tekst om naar "kleine letters"
+				\item \texttt{capital}: zet een tekst om naar begin met hoofdletter
+				\item \texttt{uncapital}: zet een tekst om naar begin met kleine letter
+			\end{itemize}
+
+		\item Voorbeeld:
+
+			\begin{lstlisting}
+				// omzetten naar "EEN TEKST MET HOOFD- EN KLEINE LETTERS"
+				<f:format.case>Een TeKsT mEt HoOfD- eN kLeInE lEtTeRs</f:format.case>
+
+				// omzetten naar "EenTekst"
+				<f:format.case mode="capital">eenTekst</f:format.case>
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		53c7dd36-8dd180c2-d39ba533-dc72537f
+% LTXE-SLIDE-ORIGIN:	586287f8-fa46da57-a201e1bf-87532889 English
+% LTXE-SLIDE-TITLE:		Skip cache hash for URIs to non-cacheable actions
+% LTXE-SLIDE-REFERENCE:	Breaking-60272-SkipCacheHashForUrisToNonCacheableActions.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+	\framesubtitle{Allerlei}
+
+	\begin{itemize}
+
+		\item Parameter \texttt{cHash} wordt niet toegevoegd aan actie-URI's als de huidige
+			aanroep niet gecached is en de doelactie niet gecached kan worden
+
+	\end{itemize}
+
+\end{frame}

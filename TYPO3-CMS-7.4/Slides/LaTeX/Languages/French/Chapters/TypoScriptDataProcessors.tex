@@ -1,0 +1,436 @@
+% ------------------------------------------------------------------------------
+% TYPO3 CMS 7.4 - What's New - Chapter "TypoScript Data Processors" (French Version)
+%
+% @author	Michael Schams <schams.net>
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		http://typo3.org/download/release-notes/whats-new/
+% @language	French
+% ------------------------------------------------------------------------------
+% LTXE-CHAPTER-UID:		c12ee814-839a93b0-c35138aa-688d84fd
+% LTXE-CHAPTER-NAME:	TypoScript Data Processors
+% ------------------------------------------------------------------------------
+
+\section{TSconfig \& TypoScript~: Transformateurs}
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript~: Transformateurs}
+
+	\begin{center}\huge{Chapitre 3~:}\end{center}
+	\begin{center}\huge{\color{typo3darkgrey}\textbf{TSconfig \& TypoScript~: Transformateurs (Data Processors)}}\end{center}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		b993204c-2b42c99a-3efad9cb-367a7fdf
+% LTXE-SLIDE-ORIGIN:	093a9669-ea06d193-c4f990b9-329ebf9b English
+% LTXE-SLIDE-ORIGIN:	73029207-22e86360-370a7baa-f6abe0c8 German
+% LTXE-SLIDE-TITLE:		Feature: #67658 - Introduce DataProcessors
+% LTXE-SLIDE-REFERENCE:	Feature-67658-IntroduceDataProcessorsForSplittingValues.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Transformateurs TypoScript}
+	\framesubtitle{Introduction des transformateurs}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Les transformateurs suivants sont introduits, permettant la transformation des listes, tableaux,
+			fichiers, etc.~:
+
+			\begin{itemize}
+				\item \texttt{SplitProcessor}
+				\item \texttt{CommaSeparatedValueProcessor}
+				\item \texttt{FilesProcessor}
+				\item \texttt{GalleryProcessor}
+				\item \texttt{DatabaseQueryProcessor}
+			\end{itemize}
+
+		\item Voir~:
+			\texttt{TYPO3\textbackslash
+				CMS\textbackslash
+				Frontend\textbackslash
+				DataProcessing}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		572eacd3-04e8c1c0-c0d0c26a-3a39f7d6
+% LTXE-SLIDE-ORIGIN:	c77c07c9-47dc7fca-c98a4b9a-8582e3b3 English
+% LTXE-SLIDE-ORIGIN:	a3886ad1-c35410c2-44630a18-6a98dfa6 German
+% LTXE-SLIDE-TITLE:		Feature: #67658 - SplitProcessor
+% LTXE-SLIDE-REFERENCE:	Feature-67658-IntroduceDataProcessorsForSplittingValues.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Transformateurs TypoScript}
+	\framesubtitle{\texttt{SplitProcessor}}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Le «~SplitProcessor~» permet de convertir des valeurs délimitées en un tableau
+
+			\begin{lstlisting}
+				page.10 = FLUIDTEMPLATE
+				page.10.file = EXT:site_default/Resources/Private/Template/Default.html
+				page.10.dataProcessing.2 = TYPO3\CMS\Frontend\DataProcessing\SplitProcessor
+				page.10.dataProcessing.2 {
+				  if.isTrue.field = bodytext
+				  delimiter = ,
+				  fieldName = bodytext
+				  removeEmptyEntries = 1
+				  filterIntegers = 1
+				  filterUnique = 1
+				  as = keywords
+				}
+			\end{lstlisting}
+
+		\item Utilisation possible avec Fluid~:
+
+			\begin{lstlisting}
+				<f:for each="{keywords}" as="keyword">
+				  <li>Keyword: {keyword}</li>
+				</f:for>
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		370ebf04-c8aee209-bfabdbfa-0a385131
+% LTXE-SLIDE-ORIGIN:	7057a94e-e3bdd575-c4fd9cdf-f9690b04 English
+% LTXE-SLIDE-ORIGIN:	c2272a2c-2d27b8ce-6b172e55-30ccbe34 German
+% LTXE-SLIDE-TITLE:		Feature: #67658 - CommaSeparatedValueProcessor (1)
+% LTXE-SLIDE-REFERENCE:	Feature-67658-IntroduceDataProcessorsForSplittingValues.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Transformateurs TypoScript}
+	\framesubtitle{\texttt{CommaSeparatedValueProcessor} (1)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Le «~CommaSeparatedValueProcessor~» converti les valeurs délimitées en un tableau à deux dimensions~:
+
+			\begin{lstlisting}
+				page.10 = FLUIDTEMPLATE
+				page.10.file = EXT:site_default/Resources/Private/Template/Default.html
+				page.10.dataProcessing.4 = TYPO3\CMS\Frontend\DataProcessing\CommaSeparatedValueProcessor
+				page.10.dataProcessing.4 {
+				  if.isTrue.field = bodytext
+				  fieldName = bodytext
+				  fieldDelimiter = |
+				  fieldEnclosure =
+				  maximumColumns = 2
+				  as = table
+				}
+			\end{lstlisting}
+
+		\item Pratique pour traiter les fichiers CSV ou les jeux de données \texttt{tt\_content} de CType «~table~» par exemple
+
+			\vspace{0.2cm}
+			\small
+				Voir un exemple d'usage avec Fluid dans la diapositive suivante
+			\normalsize
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		679df20f-34e5791d-b62616ed-157bd93c
+% LTXE-SLIDE-ORIGIN:	a3133675-b3a6a744-59c470b3-6a5348c7 English
+% LTXE-SLIDE-ORIGIN:	be3430cc-6b172a2c-b8ce2d27-2e55c227 German
+% LTXE-SLIDE-TITLE:		Feature: #67658 - CommaSeparatedValueProcessor (2)
+% LTXE-SLIDE-REFERENCE:	Feature-67658-IntroduceDataProcessorsForSplittingValues.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Transformateurs TypoScript}
+	\framesubtitle{\texttt{CommaSeparatedValueProcessor} (2)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Utilisation possible avec Fluid~:
+
+			\begin{lstlisting}
+				<table>
+				  <f:for each="{table}" as="columns">
+				    <tr>
+				      <f:for each="{columns}" as="column">
+				        <td>
+				          {column}
+				        </td>
+				      </f:for>
+				    <tr>
+				  </f:for>
+				</table>
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		ea31f119-c44fa671-16635dd2-8bbe031e
+% LTXE-SLIDE-ORIGIN:	c5bbdde9-1ab95545-65d21bce-332c2d11 English
+% LTXE-SLIDE-ORIGIN:	09e5e821-ffca91f9-0d4f3bac-85bfc17b German
+% LTXE-SLIDE-TITLE:		Feature: #67662 - DataProcessor for files (1)
+% LTXE-SLIDE-REFERENCE:	Feature-67662-DataProcessorForFiles.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Transformateurs TypoScript}
+	\framesubtitle{\texttt{FilesProcessor} (1)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Le «~FilesProcessor~» résout les références de fichiers, les fichiers, ou les fichiers d'un dossier
+			ou d'une collection utilisés pour la sortie frontend
+
+			\begin{lstlisting}
+				tt_content.image.20 = FLUIDTEMPLATE
+				tt_content.image.20 {
+				  file = EXT:myextension/Resources/Private/Templates/ContentObjects/Image.html
+				  dataProcessing.10 = TYPO3\CMS\Frontend\DataProcessing\FilesProcessor
+				  dataProcessing.10 {
+				    references.fieldName = image
+				    references.table = tt_content
+				    files = 21,42
+				    collections = 13,14
+				    folders = 1:introduction/images/,1:introduction/posters/
+				    folders.recursive = 1
+				    sorting = description
+				    sorting.direction = descending
+				    as = myfiles
+				  }
+				}
+			\end{lstlisting}
+
+			\small
+				Voir un exemple d'usage avec Fluid dans la diapositive suivante
+			\normalsize
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		04d7b9fa-52b33808-02a11d32-28142603
+% LTXE-SLIDE-ORIGIN:	aebad6d6-cf790b17-d385fe19-b48a6016 English
+% LTXE-SLIDE-ORIGIN:	ffca91f9-e82109e5-0d4f3bac-85bfc17b German
+% LTXE-SLIDE-TITLE:		Feature: #67662 - DataProcessor for files (2)
+% LTXE-SLIDE-REFERENCE:	Feature-67662-DataProcessorForFiles.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Transformateurs TypoScript}
+	\framesubtitle{\texttt{FilesProcessor} (2)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Utilisation possible avec Fluid~:
+
+			\begin{lstlisting}
+				<ul>
+				  <f:for each="{myfiles}" as="file">
+				    <li>
+				      <a href="{file.publicUrl}">{file.name}</a>
+				    </li>
+				  </f:for>
+				</ul>
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		85cbea47-30a96337-ee5ae8f2-99855e13
+% LTXE-SLIDE-ORIGIN:	cb6f86cd-767463a3-fff3c768-a6b6755b English
+% LTXE-SLIDE-ORIGIN:	4e375ebd-6c1cb855-d9f32eac-bfb1754e German
+% LTXE-SLIDE-TITLE:		Feature: #67663 - Introduce DataProcessor for media galleries
+% LTXE-SLIDE-REFERENCE:	Feature-67663-IntroduceDataProcessorForMediaGalleries.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Transformateurs TypoScript}
+	\framesubtitle{The \texttt{GalleryProcessor} (1)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		% Note for translators: make sure, the following bullet point does not exceed ONE line.
+		% If it wraps and uses two lines, the code example below does not fit on the page.
+		% If not avoidable, split the content and create a second slide for the code.
+
+		\item Le «~GalleryProcessor~» calcule les tailles maximales d'un ensemble de
+			fichiers ainsi que la disposition pour la construction d'une galerie
+
+			\small
+				Voir un exemple dans la diapositive suivante
+			\normalsize
+
+	\end{itemize}
+
+\end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{Transformateurs TypoScript}
+	\framesubtitle{\texttt{GalleryProcessor} (2)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Exemple de TypoScript~:
+
+			\begin{lstlisting}
+				tt_content.text_media.20 = FLUIDTEMPLATE
+				tt_content.text_media.20 {
+				  file = EXT:myextension/Resources/Private/Templates/ContentObjects/Image.html
+				  dataProcessing {
+				    10 = TYPO3\CMS\Frontend\DataProcessing\FilesProcessor
+				    20 = TYPO3\CMS\Frontend\DataProcessing\GalleryProcessor
+				    20 {
+				      filesProcessedDataKey = files
+				      mediaOrientation.field = imageorient
+				      numberOfColumns.field = imagecols
+				      equalMediaHeight.field = imageheight
+				      equalMediaWidth.field = imagewidth
+				      maxGalleryWidth = 1000
+				      maxGalleryWidthInText = 1000
+				      columnSpacing = 0
+				      borderEnabled.field = imageborder
+				      borderWidth = 0
+				      borderPadding = 10
+				      as = gallery
+				    }
+				  }
+				}
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		847985dc-963d7243-0be287f9-83485d4c
+% LTXE-SLIDE-ORIGIN:	61607e79-8b231b33-2b9cc07d-ada762f3 English
+% LTXE-SLIDE-ORIGIN:	773e4cfa-a49bd28b-fe31681a-eae68427 German
+% LTXE-SLIDE-TITLE:		Feature: #68094 - Database Query DataProcessor
+% LTXE-SLIDE-REFERENCE:	Feature-68094-DatabaseQueryDataProcessor.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Transformateurs TypoScript}
+	\framesubtitle{\texttt{DatabaseQueryProcessor} (1)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Le «~DatabaseQueryProcessor~» est utilisable pour récupérer des données en base
+
+			\begin{lstlisting}
+				tt_content.mycontent.20 = FLUIDTEMPLATE
+				tt_content.mycontent.20 {
+				  file = EXT:myextension/Resources/Private/Templates/ContentObjects/MyContent.html
+				  dataProcessing.10 = TYPO3\CMS\Frontend\DataProcessing\DatabaseQueryProcessor
+				  dataProcessing.10 {
+				    if.isTrue.field = records
+				    table = tt_address
+				    colPos = 1
+				    pidInList = 13,14
+				    as = myrecords
+				    dataProcessing {
+				      10 = TYPO3\CMS\Frontend\DataProcessing\FilesProcessor
+				      10 {
+				        references.fieldName = image
+				      }
+				    }
+				  }
+				}
+			\end{lstlisting}
+
+			% Note for translators: make sure, the following sentence appears on the slide.
+			% If the bullet point above wraps and uses two lines, the code example becomes too
+			% long and pushes the sentence off the slide. If not avoidable, simply remove the
+			% sentence (our readers will realize that there is a code example on the next slide).
+
+			\vspace{-0.2cm}
+			\small
+				Voir un exemple d'usage avec Fluid dans la diapositive suivante
+			\normalsize
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		3e19652a-a76f842a-8ad73d06-4269bb6f
+% LTXE-SLIDE-ORIGIN:	ee266111-2964afae-9cfcfd3f-3264b90b English
+% LTXE-SLIDE-ORIGIN:	bd28ba49-e42ae687-68fe311a-cfa773e4 German
+% LTXE-SLIDE-TITLE:		Feature: #68094 - Database Query DataProcessor
+% LTXE-SLIDE-REFERENCE:	Feature-68094-DatabaseQueryDataProcessor.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Transformateurs TypoScript}
+	\framesubtitle{The \texttt{DatabaseQueryProcessor} (2)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Utilisation possible avec Fluid~:
+
+			\begin{lstlisting}
+				<ul>
+				  <f:for each="{myrecords}" as="record">
+				    <li>
+				      <f:image image="{record.files.0}" ></f:image>
+				      <a href="{record.data.www}">{record.data.first_name} {record.data.last_name}</a>
+				    </li>
+				  </f:for>
+				</ul>
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------

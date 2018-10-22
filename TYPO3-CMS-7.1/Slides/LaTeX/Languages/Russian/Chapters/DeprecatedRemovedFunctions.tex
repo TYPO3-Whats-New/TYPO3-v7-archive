@@ -1,0 +1,708 @@
+% ------------------------------------------------------------------------------
+% TYPO3 CMS 7.1 - What's New - Chapter "Deprecated Functions" (Russian Version)
+%
+% @author		Michael Schams <schams.net>
+% @translation	Andrey Aksenov <aksenovaa@bk.ru>
+% @license		Creative Commons BY-NC-SA 3.0
+% @link			http://typo3.org/download/release-notes/whats-new/
+% @language		Russian
+% ------------------------------------------------------------------------------
+% LTXE-CHAPTER-UID:		08661c9e-3f5aee5c-0b8f8af6-9681f2f1
+% LTXE-CHAPTER-NAME:	Deprecated Functions
+% ------------------------------------------------------------------------------
+
+\section{Устаревшие/удаленные функции}
+\begin{frame}[fragile]
+	\frametitle{Устаревшие/удаленные функции}
+
+	\begin{center}\huge{Глава 5:}\end{center}
+	\begin{center}\huge{\color{typo3darkgrey}\textbf{Устаревшие/удаленные функции}}\end{center}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		9e4eab89-37a7257f-0f7571ae-1cef2853
+% LTXE-SLIDE-ORIGIN:	a7906163-03ca76ca-44329119-f52c3e0b English
+% LTXE-SLIDE-TITLE:		$TYPO3_CONF_VARS[SYS][compat_version]
+% LTXE-SLIDE-REFERENCE:	Breaking-24900-CompatVersion-Setting-Removed.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Устаревшие/удаленные функции}
+	\framesubtitle{\$TYPO3\_CONF\_VARS[SYS][compat\_version]}
+
+	\begin{itemize}
+
+		\item Был удалён параметр \texttt{\$TYPO3\_CONF\_VARS[SYS][compat\_version]} (который обновлялся при
+			обновлении мастером в Install Tool)
+
+		\item Все проверки \texttt{GeneralUtility::compat\_version} теперь производятся в
+			константе \texttt{TYPO3\_branch}
+
+			\vspace{0.2cm}
+
+			\begingroup
+				\color{red}
+					Замечание: условия TypoScript, проверяющие страрую \texttt{compat\_version}
+					теперь имеют другое поведение!
+			\endgroup
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		e938506a-3bb91f39-60b86aaf-d97b941b
+% LTXE-SLIDE-ORIGIN:	9eaf5bf4-b7582d54-4938c777-c1b6568b English
+% LTXE-SLIDE-TITLE:		TypoScript inline styles from blockquote tag removed
+% LTXE-SLIDE-REFERENCE: Breaking-44879-CSSStyledContentTypoScriptBlockQuoteInlineStylesRemoved.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Устаревшие/удаленные функции}
+	\framesubtitle{Встроенные стили тега \texttt{<blockquote>}}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Формирование CSS Styled Content тегов \texttt{<blockquote>} через \texttt{lib.parseFunc\_RTE} TypoScript
+		\item Следующие строки удалены без замены:
+
+			\begin{lstlisting}
+				lib.parseFunc_RTE.externalBlocks.blockquote.callRecursive.tagStdWrap.HTMLparser = 1
+				lib.parseFunc_RTE.externalBlocks.blockquote.callRecursive.tagStdWrap.HTMLparser.tags.blockquote.overrideAttribs = style="margin-bottom:0;margin-top:0;"
+			\end{lstlisting}
+
+		\item В результате удалены встроенные стили\newline
+			"\texttt{margin-bottom:0;margin-top:0;}"
+
+			\vspace{0.2cm}
+
+			\begingroup
+				\color{red}
+					Замечание: возможно изменение стилизации тегов \texttt{<blockquote>} после
+					обновления на TYPO3 CMS 7.1.
+			\endgroup
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		905bc5df-615c5044-bb0abddf-df83d217
+% LTXE-SLIDE-ORIGIN:	e8a3322b-6849c7a5-00d1d536-4969a34d English
+% LTXE-SLIDE-TITLE:		Field disable_autocreate removed from workspaces
+% LTXE-SLIDE-REFERENCE:	Breaking-62415-DisableAutoCreateRemoved.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Устаревшие/удаленные функции}
+	\framesubtitle{Рабочие области: поле \texttt{disable\_autocreate}}
+
+	\begin{itemize}
+		\item Удалено устаревшее поле \texttt{disable\_autocreate} из EXT:workspaces
+		\item Если расширение TYPO3 использует это поле, произойдёт ошибка SQL
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		3912945e-e81f1e0c-6bf44b24-1a270567
+% LTXE-SLIDE-ORIGIN:	b285495c-1da2e51b-c05e599a-cf578879 English
+% LTXE-SLIDE-TITLE:		include_once Funktionen in ModulFunktionen enfernt
+% LTXE-SLIDE-REFERENCE:	Breaking-63464-IncludeOnceArraysRemoved.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Устаревшие/удаленные функции}
+	\framesubtitle{Функционал \texttt{include\_once}}
+
+	\begin{itemize}
+
+		\item Удалена возможность подключения файлов PHP внутри модуля функций (например, модуля Инфо)
+			через массив \texttt{include\_once}
+
+		\item Это применимо к следующим модулям:
+
+			\begin{itemize}
+				\item \texttt{Веб => Страница}
+				\item \texttt{Веб => Страница - Мастер нового содержимого}
+				\item \texttt{Веб => Функции}
+				\item \texttt{Веб => Инфо}
+				\item \texttt{Веб => Шаблон}
+				\item \texttt{Веб => Корзина}
+				\item \texttt{Пользователь => Центр задач}
+				\item \texttt{Система => Планировщик}
+			\end{itemize}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		fc37c65e-8030ab17-f6215f42-2a86a3a7
+% LTXE-SLIDE-ORIGIN:	057bded6-892aeffc-76994169-8f50fded English
+% LTXE-SLIDE-TITLE:		TS setting config.meaningfulTempFilePrefix removed
+% LTXE-SLIDE-REFERENCE:	Breaking-62886-RemoveMeaningfulTempFilePrefix.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Устаревшие/удаленные функции}
+	\framesubtitle{Настройка \texttt{config.meaningfulTempFilePrefix}}
+
+	\begin{itemize}
+
+		\item В TYPO3 CMS < 7.1, названия файлов изображений формируемы через GIFBUILDER могли быть
+			затронуты параметром TypoScript:\newline
+			\texttt{config.meaningfulTempFilePrefix}\newline
+			\small
+				(GIFBUILDER использует в качестве файла только значение хеша)
+			\normalsize
+
+		\item Этот параметр удалён (к названиям файлов в директории \texttt{typo3temp/GB/}
+			автоматически в начале добавляются названия оригинальных файлов)
+
+	\end{itemize}
+
+\end{frame}
+
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		3af64cd6-3f42e91e-d4f5ebaf-ca3e9d3b
+% LTXE-SLIDE-ORIGIN:	269ea7d1-36650454-409500b5-b0c43306 English
+% LTXE-SLIDE-TITLE:		Removed files
+% LTXE-SLIDE-REFERENCE:	Breaking-63296-Removed-Files.rst
+
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Устаревшие/удаленные функции}
+	\framesubtitle{Удалённые файлы}
+
+	\begin{itemize}
+		\item Удалены следующие \textbf{файлы}:
+
+			\begin{itemize}
+				\item \texttt{typo3/file\_edit.php}
+				\item \texttt{typo3/file\_newfolder.php}
+				\item \texttt{typo3/file\_rename.php}
+				\item \texttt{typo3/file\_upload.php}
+				\item \texttt{typo3/show\_rechis.php}
+				\item \texttt{typo3/listframe\_loader.php}
+			\end{itemize}
+
+		\item Их функции перешли к внутренним модулям, например,
+			\texttt{typo3/file\_edit.php} к \texttt{BackendUtility::getModuleUrl('file\_edit');}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		cf7707b3-e38a00c7-c844dd7f-0cbe8bb8
+% LTXE-SLIDE-ORIGIN:	cb8c61bb-fdf7dd11-ee8432b4-5f1380aa English
+% LTXE-SLIDE-TITLE:		Removed functions
+% LTXE-SLIDE-REFERENCE:	Breaking-62925-RemoveExtJsDateTimePicker.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Устаревшие/удаленные функции}
+	\framesubtitle{ExtJS DateTimePicker}
+
+	\begin{itemize}
+
+		\item Компонент ExtJS \texttt{Ext.ux.DateTimePicker} был удалён и заменён на
+			альтернативу из Twitter Bootstrap (смотрите главу "BackendUI")
+
+		\item Затронуты системные расширения TYPO3 CMS вроде \texttt{EXT:belog} или
+			\texttt{EXT:scheduler}
+
+			\vspace{0.2cm}
+
+			\begingroup
+				\color{red}
+					Замечание: расширения, использующие устаревший функционал
+					\texttt{Ext.ux.DateTimePicker} возможно не будут работать!
+			\endgroup
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		889918fd-0e149199-61584adc-383d0250
+% LTXE-SLIDE-ORIGIN:	b8a91683-24f77c38-d4428269-4ef4acb7 English
+% LTXE-SLIDE-TITLE:		Access List Render Mode
+% LTXE-SLIDE-REFERENCE:	Breaking-64226-OptionAccessListRenderModeRemoved.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Устаревшие/удаленные функции}
+	\framesubtitle{Режим вывода Списка доступа}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Удалена следующая \textbf{переменная}:
+			\small\texttt{\$GLOBALS[TYPO3\_CONF\_VARS][BE][accessListRenderMode]}\normalsize
+
+		\item В соответствующе поля в таблицах TCA \texttt{be\_users} и \texttt{be\_groups}
+			установлены значения по умолчанию "\texttt{checkbox}"
+
+		\item Это можно изменить в файле \texttt{typo3conf/extTables.php}:
+
+	\end{itemize}
+
+	\begin{lstlisting}
+		$GLOBALS['TCA']['be_users']['columns']['file_permissions']['config']['renderMode'] = 'singlebox';
+		$GLOBALS['TCA']['be_users']['columns']['userMods']['config']['renderMode'] = 'singlebox';
+
+		$GLOBALS['TCA']['be_groups']['columns']['file_permissions']['config']['renderMode'] = 'singlebox';
+		$GLOBALS['TCA']['be_groups']['columns']['pagetypes_select']['config']['renderMode'] = 'singlebox';
+		$GLOBALS['TCA']['be_groups']['columns']['tables_select']['config']['renderMode'] = 'singlebox';
+		$GLOBALS['TCA']['be_groups']['columns']['tables_modify']['config']['renderMode'] = 'singlebox';
+		$GLOBALS['TCA']['be_groups']['columns']['non_exclude_fields']['config']['renderMode'] = 'singlebox';
+		$GLOBALS['TCA']['be_groups']['columns']['userMods']['config']['renderMode'] = 'singlebox';
+	\end{lstlisting}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		e7d36d14-8c033f18-04a0a3ed-d93cbb01
+% LTXE-SLIDE-ORIGIN:	bb2e2f0a-68ce6d81-2b25db74-b66e748e English
+% LTXE-SLIDE-TITLE:		Content Element mailform moved to legacy extension
+% LTXE-SLIDE-REFERENCE:	Breaking-64668-MailformMovedToLegacyExtension.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Устаревшие/удаленные функции}
+	\framesubtitle{Элемент содержимого "Mailform"}
+
+	\begin{itemize}
+
+		\item Функционал почтовой формы, дающая cObject \texttt{FORM}, был
+			удалён из ядра
+		
+		\item Но при необходимости всё ещё доступен в расширении \texttt{EXT:compatibility6}
+
+		\item Следующие параметры были отмечены как устаревшие:
+
+			\begin{lstlisting}
+				$TYPO3_CONF_VARS][FE][secureFormmail]
+				$TYPO3_CONF_VARS][FE][strictFormmail]
+				$TYPO3_CONF_VARS][FE][formmailMaxAttachmentSize]
+			\end{lstlisting}
+
+		\item Удалены следующие методы контроллера TypoScriptFrontendController:
+
+			\begin{lstlisting}
+				protected checkDataSubmission()
+				protected sendFormmail()
+				public extractRecipientCopy()
+				public codeString()
+				protected roundTripCryptString()
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		a039869f-584e7169-84e7cd7d-4798cead
+% LTXE-SLIDE-ORIGIN:	6e5b32a6-aa44f3b5-7048bbac-14af1c44 English
+% LTXE-SLIDE-TITLE:		Functionality changed (1)
+% LTXE-SLIDE-REFERENCE:	Breaking-61510-IndexedSearch.rst
+% LTXE-SLIDE-REFERENCE: Breaking-63310-Wizard-Modules-Moved.rst
+% LTXE-SLIDE-REFERENCE: Breaking-63431-BackendToolbarRefactored.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Устаревшие/удаленные функции}
+	\framesubtitle{Изменённый функционал (1)}
+
+	\begin{itemize}
+
+		\item \texttt{EXT:indexed\_search} активируется стразу при установке.
+			В итоге соответствующие параметры TypoScript \small\texttt{config.index\_enable = 1}\normalsize
+			и \small\texttt{config.index\_externals = 1}\normalsize также по умолчанию активны
+		
+		\item TSconfig \small\texttt{web\_func.menu.wiz}\normalsize\space
+			изменён на \small\texttt{web\_func.menu.functions}\normalsize
+
+		\item Расширения, интегрированные в верхний правый угол панели инструментов, должны реализовывать новый интерфейс:
+			\small
+				\texttt{TYPO3\textbackslash
+					CMS\textbackslash
+					Backend\textbackslash
+					Toolbar\textbackslash
+					ToolbarItemInterface}
+			\normalsize\newline
+			и их необходимо регистрировать в:
+			\small
+				\texttt{\$GLOBALS['TYPO3\_CONF\_VARS']['BE']['toolbarItems']}
+			\normalsize
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		aaab7a1d-aaec977a-891ceb58-24a0d246
+% LTXE-SLIDE-ORIGIN:	d8be83ed-9b8abcba-ac1d66e9-f9558e0b English
+% LTXE-SLIDE-TITLE:		Functionality changed (2)
+% LTXE-SLIDE-REFERENCE:	Breaking-64059-Rewritten-JavaScript-Tree-Components.rst
+% LTXE-SLIDE-REFERENCE: Breaking-64070-GlobalWebmountsRemoved.rst
+% LTXE-SLIDE-REFERENCE: Breaking-64102-MoveT3TableAndT3ButtonToBootstrap.rst
+% LTXE-SLIDE-REFERENCE: Breaking-64143-FlagFilesMoved.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Устаревшие/удаленные функции}
+	\framesubtitle{Изменённый функционал (2)}
+
+	\begin{itemize}
+
+		\item File
+			\small\texttt{typo3/js/tree.js}\normalsize\space
+			было заменено на
+			\small\texttt{EXT:backend/Resources/Public/JavaScript/LegacyTree.js}\normalsize\newline
+			(которое работает на базе jQuery)
+
+		\item Variable
+			\small\texttt{\$GLOBALS['WEBMOUNTS']}\normalsize\space
+			было заменено на
+			\small\texttt{\$GLOBALS['BE\_USER']->returnWebmounts()}\normalsize
+
+		\item Поддержка
+			\small\texttt{.t3-table}\normalsize\space
+			и
+			\small\texttt{.t3-button}\normalsize\space
+			была удалена\newline
+			\small
+				(Теперь визуальное представление реализуют классы Twitter Bootstrap)
+			\normalsize
+
+		\item Флажки стран (изображения PNG) были перемещены с
+			\small\texttt{typo3/gfx/flags/}\normalsize
+			и
+			\small\texttt{typo3/sysext/t3skin/images/flags/}\normalsize\newline
+			в: \small\texttt{typo3/sysext/core/Resources/Public/Icons/flags/}\normalsize
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		25d00c41-44a6da2d-8522f0a8-294dc1fc
+% LTXE-SLIDE-ORIGIN:	0383b982-dc073c93-13c67be6-085ba022 English
+% LTXE-SLIDE-TITLE:		Functionality changed (3)
+% LTXE-SLIDE-REFERENCE:	Breaking-64637-CSSStyledContentLegacyTypoScriptRemoved.rst
+% LTXE-SLIDE-REFERENCE: Breaking-64639-RemovedContentObjects.rst
+% LTXE-SLIDE-REFERENCE: Breaking-64671-ContentObjectImgTextMovedToLegacyExtension.rst
+% LTXE-SLIDE-REFERENCE: Breaking-64696-MoveSearchCTypeToLegacyExtension.rst
+% LTXE-SLIDE-REFERENCE: Breaking-64762-FormEngineWizards.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Устаревшие/удаленные функции}
+	\framesubtitle{Изменённый функционал (3)}
+
+	\begin{itemize}
+		\item Шаблоны CSS Styled Content TypoScript для TYPO3 CMS 4.5 - 6.1 были удалены
+
+		\item Следующие TypoScript cObjects были перемещены в соответствующее расширение
+			\texttt{EXT:compatibility6}:
+
+			\vspace{0.2cm}
+
+			\small
+				\texttt{SEARCHRESULTS} \tabto{3cm}\texttt{COLUMNS} \tabto{6cm}\texttt{OTABLE} \tabto{9cm}\texttt{CLEARGIF}\newline
+				\texttt{IMGTEXT}       \tabto{3cm}\texttt{CTABLE}  \tabto{6cm}\texttt{HRULER}
+			\normalsize
+
+		\item Элемент содержимого \texttt{search} был перемещён в соответствующее расширение \texttt{EXT:compatibility6}
+
+		\item Были удалены следующие параметры мастера TCA:
+
+			\vspace{0.2cm}
+
+			\small
+				\texttt{\_PADDING} \tabto{3cm}\texttt{\_VALIGN} \tabto{6cm}\texttt{\_DISTANCE}
+			\normalsize
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		30152b7f-13dfe292-67073b9d-a612494f
+% LTXE-SLIDE-ORIGIN:	4c02c89b-ed4b06b5-45e0505d-9c6a521c English
+% LTXE-SLIDE-TITLE:		TypoScript option andWhere is deprecated
+% LTXE-SLIDE-REFERENCE:	Deprecation-25112-andWhere.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Устаревшие/удаленные функции}
+	\framesubtitle{Параметр TypoScript \texttt{andWhere}}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item Параметр TypoScript \texttt{andWhere} был указан как устаревший
+		\item Интеграторы вместо этого должны использовать свойства \texttt{where} и \texttt{markers}:
+	\end{itemize}
+
+	\begin{columns}[T]
+		\begin{column}{.6\textwidth}
+
+			\lstset{xleftmargin=1cm}
+
+			\begin{lstlisting}
+				page.30 = CONTENT
+				page.30 {
+				  table = tt_content
+				  select {
+				    pidInList = this
+				    orderBy = sorting
+				    where {
+				      dataWrap = sorting>{field:sorting}
+				    }
+				  }
+				}
+			\end{lstlisting}
+		\end{column}
+		\begin{column}{.4\textwidth}
+			\begin{lstlisting}
+				page.60 = CONTENT
+				page.60 {
+				  table = tt_content
+				  select {
+				    pidInList = 73
+				    where = header != ###whatever###
+				    orderBy = ###sortfield###
+				    markers {
+				      whatever.data = GP:first
+				      sortfield.value = sor
+				      sortfield.wrap = |ting
+				    }
+				  }
+				}
+			\end{lstlisting}
+		\end{column}
+	\end{columns}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		50a42901-7f29a666-b8147dfa-a6e080ce
+% LTXE-SLIDE-ORIGIN:	d66b3c88-2ab353d9-ad310291-76264c23 English
+% LTXE-SLIDE-TITLE:		Deprecated entry points
+% LTXE-SLIDE-REFERENCE:	Deprecation-64922-DeprecatedEntryPoints.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Устаревшие/удаленные функции}
+	\framesubtitle{Устаревшие точки входа}
+
+	\begin{itemize}
+		\item Следующие точки входа были отмечены как устаревшие:
+
+			\begin{itemize}
+				\item \texttt{typo3/tce\_file.php}
+				\item \texttt{typo3/move\_el.php}
+				\item \texttt{typo3/tce\_db.php}
+				\item \texttt{typo3/login\_frameset.php}
+				\item \texttt{typo3/sysext/cms/layout/db\_new\_content\_el.php}
+				\item \texttt{typo3/sysext/cms/layout/db\_layout.php}
+			\end{itemize}
+
+		\item Вмето них используйте следующее:
+			\begin{lstlisting}
+				\TYPO3\CMS\Backend\Utility\BackendUtility::getModuleUrl('<parameter>')
+			\end{lstlisting}
+
+			Где \textit{<parameter>} должен быть:\newline
+				\small
+					\texttt{tce\_file}, \texttt{move\_element}, \texttt{tce\_db},
+					\texttt{login\_frameset}, \texttt{new\_content\_element}, \texttt{web\_layout}
+				\normalsize
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		fb5baf19-d373cc50-5e2f45f1-ef9015af
+% LTXE-SLIDE-ORIGIN:	8e94d179-3ef030f6-fe527544-736c9afe English
+% LTXE-SLIDE-TITLE:		Miscellaneous (1)
+% LTXE-SLIDE-REFERENCE:	Deprecation-24387-Xhtml2.rst
+% LTXE-SLIDE-REFERENCE: Deprecation-46523-BackendUtilityImplodeTSParams.rst
+% LTXE-SLIDE-REFERENCE: Deprecation-46770-LocalImageProcessorGraphicalFunctions.rst
+% LTXE-SLIDE-REFERENCE: Deprecation-49247-textStyleTableStyleAddParams.rst
+% LTXE-SLIDE-REFERENCE: Deprecation-60559-MakeLoginBoxImage.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Устаревшие/удаленные функции}
+	\framesubtitle{Разное (1)}
+
+	\begin{itemize}
+		\item Параметр TypoScript \texttt{config.xhtmlDoctype = xhtml\_2} был отмечен для удаления в TYPO3 CMS 8
+
+		\item Отмечены устаревшими следующие методы:
+			\begin{lstlisting}
+				TYPO3\CMS\Backend\Utility\BackendUtility::implodeTSParams()
+				TYPO3\CMS\Backend\Controller::makeLoginBoxImage()
+			\end{lstlisting}
+
+		\item Отмечен устаревшим следующий метод:
+			\begin{lstlisting}
+				LocalImageProcessor::getTemporaryImageWithText()
+			\end{lstlisting}
+
+			...и заменён на:
+
+			\begin{lstlisting}
+				TYPO3\CMS\Core\Imaging\GraphicalFunctions::getTemporaryImageWithText()
+			\end{lstlisting}
+
+		\item Отмечены устаревшими свойства StdWrap \texttt{textStyle} и \texttt{tableStyle}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		b5b72fb1-5d878d5d-758e6bc1-601b1f4e
+% LTXE-SLIDE-ORIGIN:	bd8701be-4fc7a22b-7f447304-fc512154 English
+% LTXE-SLIDE-TITLE:		Miscellaneous (2)
+% LTXE-SLIDE-REFERENCE:	Deprecation-61605-ChangeNamingOfIncludeJSlibs.rst
+% LTXE-SLIDE-REFERENCE: Deprecation-62329-DocumentTemplate-table.rst
+% LTXE-SLIDE-REFERENCE: Deprecation-62855-XHTMLCleaningMovedToLegacyExtension.rst
+% LTXE-SLIDE-REFERENCE: Deprecation-63522-ClientRelatedConditionDevice.rst 
+% LTXE-SLIDE-REFERENCE: Deprecation-64109-Hook-softRefParserGL.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Устаревшие/удаленные функции}
+	\framesubtitle{Разное (2)}
+
+	\begin{itemize}
+		\item Параметр TypoScript \texttt{page.includeJSlibs} был переименован в\newline
+			\texttt{page.includeJSLibs} ("L" в верхнем регистре), а старый параметр был отмечен как устаревший
+
+		\item Условие TypoScript \texttt{device} было отмечено как устаревшее
+
+		\item Метод \texttt{DocumentTable::table()} был отмечен как устаревший\newline
+			\small(developers should use Fluid for this)\normalsize
+
+		\item Был отмечен как устаревший следующий метод:
+			\begin{lstlisting}
+				TYPO3\CMS\Frontend\Controller\
+				    TypoScriptFrontendController::doXHTML_cleaning()
+			\end{lstlisting}
+			...наряду с параметром TypoScript
+			\small
+				\texttt{config.xhtml\_cleaning}
+			\normalsize
+
+		\item Была отмечена устаревшей следующая уловка/hook:
+			\begin{lstlisting}
+				$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['GLOBAL']['softRefParser_GL']
+			\end{lstlisting}
+ 
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		5e6a7909-7d7ecf1c-3e4d54bb-1b8b7b07
+% LTXE-SLIDE-ORIGIN:	46d56df5-2b715754-2d50369c-6ac99b43 English
+% LTXE-SLIDE-TITLE:		Miscellaneous (3)
+% LTXE-SLIDE-REFERENCE:	Deprecation-64134-TypoScriptTemplateObjectBrowserModuleFunctionController-verify_TSobjects.rst
+% LTXE-SLIDE-REFERENCE: Deprecation-64147-ConstantEditorFunctions.rst
+% LTXE-SLIDE-REFERENCE: Deprecation-64388-ContentObjectMethods.rst
+% LTXE-SLIDE-REFERENCE: Deprecation-63847-FormEngine-renderReadonly.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Устаревшие/удаленные функции}
+	\framesubtitle{Разное (3)}
+
+	\begin{itemize}
+		\item Был отмечены как устаревшие следующие методы:
+
+			\begin{lstlisting}
+				TypoScriptTemplateObjectBrowserModuleFunctionController::
+				    verify_TSobjects()
+				ExtendedTemplateService::ext_getKeyImage()
+				ConfigurationForm::ext_getKeyImage()
+			\end{lstlisting}
+
+ 		\item Выполнение \texttt{contentObject->COBJECT()} было отмечено как устаревшее\newline
+ 			\small(вместо этого используйте \texttt{\$cObj->cObjGetSingle('...', \$conf);})\normalsize
+ 
+		\item Непосредственный доступ к \texttt{FormEngine::\$renderReadonly} был отмечен как устаревший\newline
+			\small(вместо этого используйте \texttt{AbstractFormElement::setRenderReadonly(TRUE);})\normalsize
+ 
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		c0f6298b-afa0117b-90b28b10-61d6f766
+% LTXE-SLIDE-ORIGIN:	73460e3b-2b53733c-a68508f8-bb829206 English
+% LTXE-SLIDE-TITLE:		Miscellaneous (4)
+% LTXE-SLIDE-REFERENCE:	Deprecation-63850-FormEngine-insertDefStyle.rst
+% LTXE-SLIDE-REFERENCE: Deprecation-63852-FormEngine-getAvailableLanguages.rst
+% LTXE-SLIDE-REFERENCE: Deprecation-63855-FormEngine-sL.rst
+% LTXE-SLIDE-REFERENCE: Deprecation-63864-FormEngine-renderVDEFDiff.rst
+% LTXE-SLIDE-REFERENCE: Deprecation-63878-FormEngine-getLL.rst
+% LTXE-SLIDE-REFERENCE: Deprecation-63889-FormEngine-getTSCpid.rst
+% LTXE-SLIDE-REFERENCE: Deprecation-63912-FormEngine-unusedMethods.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Устаревшие/удаленные функции}
+	\framesubtitle{Разное (4)}
+
+	\begin{itemize}
+		\item Был отмечены как устаревшие следующие методы FormEngine:
+		\begin{itemize}
+			\item \texttt{FormEngine::insertDefStyle}
+			\item \texttt{FormEngine::getAvailableLanguages()}
+			\item \texttt{FormEngine::sL()}
+			\item \texttt{FormEngine::renderVDEFDiff()}
+			\item \texttt{FormEngine::getLL()}
+ 			\item \texttt{FormEngine::getTSCpid()}
+ 			\item \texttt{FormEngine::getSingleField\_typeFlex\_langMenu()}
+ 			\item \texttt{FormEngine::getSingleField\_typeFlex\_sheetMenu()}
+ 			\item \texttt{FormEngine::getSpecConfFromString()}
+ 		\end{itemize}
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------

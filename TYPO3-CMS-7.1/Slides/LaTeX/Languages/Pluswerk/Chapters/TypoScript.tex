@@ -1,0 +1,482 @@
+% ------------------------------------------------------------------------------
+% TYPO3 CMS 7.1 - What's New - Chapter "TypoScript" (Pluswerk Version)
+%
+% @author	Patrick Lobacher <patrick@lobacher.de>
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		http://typo3.org/download/release-notes/whats-new/
+% @language	German
+% ------------------------------------------------------------------------------
+% LTXE-CHAPTER-UID:		d92ab5b9-9ffa4925-30a2e34f-0d6939e5
+% LTXE-CHAPTER-NAME:	TypoScript
+% ------------------------------------------------------------------------------
+
+\section{TSconfig \& TypoScript}
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+
+	\begin{center}\huge{Kapitel 2:}\end{center}
+	\begin{center}\huge{\color{typo3darkgrey}\textbf{TSconfig \& TypoScript}}\end{center}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		48d088b2-64586a7a-702f5959-7aa2e155
+% LTXE-SLIDE-TITLE:		StdWrap für page.headTag
+% LTXE-SLIDE-REFERENCE:	Feature-22086-StdWrapForHeadTag.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+	\framesubtitle{StdWrap für page.headTag}
+
+	\begin{itemize}
+		\item Die TypoScript Option \texttt{page.headTag} besitzt nun \texttt{stdWrap}
+		\begin{lstlisting}
+			page = PAGE
+			page.headTag = <head>
+			page.headTag.override = <head class="special">
+			page.headTag.override.if {
+	  			isInList.field = uid
+	  			value = 24
+			}
+		\end{lstlisting}	
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		a4cc2dca-c73ee8aa-66891c37-4d12b78c
+% LTXE-SLIDE-TITLE:		Eigenschaft async für JavaScript-Inklusion
+% LTXE-SLIDE-REFERENCE:	Feature-28382-AddAsyncPropertyToJavaScriptFiles.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+	\framesubtitle{Eigenschaft async für JavaScript-Inklusion}
+
+	\begin{itemize}
+		\item JavaScript Dateien können nun asynchron geladen werden
+
+			\begin{lstlisting}
+				page {
+				  includeJS {
+				    jsFile = /path/to/file.js
+				    jsFile.async = 1
+				  }
+				}
+			\end{lstlisting}
+
+		\item Dies betrifft:
+
+			\begin{itemize}
+				\item \texttt{includeJSlibs} / \texttt{includeJSLibs}
+				\item \texttt{includeJSFooterlibs}
+				\item \texttt{includeJS}
+				\item \texttt{includeJSFooter}
+			\end{itemize}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		9686bec9-4f7ac173-e8963f2e-9cfb6501
+% LTXE-SLIDE-TITLE:		Eigenschaft async für JavaScript-Inklusion
+% LTXE-SLIDE-REFERENCE:	Feature-46624-AdditionalWhereForMenu.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+	\framesubtitle{HMENU mit Eigenschaft additionalWhere Eigenschaft}
+
+	\begin{itemize}
+
+		\item Das TypoScript cObject \texttt{HMENU} hat nun die neue Eigenschaft \texttt{additionalWhere}
+		\item Damit kann man spezifischere Datanbank-Abfragen realisieren (z.B. Filter)
+
+		\item Beispiel:
+
+			\begin{lstlisting}
+				lib.authormenu = HMENU
+				lib.authormenu.1 = TMENU
+				lib.authormenu.1.additionalWhere = AND author!=""
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		32dbcc68-d250a166-3614b200-97d91219
+% LTXE-SLIDE-TITLE:		Zusätzliche Parameter für Browse-Menu
+% LTXE-SLIDE-REFERENCE:	Feature-57178-SpecialHmenuExcludeSpecialParameters.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+	\framesubtitle{Zusätzliche Parameter für \texttt{HMENU} Browse-Menüs}
+
+	\begin{itemize}
+		\item Es wurden zwei neue Eigenschaften für das cObject \texttt{HMENU} (Option "\texttt{special=browse"})\newline
+			eingeführt, um detailierter festzulegen, welche Seiten im Menü enthalten sein sollen:
+		
+			\begin{itemize}
+				\item \texttt{excludeNoSearchPages}
+				\item \texttt{includeNotInMenu}
+			\end{itemize}
+
+		\item Beispiel:
+
+			\begin{lstlisting}
+				lib.browsemenu = HMENU
+				lib.browsemenu.special = browse
+				lib.browsemenu.special.excludeNoSearchPages = 1
+				lib.browsemenu.includeNotInMenu = 1
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		07178b8c-0d307fe6-3720e5ad-957ac498
+% LTXE-SLIDE-TITLE:		Mehrere HTTP-Header des selben Typs möglich
+% LTXE-SLIDE-REFERENCE:	Feature-56236-Multiple-HTTP-Headers-In-Frontend.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+	\framesubtitle{Mehrere HTTP-Header des selben Typs möglich}
+
+	\begin{itemize}
+
+		\item HTTP Headers können nun als Array gesetzt werden (\small\texttt{config.additionalHeaders}\normalsize)
+		\item Dies erlaubt die Konfiguration von mehreren Header zur gleichen Zeit
+
+			\begin{lstlisting}
+				config.additionalHeaders {
+				  10 {
+				    # Header String
+				    header = WWW-Authenticate: Negotiate
+
+				    # (optional) Ersetzt einen vorhandenen Header mit dem selben Namen (default: 1)
+				    replace = 0
+
+				    # (optional) erzwinge HTTP Response Code
+				    httpResponseCode = 401
+				  }
+				  # setze zweiten zusätzlichen HTTP Header
+				  20.header = Cache-control: Private
+				}
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		4b1e3f89-543d5c55-f13506b0-c1874f99
+% LTXE-SLIDE-TITLE:		AbsRefPrefix bekommt "auto" Option
+% LTXE-SLIDE-REFERENCE:	Feature-58366-AutomaticAbsRefPrefix.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+	\framesubtitle{AbsRefPrefix bekommt "auto" Option}
+
+	\begin{itemize}
+		\item Die TypoScript Eigenschaft \texttt{config.absRefPrefix} kann verwendet werden, um URL
+			Rewriting zu ermöglichen. Als Alternative zu \texttt{config.baseURL} (um eine spezielle Domain zu spezifizieren), kann \texttt{absRefPrefix} das Site Root automatisch erkennen:
+
+			\begin{lstlisting}
+				config.absRefPrefix = auto
+
+				# ...anstelle von:
+				[ApplicationContext = Production]
+				config.absRefPrefix = /
+
+				[ApplicationContext = Testing]
+				config.absRefPrefix = /my_site_root/
+			\end{lstlisting}
+
+		\smaller
+			Note: Die neue Option ist ebenfalls für Multi-Domain-Umgebungen zu verwenden, um überflüssige Cache-Mechanismen zu verhindern.
+		\normalsize
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		791fe19a-e32b2e94-56c98f12-f134028a
+% LTXE-SLIDE-TITLE:		Zwei-Buchstaben Code bei sys\_language
+% LTXE-SLIDE-REFERENCE:	Feature-61542-AddIsoLanguageKeys.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+	\framesubtitle{Zwei-Buchstaben Code für \texttt{sys\_language} (1)}
+
+	\begin{itemize}
+		\item Das Sprach-Handling wird durch Datensätze durchgeführt, welche in der Tabelle 
+			\texttt{sys\_language} gespeichert werden. Diese wird üblicherweise durch die \texttt{sys\_language\_uid} referenziert
+		\item In TYPO3 CMS 7.1 wurden die ISO 639-1 Zwei-Buchstaben-Codes eigeführt:
+
+			\begin{itemize}
+				\item Neues DB Feld: \texttt{sys\_language.language\_isocode}
+				\item Neue TypoScript Option: \texttt{sys\_language\_isocode}
+			\end{itemize}
+
+
+		\vspace{1cm}
+
+		\small
+			Note: \textbf{ISO 639} ist ein Standard der International Organization
+			for Standardization. Eine Liste der ISO 639-1 Codes findet sich hier:\newline
+			\url{http://en.wikipedia.org/wiki/List_of_ISO_639-1_codes}
+		\normalsize
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		d630446f-ba747ba6-5568843d-8210d253
+% LTXE-SLIDE-TITLE:		Two-letter ISO code for sys_language (2)
+% LTXE-SLIDE-REFERENCE:	Feature-61542-AddIsoLanguageKeys.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+	\framesubtitle{Zwei-Buchstaben Code für \texttt{sys\_language} (2)}
+
+	\begin{itemize}
+		\item Beispiel:
+
+			\begin{lstlisting}
+				# Dänisch per default
+				config.sys_language_uid = 0
+				config.sys_language_isocode_default = da
+
+				[globalVar = GP:L = 1]
+				  # ISO code wird in der Tabelle sys_language (uid 1) gespeichert
+				  config.sys_language_uid = 1
+				  # Überschreiben des ISO Codes
+				  config.sys_language_isocode = fr
+				[GLOBAL]
+
+				page.10 = TEXT
+				page.10.data = TSFE:sys_language_isocode
+				page.10.wrap = <div class="main" data-language="|">
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		c4406cb8-61cd44f1-d0201718-0818cbf3
+% LTXE-SLIDE-TITLE:		Eigene Conditions im Backend
+% LTXE-SLIDE-REFERENCE:	Feature-63600-CustomTypoScriptConditionsInBackend.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+	\framesubtitle{Eigene Conditions im Backend}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+	
+		\item Der Support für eigene Conditions für das \textbf{Frontend} wurde mit TYPO3 CMS 7.0 eingeführt
+		\item Seit TYPO3 CMS 7.1, ist es ebenfalls möglich, eigene Conditions auch im \textbf{Backend} zu verwenden
+		\item Die Condition muss dabei von \texttt{AbstractCondition} abgeleitet werden und die Methode \texttt{matchCondition()} implementieren
+		\item Beispielhafte Verwendung in TypoScript: 
+
+			\begin{lstlisting}
+				[BigCompanyName\TypoScriptLovePackage\MyCustomTypoScriptCondition]
+
+				[BigCompanyName\TypoScriptLovePackage\MyCustomTypoScriptCondition = 7]
+
+				[BigCompanyName\TypoScriptLovePackage\MyCustomTypoScriptCondition = 7, != 6]
+
+				[BigCompanyName\TypoScriptLovePackage\MyCustomTypoScriptCondition = {$mysite.myconstant}]
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		11429454-e059c377-1f44b6df-89eb21a5
+% LTXE-SLIDE-TITLE:		Zufügen von Icons zur FormEngine via PageTSconfig
+% LTXE-SLIDE-REFERENCE:	Feature-35891-AddTCAItemsWithIconsViaPageTSConfig.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+	\framesubtitle{Icons via PageTSconfig anpassen}
+
+	\begin{itemize}
+		\item Werte/Label von Select-Feldern können bereits per PageTSconfig Option \texttt{addItems} konfiguriert werden
+		\item Nun kann man auch die Icons dieser Felder beinflussen
+
+			\begin{itemize}
+				\item Option 1: indem man \texttt{addItems} und die Untereigenschaft \texttt{.icon}
+				\item Option 2: indem man \texttt{altIcons} verwendet (für generell alle Icons)
+			\end{itemize}
+
+		\item Beispiel:
+
+			\begin{lstlisting}
+				TCEFORM.pages.doktype.addItems {
+				  10 = My Label
+				  10.icon = EXT:t3skin/icons/gfx/i/pages.gif
+				}
+				TCEFORM.pages.doktype.altIcons {
+				  10 = EXT:myext/icon.gif
+				}
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		f5979845-d2e5b3c8-9944e67c-7b3dcbf9
+% LTXE-SLIDE-TITLE:		Mountpoints in UserTSconfig hinzufügen
+% LTXE-SLIDE-REFERENCE:	Feature-50780-AppendElementBrowserMountPoints.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+	\framesubtitle{Element Browser mit Mount Points erweitern}
+
+	\begin{itemize}
+		\item Die neue UserTSconfig Option \texttt{.append} erlaubt dem Administrator zusätzliche Mountpoints in RTE und Wizard-Element-Browser hinzuzufügen, anstelle die bereits konfigurierten mit der bisherigen Option \texttt{options.pageTree.altElementBrowserMountPoints} zu ersetzen:
+		\item Example:
+
+			\begin{lstlisting}
+				options.pageTree.altElementBrowserMountPoints = 20,31
+				options.pageTree.altElementBrowserMountPoints.append = 1
+			\end{lstlisting}
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		8e00b570-40769cbc-d1a199a8-c1155592
+% LTXE-SLIDE-TITLE:		Überschreiben der Labels von Radio-Buttons und Checkboxen
+% LTXE-SLIDE-REFERENCE:	Feature-58033-AltLabelsForFormEngineCheckboxAndRadioButtons.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+	\framesubtitle{Überschreiben der Labels von Radio-Buttons und Checkboxen}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item Man kann nun die Labels der Radio-Buttons und Checkboxen in der TCEFORM-Engine überschreiben:
+		\item Example:
+
+			\begin{lstlisting}
+				// Feld mit einzelner Checkbox (".default")
+				TCEFORM.pages.hidden.altLabels.default = neues Label
+				TCEFORM.pages.hidden.altLabels.default = LLL:path/to/languagefile.xlf:individualLabel
+
+				// Feld mit mehreren Checkboxen (0,1,2,3...)
+				TCEFORM.pages.l18n_cfg.altLabels.0 = new Label fuer erste Checkbox
+				TCEFORM.pages.l18n_cfg.altLabels.1 = new Label fuer zweite Checkbox
+				TCEFORM.pages.l18n_cfg.altLabels.2 = new Label fuer dritte Checkbox
+				...
+			\end{lstlisting}
+		
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		ed9b620e-368be2c7-96942804-c7c039f3
+% LTXE-SLIDE-TITLE:		TSconfig Diverse
+% LTXE-SLIDE-REFERENCE:	Feature-50780-AppendElementBrowserMountPoints.rst
+% LTXE-SLIDE-REFERENCE: Feature-59646-AddRteConfigurationPropertyButtonsLinkTypePropertiesTargetDefault.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+	\framesubtitle{Diverse (1)}
+
+	\begin{itemize}
+		\item Es ist nun möglich, Breite und Höhe des Element-Browsers in der UserTSconfig festzulegen
+		
+			\begin{lstlisting}
+				options.popupWindowSize = 400x900
+				options.RTE.popupWindowSize = 200x200
+			\end{lstlisting}
+		
+		\item PageTSconfig: eine neue RTE Konfigurations-Eigenschafte kann verwendet werden, um das Default-Ziel für Links zu setzen:
+
+			\begin{lstlisting}
+				buttons.link.[type].properties.target.default
+			\end{lstlisting}
+
+			Wobei \texttt{[type]} den Wert \texttt{page}, \texttt{file}, \texttt{url}, \texttt{mail} or \texttt{spec} haben kann\newline
+			(Extensions können weitere Types hinzufügen)
+	\end{itemize}
+
+\end{frame}
+
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		220e945e-fdde21b2-7de39014-b7072087
+% LTXE-SLIDE-TITLE:		TSconfig Available to Link Checkers
+% LTXE-SLIDE-REFERENCE:	Feature-16794-MakeSectionLinkingForIndexedSearchResultsConfigurable.rst
+% LTXE-SLIDE-REFERENCE: Feature-20767-getDataByNestedKey.rst
+% LTXE-SLIDE-REFERENCE: Feature-33491-StdWrapForTitleTag.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+	\framesubtitle{Diverse}
+
+	\begin{itemize}
+		\item Per Default sind Section-Headlines der Indexed-Search Resultat verlinkt. Dies kann über das TypoScript \texttt{plugin.tx\_indexedsearch.linkSectionTitles = 0} ausgeschaltet werden (Default ist 1) 
+
+		\item Bislang konnte nur \texttt{getData} auf Arrays (wie \texttt{GPVar} und \texttt{TSFE}) zugreifen - dies funktioniert nun auch für \texttt{field}
+		\begin{lstlisting}
+		10 = TEXT
+		10.data = field:fieldname|level1|level2
+		\end{lstlisting}
+
+		\item Auf den Seitentitel kann nun nun \texttt{stdwrap} über die Option \texttt{config.pageTitle} angewendet werden:
+		\begin{lstlisting}
+			page = PAGE
+			page.config.pageTitle.case = upper
+		\end{lstlisting}
+	\end{itemize}
+
+\end{frame}
+
+
+
+
+
+

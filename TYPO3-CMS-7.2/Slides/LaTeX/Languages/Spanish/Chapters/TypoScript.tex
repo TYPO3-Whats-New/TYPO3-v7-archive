@@ -1,0 +1,207 @@
+% ------------------------------------------------------------------------------
+% TYPO3 CMS 7.2 - What's New - Chapter "TypoScript" (English Version)
+%
+% @author	Michael Schams <schams.net>
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		http://typo3.org/download/release-notes/whats-new/
+% @language	English
+% ------------------------------------------------------------------------------
+% LTXE-CHAPTER-UID:		12518a77-2b90a173-4e3f8420-485e0497
+% LTXE-CHAPTER-NAME:	TypoScript
+% ------------------------------------------------------------------------------
+
+\section{TSconfig \& TypoScript}
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+
+	\begin{center}\huge{Capítulo 2:}\end{center}
+	\begin{center}\huge{\color{typo3darkgrey}\textbf{TSconfig \& TypoScript}}\end{center}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		a22b1cc4-2f5edc86-be9d95c3-f88a042a
+% LTXE-SLIDE-ORIGIN:	56b025e6-cf380b11-c9d1c009-0b548d6a English
+% LTXE-SLIDE-TITLE:		Add flexible preview URL configuration (1)
+% LTXE-SLIDE-REFERENCE:	Feature-66370-AddFlexiblePreviewUrlConfiguration.rst
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+	\framesubtitle{Configuración flexible de la URL de vista previa (1)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Ahora es posible configurar el enlace de vista previa generado por el botón
+			"guardar \& ver" en el backend.
+
+		\item Un caso de uso común es tener vistas previas para registros de noticias o blog,
+			pero también puede definir páginas de vista previa diferentes para elementos
+			de contenido normales.
+
+			\begin{lstlisting}
+				TCEMAIN.preview {
+				  <table name> {
+				    previewPageId = 123
+				    useDefaultLanguageRecord = 0
+				    fieldToParameterMap {
+				      uid = tx_myext_pi1[showUid]
+				    }
+				    additionalGetParameters {
+				      tx_myext_pi1[special] = HELLO
+				    }
+				  }
+				}
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		0a07266a-96b4f361-0a144e8d-13a6117a
+% LTXE-SLIDE-ORIGIN:	6822c376-37649cd8-0acc836a-b856fc61 English
+% LTXE-SLIDE-TITLE:		Add flexible preview URL configuration (2)
+% LTXE-SLIDE-REFERENCE:	Feature-66370-AddFlexiblePreviewUrlConfiguration.rst
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+	\framesubtitle{Configuración flexible de la URL de vista previa (2)}
+
+	\begin{itemize}
+		\item \texttt{previewPageId}:\newline
+			\smaller
+				UID de la página a usar para vista previa\newline
+				(si se omite este ajuste, la página actual será usada)
+			\normalsize
+		\item \texttt{useDefaultLanguageRecord}:\newline
+			\smaller
+				define si los registros traducidos usarán la UID del registro por defecto\newline
+				(esto es activado por defecto, valor: 1)
+			\normalsize
+		\item \texttt{fieldToParameterMap}:\newline
+			\smaller
+				un mapeo que permite seleccionar campos del registro para ser incluidos como parámetros GET
+			\normalsize
+		\item \texttt{additionalGetParameters}:\newline
+			\smaller
+				permite añadir parámetros GET arbitrariamente e incluso sobrescribir otros
+			\normalsize
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		74087d4b-616e3e02-50026df8-f902e827
+% LTXE-SLIDE-ORIGIN:	c5dbf3c7-655fc6e4-227a3bf6-f5d89fb1 English
+% LTXE-SLIDE-TITLE:
+% LTXE-SLIDE-REFERENCE:	Feature-59646-AddRteConfigurationPropertyButtonsLinkTypePropertiesTargetDefault.rst
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+	\framesubtitle{Configuración RTE: Objetivo por Defecto}
+
+	\begin{itemize}
+
+		\item Una propiedad de configuración RTE puede ser usada en PageTSconfig
+			para configurar un objetivo por defecto para los enlaces de un tipo dado\newline
+
+			\small
+				\texttt{buttons.link.[}
+				\textit{type}
+				\texttt{].properties.target.default = ...}
+			\normalsize\newline
+
+		\item Los tipos de enlace posibles son:\newline
+			\small
+				(tipos posteriores pueden ser proporcionados por extensiones)
+			\normalsize
+
+			\begin{itemize}
+				\item \texttt{page}
+				\item \texttt{file}
+				\item \texttt{url}
+				\item \texttt{mail}
+				\item \texttt{spec}
+			\end{itemize}
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		2d26c3a1-a0d84e61-ccd9dde3-f95e1e50
+% LTXE-SLIDE-ORIGIN:	fd957580-301e4a0a-ad5325f5-ffa024c3 English
+% LTXE-SLIDE-TITLE:		Strip empty HTML tags in HtmlParser
+% LTXE-SLIDE-REFERENCE:	Feature-20555-StripEmptyHtmlTags.rst
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+	\framesubtitle{Retirar Etiquetas HTML Vacías en HTMLparser}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item Una funcionalidad nueva ha sido implementada en el HTMLparser
+			que permite la retirada de etiquetas HTML vacías
+
+			\begin{lstlisting}
+				stdWrap {
+				   // this removes all empty HTML tags
+				   HTMLparser.stripEmptyTags = 1
+				   // this removes empty h2 and h3 tags only
+				   HTMLparser.stripEmptyTags.tags = h2, h3
+				}
+
+				RTE.default.proc.entryHTMLparser_db {
+				   stripEmptyTags = 1
+				   stripEmptyTags.tags = p
+				   stripEmptyTags.treatNonBreakingSpaceAsEmpty = 1
+				}
+			\end{lstlisting}
+
+			\underline{\textbf{Nota:}}
+				HTMLparser retira todas las etiquetas desconocidas por defecto.\newline
+				Por lo tanto podría ser útil para conservar éstas:\newline
+				\texttt{HTMLparser.keepNonMatchedTags = 1}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		096b504e-cb7c203e-d8022481-77c0355a
+% LTXE-SLIDE-ORIGIN:	62960e76-c3dca953-fe5a1070-831633fc English
+% LTXE-SLIDE-TITLE:		Miscellaneous
+% LTXE-SLIDE-REFERENCE:	Feature-63040-AddRteConfigurationPropertyButtonsAbbreviationRemoveFieldsets.rst
+% LTXE-SLIDE-REFERENCE:	commit 31c62f9311ee3d33bf792d548cc4a5fac83aa3d0
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+	\framesubtitle{Miscelánea}
+
+	\begin{itemize}
+		\item La nueva propiedad \texttt{buttons.abbreviation.removeFieldsets} pueden ser
+			usada en PageTSconfig para configurar el cuadro de abreviaturas
+
+			\begin{lstlisting}
+				# Los valores posibles son:
+				# acronym, definedAcronym, abbreviation, definedAbbreviation
+				buttons.abbreviation.removeFieldsets = acronym,definedAcronym
+			\end{lstlisting}
+
+		\item Ahora la propiedad \texttt{inlineLanguageLabel} del objeto \texttt{PAGE}
+			puede manejar referencias a \texttt{LLL:}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------

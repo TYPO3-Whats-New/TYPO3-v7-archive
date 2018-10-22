@@ -1,0 +1,513 @@
+% ------------------------------------------------------------------------------
+% TYPO3 CMS 7.4 - What's New - Chapter "TypoScript" (English Version)
+%
+% @author	Michael Schams <schams.net>
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		http://typo3.org/download/release-notes/whats-new/
+% @language	English
+% ------------------------------------------------------------------------------
+% LTXE-CHAPTER-UID:		693ffeb9-5ce46f4e-8c0b7d7c-be9f3ee3
+% LTXE-CHAPTER-NAME:	TypoScript
+% ------------------------------------------------------------------------------
+
+\section{TSconfig \& TypoScript}
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+
+	\begin{center}\huge{Hoodstuk 2:}\end{center}
+	\begin{center}\huge{\color{typo3darkgrey}\textbf{TSconfig \& TypoScript}}\end{center}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		8141a5eb-2db0b286-05718c76-e8982ade
+% LTXE-SLIDE-ORIGIN:	69805fcd-5bf6738b-3d31552e-d0add3ee English
+% LTXE-SLIDE-ORIGIN:	78394814-b88d7d32-54dd1c41-022129d0 German
+% LTXE-SLIDE-TITLE:		Feature: #61903 - PageTS dataprovider for backend layouts (1)
+% LTXE-SLIDE-REFERENCE:	Feature-61903-PageTSDataproviderForBackendLayouts.rst
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+	\framesubtitle{Data-Provider voor Backend Layouts (1)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item Backend layouts kunnen nu via page TSconfig gedefinieerd worden en ook opgeslagen worden in bestanden. Voorbeeld:
+
+		\begin{lstlisting}
+			mod {
+			  web_layout {
+			    BackendLayouts {
+			      exampleKey {
+			        title = Voorbeeld
+			        config {
+			          backend_layout {
+			            colCount = 1
+			            rowCount = 2
+			            rows {
+			              1 {
+			                columns {
+			                  1 {
+			                    name = LLL:EXT:frontend/ ... /locallang_ttc.xlf:colPos.I.3
+			                    colPos = 3
+			                    colspan = 1
+			                  }
+			                }
+			              }
+			[...]
+		\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		d944aa51-5f3ad1c1-568be91a-1d061fdb
+% LTXE-SLIDE-ORIGIN:	0691efc7-c5a339e2-1753851e-9a62d8ed English
+% LTXE-SLIDE-ORIGIN:	b88d4814-7d327839-10221c41-54dd29d0 German
+% LTXE-SLIDE-TITLE:		Feature: #61903 - PageTS dataprovider for backend layouts (2)
+% LTXE-SLIDE-REFERENCE:	Feature-61903-PageTSDataproviderForBackendLayouts.rst
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+	\framesubtitle{Data-Provider voor Backend Layouts (2)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item \smaller(vervolg)\normalsize
+		\begin{lstlisting}
+			[...]
+			              2 {
+			                columns {
+			                  1 {
+			                    name = Inhoud
+			                    colPos = 0
+			                    colspan = 1
+			                  }
+			                }
+			              }
+			            }
+			          }
+			        }
+			        icon = EXT:example_extension/Resources/Public/Images/BackendLayouts/default.gif
+			      }
+			    }
+			  }
+			}
+		\end{lstlisting}
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		d14b89a9-39c0dd1e-3e38ce4c-73c40ae2
+% LTXE-SLIDE-ORIGIN:	53593b48-60766071-136bf56b-f63caf39 English
+% LTXE-SLIDE-ORIGIN:	9fc7749d-aa1d6042-b1b7699d-e9aee9ed German
+% LTXE-SLIDE-TITLE:		Feature: #67360 - Custom attribute name and multiple values for meta tags
+% LTXE-SLIDE-REFERENCE:	Feature-67360-CustomAttributeNameAndMultipleValuesForMetaTags.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+	\framesubtitle{Meta-tags uitgebreid}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		% Note for translators: make sure, the following bullet point is only ONE line long.
+		% If it wraps and uses two lines, the code example below does not fit on the page.
+		% If not avoidable, split the content and create a second slide for the code.
+
+		\item Optie \texttt{page.meta} kent nu ook \href{http://ogp.me}{Open Graph} attributen
+
+			\begin{lstlisting}
+				page {
+				  meta {
+				    X-UA-Compatible = IE=edge,chrome=1
+				    X-UA-Compatible.attribute = http-equiv
+				    keywords = TYPO3
+				    # <meta property="og:site_name" content="TYPO3" />
+				    og:site_name = TYPO3
+				    og:site_name.attribute = property
+				    description = Inspiring people to share
+				    og:description = Inspiring people to share
+				    og:description.attribute = property
+				    og:locale = en_GB
+				    og:locale.attribute = property
+				    og:locale:alternate {
+				      attribute = property
+				      value.1 = fr_FR
+				      value.2 = de_DE
+				    }
+				    refresh = 5; url=http://example.com/
+				    refresh.attribute = http-equiv
+				  }
+				}
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		c8fd6416-1b175b0e-0cc48458-d478b320
+% LTXE-SLIDE-ORIGIN:	5df1ea93-74ddf5d4-c8acd647-7f47e896 English
+% LTXE-SLIDE-ORIGIN:	c38a626f-40c7bda9-523650fb-6829234e German
+% LTXE-SLIDE-TITLE:		Feature: #68191 - TypoScript .select option languageField is active by default
+% LTXE-SLIDE-REFERENCE:	Feature-68191-TypoScriptSelectOptionLanguageFieldIsActiveByDefault.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+	\framesubtitle{\texttt{languageField} standaard aanwezig}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Bij TypoScript optie \texttt{select} (gebruikt in bijvoorbeeld cObject CONTENT) moest
+			\texttt{languageField} expliciet ingesteld worden
+
+		\item Dit is niet meer nodig; de instelling wordt automatisch opgehaald uit TCA informatie
+
+			% reminder for translators: special characters such as German umlauts are not
+			% allowed inside "lstlisting". They break the LaTeX code. Be careful when you
+			% want to translate the sentence "the following line is not required anymore"
+			% below (feel free to leave it in English).
+
+			\begin{lstlisting}
+				config.sys_language_uid = 2
+				page.10 = CONTENT
+				page.10 {
+				  table = tt_content
+				  select.where = colPos=0
+
+				  # volgende regel is niet meer nodig:
+				  #select.languageField = sys_language_uid
+
+				  renderObj = TEXT
+				  renderObj.field = header
+				  renderObj.htmlSpecialChars = 1
+				}
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		5032a8d9-68effba8-30f535b4-bfac78e1
+% LTXE-SLIDE-ORIGIN:	48fffdc3-1a0b74a9-f2415121-1e9f032a English
+% LTXE-SLIDE-ORIGIN:	945ae684-9d826d2a-1c2e0d7b-c6c69465 German
+% LTXE-SLIDE-TITLE:		Feature: #64200 - Allow individual content caching
+% LTXE-SLIDE-REFERENCE:	Feature-64200-AllowIndividualContentCaching.rst
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+	\framesubtitle{Caching van losse content}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Vanaf TYPO3 CMS 7.4 is er caching voor losse inhoud die - net zoals \texttt{stdWrap.cache} -
+			ook werkt met COA objecten\newline(zoals "Magento Block Caching")
+
+			\begin{columns}[T]
+				\begin{column}{.07\textwidth}
+                \end{column}
+				\begin{column}{.465\textwidth}
+					\begin{lstlisting}
+						page = PAGE
+						page.10 = COA
+						page.10 {
+						  cache.key = coaout
+						  cache.lifetime = 60
+						  #stdWrap.cache.key = coastdWrap
+						  #stdWrap.cache.lifetime = 60
+						  10 = TEXT
+						  10 {
+						    cache.key = mycurrenttimestamp
+						    cache.lifetime = 60
+						    data = date : U
+						    strftime = %H:%M:%S
+						    noTrimWrap = |10: | |
+						  }
+					[...]
+					\end{lstlisting}
+				\end{column}
+
+				\begin{column}{.465\textwidth}
+					\begin{lstlisting}
+					[...]
+						  20 = TEXT
+						  20 {
+						    data = date : U
+						    strftime = %H:%M:%S
+						    noTrimWrap = |20: | |
+						  }
+						}
+					\end{lstlisting}
+
+				\end{column}
+			\end{columns}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		09250772-ad9239aa-947c3819-8b6460a2
+% LTXE-SLIDE-ORIGIN:	a9f58068-74a67b75-cd3b44ef-4c5422b9 English
+% LTXE-SLIDE-ORIGIN:	d4fd55ab-f9f1cd6c-4eb2ca00-d50beeb2 German
+% LTXE-SLIDE-TITLE:		Feature: #67880 - Added count to listNum
+% LTXE-SLIDE-REFERENCE:	Feature-67880-AddedCountToListNum.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+	\framesubtitle{Aantal elementen in lijst}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item De stdWrap optie \texttt{split} heeft een nieuwe eigenschap \texttt{returnCount}
+
+		\item Deze telt bijvoorbeeld het aantal elementen in een kommagescheiden lijst
+
+		\item De volgende code geeft bijvoorbeeld \texttt{9}:
+
+			\begin{lstlisting}
+				1 = TEXT
+				1 {
+				  value = x,y,z,1,2,3,a,b,c
+				  split.token = ,
+				  split.returnCount = 1
+				}
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		2a7761e1-178dd717-b1947046-defdac49
+% LTXE-SLIDE-ORIGIN:	525607c3-d2f26693-2b44076d-e90599ca English
+% LTXE-SLIDE-ORIGIN:	a31ad0e4-857ff98a-239b23fd-c2e48958 German
+% LTXE-SLIDE-TITLE:		Feature: #65550 - Make table display order configurable in List module
+% LTXE-SLIDE-REFERENCE:	Feature-65550-MakeTableDisplayOrderConfigurableInListModule.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+	\framesubtitle{Sorteervolgorde van tabellen in Lijstmodule}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Een nieuwe TSconfig optie \texttt{mod.web\_list.tableDisplayOrder} voor de "Lijst" module
+
+		\item Met deze optie is de volgorde waarin tabellen worden weergegeven in te stellen
+
+		\item Termen \texttt{before} en \texttt{after} stellen volgorde relatief aan andere tabellen in
+
+		\begin{columns}[T]
+			\begin{column}{.07\textwidth}
+			\end{column}
+			\begin{column}{.465\textwidth}
+
+				\small Syntax:\normalsize
+
+				\begin{lstlisting}
+					mod.web_list.tableDisplayOrder {
+					  <tableName> {
+					    before = <tableA>, <tableB>, ...
+					    after = <tableA>, <tableB>, ...
+					  }
+					}
+				\end{lstlisting}
+			\end{column}
+			\begin{column}{.465\textwidth}
+
+				\small Voorbeeld:\normalsize
+
+				\begin{lstlisting}
+					mod.web_list.tableDisplayOrder {
+					  be_users.after = be_groups
+					  sys_filemounts.after = be_users
+					  pages_language_overlay.before = pages
+					  fe_users.after = fe_groups
+					  fe_users.before = pages
+					}
+				\end{lstlisting}
+
+			\end{column}
+		\end{columns}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		6c7619f4-66c6f660-a889c65e-0d0897a6
+% LTXE-SLIDE-ORIGIN:	9d764efe-2cd7e74e-f53f456b-f4a88331 English
+% LTXE-SLIDE-ORIGIN:	35e3a45d-888c3fe2-26d320d1-ce6c65c3 German
+% LTXE-SLIDE-TITLE:		Feature: #33071 - Add the http header "Content-Language" when rendering a page
+% LTXE-SLIDE-REFERENCE:	Feature-33071-AddTheHttpHeaderContent-LanguageWhenRenderingAPage.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+	\framesubtitle{Content-Language in HTTP Header}
+
+	\begin{itemize}
+
+		\item De HTTP header \texttt{Content-language: XX} wordt automatisch verstuurd met als "XX" de ISO code van
+			de \texttt{sys\_language\_content} configuratie
+
+		\item Met \texttt{config.disableLanguageHeader = 1} kan dit uitgeschakeld worden
+			(de \texttt{Content-language} header wordt helemaal niet verstuurd)
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		2d9905f6-637825a1-ac543bd7-dfd6e72e
+% LTXE-SLIDE-ORIGIN:	17e7f151-0ebb8899-6209180f-bec0fc56 English
+% LTXE-SLIDE-ORIGIN:	35a84207-7b86ee45-c39d815d-859811e1 German
+% LTXE-SLIDE-TITLE:		Feature: #45725 - Added recursive option to folder based file collections
+% LTXE-SLIDE-REFERENCE:	Feature-45725-AddedRecursiveOptionToFolderBasedFileCollections.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+	\framesubtitle{Optie Recursive voor bestandsverzameling}
+
+	\begin{itemize}
+
+		\item Bestandsverzamelingen gebaseerd op een map hebben nu een optie om alle bestanden recursief op te halen
+
+		\item De optie is ook beschikbaar in het TypoScript Object \texttt{FILES}
+
+			\begin{lstlisting}
+				filecollection = FILES
+				filecollection {
+				  folders = 1:images/
+				  folders.recursive = 1
+				  renderObj = IMAGE
+				  renderObj {
+				    file.import.data = file:current:uid
+				  }
+				}
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		1db27713-23b96d7b-fa73d1e0-b910071c
+% LTXE-SLIDE-ORIGIN:	b7337338-ab366edd-bd94e9c0-6d7e86de English
+% LTXE-SLIDE-ORIGIN:	ece6c712-df09d880-9378940c-e658d6a5 German
+% LTXE-SLIDE-TITLE:		Feature: #34922 - Allow .ts file extension for static TypoScript templates
+% LTXE-SLIDE-REFERENCE:	Feature-34922-AllowTsFileExtensionForStaticTyposcriptTemplates.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+	\framesubtitle{Extensie \texttt{.ts} voor statische sjablonen}
+
+	\begin{itemize}
+
+		\item In TYPO3 CMS < 7.4 de enige toegestane bestandsnamen voor statische TypoScript-sjablonen waren:
+
+			\begin{itemize}
+				\item \texttt{constants.txt}
+				\item \texttt{setup.txt}
+				\item \texttt{include\_static.txt}
+				\item \texttt{include\_static\_files.txt}
+			\end{itemize}
+
+		\item Voor \texttt{constants} en \texttt{setup} kan nu ook de bestandsextensie \texttt{.ts} gebruikt worden
+
+		\item In dit verband heeft \texttt{.ts} prioriteit boven \texttt{.txt}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		51a0225d-44e39b12-46e92cd8-00a13f2e
+% LTXE-SLIDE-ORIGIN:	6e127c7e-38fe07f8-e6b9545b-9142c306 English
+% LTXE-SLIDE-ORIGIN:	168d7ca5-b9a3c55b-d6300076-7abdfd09 German
+% LTXE-SLIDE-TITLE:		Feature: #20194 - Configuration for displaying the "save & view" button
+% LTXE-SLIDE-REFERENCE:	Feature-20194-ConfigurationForDisplayingTheSaveViewButton.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+	\framesubtitle{Knop opslaan \& tonen}
+
+	\begin{itemize}
+
+		\item De knop "opslaan \& tonen" kan nu met TSconfig uitgeschakeld worden
+
+		\item TSconfig \texttt{TCEMAIN.preview.disableButtonForDokType} bevat een kommagescheiden lijst met "doktypes"
+
+		\item Standaard is "254, 255, 199" (Opslagmap, Prullenbak en Menuscheiding)
+
+		\item Het gevolg is dat de knop "opslaan \& tonen" niet meer in mappen en prullenbakken getoond wordt
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		7c69ce4e-b1ccd464-7342fbc4-0d1f775e
+% LTXE-SLIDE-ORIGIN:	eb340ca0-00687bcb-51cda09f-82cb51ce English
+% LTXE-SLIDE-ORIGIN:	80efec02-bec87365-a8bc2ab6-6741053f German
+% LTXE-SLIDE-TITLE:		Feature: #43984 - Add stdWrap functionality to TreatIdAsReference TypoScript
+% LTXE-SLIDE-REFERENCE:	Feature-43984-AddStdWrapFunctionalityToTreatIdAsReferenceTypoScript.rst
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+	\framesubtitle{stdWrap voor \texttt{treatIdAsReference}}
+
+	\begin{itemize}
+
+		\item Het object \texttt{getImgResource} kent de optie \texttt{treatIdAsReference},
+			die definieert dat UID's worden gezien als UID's van een \texttt{sys\_file\_reference}
+			in plaats van een \texttt{sys\_file}.
+
+		\item Optie \texttt{treatIdAsReference} kent nu stdWrap functionaliteit
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------

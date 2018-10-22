@@ -1,0 +1,215 @@
+% ------------------------------------------------------------------------------
+% TYPO3 CMS 7.6 - What's New - Chapter "Introduction" (English Version)
+%
+% @author	Angeliki Plati <ag.plati@gmail.com>
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		http://typo3.org/download/release-notes/whats-new/
+% @language	Greek
+% ------------------------------------------------------------------------------
+% LTXE-CHAPTER-UID:		cb43d098-7bf9a537-bf3817c0-53a0f29f
+% LTXE-CHAPTER-NAME:	Introduction
+% ------------------------------------------------------------------------------
+
+\section{\greektext Εισαγωγή}
+\begin{frame}[fragile]
+	\frametitle{\greektext Εισαγωγή}
+
+	\begin{center}\huge{\greektext Εισαγωγή}\end{center}
+	\begin{center}\huge{\color{typo3darkgrey}\textbf{\greektext Τα Γεγονότα}}\end{center}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		34d08603-f47d6ad6-8d078fea-d71903b9
+% LTXE-SLIDE-ORIGIN:	9e397afb-762f7061-0e0e0bd1-9836250e English
+% LTXE-SLIDE-ORIGIN:	1e50fa0a-e0f4c00a-5f667356-11df7c7c German
+% LTXE-SLIDE-TITLE:		TYPO3 CMS 7.6 - The Facts
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{\greektext Εισαγωγή}
+	\framesubtitle{TYPO3 CMS 7.6 - \greektext Τα Γεγονότα}
+
+	\begin{itemize}
+		\item \greektext Ημερομηνία Έκδοσης: 10 Νοεμβρίου 2015
+		\item \greektext Τύπος Δημοσίευσης:
+			\latintext\begingroup\color{red}Long Term Support (LTS) Release\endgroup
+		\item \greektext Όραμα: Αγκαλιάζουμε, Καινοτομούμε, Παραδίδουμε
+	\end{itemize}
+
+	\begin{figure}
+		\includegraphics[width=0.95\linewidth]{Introduction/typo3cms76-banner.png}
+	\end{figure}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		98abc082-8c6bc60b-f0b55b71-3c28b33d
+% LTXE-SLIDE-ORIGIN:	737c8e9b-4ae60e26-6975ea72-21146dd0 English
+% LTXE-SLIDE-ORIGIN:	07f94e22-95cf3db6-373b81e0-4b00bb57 German
+% LTXE-SLIDE-TITLE:		System Requirements
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{\greektext Εισαγωγή}
+	\framesubtitle{\greektext Προδιαγραφές Συστήματος}
+
+	\begin{itemize}
+		\item PHP*:\tabto{2.2cm}v5.5.0 - v5.6.x
+		\item MySQL:\tabto{2.2cm}v5.5.x - v5.6.x (no strict mode)
+		\item \greektext Χωρητ. Δίσκου:   τουλάχιστον \latintext 200 MB
+		\item \greektext Ρυθμίσεις \latintext PHP:
+
+			\begin{itemize}
+				\item \latintext memory\_limit >= 128M
+				\item \latintext max\_execution\_time \latintext >= 240s
+				\item \greektext η επιλογή \texttt{\latintext --disable-ipv6} \underline \greektext{δεν} πρέπει να χρησιμοποιείται
+			\end{itemize}
+
+		\item \greektext Για το \latintext backend \greektext απαιτείται η χρήση \latintext IE >= 9 \greektext ή οποιουδήποτε άλλου σύγχρονου \latintext browser
+
+	\end{itemize}
+
+	\vspace{1cm}
+
+	*)\greektext Περαιτέρω λεπτομέρειες: \latintext \href{http://typo3.org/news/article/php-minimum-requirements-for-typo3-cms-7/}{PHP Minimum Requirements for TYPO3 CMS 7}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		82893d14-a50e7b07-431e1ce4-30da37be
+% LTXE-SLIDE-ORIGIN:	90d2d3d1-f9d57661-dd01143b-10630416 English
+% LTXE-SLIDE-ORIGIN:	79b3ee12-a96f5128-178eb0a1-52534b81 German
+% LTXE-SLIDE-TITLE:		Development And Release Timeline
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{\greektext Εισαγωγή}
+	\framesubtitle{\greektext Χρονοδιάγραμμα Ανάπτυξης και Δημοσίευσης}
+
+	\begin{figure}
+		\includegraphics[width=0.90\linewidth]{Introduction/ReleaseAgenda.png}
+	\end{figure}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		f7c7230e-01e3af7e-5b2b5dda-0be339e9
+% LTXE-SLIDE-ORIGIN:	13e0fd6a-fa50d02d-c15c4af0-f3996926 English
+% LTXE-SLIDE-ORIGIN:	89509115-eb2b6501-4bf03801-c53e7c0c German
+% LTXE-SLIDE-TITLE:		TYPO3 CMS Roadmap
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{\greektext Εισαγωγή}
+	\framesubtitle{TYPO3 CMS - \greektext Πλάνο}
+
+	\greektext Ημερομηνίες δημοσίευσης και ο πρωταρχικός τους στόχος:
+
+	\begin{itemize}
+		\item \latintext v7.0 \tabto{1.1cm}02/\greektext Δεκ\latintext/2014\tabto{3.4cm} \greektext Αναμόρφωση του \latintext Backend \greektext Νο. 1
+		\item \latintext v7.1 \tabto{1.1cm}24/\greektext Φεβ\latintext/2015\tabto{3.4cm}Core Cleanup \& Streamlining
+		\item \latintext v7.2 \tabto{1.1cm}28/\greektext Απρ\latintext//2015\tabto{3.4cm}Frontend
+		\item \latintext v7.3 \tabto{1.1cm}16/\greektext Ιουν\latintext/2015\tabto{3.4cm}Package Ecosystem, Composer
+		\item \latintext v7.4 \tabto{1.1cm}04/\greektext Αυγ\latintext/2015\tabto{3.4cm}\greektext Αναμόρφωση του \latintext Backend \greektext Νο. 2
+		\item \latintext v7.5 \tabto{1.1cm}29/\greektext Σεπ\latintext/2015\tabto{3.4cm}\greektext Οριστικοποίηση
+
+		\item
+			\begingroup
+				\color{typo3orange}
+					\latintext v7 LTS \tabto{1.1cm}10/\greektext Νοε\latintext/2015\tabto{3.4cm}\textbf{TYPO3 CMS 7 LTS} (\greektext Μακροπρόθεσμη Υποστήριξη)
+			\endgroup
+
+	\end{itemize}
+
+	\smaller
+		\latintext\url{https://typo3.org/typo3-cms/roadmap/}\newline
+		\latintext\url{http://typo3.org/news/article/embrace-and-innovate-typo3-cms-7/}
+	\normalsize
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		716b7541-e2d1ebfd-a9d8857c-cc3c7b5c
+% LTXE-SLIDE-ORIGIN:	06c6100a-69216610-618bde63-bbdc4eef English
+% LTXE-SLIDE-ORIGIN:	8ac7908b-f1a64895-d12d437b-9309b07b German
+% LTXE-SLIDE-TITLE:		Installation
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{\greektext Εισαγωγή}
+	\framesubtitle{\greektext Εγκατάσταση}
+
+	\begin{itemize}
+		\item \greektext Επίσημη διαδικασία εγκατάστασης σε \latintext Linux/Mac OS X\newline
+			(DocumentRoot \greektext για παράδειγμα \texttt{\latintext/var/www/site/htdocs}):
+		\latintext \begin{lstlisting}
+			$ cd /var/www/site
+			$ wget --content-disposition get.typo3.org/7.6
+			$ tar xzf typo3_src-7.6.0.tar.gz
+			$ cd htdocs
+			$ ln -s ../typo3_src-7.6.0 typo3_src
+			$ ln -s typo3_src/index.php
+			$ ln -s typo3_src/typo3
+			$ touch FIRST_INSTALL
+		\end{lstlisting}
+
+		\item \greektext Συμβολικoί σύνδεσμοι για \latintext Microsoft Windows:
+
+			\begin{itemize}
+				\item \greektext Χρησιμοποιήστε \texttt{\latintext junction} \greektext για \latintext Windows XP/2000
+				\item \greektext Χρησιμοποιήστε \texttt{\latintext mlink} \greektext για \latintext Windows Vista and Windows 7
+			\end{itemize}
+
+	\end{itemize}
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		15436c00-cfcfc33e-a91053bc-0d92bf75
+% LTXE-SLIDE-ORIGIN:	e4b09ddf-4c0ea575-9e0900ad-b878899c English
+% LTXE-SLIDE-ORIGIN:	d146f854-4fcfed01-7de68fce-c2599f7f German
+% LTXE-SLIDE-TITLE:		Upgrade to TYPO3 CMS 7
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{\greektext Εισαγωγή}
+	\framesubtitle{\greektext Αναβάθμιση σε \latintext TYPO3 CMS 7.x}
+
+	\begin{itemize}
+		\item \greektext Η αναβάθμιση είναι δυνατή μόνο από \latintext TYPO3 CMS 6.2 LTS
+		\item \greektext Η έκδοση \latintext TYPO3 CMS < 6.2 \greektext πρέπει να αναβαθμιστεί πρώτα σε \latintext TYPO3 CMS 6.2 LTS
+	\end{itemize}
+
+	\begin{itemize}
+
+		\item \greektext Οδηγίες αναβάθμισης:\newline
+			\latintext \smaller\url{http://wiki.typo3.org/Upgrade#Upgrading_to_7.6}\normalsize
+		\item \greektext Επίσημος οδηγός \latintext TYPO3 "TYPO3 Installation and Upgrading":
+			\latintext \smaller\url{http://docs.typo3.org/typo3cms/InstallationGuide}\normalsize
+		\item \greektext Γενική προσέγγιση:
+			\begin{itemize}
+				\item \greektext Ελέγξτε τις ελάχιστες απαιτήσεις συστήματος \small(\latintext PHP, MySQL, etc.)
+				\item \greektext Κάνετε ανασκόπηση του \textbf{\latintext deprecation\_*.log} \greektext στην παλιά υπόσταση της \latintext TYPO3
+				\item \greektext Ανανεώστε όλες τις \latintext extensions \greektext στην τελευταία τους έκδοση
+			\end{itemize}
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{\greektext Εισαγωγή}
+	\framesubtitle{\greektext Αναβάθμιση σε \latintext TYPO3 CMS 7.x}
+
+	\begin{itemize}
+		\item \greektext Γενική προσέγγιση - Συνέχεια:
+			\begin{itemize}
+				\item \greektext Kάνετε \latintext deploy \greektext τα νέα πηγαία αρχεία και "τρέξτε" τον \textrightarrow Οδηγό Αναβάθμισης
+				\item \greektext Κάνετε ανασκόπηση του \latintext startup module \greektext για τους χρήστες \latintext backend (\greektext προαιρετικά)
+			\end{itemize}
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------

@@ -1,0 +1,508 @@
+% ------------------------------------------------------------------------------
+% TYPO3 CMS 7.6 - What's New - Chapter "In-Depth Changes" (English Version)
+%
+% @author	Patrick Lobacher <patrick@lobacher.de> and Michael Schams <schams.net>
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		http://typo3.org/download/release-notes/whats-new/
+% @language	English
+% ------------------------------------------------------------------------------
+% LTXE-CHAPTER-UID:		7229f1b9-b481e9bc-09c46183-a86b6a7e
+% LTXE-CHAPTER-NAME:	In-Depth Changes
+% ------------------------------------------------------------------------------
+
+\section{Systeemwijzigingen}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:	d0100a90-5ae575f5-4b541c81-2d344d4d
+% LTXE-SLIDE-ORIGIN:	159a2d7f-b679989c-30cf1736-6693f827 English
+% LTXE-SLIDE-TITLE:		Bootstrap for Install Tool (1)
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Systeemwijzigingen}
+	\framesubtitle{Bootstrap in de Installatie-module (1)}
+
+	\begin{itemize}
+
+		\item De Installatie-module is nu gebaseerd op Bootstrap - voor het installatiedeel:
+
+			\begin{figure}
+				\includegraphics[width=0.7\linewidth]{InDepthChanges/InstallToolBootstrap01.jpg}
+			\end{figure}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		b8b016c3-cab9f963-89762d15-12bfbe85
+% LTXE-SLIDE-ORIGIN:	66a71f73-91b6c90e-e548a037-e2d47f94 English
+% LTXE-SLIDE-TITLE:		Bootstrap for Install Tool (2)
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Systeemwijzigingen}
+	\framesubtitle{Bootstrap in de Installatie-module (2)}
+
+	\begin{itemize}
+
+		\item De Installatie-module is nu gebaseerd op Bootstrap - voor de configuratie:
+
+			\begin{figure}
+				\includegraphics[width=0.7\linewidth]{InDepthChanges/InstallToolBootstrap02.png}
+			\end{figure}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		63607bcc-31ac0bda-1427e0e6-0b862497
+% LTXE-SLIDE-ORIGIN:	f901074a-4080140f-dd93e505-1e8c2178 English
+% LTXE-SLIDE-ORIGIN:	d5acb2d2-159a2d7f-6693f827-30cf1736 German
+% LTXE-SLIDE-TITLE:		Form protection API for frontend usage
+% LTXE-SLIDE-REFERENCE:	Feature-56633-FormProtectionAPIForFrontEndUsage.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Systeemwijzigingen}
+	\framesubtitle{CSRF-bescherming voor frontend plug-ins}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Nieuwe klasse ondersteunt gebruik van formulierbeschermings-API in de frontend
+
+		\item Dit implementeert een CSRF-bescherming (Cross-Site Request Forgery)
+
+			\begin{lstlisting}
+				$formToken = \TYPO3\CMS\Core\FormProtection\FormProtectionFactory::get()->getFormProtection()->generateToken('news', 'edit', $uid);
+				if (
+				  $dataHasBeenSubmitted
+				  && \TYPO3\CMS\Core\FormProtection\FormProtectionFactory::get()->validateToken(
+				    \TYPO3\CMS\Core\Utility\GeneralUtility::_POST('formToken'), 'User setup', 'edit')) {
+				  // bewerk de gegevens
+				}
+				else {
+				  // ongeldige token!
+				}
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		ad24014f-7dc9d749-242f32d3-67b295fc
+% LTXE-SLIDE-ORIGIN:	0198b067-68da7843-6a6d3f6d-94cee9b7 English
+% LTXE-SLIDE-ORIGIN:	388c7243-b679989c-e2b30dbb-78f1aea4 German
+% LTXE-SLIDE-TITLE:		Added LinkBrowser APIs (1)
+% LTXE-SLIDE-REFERENCE:	Feature-66369-AddedLinkBrowserAPIs.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Systeemwijzigingen}
+	\framesubtitle{Tabbladen voor linkbladerscherm (1)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Het linkbladerscherm is uit te breiden met nieuwe tabbladen
+
+		\item Elk tabblad wordt afgehandeld door een zogenoemde "LinkHandler", die de volgende Interface
+			moet implementeren:\newline
+			\small
+				\texttt{\textbackslash TYPO3\textbackslash CMS\textbackslash Recordlist\textbackslash LinkHandler\textbackslash LinkHandlerInterface}
+			\normalsize
+
+		\item LinkHandlers worden als volgt in PageTSconfig geregistreerd:
+
+			\begin{lstlisting}
+				file {
+				  handler = TYPO3\\CMS\\Recordlist\\LinkHandler\\FileLinkHandler
+				  label = LLL:EXT:lang/locallang_browse_links.xlf:file
+				  displayAfter = page
+				  scanAfter = page
+				  configuration {
+				    customConfig = doorgegeven aan handler
+				  }
+				}
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		73aa762a-cd12b8fe-400b2bb6-c8eb7774
+% LTXE-SLIDE-ORIGIN:	7ff322bc-2ace574c-34ddebb5-559fd90c English
+% LTXE-SLIDE-ORIGIN:	dfd89b4b-7b4b816c-e5904ba8-2527339b German
+% LTXE-SLIDE-TITLE:		Added LinkBrowser APIs (2)
+% LTXE-SLIDE-REFERENCE:	Feature-66369-AddedLinkBrowserAPIs.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Systeemwijzigingen}
+	\framesubtitle{Tabbladen voor linkbladerscherm (2)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Opties \texttt{displayBefore} en \texttt{displayAfter} bepalen de posities van de tabbladen
+
+		\item Opties \texttt{scanBefore} en \texttt{scanAfter} bepalen de volgorde waarin de handlers
+			worden uitgevoerd bij het scannen van bestaande links
+
+			\begin{lstlisting}
+				$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['LinkBrowser']['hooks'][1444048118] = [
+				  'handler' => \Vendor\Ext\MyClass::class,
+				  'before' => [], // optioneel
+				  'after' => [] // optioneel
+				];
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		5961ef23-3433326f-ff837fc5-550adf0b
+% LTXE-SLIDE-ORIGIN:	1ef90646-4f4342dd-3bf0112b-95acba1b English
+% LTXE-SLIDE-ORIGIN:	687f24a3-032124a3-7ac41f15-26329962 German
+% LTXE-SLIDE-TITLE:		Module Template API (1)
+% LTXE-SLIDE-REFERENCE:	Feature-69814-ModuleTemplateAPI.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Systeemwijzigingen}
+	\framesubtitle{API Modulesjabloon (1)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Een nieuwe API voor de modulesjabloon heeft als doel de implementatie van DocHeaders normalizeren
+
+		\item Voorbeeld 1: knop toevoegen
+
+			\begin{lstlisting}
+				$openInNewWindowButton = $this->moduleTemplate->getDocHeaderComponent()->getButtonBar()
+				  ->makeLinkButton()
+				  ->setHref('#')
+				  ->setTitle($this->getLanguageService()->sL(
+				    'LLL:EXT:lang/locallang_core.xlf:labels.openInNewWindow', TRUE
+				    ))
+				  ->setIcon($this->iconFactory->getIcon('actions-window-open', Icon::SIZE_SMALL))
+				  ->setOnClick($aOnClick);
+
+				$this->moduleTemplate->getDocHeaderComponent()->getButtonBar()
+				  ->addButton($openInNewWindowButton, ButtonBar::BUTTON_POSITION_RIGHT);
+			\end{lstlisting}
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		67383bfa-70ed008b-b4fc731d-3e67414f
+% LTXE-SLIDE-ORIGIN:	44c8e88e-5668ccb6-3cf424ea-c6a40ecf English
+% LTXE-SLIDE-ORIGIN:	1570c8c9-2dfa48e9-058d2d04-bff5465d German
+% LTXE-SLIDE-TITLE:		Module Template API (2)
+% LTXE-SLIDE-REFERENCE:	Feature-69814-ModuleTemplateAPI.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Systeemwijzigingen}
+	\framesubtitle{API Modulesjabloon (2)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item Voorbeeld 2: menu met menu-items toevoegen
+
+			\begin{lstlisting}
+				$languageMenu = $this->moduleTemplate->getDocHeaderComponent()
+				  ->getModuleMenuRegistry()->makeMenu()
+				  ->setIdentifier('_langSelector')
+				  ->setLabel($this->getLanguageService()->sL(
+				    'LLL:EXT:lang/locallang_general.xlf:LGL.language', TRUE
+				  ));
+
+				$menuItem = $languageMenu->makeMenuItem()
+				  ->setTitle($lang['title'] . $newTranslation)
+				  ->setHref($href);
+
+				if((int)$lang['uid'] === $currentLanguage) {
+				  $menuItem->setActive(TRUE);
+				}
+
+				$languageMenu->addMenuItem($menuItem);
+				$this->moduleTemplate->getDocHeaderComponent()->getModuleMenuRegistry()->addMenu($languageMenu);
+			\end{lstlisting}
+	\end{itemize}
+
+\end{frame}
+
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		d5ea3bff-d87977a8-19b5e445-d8d9d3d5
+% LTXE-SLIDE-ORIGIN:	2ffbc623-117a44dc-923610ec-78a3afc2 English
+% LTXE-SLIDE-ORIGIN:	df3ea848-d5406e98-edbd6684-485ff477 German
+% LTXE-SLIDE-TITLE:		PSR-7-based Routing for Backend AJAX Requests
+% LTXE-SLIDE-REFERENCE:	Feature-69916-PSR-7-basedRoutingForBackendAJAXRequests.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Systeemwijzigingen}
+	\framesubtitle{PSR-7 Routing voor Backend AJAX Requests}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Om een route voor een AJAX-request toe te voegen, kan het bestand
+			\texttt{Configuration/Backend/AjaxRoutes.php}\newline
+			worden aangemaakt met de volgende inhoud:
+
+			\begin{lstlisting}
+				return [
+				  // doe iets
+				  'unique_route_name' => [
+				    'path' => '/toolcollection/some-action',
+				    'target' => \Vendor\Controller\SomeController::class . '::myAction',
+				  ]
+				];
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		1ad0c2ff-9489f756-51da9276-999dae43
+% LTXE-SLIDE-ORIGIN:	b68a9d26-30e6d4a0-7bccecf2-ad1f93c6 English
+% LTXE-SLIDE-ORIGIN:	cb01cca6-58e91977-d18fa0b3-cba021ab German
+% LTXE-SLIDE-TITLE:		Introduced two new Hooks for OpenID (getUserRecord)
+% LTXE-SLIDE-REFERENCE:	Feature-44127-HooksForOpenIdToAutomaticallyCreateUserAccounts.rst
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{Systeemwijzigingen}
+	\framesubtitle{OpenID Hook \texttt{getUserRecord}}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	Twee hooks zijn toegevoegd aan de OpenID-service (1/2)
+
+		\begin{itemize}
+
+			\item Hook 1:\newline
+				\smaller\smaller
+					\texttt{\$GLOBALS['TYPO3\_CONF\_VARS']['SC\_OPTIONS']['openid']['getUserRecord']}
+				\normalsize
+
+				\begin{itemize}
+					\item Wijzig het gebruikersrecord nadat het is opgehaald, of
+					\item Maak een nieuw record aan als er geen is gevonden
+					\item Parameters \texttt{record}, \texttt{response} en \texttt{authInfo} worden doorgegeven aan de hook
+				\end{itemize}
+
+		\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		d130d657-84183b2a-175bf466-ae3cfd8c
+% LTXE-SLIDE-ORIGIN:	b9b259e4-9d35ace7-edff1014-7390d1d1 English
+% LTXE-SLIDE-ORIGIN:	ea0bfed8-831666d7-1ba40bb9-7a95723a German
+% LTXE-SLIDE-TITLE:		Introduced two new Hooks for OpenID (authRequest)
+% LTXE-SLIDE-REFERENCE:	Feature-44127-HooksForOpenIdToAutomaticallyCreateUserAccounts.rst
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{Systeemwijzigingen}
+	\framesubtitle{OpenID Hook \texttt{authRequest}}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	Twee hooks zijn toegevoegd aan de OpenID-service (2/2)
+
+		\begin{itemize}
+
+			\item Hook 2:\newline
+				\smaller\smaller
+					\texttt{\$GLOBALS['TYPO3\_CONF\_VARS']['SC\_OPTIONS']['openid']['authRequest']}
+				\normalsize
+
+				\begin{itemize}
+					\item Wijzigt het Authentication Request, voordat het wordt verzonden
+					\item Kan worden gebruikt om extra attributen aan te vragen uit de OpenID-Server zoals een bijnaam
+					\item Parameters \texttt{authRequest} en \texttt{authInfo} worden doorgegeven aan de hook
+				\end{itemize}
+
+		\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		3ea0c723-78d7057c-b0007ef4-1a9ab4f8
+% LTXE-SLIDE-ORIGIN:	1626edc6-8d93ff84-f64178bf-8e7650df English
+% LTXE-SLIDE-ORIGIN:	115a4459-3653bb99-1680d6ab-d8c3c69b German
+% LTXE-SLIDE-TITLE:		Hook in BackendUserAuthentication::getDefaultUploadFolder (1)
+% LTXE-SLIDE-REFERENCE:	Feature-68895-IntroducedHookInBackendUserAuthenticationgetDefaultUploadFolder.rst
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{Systeemwijzigingen}
+	\framesubtitle{Hooks en Signals (1)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Het is nu mogelijk om de upload-map te wijzigen die terugkomt uit
+			\texttt{BackendUserAuthentication::getDefaultUploadFolder()}
+
+		\item Registreer de hook in bestand \texttt{ext\_localconf.php} als volgt:
+
+			\begin{lstlisting}
+				$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_userauthgroup.php']
+				  ['getDefaultUploadFolder'][] =
+				  \Vendor\MyExtension\Hooks\DefaultUploadFolder::class . '->getDefaultUploadFolder';
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		f8df0c71-86ee3b67-2229140f-55d2775e
+% LTXE-SLIDE-ORIGIN:	9c150d50-ee3ba19b-120ef653-e714135c English
+% LTXE-SLIDE-ORIGIN:	d1041967-32814ee3-2172e570-4a6d21bd German
+% LTXE-SLIDE-TITLE:		Hook in BackendUserAuthentication::getDefaultUploadFolder (2)
+% LTXE-SLIDE-REFERENCE:	Feature-68895-IntroducedHookInBackendUserAuthenticationgetDefaultUploadFolder.rst
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{Systeemwijzigingen}
+	\framesubtitle{Hooks en Signals (2)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\small Voorbeeld:\normalsize
+
+		\begin{lstlisting}
+			<?php
+			namespace Vendor\MyExtension\Hooks;
+			use TYPO3\CMS\Core\Authentication\BackendUserAuthentication;
+			use TYPO3\CMS\Core\Resource\Folder;
+
+			/**
+			 * Class DefaultUploadFolder
+			 */
+			class DefaultUploadFolder {
+
+			  /**
+			   * Haal de standaard upload-map op
+			   * Als er een map beschikbaar is met dezelfde naam als het laatste deel van de tabelnaam gebruik dan die map
+			   * @param array $params
+			   * @param BackendUserAuthentication $backendUserAuthentication
+			   * @return Map
+			   */
+			   public function getDefaultUploadFolder($params, BackendUserAuthentication $backendUserAuthentication) {
+			    [...]
+		\end{lstlisting}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		0f1f4e42-daa2b6e8-8345861e-2213e361
+% LTXE-SLIDE-ORIGIN:	a4d7bec0-6c19d8b2-6a6be951-5d5aa0c0 English
+% LTXE-SLIDE-ORIGIN:	2f855107-2262065c-c865f953-91b4f0ea German
+% LTXE-SLIDE-TITLE:		Hook in BackendUserAuthentication::getDefaultUploadFolder (3)
+% LTXE-SLIDE-REFERENCE:	Feature-68895-IntroducedHookInBackendUserAuthenticationgetDefaultUploadFolder.rst
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{Systeemwijzigingen}
+	\framesubtitle{Hooks en Signals (3)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\small Voorbeeld (vervolg):\normalsize
+
+		\begin{lstlisting}
+			    [...]
+
+			    /** @var Folder $uploadFolder */
+			    $uploadFolder = $params['uploadFolder'];
+			    $pid = $params['pid'];
+			    $table = $params['table'];
+			    $field = $params['field'];
+
+			    $matches = [];
+			    if (!empty($uploadFolder) && preg_match('/_([a-z]+)$/', $table, $matches)) {
+			      $folderName = $matches[1];
+			      if ($uploadFolder->hasFolder($folderName)) {
+			        $uploadFolder = $uploadFolder->getSubfolder($folderName);
+			      }
+			    }
+			    return $uploadFolder;
+			  }
+			}
+		\end{lstlisting}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		d79dc157-91e33091-d02ef69a-4672111c
+% LTXE-SLIDE-ORIGIN:	2c656d9e-38b9be7a-d590cb6e-21eccd4d English
+% LTXE-SLIDE-ORIGIN:	cd6ba83d-9f068dee-b8887ffa-4a2eff29 German
+% LTXE-SLIDE-TITLE:		Diverse Änderungen
+% LTXE-SLIDE-REFERENCE:	Deprecation-69822-DeprecateSelectFieldTca.rst
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{Systeemwijzigingen}
+	\framesubtitle{Diversen}
+
+	\begin{itemize}
+
+		\item Het gebruik van het TCA-veldtype \texttt{select} vereist het gebruik van de optie \texttt{renderType}
+
+		\item Geldige waarden zijn:
+
+			\begin{lstlisting}
+				'renderType' => 'selectMultipleSideBySide',
+				'renderType' => 'selectCheckBox',
+				'renderType' => 'selectSingle',
+				'renderType' => 'selectSingleBox',
+				'renderType' => 'selectTree',
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------

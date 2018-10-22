@@ -1,0 +1,111 @@
+% ------------------------------------------------------------------------------
+% TYPO3 CMS 7.2 - What's New - Chapter "Extbase & Fluid" (English Version)
+%
+% @author	Michael Schams <schams.net>
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		http://typo3.org/download/release-notes/whats-new/
+% @language	English
+% ------------------------------------------------------------------------------
+% LTXE-CHAPTER-UID:		7895b9cc-5939ed80-62e6d9b9-bcb40d5e
+% LTXE-CHAPTER-NAME:	Chapter: Extbase & Fluid
+% ------------------------------------------------------------------------------
+
+\section{Extbase i Fluid}
+\begin{frame}[fragile]
+	\frametitle{Extbase i Fluid}
+
+	\begin{center}\huge{Poglavlje 4:}\end{center}
+	\begin{center}\huge{\color{typo3darkgrey}\textbf{Extbase i Fluid}}\end{center}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		9a3ddcba-aee0cc9a-1f7bfb34-2a43874a
+% LTXE-SLIDE-ORIGIN:	44467f9a-abe64946-3da2bf4c-5bd094eb English
+% LTXE-SLIDE-TITLE:		Introduce callouts to replace content alerts
+% LTXE-SLIDE-REFERENCE:	Feature-66077-IntroduceCalloutsToReplaceContentAlerts.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Extbase i Fluid}
+	\framesubtitle{Callouts vs. FlashMessages}
+
+	\begin{itemize}
+
+		\item Callouts (content info boxes) zamenjuju FlashMessages na nekoliko mesta u administratorskom interfejsu kako bi prikazali dodatne informacije
+
+		\item Ovo zahteva novi Fluid ViewHelper \texttt{be.infobox}:
+
+			\begin{lstlisting}
+				<f:be.infobox title="Message title">
+				   your box content
+				</f:be.infobox>
+
+				<f:be.infobox
+				   title="Message title"
+				   message="your box content"
+				   state="-2"
+				   iconName="check"
+				   disableIcon="TRUE" />
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		4f6e7857-7eb343a2-51743621-0e77a417
+% LTXE-SLIDE-ORIGIN:	b5ee213c-b04df592-d31ed084-b94e0f58 English
+% LTXE-SLIDE-TITLE:		FormatCaseViewHelper
+% LTXE-SLIDE-REFERENCE: Feature-58621-FormatCaseViewHelper.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Extbase i Fluid}
+	\framesubtitle{format.case ViewHelper}
+
+	\begin{itemize}
+
+		\item Novi ViewHelper \texttt{format.case} menja velicinu slova stringa:
+			\begin{itemize}
+				\item \texttt{upper}: pretvara stringu u  "UPPERCASE"
+				\item \texttt{lower}: pretvara stringu u  "lowercase"
+				\item \texttt{capital}: pretvara prvo slovo stringa u veliko slovo
+				\item \texttt{uncapital}: pretvara prvo slovo stringa u malo slovo
+			\end{itemize}
+
+		\item Na primer:
+
+			\begin{lstlisting}
+				// pretvara u "SOME TEXT WITH MIXED CASE"
+				<f:format.case>Some TeXt WiTh miXed cAse</f:format.case>
+
+				// pretvara u "SomeString"
+				<f:format.case mode="capital">someString</f:format.case>
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		65818584-c466ecbd-ae5275c3-b259f67e
+% LTXE-SLIDE-ORIGIN:	586287f8-fa46da57-a201e1bf-87532889 English
+% LTXE-SLIDE-TITLE:		Skip cache hash for URIs to non-cacheable actions
+% LTXE-SLIDE-REFERENCE:	Breaking-60272-SkipCacheHashForUrisToNonCacheableActions.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Extbase i Fluid}
+	\framesubtitle{Miscellaneous}
+
+	\begin{itemize}
+
+		\item Parametar \texttt{cHash} se ne dodaje URI-ju akcije ako se zahtev i sama akcija ne kesira
+
+	\end{itemize}
+
+\end{frame}

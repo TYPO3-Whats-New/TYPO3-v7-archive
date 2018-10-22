@@ -1,0 +1,419 @@
+% ------------------------------------------------------------------------------
+% TYPO3 CMS 7.0 - What's New - Chapter "In-Depth Changes" (English Version)
+%
+% @author	Michael Schams <schams.net>
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		http://typo3.org/download/release-notes/whats-new/
+% @language	English
+% ------------------------------------------------------------------------------
+% LTXE-CHAPTER-UID:		212ecbb8-5986dfff-21b3e733-edfb8d99
+% LTXE-CHAPTER-NAME:	In-Depth Changes
+% ------------------------------------------------------------------------------
+
+\section{Systeemwijzigingen}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		d3d9a8f5-982489ce-1fdd24b0-d49e1b32
+% LTXE-SLIDE-ORIGIN:	b47dd2a2-952b3dd2-b9ceecce-ab8630bc English
+% LTXE-SLIDE-TITLE:		Integration of jQuery UI version 1.11.2
+% LTXE-SLIDE-REFERENCE:	https://forge.typo3.org/issues/62916
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Systeemwijzigingen}
+	\framesubtitle{Integratie van jQuery UI versie 1.11.2}
+
+	\begin{itemize}
+		\item jQuery UI 1.11 ondersteunt AMD
+			(\href{http://en.wikipedia.org/wiki/Asynchronous_module_definition}{Asynchronous Module Definition}),
+			die JavaScript-bestanden alleen inlaadt als ze nodig zijn (extra performance)
+
+    	\item jQuery UI 1.11 vervangt jQuery UI 1.10 + Scriptaculous in TYPO3 CMS 7.0
+
+    	\item Alleen de core- en interactiecomponenten die nodig zijn
+    		om ExtJS en Scriptaculous te vervangen zijn opgenomen 
+
+    	\item Widgets zijn niet opgenomen (die van Twitter Bootstrap worden gebruikt,
+    		zoals: DatePicker, Spinner, Dialog, Buttons, Tabs, Tooltip)
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		68f25a3b-4df59cf1-b70546d5-e32dcb0c
+% LTXE-SLIDE-ORIGIN:	66a996e1-bcfe7442-d44f59c8-d3495d4e English
+% LTXE-SLIDE-TITLE:		Registry for File Rendering Classes
+% LTXE-SLIDE-REFERENCE:	https://forge.typo3.org/issues/61800
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Systeemwijzigingen}
+	\framesubtitle{Register voor klassen om bestanden te renderen}
+
+	\lstset{
+		basicstyle=\tiny\ttfamily
+	}
+
+	\begin{itemize}
+		\item Om alle soorten mediabestanden te kunnen renderen is een register
+			voor het renderen van bestanden gemaakt.\newline
+			Dit gebeurt als volgt (bijv. Video, MPEG, AVI, WAV, etc.):
+
+		\begin{lstlisting}
+			<?php
+			namespace ...;
+
+			class NameTagRenderer implements FileRendererInterface {
+			  protected $possibleMimeTypes = array('audio/mpeg', 'audio/wav', ...);
+			  public function getPriority() {
+			    return 1; // prioriteit: hoe hoger, des te belangrijker (max: 100)
+			  }
+			  public function canRender(FileInterface $file) {
+			    return in_array($file->getMimeType(), $this->possibleMimeTypes, TRUE);
+			  }
+			  public function render(FileInterface $file, $width, $height, array $options = array(), $usedPathsRelativeToCurrentScript = FALSE) {
+			    ...
+
+			    return 'HTML code';
+			  }
+			}
+		\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		4f933dcb-fbe9e005-93213680-67f8aa48
+% LTXE-SLIDE-ORIGIN:	2c97df27-58f83c0c-2a7532ce-73ba3bd5 English
+% LTXE-SLIDE-TITLE:		TCA: Validate Email Addresses
+% LTXE-SLIDE-REFERENCE:	https://forge.typo3.org/issues/62147
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Systeemwijzigingen}
+	\framesubtitle{TCA: E-mailadressen valideren}
+
+	\lstset{
+		basicstyle=\tiny\ttfamily
+	}
+
+	\begin{itemize}
+
+		\item Nieuwe functie "email" checkt of de waarde een geldig e-mailadres is
+		\item Als controle niet slaagt, verschijnt een statusmelding
+		\item Voorbeeld:
+
+		\begin{lstlisting}
+			'emailaddress' => array(
+			  'exclude' => 1,
+			  'label' => 'LLL:EXT:myextension/Resources/Private/Language/locallang_db.xlf:tx_myextension
+		 	  'config' => array(
+			      'type' => 'input',
+			      'size' => 30,
+			      'eval' => 'email,trim'
+			  ),
+			)
+		\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		7bd8930b-8ecb50d5-00dbc4d5-15509842
+% LTXE-SLIDE-ORIGIN:	08cf25ed-0cba243f-e0738567-598b1534 English
+% LTXE-SLIDE-TITLE:		AbstractCondition For Custom TypoScript Conditions
+% LTXE-SLIDE-REFERENCE:	https://forge.typo3.org/issues/61489
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Systeemwijzigingen}
+	\framesubtitle{AbstractCondition voor eigen TypoScript-condities}
+
+	\lstset{
+		basicstyle=\tiny\ttfamily
+	}
+
+	\begin{itemize}
+		\item Eigen TypoScript-condities kunnen afgeleid worden van AbstractCondition
+
+		\begin{lstlisting}
+			class TestCondition
+			  extends \TYPO3\CMS\Core\Configuration\TypoScript\ConditionMatching\AbstractCondition {
+
+			  public function matchCondition(array $conditionParameters) {
+ 			    if ($conditionParameters[0] === '= 7' && $conditionParameters[1] === '!= 6') {
+			      throw new TestConditionException('Alles Ok', 1411581139);
+			    }
+			  }
+			}
+		\end{lstlisting}
+
+		\item De bijgehorende TypoScript-code is:
+
+		\begin{lstlisting}
+			[Vendor\Package\TestCondition]
+			[Vendor\Package\TestCondition = 7]
+			[Vendor\Package\TestCondition = 7, != 6]
+		\end{lstlisting}
+
+		\item Operatoren die beschikbaar moeten zijn, worden in de klasse gedefinieerd
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		043d574c-4d8a45c2-4e6ae4b2-75101883
+% LTXE-SLIDE-ORIGIN:	c137d1cf-7ce68dbe-8149deb5-19fe62bb English
+% LTXE-SLIDE-TITLE:		Signal for IconUtility HTML tag manipulation
+% LTXE-SLIDE-REFERENCE:	https://forge.typo3.org/issues/61289
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Systeemwijzigingen}
+	\framesubtitle{Signal voor manipulatie van IconUtility HTML tag}
+
+	\lstset{
+		basicstyle=\tiny\ttfamily
+	}
+
+	\begin{itemize}
+
+		\item Nieuw signal voor manipulatie van de IconUtility HTML tag voor sprite-iconen:
+
+		\begin{lstlisting}
+			dispatch(
+			  'TYPO3\\CMS\\Backend\\Utility\\IconUtility',
+			  'buildSpriteHtmlIconTag',
+			  array($tagAttributes, $innerHtml, $tagName)
+			);
+		\end{lstlisting}
+
+		\item Aanroep:
+
+		\begin{lstlisting}
+			TYPO3\CMS\Backend\Utility\IconUtility\buildSpriteHtmlIconTag
+		\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		d1af14e6-dbc4c18b-f211315a-413b9cae
+% LTXE-SLIDE-ORIGIN:	6713b880-9410d0a5-ef04d276-7bb989ba English
+% LTXE-SLIDE-TITLE:		Add Signal Slots to SoftReferenceIndex
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Systeemwijzigingen}
+	\framesubtitle{Signal Slots voor SoftReferenceIndex}
+
+	\lstset{
+		basicstyle=\tiny\ttfamily
+	}
+
+	\begin{itemize}
+		\item
+			\smaller
+				Twee nieuwe signal-slot aanroepen in SoftReferenceIndex:
+			\normalsize
+
+		\begin{lstlisting}
+			protected function emitGetTypoLinkParts(
+			  $linkHandlerFound, $finalTagParts, $linkHandlerKeyword, $linkHandlerValue) {
+			  return $this->getSignalSlotDispatcher()->dispatch(
+			    get_class($this),
+			    'getTypoLinkParts',
+			    array($linkHandlerFound, $finalTagParts, $linkHandlerKeyword, $linkHandlerValue)
+			  );
+			}
+			protected function emitSetTypoLinkPartsElement(
+			  $linkHandlerFound, $tLP, $content, $elements, $idx, $tokenID) {
+			  return $this->getSignalSlotDispatcher()->dispatch(
+			    get_class($this),
+			    'setTypoLinkPartsElement',
+			    array($linkHandlerFound, $tLP, $content, $elements, $idx, $tokenID, $this)
+			  );
+			}
+		\end{lstlisting}
+
+		\item
+			\smaller
+				Aangeroepen in:
+			\normalsize
+
+			\begin{lstlisting}
+				TYPO3\CMS\Core\Database\SoftReferenceIndex->findRef_typolink
+				TYPO3\CMS\Core\Database\SoftReferenceIndex->getTypoLinkParts
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		4a351366-26376e7d-ab85f815-1b2810aa
+% LTXE-SLIDE-ORIGIN:	d743b8cf-4924c9ca-7e1d330c-3b101461 English
+% LTXE-SLIDE-TITLE:		afterPersistObjetct Signal Slot
+% LTXE-SLIDE-REFERENCE:	https://forge.typo3.org/issues/59986
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Systeemwijzigingen}
+	\framesubtitle{afterPersistObjetct Signal Slot}
+
+	\lstset{
+		basicstyle=\tiny\ttfamily
+	}
+
+	\begin{itemize}
+
+		\item Nieuwe afterPersistObject signal-slot zendt uit voor de aggregate root na het persisteren van alle andere objecten
+
+			\begin{lstlisting}
+				protected function emitAfterPersistObjectSignal(DomainObjectInterface $object) {
+				  $this->signalSlotDispatcher->dispatch(__CLASS__, 'afterPersistObject', array($object));
+				}
+			\end{lstlisting}
+
+		\item Aangeroepen in:
+
+			\begin{lstlisting}
+				TYPO3\CMS\Extbase\Persistence\Generic\Backend->persistObject
+			\end{lstlisting}
+
+		\item Hetzelfde signal is uitgezonden in de methode persistObject in de AbstractBackend-klasse in Flow
+
+	\end{itemize}
+
+\end{frame}                                                 
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		4cde04d3-f19c0c84-f1a221f7-5bc73e53
+% LTXE-SLIDE-ORIGIN:	17ea6530-0ec1ad3e-8e7d9d24-1d5b64aa English
+% LTXE-SLIDE-TITLE:		Signal in loadBaseTca
+% LTXE-SLIDE-REFERENCE:	https://forge.typo3.org/issues/57863
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Systeemwijzigingen}
+	\framesubtitle{Signal in loadBaseTca}
+
+	\lstset{
+		basicstyle=\tiny\ttfamily
+	}
+
+	\begin{itemize}
+		\item Om de prestaties te verbeteren in de backend, wordt de hele
+			TCA gecachet (niet alleen delen ervan)
+
+		\begin{lstlisting}
+			protected function emitTcaIsBeingBuiltSignal(array $tca) {
+			  list($tca) = static::getSignalSlotDispatcher()->dispatch(
+			    __CLASS__,
+			    'tcaIsBeingBuilt',
+			    array($tca)
+			  );
+			  $GLOBALS['TCA'] = $tca;
+			}
+		\end{lstlisting}
+
+		\item Aangeroepen in:
+
+			\begin{lstlisting}
+				TYPO3\CMS\Core\Utility\ExtensionManagementUtility\Backend->buildBaseTcaFromSingleFiles
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}  
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		13e6c16d-59e17e53-c6d6705d-2ccf822c
+% LTXE-SLIDE-ORIGIN:	2fd6c25c-5f7952da-1406b74c-e0ff5e67 English
+% LTXE-SLIDE-TITLE:		API to Add Cached TCA Changes
+% LTXE-SLIDE-REFERENCE:	https://forge.typo3.org/issues/57942
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Systeemwijzigingen}
+	\framesubtitle{API om gecachete TCA-wijzigingen toe te voegen}
+
+	\begin{itemize}
+		\item PHP bestanden in \texttt{extkey/Configuration/TCA/Overrides/}
+			worden direct uitgevoerd nadat de TCA cache is gebouwd
+
+		\item Deze bestanden mogen alleen code bevatten die de TCA bewerkt,\newline
+			zoals: \texttt{addTCAColumns} of \texttt{addToAllTCATypes}
+
+		\item Dit geeft de backend een prestatieverhoging zodra extensies hiervan gebruik maken
+
+	\end{itemize}
+
+\end{frame} 
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		599b1914-e57ca89a-4df6b4b3-3921cd5a
+% LTXE-SLIDE-ORIGIN:	89fbd845-3952a157-98d97fc4-4244a2d4 English
+% LTXE-SLIDE-TITLE:		Read-only File Mounts
+% LTXE-SLIDE-REFERENCE:	https://forge.typo3.org/issues/49391
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Systeemwijzigingen}
+	\framesubtitle{Alleen-lezen startpunten voor bestanden}
+
+	\begin{itemize}
+
+		\item Startpunten voor bestanden kunnen (weer) ingesteld worden als "alleen-lezen"
+		\item Dit was al mogelijk in TYPO3 CMS 4.x, maar stilletjes verwijderd in 6.x
+		\item Voorbeeld: voeg map "test" van opslag UID 3 als een alleen-lezen startpunt in de bestandslijst en elementbladerscherm.\newline
+
+			\smaller\texttt{options.folderTree.altElementBrowserMountPoints = 3:/test}\normalsize\newline
+
+			Als geen opslag is ingesteld wordt aangenomen dat de map in de standaardopslag zit.
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		6e87474c-2f903f40-bfcd09a0-03b03cea
+% LTXE-SLIDE-ORIGIN:	b964bc6b-27cd32e7-bda8cc3e-8bea33ca English
+% LTXE-SLIDE-TITLE:		Miscellaneous
+% LTXE-SLIDE-REFERENCE:	https://forge.typo3.org/issues/62993
+% LTXE-SLIDE-REFERENCE:	https://forge.typo3.org/issues/61185
+% LTXE-SLIDE-REFERENCE:	https://forge.typo3.org/issues/58365
+% LTXE-SLIDE-REFERENCE:	https://forge.typo3.org/issues/59830
+% LTXE-SLIDE-REFERENCE:	https://forge.typo3.org/issues/62857
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Systeemwijzigingen}
+	\framesubtitle{Diversen}
+
+	\begin{itemize}
+		\item jQuery is bijgewerkt van versie 1.11.0 naar versie 1.11.1
+		\item Datatabellen zijn bijgewerkt van versie 1.9.4 naar versie 1.10.2
+		\item Enige oude, ongebruikte variabelen zijn verwijderd uit \texttt{EM\_CONF}
+		\item Extensie-iconen kunnen ook in SVG-formaat zijn (\texttt{ext\_icon.svg})
+		\item Een verkeerde eID-identifier geeft nu een exceptie
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------

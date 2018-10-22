@@ -1,0 +1,184 @@
+% ------------------------------------------------------------------------------
+% TYPO3 CMS 7.2 - What's New - Chapter "TypoScript" (German Version)
+%
+% @author	Patrick Lobacher <patrick@lobacher.de> and Michael Schams <schams.net>
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		http://typo3.org/download/release-notes/whats-new/
+% @language	German
+% ------------------------------------------------------------------------------
+% LTXE-CHAPTER-UID:		12518a77-2b90a173-4e3f8420-485e0497
+% LTXE-CHAPTER-NAME:	TypoScript
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		56b025e6-cf380b11-c9d1c009-0b548d6a
+% LTXE-SLIDE-TITLE:		Add flexible preview URL configuration (1)
+% LTXE-SLIDE-REFERENCE:	Feature-66370-AddFlexiblePreviewUrlConfiguration.rst
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+	\framesubtitle{Konfigurierbarer Vorschau-Link (1)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item Es ist nun möglich, die URL zur Vorschau einer Seite zu definieren,
+			die durch den Button "Speichern \& Vorschau" aufgerufen wird.
+
+		\item Damit kann man unterschiedliche Links für Blog- oder News-Datensätze,
+			aber auch für Inhaltselemente generieren lassen.
+
+			\begin{lstlisting}
+				TCEMAIN.preview {
+				  <table name> {
+				    previewPageId = 123
+				    useDefaultLanguageRecord = 0
+				    fieldToParameterMap {
+				      uid = tx_myext_pi1[showUid]
+				    }
+				    additionalGetParameters {
+				      tx_myext_pi1[special] = HELLO
+				    }
+				  }
+				}
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		6822c376-37649cd8-0acc836a-b856fc61
+% LTXE-SLIDE-TITLE:		Add flexible preview URL configuration (2)
+% LTXE-SLIDE-REFERENCE:	Feature-66370-AddFlexiblePreviewUrlConfiguration.rst
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+	\framesubtitle{Konfigurierbarer Vorschau-Link (2)}
+
+	\begin{itemize}
+		\item \texttt{previewPageId}:\newline
+			\smaller
+				UID der Seite, die für den Preview verwendet werden soll\newline
+				(ohne Angabe wird die aktuelle Seite verwendet)
+			\normalsize
+		\item \texttt{useDefaultLanguageRecord}:\newline
+			\smaller
+				definiert, ob übersetzte Datensätze die UID des Default-Datensatzes verwenden
+				(standardmäßig ist jenes aktiviert, default: 1)
+			\normalsize
+		\item \texttt{fieldToParameterMap}:\newline
+			\smaller
+				Mapping (Key = Value) von Feldern des Datensatzes, die als GET-Parameter an den Link angehängt werden
+			\normalsize
+		\item \texttt{additionalGetParameters}:\newline
+			\smaller
+				wie \texttt{fieldToParameterMap}, aber für beliebige Paramater
+			\normalsize
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		c5dbf3c7-655fc6e4-227a3bf6-f5d89fb1
+% LTXE-SLIDE-TITLE:		Add RTE configuration property buttons.abbreviation.removeFieldsets
+% LTXE-SLIDE-REFERENCE:	Feature-63040-AddRteConfigurationPropertyButtonsAbbreviationRemoveFieldsets
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+	\framesubtitle{RTE Konfiguration: Default-Target}
+
+	\begin{itemize}
+		\item Das Default-Target in der RTE Konfiguration ist nun im PageTSconfig abhängig vom Typ einstellbar\newline
+
+			\small
+				\texttt{buttons.link.[}
+				\textit{type}
+				\texttt{].properties.target.default = ...}
+			\normalsize\newline
+
+		\item Als "\textit{type}" sind folgende Werte zulässig:\newline
+			\small
+				(weitere können via Extensions eingebracht werden)
+			\normalsize
+
+			\begin{itemize}
+				\item \texttt{page}
+				\item \texttt{file}
+				\item \texttt{url}
+				\item \texttt{mail}
+				\item \texttt{spec}
+			\end{itemize}
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		fd957580-301e4a0a-ad5325f5-ffa024c3
+% LTXE-SLIDE-TITLE:		Strip empty HTML tags in HtmlParser
+% LTXE-SLIDE-REFERENCE:	Feature-20555-StripEmptyHtmlTags.rst
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+	\framesubtitle{Leere HTML-Tags im HTMLparser löschen}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item Es ist nun möglich, leere HTML-Tags im HTMLparser zu löschen
+			\begin{lstlisting}
+				stdWrap {
+				   // Hier werden alle leeren HTML-Tags entfernt
+				   HTMLparser.stripEmptyTags = 1
+				   // Hier werden nur leere h2 und h3 Tags entfernt
+				   HTMLparser.stripEmptyTags.tags = h2, h3
+				}
+
+				RTE.default.proc.entryHTMLparser_db {
+				   stripEmptyTags = 1
+				   stripEmptyTags.tags = p
+				   stripEmptyTags.treatNonBreakingSpaceAsEmpty = 1
+				}
+			\end{lstlisting}
+
+			\item Da der HtmlParser unbekannte Tags grundsätzlich entfernt,
+				ist es ratsam, diese zunächst zu behalten:\newline
+				\texttt{HTMLparser.keepNonMatchedTags = 1}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		62960e76-c3dca953-fe5a1070-831633fc
+% LTXE-SLIDE-TITLE:		Miscellaneous
+% LTXE-SLIDE-REFERENCE:	Feature-63040-AddRteConfigurationPropertyButtonsAbbreviationRemoveFieldsets.rst
+% LTXE-SLIDE-REFERENCE:	commit 31c62f9311ee3d33bf792d548cc4a5fac83aa3d0
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+	\framesubtitle{Diverses}
+
+	\begin{itemize}
+		\item Der Button für "Abkürzung" (engl. \textit{abbreviation}) im RTE kann nun
+			in der PageTSconfig ausgeblendet werden (da nicht mehr HTML5 konform):
+
+			\begin{lstlisting}
+				# moegliche Wert sind:
+				# acronym, definedAcronym, abbreviation, definedAbbreviation
+				buttons.abbreviation.removeFieldsets = acronym,definedAcronym
+			\end{lstlisting}
+
+		\item Die Eigenschaft \texttt{inlineLanguageLabel} des Objekts \texttt{PAGE} kann nun
+			auch mit \texttt{LLL:}-Referenzen umgehen
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------

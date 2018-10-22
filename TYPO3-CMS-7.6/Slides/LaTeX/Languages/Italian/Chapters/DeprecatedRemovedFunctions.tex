@@ -1,0 +1,78 @@
+% ------------------------------------------------------------------------------
+% TYPO3 CMS 7.6 - What's New - Chapter "Deprecated Functions" (English Version)
+%
+% @author	Patrick Lobacher <patrick@lobacher.de> and Michael Schams <schams.net>
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		http://typo3.org/download/release-notes/whats-new/
+% @language	English
+% ------------------------------------------------------------------------------
+% LTXE-CHAPTER-UID:		10e028d3-5834c92b-a0fe4127-b0fdad95
+% LTXE-CHAPTER-NAME:	Deprecated Functions
+% ------------------------------------------------------------------------------
+
+\section{Funzionalità deprecate/rimosse}
+\begin{frame}[fragile]
+	\frametitle{Funzionalità deprecate/rimosse}
+
+	\begin{center}\huge{Capitolo 5:}\end{center}
+	\begin{center}\huge{\color{typo3darkgrey}\textbf{Funzionalità deprecate/rimosse}}\end{center}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		7c984e44-aa45026b-2c966bef-d333010f
+% LTXE-SLIDE-ORIGIN:	4d786e22-7c650555-67ebf079-3f322823 English
+% LTXE-SLIDE-ORIGIN:	09d19dca-6acd88c5-1e8af64a-b5c879d3 German
+% LTXE-SLIDE-TITLE:		Registered AJAX handlers replaced by routes
+% LTXE-SLIDE-REFERENCE:	Breaking-69916-RegisteredAJAXHandlersReplacedByRoutes.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Funzionalità deprecate/rimosse}
+	\framesubtitle{AJAX Route}
+
+	\begin{itemize}
+
+		\item Gli handler AJAX registrati nel core da
+			\texttt{ExtensionManagementUtility::registerAjaxHandler()}
+			sono stati sostituiti da AJAX route, che sono registrati in
+			\texttt{ Configuration/Backend/AjaxRoutes.php}
+
+		\item Una lista completa (vecchi/nuovi) è disponibile alla pagina:\newline
+				\href{https://forge.typo3.org/projects/typo3cms-core/repository/revisions/3f0fb6229ba391356e5ed4984eb1c9418ba6663e/entry/typo3/sysext/core/Documentation/Changelog/master/Breaking-69916-RegisteredAJAXHandlersReplacedByRoutes.rst}{Breaking-69916-RegisteredAJAXHandlersReplacedByRoutes.rst}
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		5c88956f-97df9d09-1fdc5b47-791807f6
+% LTXE-SLIDE-ORIGIN:	d4c8c340-33163839-2ae654ee-9c6834da English
+% LTXE-SLIDE-ORIGIN:	6ed8ef41-42a35835-ff2669df-2b292265 German
+% LTXE-SLIDE-TITLE:		Miscellaneous (#68079, #70514, #70578)
+% LTXE-SLIDE-REFERENCE:	Important-68079-ExtensionMediaceMovedToTER.rst
+% LTXE-SLIDE-REFERENCE:	Deprecation-70514-DynamigConfigFile.rst
+% LTXE-SLIDE-REFERENCE:	Breaking-70578-JumpURLFunctionalityRemovedFromTheTYPO3Core.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Funzionalità deprecate/rimosse}
+	\framesubtitle{Varie}
+
+	\begin{itemize}
+
+		\item L'estensione \texttt{mediace} è stata spostata nel repository delle estensioni TYPO3
+
+		\item La configurazione TCA \texttt{dynamicConfigFile} all'interno della sezione \texttt{ctrl} di
+			una tabella è stata \textbf{deprecata}.
+			Ora la configurazione della tabella si trova come \texttt{Configuration/TCA/<table\_name>.php}.
+
+		\item La funzione \texttt{jumpurl} è stata rimossa dal core ed è disponibile 
+			come un estensione nel repository delle estensioni TYPO3
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------

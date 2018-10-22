@@ -1,0 +1,193 @@
+% ------------------------------------------------------------------------------
+% TYPO3 CMS 7.6 - What's New - Chapter "Extbase & Fluid" (English Version)
+%
+% @author	Patrick Lobacher <patrick@lobacher.de> and Michael Schams <schams.net>
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		http://typo3.org/download/release-notes/whats-new/
+% @language	English
+% ------------------------------------------------------------------------------
+% LTXE-CHAPTER-UID:		cfcf5377-f3e96f39-d1ba01e9-2f341646
+% LTXE-CHAPTER-NAME:	Extbase & Fluid
+% ------------------------------------------------------------------------------
+
+\section{Extbase \& Fluid}
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+
+	\begin{center}\huge{Hoofdstuk 4:}\end{center}
+	\begin{center}\huge{\color{typo3darkgrey}\textbf{Extbase \& Fluid}}\end{center}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		ec03f3ce-3a26e42a-1a1783b8-f8df5e69
+% LTXE-SLIDE-ORIGIN:	9cd3fb74-276172d0-d6b3f387-3d2bd20f English
+% LTXE-SLIDE-ORIGIN:	78012a67-036705de-daefb092-e87adffa German
+% LTXE-SLIDE-TITLE:		Relations to the same table in Extbase
+% LTXE-SLIDE-REFERENCE:	Feature-27057-RelationsToTheSameTableInExtbase.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+	\framesubtitle{Relatie met dezelfde tabel}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Er kan nu in een domeinmodel direct een relatie gemaakt worden met een object van dezelfde klasse
+
+			\begin{lstlisting}
+				namespace \Vendor\Extension\Domain\Model;
+				class A {
+				  /**
+				   * @var \Vendor\Extension\Domain\Model\A
+				   */
+				  protected $parent;
+				}
+			\end{lstlisting}
+
+			\begin{lstlisting}
+				namespace \Vendor\Extension\Domain\Model;
+				class A {
+				  /**
+				   * @var \Vendor\Extension\Domain\Model\B
+				   */
+				  protected $x;
+
+				  /**
+				   * @var \Vendor\Extension\Domain\Model\B
+				   */
+				  protected $y;
+				}
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		f42c0ac3-1173f308-07843103-3327699b
+% LTXE-SLIDE-ORIGIN:	12b7dd4a-73b912f7-e5d1cefa-e3c8386d English
+% LTXE-SLIDE-ORIGIN:	0c279898-ab69247f-502eb397-6817d02b German
+% LTXE-SLIDE-TITLE:		Added absolute url option to uri.image and image viewHelper
+% LTXE-SLIDE-REFERENCE:	Feature-64286-AddedAbsoluteUrlOptionToUriimageAndImageViewHelper.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+	\framesubtitle{Optie \texttt{absolute} voor Image-ViewHelpers}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Nieuwe optie \texttt{absolute} forceert \texttt{ImageViewhelper} en
+			\texttt{Uri/ImageViewHelper} om een \textbf{absolute} URL te geven
+
+		\item Voorbeeld 1 (\texttt{ImageViewhelper}):
+
+			\begin{lstlisting}
+				<f:image image="{file}" width="400" height="375" absolute="1" ></f:image>
+
+				// Output
+				<img alt="alt uit het afbeeldingsrecord"
+				  src="http://example.com/fileadmin/_processed_/323223424.png"
+				  width="400" height="375" />
+			\end{lstlisting}
+
+		\item Voorbeeld 2 (\texttt{Uri/ImageViewHelper}):
+
+			\begin{lstlisting}
+				<f:uri.image image="{file}" width="400" height="375" absolute="1" ></f:uri>
+
+				// Uitvoer
+				http://example.com/fileadmin/_processed_/323223424.png
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		a4bb2dc6-df572182-f6908a0d-230ac54b
+% LTXE-SLIDE-ORIGIN:	666331cd-80241eb3-4da880c4-7c9ee834 English
+% LTXE-SLIDE-ORIGIN:	b880b0d8-83956e2a-0a594f16-7f4eb357 German
+% LTXE-SLIDE-TITLE:		ViewHelper to strip whitespace between HTML tags
+% LTXE-SLIDE-REFERENCE:	Feature-70170-ViewHelperToStripWhitespaceBetweenHTMLTags.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+	\framesubtitle{Verwijder witruimte tussen HTML-tags}
+
+	\begin{itemize}
+
+		\item Nieuwe ViewHelper \texttt{spaceless} verwijdert overbodige spaties tussen HTML tags
+			terwijl de witruimte binnen HTML tags bewaard blijft:
+
+			\begin{lstlisting}
+				<f:spaceless>
+				<div>
+				    <div>
+				        <div>tekst
+
+				tekst</div>
+				</div>
+				</div>
+			\end{lstlisting}
+
+		\item Uitvoer:
+
+			\begin{lstlisting}
+				<div><div><div>tekst
+
+				tekst</div></div></div>
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		b9a6fedc-8de75399-7d4732c5-2a4cec2d
+% LTXE-SLIDE-ORIGIN:	cc4b2591-896d4885-92b8e0d7-35adac7e English
+% LTXE-SLIDE-ORIGIN:	84d3095f-75b5a68a-b9591a53-f34d8ecb German
+% LTXE-SLIDE-TITLE:		Respect rootLevel configuration in extbase queries
+% LTXE-SLIDE-REFERENCE:	Breaking-63406-RespectRootlevelConfigurationinExtbaseQueries.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+	\framesubtitle{Configuratie op root-niveau}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\small\ttfamily}
+
+	\begin{itemize}
+
+		\item Het root-niveau van een tabel kan nu in de TCA ingesteld worden\newline
+			\small(dit bepaalt waar in het systeem records van een tabel gevonden kunnen worden)\normalsize
+
+			\begin{itemize}
+				\item \texttt{0}: alleen paginaboom
+				\item \texttt{1}: alleen op de rootpagina (PID 0)
+				\item \texttt{-1}: beide, rootpagina en paginaboom
+			\end{itemize}
+
+		\item TCA configuratie:\newline
+			\tiny
+				\texttt{\$GLOBALS['TCA']['tx\_myext\_domain\_model\_record']['ctrl']['rootLevel'] = -1;}
+			\normalsize
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------

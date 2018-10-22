@@ -1,0 +1,203 @@
+% ------------------------------------------------------------------------------
+% TYPO3 CMS 7.0 - What's New - Chapter "Introduction" (English Version)
+%
+% @author	Michael Schams <schams.net>
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		http://typo3.org/download/release-notes/whats-new/
+% @language	English
+% ------------------------------------------------------------------------------
+% LTXE-CHAPTER-UID:		808b0b2c-800d6944-dbfbe86d-b944f1b3
+% LTXE-CHAPTER-NAME:	Introduction
+% ------------------------------------------------------------------------------
+
+\section{Uvod}
+\begin{frame}[fragile]
+	\frametitle{Uvod}
+
+	\begin{center}\huge{Uvod}\end{center}
+	\begin{center}\huge{\color{typo3darkgrey}\textbf{Cinjenice}}\end{center}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		b9fd5df2-df6f5ef6-935ec0d9-5848d7b9
+% LTXE-SLIDE-ORIGIN:	c0dd5662-b64f5b3d-ea39556c-dca19b07 English
+% LTXE-SLIDE-TITLE:		TYPO3 CMS 7.0 - The Facts
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Uvod}
+	\framesubtitle{TYPO3 CMS 7.0 - Cinjenice}
+
+	\begin{itemize}
+		\item Datum objavljivanja: 2. decembar 2014.
+		\item Tip objavljivanja: "Brza objava" ("Sprint Release")
+		\item Vizija: Prihvatiti, inovirati, dostaviti
+		\item U fokusu: Remont administratorskog interfejsa
+	\end{itemize}
+
+	\begin{figure}
+		\includegraphics[width=0.95\linewidth]{typo3-seven-zero-banner.png}
+	\end{figure}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		5abfe317-73f59f68-1bf4569b-be5ec639
+% LTXE-SLIDE-ORIGIN:	f0c768bc-7a7f5fff-20ca5059-23f8e843 English
+% LTXE-SLIDE-TITLE:		System Requirements
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Uvod}
+	\framesubtitle{Sistemski zahtevi}
+
+	\begin{itemize}
+		\item PHP*:\tabto{3.5cm}v5.5.0 - v5.6.x
+		\item MySQL:\tabto{3.5cm}v5.5.x - v5.6.x (no strict mode)
+		\item Prostor na disku:\tabto{3.5cm}min 200 MB
+		\item PHP podesavanja:
+
+			\begin{itemize}
+				\item memory\_limit >= 128M
+				\item max\_execution\_time >= 240s
+				\item opcija \texttt{--disable-ipv6} se \underline{ne sme} koristiti
+			\end{itemize}
+
+		\item Administratorski interfejs zahteva IE >= 9 ili bilo koji drugi moderni pretrazivac
+
+	\end{itemize}
+
+	\vspace{0.5cm}
+	*) Dodatno objasnjenje: \href{http://typo3.org/news/article/php-minimum-requirements-for-typo3-cms-7/}{PHP Minimum Requirements for TYPO3 CMS 7}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		f8753629-b0065e17-e3b1f69b-69f2c9f6
+% LTXE-SLIDE-ORIGIN:	e6dd8a1b-2b60f76b-adc1d788-f77036d9 English
+% LTXE-SLIDE-TITLE:		Development And Release Timeline
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Uvod}
+	\framesubtitle{Vreme razvoja i datumi objavljivanja}
+
+	\begin{figure}
+		\includegraphics[width=0.90\linewidth]{Introduction/ReleaseAgenda.png}
+	\end{figure}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		927567d5-8bab0817-5c935533-66ca28ed
+% LTXE-SLIDE-ORIGIN:	a99cfec1-0a35c0fb-e552ac34-e4e407f8 English
+% LTXE-SLIDE-TITLE:		TYPO3 CMS Roadmap
+% ------------------------------------------------------------------------------
+% https://typo3.org/typo3-cms/roadmap/
+
+\begin{frame}[fragile]
+	\frametitle{Uvod}
+	\framesubtitle{TYPO3 CMS plan}
+
+	Predvidjeni datumi objavljivanja i njihov osnovni fokus:
+
+	\begin{itemize}
+		\item
+			\begingroup
+				\color{typo3orange}
+					v7.0 \textrightarrow\tabto{1.3cm}02/Dec/2014\tabto{3.4cm}Remont administratorskog interfejsa prvi deo
+			\endgroup
+
+		\item v7.1 \textrightarrow\tabto{1.3cm}17/Feb/2015\tabto{3.4cm}Ciscenje osnove sistema i optimizacija
+		\item v7.2 \textrightarrow\tabto{1.3cm}10/Mar/2015\tabto{3.4cm}Korisnicki interfejs
+		\item v7.3 \textrightarrow\tabto{1.3cm}21/Apr/2015\tabto{3.4cm}Composer Ecosystem
+		\item v7.4 \textrightarrow\tabto{1.3cm}09/Jun/2015\tabto{3.4cm}Remont administratorskog interfejsa drugi deo
+		\item v7.5 \textrightarrow\tabto{1.3cm}28/Jul/2015\tabto{3.4cm}\textit{(bice odredjeno...)}
+		\item v7.6 \textrightarrow\tabto{1.3cm}13/Oct/2015\tabto{3.4cm}priprema LTS verzije
+		\item v7.7 \textrightarrow\tabto{1.3cm}xx/xxx/2015\tabto{3.4cm}\textbf{TYPO3 CMS 7 LTS} (Verzija sa dugorocnom podrskom)
+	\end{itemize}
+
+	\smaller
+		\url{https://typo3.org/typo3-cms/roadmap/}\newline
+		\url{http://typo3.org/news/article/embrace-and-innovate-typo3-cms-7/}
+	\normalsize
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		4214467b-389128b1-926aaea3-47eb3c21
+% LTXE-SLIDE-ORIGIN:	185b2d64-63cab652-fa469322-8a16b1b7 English
+% LTXE-SLIDE-TITLE:		Installation
+% LTXE-SLIDE-REFERENCE:	https://forge.typo3.org/issues/62578
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Uvod}
+	\framesubtitle{Instalacija}
+
+	\begin{itemize}
+		\item Zvanicna procedura za instalaciju na Linux/Mac OS X \newline
+			(DocumentRoot na primer \texttt{/var/www/site/htdocs}):
+		\begin{lstlisting}
+			$ cd /var/www/site
+			$ wget --content-disposition get.typo3.org/7.0
+			$ tar xzf typo3_src-7.0.0.tar.gz
+			$ cd htdocs
+			$ ln -s ../typo3_src-7.0.0 typo3_src
+			$ ln -s typo3_src/index.php
+			$ ln -s typo3_src/typo3
+			$ touch FIRST_INSTALL
+		\end{lstlisting}
+
+		\item Simbolicki linkovi (Symbolic links) na Microsoft Windows:
+
+			\begin{itemize}
+				\item Koristiti  \texttt{junction} za Windows XP/2000
+				\item Koristiti  \texttt{mlink} za Windows Vista i Windows 7
+			\end{itemize}
+
+	\end{itemize}
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		3142953c-b745fbbf-54f4a9d1-b507b3d8
+% LTXE-SLIDE-ORIGIN:	d884c8cf-25261e85-a2a26fcd-8a64a9cb English
+% LTXE-SLIDE-TITLE:		Upgrade to TYPO3 CMS 7
+% LTXE-SLIDE-REFERENCE:	https://forge.typo3.org/issues/62578
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Uvod}
+	\framesubtitle{Nadogradnja na TYPO3 CMS 7.x}
+
+	\begin{itemize}
+		\item Nadogradnja je moguca samo sa  TYPO3 CMS 6.2 LTS
+		\item TYPO3 CMS < 6.2 bi prvo trebalo nadograditi na  TYPO3 CMS 6.2 LTS
+	\end{itemize}
+
+	\begin{itemize}
+
+		\item Upsutstvo za nadogradnju:\newline
+			\smaller\url{http://wiki.typo3.org/Upgrade#Upgrading_to_7.0}\normalsize
+		\item Zvanicni TYPO3 vodic  "TYPO3 Installation and Upgrading":
+			\smaller\url{http://docs.typo3.org/typo3cms/InstallationGuide}\normalsize
+		\item Opsti pristup:
+			\begin{itemize}
+				\item Proveriti minimalne sistemske zahte \small(PHP, MySQL, itd.)
+				\item Proveriti \textbf{deprecation\_*.log} u staroj TYPO3 instanci
+				\item Nadograditi sva prosirenja na najnoviju verziju
+				\item Postaviti nove fajlove i pokrenuti Install Tool \textrightarrow Upgrade Wizard
+				\item Proveriti startup modul za administrator  (opciono)
+			\end{itemize}
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------

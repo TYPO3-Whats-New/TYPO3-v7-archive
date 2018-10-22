@@ -1,0 +1,78 @@
+% ------------------------------------------------------------------------------
+% TYPO3 CMS 7.6 - What's New - Chapter "Deprecated Functions" (French Version)
+%
+% @author	Patrick Lobacher <patrick@lobacher.de> and Michael Schams <schams.net>
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		http://typo3.org/download/release-notes/whats-new/
+% @language	French
+% ------------------------------------------------------------------------------
+% LTXE-CHAPTER-UID:		10e028d3-5834c92b-a0fe4127-b0fdad95
+% LTXE-CHAPTER-NAME:	Deprecated Functions
+% ------------------------------------------------------------------------------
+
+\section{Fonctions dépréciées et retirées}
+\begin{frame}[fragile]
+	\frametitle{Fonctions dépréciées et retirées}
+
+	\begin{center}\huge{Chapitre 5~:}\end{center}
+	\begin{center}\huge{\color{typo3darkgrey}\textbf{Fonctions dépréciées et retirées}}\end{center}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		81baa6d8-4cb61924-877c4985-d0af460b
+% LTXE-SLIDE-ORIGIN:	4d786e22-7c650555-67ebf079-3f322823 English
+% LTXE-SLIDE-ORIGIN:	09d19dca-6acd88c5-1e8af64a-b5c879d3 German
+% LTXE-SLIDE-TITLE:		Registered AJAX handlers replaced by routes
+% LTXE-SLIDE-REFERENCE:	Breaking-69916-RegisteredAJAXHandlersReplacedByRoutes.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Fonctions dépréciées et retirées}
+	\framesubtitle{Routes AJAX}
+
+	\begin{itemize}
+
+		\item Les gestionnaires AJAX inscrits dans le noyau avec
+			\texttt{ExtensionManagementUtility::registerAjaxHandler()}
+			sont remplacés par des routes AJAX, qui sont enregistrées avec
+			\texttt{Configuration/Backend/AjaxRoutes.php}
+
+		\item La liste complète (ancien/nouveau) est disponible à~:\newline
+				\href{https://forge.typo3.org/projects/typo3cms-core/repository/revisions/3f0fb6229ba391356e5ed4984eb1c9418ba6663e/entry/typo3/sysext/core/Documentation/Changelog/master/Breaking-69916-RegisteredAJAXHandlersReplacedByRoutes.rst}{Breaking-69916-RegisteredAJAXHandlersReplacedByRoutes.rst}
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		382195ae-c73a750d-2ca0fcfa-65878880
+% LTXE-SLIDE-ORIGIN:	d4c8c340-33163839-2ae654ee-9c6834da English
+% LTXE-SLIDE-ORIGIN:	6ed8ef41-42a35835-ff2669df-2b292265 German
+% LTXE-SLIDE-TITLE:		Miscellaneous (#68079, #70514, #70578)
+% LTXE-SLIDE-REFERENCE:	Important-68079-ExtensionMediaceMovedToTER.rst
+% LTXE-SLIDE-REFERENCE:	Deprecation-70514-DynamigConfigFile.rst
+% LTXE-SLIDE-REFERENCE:	Breaking-70578-JumpURLFunctionalityRemovedFromTheTYPO3Core.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Fonctions dépréciées et retirées}
+	\framesubtitle{Divers}
+
+	\begin{itemize}
+
+		\item L'extension \texttt{mediace} est déplacée vers le dépôt d'extensions TYPO3
+
+		\item La configuration TCA \texttt{dynamicConfigFile} de la section \texttt{ctrl}
+			des tables est \textbf{dépréciée}.
+			L'emplacement de configuration d'une table est \texttt{Configuration/TCA/<table\_name>.php}.
+
+		\item La fonction \texttt{jumpurl} est retirée du noyau et disponible dans une
+			extension du dépôt d'extensions TYPO3
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------

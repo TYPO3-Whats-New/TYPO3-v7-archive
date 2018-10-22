@@ -1,0 +1,469 @@
+% ------------------------------------------------------------------------------
+% TYPO3 CMS 7.2 - What's New - Chapter "Deprecated Functions" (English Version)
+%
+% @author	Michael Schams <schams.net>
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		http://typo3.org/download/release-notes/whats-new/
+% @language	English
+% ------------------------------------------------------------------------------
+% LTXE-CHAPTER-UID:		d2a8bce4-b4f96306-c1f769df-3dc9f8fd
+% LTXE-CHAPTER-NAME:	Deprecated Functions
+% ------------------------------------------------------------------------------
+
+\section{Устаревшие/удаленные функции}
+\begin{frame}[fragile]
+	\frametitle{Устаревшие/удаленные функции}
+
+	\begin{center}\huge{Глава 5:}\end{center}
+	\begin{center}\huge{\color{typo3darkgrey}\textbf{Устаревшие/удаленные функции}}\end{center}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		1806e7ee-68c5ed8a-f5d2295a-32dcc3f9
+% LTXE-SLIDE-ORIGIN:	cc347f31-9a9ec80f-7264a3b4-01baa9c3 English
+% LTXE-SLIDE-TITLE:		FormEngine Refactoring (1)
+% LTXE-SLIDE-REFERENCE:	Breaking-65357-DependenciesToFormEngine.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Устаревшие/удаленные функции}
+	\framesubtitle{Реорганизация FormEngine (1)}
+
+	\begin{itemize}
+
+		\item Произошла важная реорганизация классов FormEngine с подклассами,
+			затронувшая свойства и методы
+
+		\item В TYPO3 CMS 7.2 игнорируются многие внутренние свойства, вроде
+			\small\texttt{FormEngine->\$defaultInputWidth}\normalsize\space
+			или
+			\small\texttt{FormEngine->\$RTEenabled}\normalsize\space
+
+		\item свойства
+			\small\texttt{FormEngine->\$allowOverrideMatrix}\normalsize\space
+			и
+			\small\texttt{SuggestElement->class}\normalsize\space
+			теперь \textit{protected}
+
+		\item Если формат \texttt{type=none} установлен для пользователя в TCA, настроенная
+			userFunc теперь не получает экземпляр FormEngine в виде родительского объекта,
+			в в виде экземпляра NoneElement
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		3fd3070d-f224ce5a-0380e616-464cbfe1
+% LTXE-SLIDE-ORIGIN:	7872ccf6-b9a536fd-a2e59b42-f508a470 English
+% LTXE-SLIDE-TITLE:		FormEngine Refactoring (2)
+% LTXE-SLIDE-REFERENCE:	Breaking-65357-DependenciesToFormEngine.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Устаревшие/удаленные функции}
+	\framesubtitle{Реорганизация FormEngine (2)}
+
+	\begin{itemize}
+
+		\item Следующие методы (и далее) были расценены как \textbf{устаревшие}:
+
+			\begin{itemize}
+				\item \texttt{FormEngine->renderWizards()}
+				\item \texttt{FormEngine->dbFileIcons()}
+				\item \texttt{FormEngine->getClipboardElements()}
+				\item \texttt{FormEngine->getSingleField\_typeNone\_render()}
+				\item \texttt{FormEngine->formMaxWidth()}
+				\item \texttt{FormEngine->addItems()}
+				\item \texttt{SuggestElement->init()}
+				\item ...
+			\end{itemize}
+
+		\small
+			\underline{\textbf{Совет:}}
+			посмотрите \texttt{deprecation\_*.log} для поиска мест, где используются эти методы из FormEngine
+			в ваших расширениях.
+		\normalsize
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		7d9f2c0b-d6648242-e968c832-810d208a
+% LTXE-SLIDE-ORIGIN:	cc347f31-9a9ec80f-7264a3b4-01baa9c3 English
+% LTXE-SLIDE-TITLE:		FormEngine Refactoring (3)
+% LTXE-SLIDE-REFERENCE:	Breaking-65357-DependenciesToFormEngine.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Устаревшие/удаленные функции}
+	\framesubtitle{Реорганизация FormEngine (3)}
+
+	\begin{itemize}
+
+		\item Были \textbf{переименованы} следующие методы:\newline
+
+			\smaller
+				РАНЕЕ:\tabto{1.4cm}
+					\texttt{\textbackslash
+						TYPO3\textbackslash
+						CMS\textbackslash
+						Backend\textbackslash
+						Form\textbackslash
+						Element\textbackslash
+						SuggestElement}\newline
+				ТЕПЕРЬ:\tabto{1.4cm}
+					\texttt{\textbackslash
+						TYPO3\textbackslash
+						CMS\textbackslash
+						Backend\textbackslash
+						Form\textbackslash
+						Wizard\textbackslash
+						SuggestWizard}\newline
+
+				РАНЕЕ:\tabto{1.4cm}
+					\texttt{\textbackslash
+						TYPO3\textbackslash
+						CMS\textbackslash
+						Backend\textbackslash
+						Form\textbackslash
+						Element\textbackslash
+						SuggestDefaultReceiver}\newline
+				ТЕПЕРЬ:\tabto{1.4cm}
+					\texttt{\textbackslash
+						TYPO3\textbackslash
+						CMS\textbackslash
+						Backend\textbackslash
+						Form\textbackslash
+						Wizard\textbackslash
+						SuggestWizardDefaultReceiver}\newline
+
+				РАНЕЕ:\tabto{1.4cm}
+					\texttt{\textbackslash
+						TYPO3\textbackslash
+						CMS\textbackslash
+						Backend\textbackslash
+						Form\textbackslash
+						Element\textbackslash
+						VaueSlider}\newline
+				ТЕПЕРЬ:\tabto{1.4cm}
+					\texttt{\textbackslash
+						TYPO3\textbackslash
+						CMS\textbackslash
+						Backend\textbackslash
+						Form\textbackslash
+						Wizard\textbackslash
+						ValueSliderWizard}\newline
+
+			\normalsize
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		209852d0-f9d243c5-3becf2c4-028fef45
+% LTXE-SLIDE-ORIGIN:	4de2e553-a5dc36d7-f7a5a456-b40ad563 English
+% LTXE-SLIDE-TITLE:		Deprecated entry point
+% LTXE-SLIDE-REFERENCE: Deprecation-65291-DeprecateLogoutEntryPoint.rst
+% LTXE-SLIDE-REFERENCE: Deprecation-65290-DeprecateDummyEntrypoint.rst
+% LTXE-SLIDE-REFERENCE: Deprecation-65289-DeprecateBrowserEntryPoint.rst
+% LTXE-SLIDE-REFERENCE: Deprecation-65288-DeprecateNewRecordEntryPoint.rst
+% LTXE-SLIDE-REFERENCE: Deprecation-65283-DeprecateShowItemEntryPoint.rst
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-TOPIC:		Deprecate file navigation frame entry point
+% LTXE-SLIDE-TOPIC:		Deprecate dummy entry point
+% LTXE-SLIDE-TOPIC:		Deprecate browser entry point
+% LTXE-SLIDE-TOPIC:		Deprecate "new record" entry point
+% LTXE-SLIDE-TOPIC:		Deprecate show item entry point
+
+\begin{frame}[fragile]
+	\frametitle{Устаревшие/удаленные функции}
+	\framesubtitle{Точки входа внутреннего интерфейса}
+
+	\begin{itemize}
+
+		\item Изменились следующие точки входа внутреннего интерфейса:
+
+			\begin{itemize}
+				\item \texttt{typo3/logout.php}					\tabto{6cm}(\begingroup\color{typo3orange}\texttt{logout}\endgroup)
+				\item \texttt{typo3/alt\_file\_navframe.php}	\tabto{6cm}(\begingroup\color{typo3orange}\texttt{file\_navframe}\endgroup)
+				\item \texttt{typo3/dummy.php}					\tabto{6cm}(\begingroup\color{typo3orange}\texttt{dummy}\endgroup)
+				\item \texttt{typo3/browser.php}				\tabto{6cm}(\begingroup\color{typo3orange}\texttt{browser}\endgroup)
+				\item \texttt{typo3/db\_new.php}				\tabto{6cm}(\begingroup\color{typo3orange}\texttt{db\_new}\endgroup)
+				\item \texttt{typo3/show\_item.php}				\tabto{6cm}(\begingroup\color{typo3orange}\texttt{show\_item}\endgroup)
+			\end{itemize}
+
+		\item URL можно определить следующим путём:
+
+			\smaller
+				\texttt{\textbackslash
+					TYPO3\textbackslash
+					CMS\textbackslash
+					Backend\textbackslash
+					Utility\textbackslash
+					BackendUtility::getModuleUrl(...)}
+			\normalsize
+
+			Например:
+
+			\smaller
+				\texttt{\textbackslash
+					TYPO3\textbackslash
+					CMS\textbackslash
+					Backend\textbackslash
+					Utility\textbackslash
+					BackendUtility::getModuleUrl('}\begingroup\color{typo3orange}\texttt{logout}\endgroup\texttt{')}
+			\normalsize
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		97541b14-1adff023-7ad33842-d46d47a0
+% LTXE-SLIDE-ORIGIN:	d4930db8-a60f2185-f76b5b45-81700eb6 English
+% LTXE-SLIDE-TITLE:		Backend Login Refactoring
+% LTXE-SLIDE-REFERENCE: Breaking-65939-BackendLoginRefactoring.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Устаревшие/удаленные функции}
+	\framesubtitle{Реорганизация авторизация во внутреннем интерфейсе}
+
+	\begin{itemize}
+
+		\item Ввиду реорганизации авторизации во внутреннем интерфейсе, Fluid используется для
+			шаблона и сигнала внутреннего интерфейса, и
+			\small\texttt{LoginController::SIGNAL\_RenderLoginForm}\normalsize\space
+			была \textbf{удалена}
+
+		\item Дополнительно, следующие методы LoginController \textbf{удалены}:
+
+			\begin{itemize}
+				\item \texttt{LoginController::makeLoginBoxImage}
+				\item \texttt{LoginController::wrapLoginForm}
+				\item \texttt{LoginController::makeLoginNews}
+				\item \texttt{LoginController::makeLoginForm}
+				\item \texttt{LoginController::makeLogoutForm}
+			\end{itemize}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		9275601e-ce674aaa-7fe8ad6c-0b48addf
+% LTXE-SLIDE-ORIGIN:	6639fe18-a732ee85-71599fe4-ca04d113 English
+% LTXE-SLIDE-TITLE:		Miscellaneous (1)
+% LTXE-SLIDE-REFERENCE: Breaking-65432-ModulUriInGlobalVarRemoved.rst
+% LTXE-SLIDE-REFERENCE: Breaking-65727-DontProvideAccessToLocalpathOfFalFiles.rst
+% LTXE-SLIDE-REFERENCE: Breaking-65922-MoveUnusedTt_contentTcaFieldsToCompatibility6.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Устаревшие/удаленные функции}
+	\framesubtitle{Разное (1)}
+
+	\begin{itemize}
+
+		\item В TYPO3 CMS < 7.2 URI модулей, организуемые через
+			\texttt{mod.php} хранились в виде массива в глобальной переменной
+			\small\texttt{\$GLOBALS['MCONF']['\_']}\normalsize.
+
+			Это \textbf{удалено} без подстановки, при этом расширения должны вместо этого использовать
+			\texttt{BackendUtility::getModuleUrl()}\normalsize\space instead.
+
+		\item Параметр для получения локального пути файла FAL через TypoScript был
+			 \textbf{удалён}: \texttt{a.value.data = file:current:localPath}
+
+		\item Следующие \texttt{tt\_content} TCA поля были перенесены в
+			\texttt{EXT:compatibility6}:
+
+	\end{itemize}
+
+	\vspace{-0.2cm}
+
+	\begin{columns}[T]
+		\begin{column}{.06\textwidth}
+		\end{column}
+		\begin{column}{.47\textwidth}
+			\smaller
+			\begin{itemize}
+				\item \texttt{altText}
+				\item \texttt{imagecaption}
+				\item \texttt{imagecaption\_position}
+			\end{itemize}
+			\normalsize
+		\end{column}
+		\begin{column}{.47\textwidth}
+			\smaller
+			\begin{itemize}
+				\item \texttt{image\_link}
+				\item \texttt{longdescURL}
+				\item \texttt{titleText}
+			\end{itemize}
+			\normalsize
+		\end{column}
+	\end{columns}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		c86f94c6-45bf8849-37c0b853-4a0f4f69
+% LTXE-SLIDE-ORIGIN:	d4930db8-a60f2185-f76b5b45-81700eb6 English
+% LTXE-SLIDE-TITLE:		Miscellaneous (2)
+% LTXE-SLIDE-REFERENCE: Breaking-65962-WebSVGLibraryAndAPIRemoved.rst
+% LTXE-SLIDE-REFERENCE: Breaking-66286-PageTSconfigOptionsToHideWebInfoModulesRenamed.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Устаревшие/удаленные функции}
+	\framesubtitle{Разное (2)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Сторонняя библиотека \texttt{websvg} была \textbf{удалена}
+			из ядра TYPO3 CMS. Также, без возможности отката были \textbf{удалены}
+			соответствующие парамерты TypoScript
+			(\texttt{page.javascriptLibs.SVG.*}) и публичные методы внутри PageRenderer.\newline
+			Например: \texttt{\$pageRenderer->loadSvg()}
+
+		\item Следующий ключ из \texttt{mod.web\_info.menu.function}
+			был \textbf{переименован} (что отразилось на PageTSconfig):
+
+			\begin{lstlisting}
+				tx_cms_webinfo_page -> TYPO3\CMS\Frontend\Controller\PageInformationController
+				tx_cms_webinfo_lang -> TYPO3\CMS\Frontend\Controller\TranslationStatusController
+				tx_belog_webinfo -> TYPO3\CMS\Belog\Module\BackendLogModuleBootstrap
+				tx_infopagetsconfig_webinfo -> TYPO3\CMS\InfoPagetsconfig\Controller\InfoPageTyposcriptConfigController
+				tx_linkvalidator_ModFuncReport -> TYPO3\CMS\Linkvalidator\Report\LinkValidatorReport
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		c80bb371-9fada626-11155487-03136de4
+% LTXE-SLIDE-ORIGIN:	aeecaf61-be9f7145-379fc21c-ea9bb38a English
+% LTXE-SLIDE-TITLE:		Miscellaneous (3)
+% LTXE-SLIDE-REFERENCE: Deprecation-65956-DebugUtilityDebugRows.rst
+% LTXE-SLIDE-REFERENCE: Deprecation-65934-PrefixLocalAnchorsMovedToLegacyExtension.rst
+% LTXE-SLIDE-REFERENCE: Deprecation-65913-checkFileInclude.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Устаревшие/удаленные функции}
+	\framesubtitle{Разное (3)}
+
+	\begin{itemize}
+
+		\item Параметр \texttt{\$returnHTML} метода
+			\small
+				\texttt{\textbackslash
+					TYPO3\textbackslash
+					CMS\textbackslash
+					Core\textbackslash
+					Utility\textbackslash
+					DebugUtility::debugRows()}
+			\normalsize
+			теперь не используется и был помечен, как \textbf{устаревший}
+
+		\item Параметр TypoScript
+			\small\texttt{config.prefixLocalAnchors}\normalsize\space
+			был помечен, как \textbf{устаревший} наряду с соответствующими методами
+			в TypoScriptFrontendContoller:
+
+			\small\texttt{prefixLocalAnchorsWithScript()}\normalsize\space
+			и
+			\small\texttt{doLocalAnchorFix()}\normalsize
+
+		\item Публичный метод
+			\small\texttt{\$TSFE->checkFileInclude()}\normalsize\space
+			в глобальном FrontendController теперь \textbf{устаревший}.
+			Вместо этого используйте autoloader или \texttt{\$TSFE->tmpl->getFileName()}.
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		a014d041-886872cd-3e107553-3f07d39e
+% LTXE-SLIDE-ORIGIN:	da4cc9b2-f738e577-893609eb-5b30e144 English
+% LTXE-SLIDE-TITLE:		Miscellaneous (4)
+% LTXE-SLIDE-REFERENCE: Deprecation-65422-cObjectAliasNames.rst
+% LTXE-SLIDE-REFERENCE: Deprecation-65381-DataHandlerStripslashesValuesProperty.rst
+% LTXE-SLIDE-REFERENCE: Deprecation-64068-ThumbnailView.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Устаревшие/удаленные функции}
+	\framesubtitle{Разное (4)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Два cObjects
+			\small\texttt{COBJ\_ARRAY}\normalsize\space
+			(псевдоним для \texttt{COA})
+			и
+			\small\texttt{CASEFUNC}\normalsize\space
+			(псевдоним для \texttt{CASE})
+			были перенесены в расширение \texttt{EXT:compatibility6}
+			(и помечены как \textbf{устаревшие}), и по умлчанию более недоступны
+
+		\item Свойство DataHandler
+			\small\texttt{stripslashes\_values}\normalsize\space
+			отмечено как \textbf{устаревшее}
+
+		\item "ThumbnailView", как и \texttt{thumbs.php} и \texttt{BackendUtility::getThumbNail()}
+			теперь \textbf{устаревшие} и будут удалены в TYPO3 CMS версии 8\newline
+			(смотрите \texttt{BackendUtility::thumbCode()} для миграции)
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		c0a3f5f5-a59b23b0-3d765df6-92d6b587
+% LTXE-SLIDE-ORIGIN:	e001c2d6-972f3b51-5bad3ca5-e9ccacd5 English
+% LTXE-SLIDE-TITLE:		Miscellaneous (5)
+% LTXE-SLIDE-REFERENCE: Deprecation-51360-LinkValidatorSchedulerSettings.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Устаревшие/удаленные функции}
+	\framesubtitle{Разное (5)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Область имён \texttt{mod.tx\_linkvalidator} для LinkValidator
+			Scheduler Task изменена на \texttt{mod.linkvalidator} для совместимости
+			настроек с TSconfig
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------

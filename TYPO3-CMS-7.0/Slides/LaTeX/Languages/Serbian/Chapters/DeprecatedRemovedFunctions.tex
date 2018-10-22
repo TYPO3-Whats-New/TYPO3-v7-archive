@@ -1,0 +1,347 @@
+% ------------------------------------------------------------------------------
+% TYPO3 CMS 7.0 - What's New - Chapter "Deprecated Functions" (English Version)
+%
+% @author	Michael Schams <schams.net>
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		http://typo3.org/download/release-notes/whats-new/
+% @language	English
+% ------------------------------------------------------------------------------
+% LTXE-CHAPTER-UID:		8db00d98-5e665b1b-cf1c5195-f708aa78
+% LTXE-CHAPTER-NAME:	Deprecated Functions
+% ------------------------------------------------------------------------------
+
+\section{Zastarele i izbacene funkcije}
+\begin{frame}[fragile]
+	\frametitle{Zastarele i izbacene funkcije}
+
+	\begin{center}\huge{Poglavlje 5:}\end{center}
+	\begin{center}\huge{\color{typo3darkgrey}\textbf{Zastarele i izbacene funkcije}}\end{center}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		749c8b17-c21e3753-60be4a9c-d99d29d7
+% LTXE-SLIDE-ORIGIN:	c47248f9-03aa1da2-8dd9985d-762cf405 English
+% LTXE-SLIDE-TITLE:		Legacy Layer
+% LTXE-SLIDE-REFERENCE:	http://typo3.org/news/article/retaining-compatibility-to-typo3-cms6/
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Zastarele i izbacene funkcije}
+	\framesubtitle{Compatibility Layer}
+
+	\begin{itemize}
+
+		\item TYPO3 CMS 6.2: compatiblity layer se brine o tome da stara prosirenja rade u novoj verziji\newline
+			\small
+				Mana: smanjene performanse (ne postize se pun potencijal sistema)
+			\normalsize
+
+		\item TYPO3 CMS 7.0: compatibility layer je uklonjen iz osnove sistema\newline
+			\small
+				Uticaj: moguce da ce stara prosirenja pucati (na primer prosirenja bez namespaces)
+			\normalsize
+
+		\item Kompatibilnost se moze vratiti instaliranjem sistemskog prosirenja \texttt{EXT:compatibility6} ako je neophodno
+		\item Ovo prosirenje ce u buducnosti biti premesteno u TER
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		0f69d2ef-654474b0-a9444db8-00b1390b
+% LTXE-SLIDE-ORIGIN:	70da8aab-cd42e15f-fe254b81-41ceabb5 English
+% LTXE-SLIDE-TITLE:		Backend User Management
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Zastarele i izbacene funkcije}
+	\framesubtitle{Upravljanje korisnicima administratorskog interfejsa}
+
+	\begin{itemize}
+		\item Switch to backend user ("change-to mode") je uklonjen
+	\end{itemize}
+
+	\smaller\tabto{1cm}\begingroup\color{typo3red}TYPO3 CMS 6.2\endgroup\normalsize
+	\begin{figure}\vspace{-0.4cm}
+		\includegraphics[width=0.90\linewidth]{DeprecatedRemovedFunctions/BackendUserSwitch1.png}
+	\end{figure}
+
+	\smaller\tabto{1cm}\begingroup\color{typo3red}TYPO3 CMS 7.0\endgroup\normalsize
+	\begin{figure}\vspace{-0.4cm}
+		\includegraphics[width=0.90\linewidth]{DeprecatedRemovedFunctions/BackendUserSwitch2.png}
+	\end{figure}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		e109201f-d8b3499b-5ad2b04c-8a074cf6
+% LTXE-SLIDE-ORIGIN:	10805d4d-787ce2f8-10e4329a-1451521a English
+% LTXE-SLIDE-TITLE:		Removed Deprecated JavaScript Functions
+% LTXE-SLIDE-REFERENCE:	https://github.com/TYPO3/TYPO3.CMS/commit/2dff81b963e1b77c7f068f91ffde73914a18b0be
+% LTXE-SLIDE-REFERENCE:	https://forge.typo3.org/issues/62291
+% LTXE-SLIDE-REFERENCE:	https://forge.typo3.org/projects/typo3cms-core/repository/revisions/9ac03e383e4786e868f4b1d81893e84c4621abc8/entry/typo3/sysext/core/Documentation/Changelog/master/Breaking-62291-RTEDeprecatedJavaScriptMethodsRemoved.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Zastarele i izbacene funkcije}
+	\framesubtitle{Uklonjene zastarele JavaScript funkcije}
+
+	\begin{itemize}
+		\item U skladu sa \href{http://forge.typo3.org/projects/typo3v4-core/wiki/CoreDevPolicy}{strategijom o zastarevanju},
+			odredjeni broj JavaScript metoda, oznacenih kao \textit{zastarele} jos od TYPO3 CMS 4.7, su uklonjene. Na primer:
+
+		\begin{lstlisting}
+			\TYPO3\CMS\Backend\Form\FormEngine->getSingleField_typeInput
+			\TYPO3\CMS\Backend\Form\FormEngine->getSingleField_typeText
+			\TYPO3\CMS\Core\Utility\GeneralUtility->quoted_printable
+			\TYPO3\CMS\Core\Utility\GeneralUtility->encodeHeader
+		\end{lstlisting}
+
+		\smaller
+			\texttt{HTMLArea.Editor.forceRedraw}\newline
+				(umesto te metode koristiti \texttt{HTMLArea.Framework.doLayout})
+				\vspace{0.2cm}
+
+			\texttt{HTMLArea.Editor.convertNode}\newline
+				(umesto te metode koristiti \texttt{HTMLArea.DOM.convertNode})
+				\vspace{0.2cm}
+
+			\texttt{HTMLArea.Editor.getBlockAncestors}\newline
+				(umesto te metode koristiti \texttt{HTMLArea.DOM.getBlockAncestors})
+		\normalsize
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		93b9ca45-275afc3e-6a9cc564-a7f00772
+% LTXE-SLIDE-ORIGIN:	9da41efc-970e66a8-f9163c40-67cfa712 English
+% LTXE-SLIDE-TITLE:		Removed Functions (1)
+% LTXE-SLIDE-REFERENCE:	https://forge.typo3.org/issues/17579
+% LTXE-SLIDE-REFERENCE:	https://forge.typo3.org/issues/62888
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Zastarele i izbacene funkcije}
+	\framesubtitle{Uklonjene funkcije (1)}
+
+	\begin{itemize}
+
+		\item
+			\small
+				TypoScript podesavanje \texttt{config.uniqueLinkVars} je uklonjeno\newline
+				(ovo ponasanje je sada podrazumevano)
+			\normalsize
+
+		\item
+			\small
+				ViewHelper
+					\texttt{\textbackslash
+						TYPO3\textbackslash
+						CMS\textbackslash
+						Documentation\textbackslash
+						ViewHelpers\textbackslash
+						Link\textbackslash
+						Action}
+					je uklonjen (koristiti umesto njega \texttt{f:be.buttons.icon} ili \texttt{f:uri.*})
+			\normalsize
+
+		\item
+			\small
+				PageTSconfig opcija \texttt{mod.web\_list.alternateBgColors}\newline
+				je uklonjena
+			\normalsize
+
+		\item
+			\small
+				PropertyMapper je uklonjen\newline
+				(ukljucujuci opciju \texttt{rewrittenPropertyMapper = 0})
+			\normalsize
+
+		\item
+			\small
+				TypoScript uslovi su uklonjeni:
+
+					\begin{itemize}
+						\item\texttt{browser}
+						\item\texttt{version}
+						\item\texttt{system}
+						\item\texttt{useragent}
+					\end{itemize}
+			\normalsize
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		053534f8-b4b25701-4187b5c3-0f74624d
+% LTXE-SLIDE-ORIGIN:	efe86631-b6020ae8-ffa01160-6de29dc3 English
+% LTXE-SLIDE-TITLE:		Removed Functions (1)
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Zastarele i izbacene funkcije}
+	\framesubtitle{Uklonjene metode (1)}
+
+	Uklonjene su sledece  \textbf{metode}:
+
+	\begin{itemize}
+		\item
+			\small
+				\texttt{connectDB}\newline
+				iz klase
+				\texttt{\textbackslash
+					TYPO3\textbackslash
+					CMS\textbackslash
+					Frontend\textbackslash
+					Utility\textbackslash
+					EidUtility}
+			\normalsize
+		\item
+			\small
+				\texttt{isDisplayCondition}\newline
+				iz klase
+				\texttt{\textbackslash
+					TYPO3\textbackslash
+					CMS\textbackslash
+					Form\textbackslash
+					FormEngine}
+			\normalsize
+		\item
+			\small
+				\texttt{int\_from\_ver}\newline
+				iz klase
+				\texttt{\textbackslash
+					TYPO3\textbackslash
+					CMS\textbackslash
+					Core\textbackslash
+					Utility\textbackslash
+					GeneralUtility}
+			\normalsize
+		\item
+			\small
+				\texttt{getUniqueFields}\newline
+				of class
+				\texttt{\textbackslash
+					TYPO3\textbackslash
+					CMS\textbackslash
+					Core\textbackslash
+					DataHandling\textbackslash
+					DataHandler}
+			\normalsize
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		0feaae1b-3428fd7e-daa7fbee-9694396a
+% LTXE-SLIDE-ORIGIN:	293414d4-e87db3d5-afced471-ca9826ed English
+% LTXE-SLIDE-TITLE:		Removed Methods (2)
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Zastarele i izbacene funkcije}
+	\framesubtitle{Uklonjene metode (2)}
+
+	Uklonjene su sledece \textbf{metode}:
+
+	\begin{itemize}
+
+		\item
+			\small
+				\texttt{isSafeModeEnabled}\newline
+				iz klase
+				\texttt{\textbackslash
+					TYPO3\textbackslash
+					CMS\textbackslash
+					Core\textbackslash
+					Utility\textbackslash
+					PhpOptionsUtility}
+			\normalsize
+		\item
+			\small
+				\texttt{registerSwiftMailer}\newline
+				iz klase
+				\texttt{\textbackslash
+					TYPO3\textbackslash
+					CMS\textbackslash
+					Core\textbackslash
+					Bootstrap}
+			\normalsize
+		\item
+			\small
+				\texttt{loadTCA}\newline
+				iz klase
+				\texttt{\textbackslash
+					TYPO3\textbackslash
+					CMS\textbackslash
+					Core\textbackslash
+					Utility\textbackslash
+					GeneralUtility}
+			\normalsize
+		\item
+			\small
+				\texttt{isLocalconfWritable}\newline
+				iz klase
+				\texttt{\textbackslash
+					TYPO3\textbackslash
+					CMS\textbackslash
+					Core\textbackslash
+					Utility\textbackslash
+					ExtensionManagementUtility}
+			\normalsize
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		75cb3aaa-d5fbd911-5b28d5ea-de739f8f
+% LTXE-SLIDE-ORIGIN:	a1ba1998-f88c1063-71470741-30b9f314 English
+% LTXE-SLIDE-TITLE:		Removed Classes
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Zastarele i izbacene funkcije}
+	\framesubtitle{Uklonjene klase}
+
+	Uklonjene su sledece \textbf{klase}:
+
+	\begin{itemize}
+
+		\item
+			\smaller
+				\texttt{\textbackslash
+					TYPO3\textbackslash
+					CMS\textbackslash
+					Backend\textbackslash
+					Template\textbackslash
+					MediumDocumentTemplate}
+			\normalsize
+		\item
+			\smaller
+				\texttt{\textbackslash
+					TYPO3\textbackslash
+					CMS\textbackslash
+					Extbase\textbackslash
+					Service\textbackslash
+					TypeHandlingService}
+			\normalsize
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------

@@ -1,0 +1,257 @@
+% ------------------------------------------------------------------------------
+% TYPO3 CMS 7.5 - What's New - Chapter "Deprecated Functions" (Dutch Version)
+%
+% @author	Michael Schams <schams.net>
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		http://typo3.org/download/release-notes/whats-new/
+% @language	Dutch
+% ------------------------------------------------------------------------------
+% LTXE-CHAPTER-UID:		29c0406a-c25fb446-757b26da-de76b4e4
+% LTXE-CHAPTER-NAME:	Deprecated Functions
+% ------------------------------------------------------------------------------
+
+\section{Verouderde/verwijderde functies}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		74829e3a-a2542caf-6134423a-9fcc2ab4
+% LTXE-SLIDE-ORIGIN:	62c4eac1-932ee516-ec6f1eef-0c38df9f English
+% LTXE-SLIDE-ORIGIN:	63ae9afb-0d3e0159-ce9ce90a-ea70ed1b German
+% LTXE-SLIDE-TITLE:		Deprecation #68128: GeneralUtility slash-related methods
+% LTXE-SLIDE-REFERENCE:	Deprecation-68128-GeneralUtilitySlash-relatedMethods.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Verouderde/verwijderde functies}
+	\framesubtitle{Slash-gerelateerde methoden in GeneralUtility}
+
+	\begin{itemize}
+
+		\item De volgende methoden in klasse \texttt{GeneralUtility} zijn gemarkeerd als
+			 \textbf{verouderd}:
+
+			\begin{itemize}
+				\item \texttt{GeneralUtility::addSlashesOnArray()}
+				\item \texttt{GeneralUtility::stripSlashesOnArray()}
+				\item \texttt{GeneralUtility::slashArray()}
+			\end{itemize}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		75c36823-dd9816dd-5384bead-34244868
+% LTXE-SLIDE-ORIGIN:	3f679661-c1c0703d-d69207e9-095b8bd1 English
+% LTXE-SLIDE-ORIGIN:	2c09a1fa-e9531d1f-c7b2f44b-0369461d German
+% LTXE-SLIDE-TITLE:		Deprecation #68804: CLI-related constants and methods
+% LTXE-SLIDE-REFERENCE:	Deprecation-68804-CLI-relatedConstantsAndMethods.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Verouderde/verwijderde functies}
+	\framesubtitle{CLI-gerelateerde constanten en methoden}
+
+	% decrease font size for code listing
+	%\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Logica met betrekking tot gewone scripts voor de command-line-interface met een CLIkey-optie, 
+			is verplaatst naar de \texttt{CliRequestHandler} en dientengevolge is de volgende methode 
+			gemarkeerd als \textbf{verouderd}:
+
+			\begin{lstlisting}
+				BackendUserAuthentication->checkCLIuser()
+			\end{lstlisting}
+
+		\item Bovendien zijn de volgende constanten en globale parameters gemarkeerd als
+			 \textbf{verouderd}:
+
+			\begin{lstlisting}
+				const TYPO3_cliKey
+				const TYPO3_cliInclude
+				$GLOBALS['MCONF']['name']
+				$GLOBALS['temp_cliScriptPath']
+				$GLOBALS['temp_cliKey']
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		60bfdf8e-abf7d8d8-866ae749-3e4e7d06
+% LTXE-SLIDE-ORIGIN:	e21b8011-a09ffae9-a020aadf-2245bd1e English
+% LTXE-SLIDE-ORIGIN:	562af58e-1ed24f11-fbeabef5-63e4c70f German
+% LTXE-SLIDE-TITLE:		Deprecation #69057: Deprecate IconUtility and move methods into IconFactory
+% LTXE-SLIDE-REFERENCE:	Deprecation-69057-DeprecateIconUtilityAndMoveMethodsIntoIconFactory.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Verouderde/verwijderde functies}
+	\framesubtitle{IconUtility}
+
+	% decrease font size for code listing
+	%\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Zowel de interface \texttt{IconUtilityOverrideResourceIconHookInterface}\newline
+			als de klasse \texttt{IconUtility} zullen worden verwijderd in TYPO3 CMS 8
+
+		\item Alle publieke methoden van deze klasse zijn gemarkeerd als \textbf{verouderd}:
+
+		\vspace{0.2cm}
+
+		\begin{columns}[T]
+			\begin{column}{.5\textwidth}
+				\tiny
+					\tabto{1cm}\texttt{IconUtility::skinImg()}\newline
+					\tabto{1cm}\texttt{IconUtility::getSpriteIcon()}\newline
+					\tabto{1cm}\texttt{IconUtility::getSpriteIconForRecord()}\newline
+					\tabto{1cm}\texttt{IconUtility::getSpriteIconClasses()}
+			\end{column}
+			\begin{column}{.5\textwidth}
+				\vspace{-0.18cm}\tiny
+					\texttt{IconUtility::getIcon()}\newline
+					\texttt{IconUtility::getSpriteIconForFile()}\newline
+					\texttt{IconUtility::getSpriteIconForResource()}\newline
+			\end{column}
+		\end{columns}
+
+		\vspace{0.2cm}
+		\normalsize
+
+			\small
+				(sommige methoden zijn verplaatst naar \texttt{IconFactory})
+			\normalsize
+
+		\item Bovendien is de volgende instelling uit PageTSConfig gemarkeerd als \textbf{verouderd}:
+
+			\begin{lstlisting}
+				mod.wizards.newContentElement.wizardItems.*.elements.*.icon
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		48b3d5a2-a2cf02cd-4130a30a-1a111923
+% LTXE-SLIDE-ORIGIN:	68785ceb-703a7579-5c4adf78-74a85dcd English
+% LTXE-SLIDE-ORIGIN:	f1b71550-3b7786c0-61c6d8c8-8b880c3c German
+% LTXE-SLIDE-TITLE:		Deprecation #69262: Move marker substitution functionality to own class
+% LTXE-SLIDE-REFERENCE:	Deprecation-69262-MoveMarkerSubstitutionFunctionalityToOwnClass.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Verouderde/verwijderde functies}
+	\framesubtitle{Verouderde \texttt{HtmlParser}-methoden}
+
+	% decrease font size for code listing
+	%\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Functionaliteit voor het vervangen van markers is verplaatst van\newline
+			\texttt{core/Classes/Html/HtmlParser.php}\newline
+			naar z'n eigen klasse in\newline
+			\texttt{core/Classes/Service/MarkerBasedTemplateService.php}
+
+		\item De volgende methoden in \texttt{HtmlParser} zullen worden verwijderd
+			in TYPO3 CMS 8 en zijn nu gemarkeerd als \textbf{verouderd}:
+
+			\begin{lstlisting}
+				HtmlParser::getSubpart()
+				HtmlParser::substituteSubpart()
+				HtmlParser::substituteSubpartArray()
+				HtmlParser::substituteMarker()
+				HtmlParser::substituteMarkerArray()
+				HtmlParser::substituteMarkerAndSubpartArrayRecursive()
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		a8ed82c6-b14f4bca-fcc82521-8526908f
+% LTXE-SLIDE-ORIGIN:	7805db4c-6a34582b-c45684f9-c164c733 English
+% LTXE-SLIDE-ORIGIN:	adeafcfb-76cdfdb9-ea459432-0c3863f5 German
+% LTXE-SLIDE-TITLE:		Deprecation #69401: Adopt form to support the Extbase/ Fluid MVC stack
+% LTXE-SLIDE-REFERENCE:	Deprecation-69401-AdoptFormToSupportTheExtbaseFluidMVCStack.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Verouderde/verwijderde functies}
+	\framesubtitle{Systeemextensie \texttt{form}}
+
+	\begin{itemize}
+
+		\item Systeemextensie \texttt{form} is nu gebaseerd op Extbase/Fluid
+
+		\item Derhalve zijn alle layout-instellingen in TypoScript gemarkeerd als
+			\textbf{verouderd} en het gebruik van \texttt{layout} wordt \underline{afgeraden}:
+
+			\begin{lstlisting}
+				10 = FORM
+				10 {
+				  layout {
+				    containerWrap = <div><elements ></elements></div>
+				    elementWrap = <div><element ></element></div>
+				  }
+				}
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		be19fe4f-031d98a6-ee937841-4b7faeae
+% LTXE-SLIDE-ORIGIN:	74f7b6b8-e7911b64-1e402420-7514ccff English
+% LTXE-SLIDE-ORIGIN:	bda2c3ea-2ff3b7f6-dd6977e6-6cf87469 German
+% LTXE-SLIDE-TITLE:		Deprecated ViewHelpers and Methods
+% LTXE-SLIDE-REFERENCE:	Deprecation-69535-DeprecateTYPO3CMSFluidViewHelpersBeButtonsIconViewHelper.rst
+% LTXE-SLIDE-REFERENCE:	Important-69531-RemoveSpriteManagerIconViewHelper.rst
+% LTXE-SLIDE-REFERENCE:	Deprecation-69568-VariousFormEngineRelatedMethods.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Verouderde/verwijderde functies}
+	\framesubtitle{Verouderde ViewHelpers en methoden}
+
+	% decrease font size for code listing
+	%\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item De volgende ViewHelpers zijn gemarkeerd als \textbf{verouderd}:
+
+			\begin{lstlisting}
+				\TYPO3\CMS\Fluid\ViewHelpers\Be\Buttons\IconViewHelper
+				\TYPO3\CMS\Backend\ViewHelpers\SpriteManagerIconViewHelper
+			\end{lstlisting}
+
+		\item De volgende methoden zijn gemarkeerd als \textbf{verouderd}:
+
+			\begin{lstlisting}
+				BackendUtility::getExcludeFields()
+				BackendUtility::getExplicitAuthFieldValues()
+				BackendUtility::getSystemLanguages()
+				BackendUtility::getRegisteredFlexForms()
+				BackendUtility::exec_foreign_table_where_query()
+				BackendUtility::replaceMarkersInWhereClause()
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------

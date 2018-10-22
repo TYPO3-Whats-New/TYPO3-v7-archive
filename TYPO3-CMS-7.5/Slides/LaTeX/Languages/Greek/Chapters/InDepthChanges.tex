@@ -1,0 +1,853 @@
+% ------------------------------------------------------------------------------
+% TYPO3 CMS 7.5 - What's New - Chapter "In-Depth Changes" (Greek Version)
+%
+% @author	Angeliki Plati <ag.plati@gmail.com>
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		http://typo3.org/download/release-notes/whats-new/
+% @language	Greek
+% ------------------------------------------------------------------------------
+% LTXE-CHAPTER-UID:		b8f1c138-2fb2f5ce-15d1ffc0-e80171e2
+% LTXE-CHAPTER-NAME:	In-Depth Changes
+% ------------------------------------------------------------------------------
+
+\section{\greektext Ριζικές Αλλαγές}
+\begin{frame}[fragile]
+	\frametitle{\greektext Ριζικές Αλλαγές}
+
+	\begin{center}\huge{\greektext Κεφάλαιο 3:}\end{center}
+	\begin{center}\huge{\color{typo3darkgrey}\textbf{\greektext Ριζικές Αλλαγές}}\end{center}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		ee7d082d-357d595a-fba788ab-42faa1d8
+% LTXE-SLIDE-ORIGIN:	16e557e2-fa6a5035-5b28d66e-27c0c626 English
+% LTXE-SLIDE-ORIGIN:	03be70bc-886235ca-10f0cef5-6b33fe60 German
+% LTXE-SLIDE-TITLE:		Fluid-based Content Elements Introduced (1)
+% LTXE-SLIDE-REFERENCE:	Feature-38732-Fluid-basedContentElementsIntroduced.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{\greektext Ριζικές Αλλαγές}
+	\framesubtitle{\greektext Στοιχεία Περιεχομένου βασισμένα σε \latintext Fluid (1)}
+
+	\begin{itemize}
+
+		\item \greektext Η νέα επέκταση συστήματος \latintext \textbf{"Fluid-based Content Elements"} \greektext έχει υλοποιηθεί
+
+		\item \greektext Τα \latintext Fluid templates \greektext χρησιμοποιούνται για την απεικόνιση στοιχείων περιεχομένου
+		και όχι η \latintext TypoScript
+
+		\item \greektext Θα μπορούσε να είναι μια εναλλακτική για την \latintext \textit{CSS Styled Content} \greektext κάποια στιγμή στο μέλλον
+
+		\item \greektext Συμπεριλάβετε τα ακόλουθα στατικά \latintext templates \greektext προκειμένου να χρησιμοποιήσετε αυτή τη λειτουργία:
+
+			\begin{itemize}
+				\item \greektext Στοιχεία Περιεχομένου \latintext (\texttt{fluid\_styled\_content})
+				\item \greektext Στοιχεία Περιεχομένου \latintext CSS \greektext (προαιρετικά) \latintext(\texttt{fluid\_styled\_content})
+			\end{itemize}
+
+	\end{itemize}
+
+\end{frame}
+
+
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		a2dfab62-9ee2beff-eb6cb2bd-437d8f62
+% LTXE-SLIDE-ORIGIN:	d8383008-e3bbb7e2-91720bea-3b93db62 English
+% LTXE-SLIDE-ORIGIN:	bb7124ec-4658414b-757ca8ca-f0addee3 German
+% LTXE-SLIDE-TITLE:		Fluid-based Content Elements Introduced (2)
+% LTXE-SLIDE-REFERENCE:	Feature-38732-Fluid-basedContentElementsIntroduced.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{\greektext Ριζικές Αλλαγές}
+	\framesubtitle{\greektext Στοιχεία Περιεχομένου βασισμένα σε \latintext Fluid (2)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item \greektext Επιπρόσθετα, το ακόλουθο \latintext PageTSconfig template \greektext πρέπει να προστεθεί
+		στις ιδιότητες της σελίδας:\newline
+			\small
+				\texttt{\latintext Fluid-based Content Elements (fluid\_styled\_content)}
+			\normalsize
+
+		\item Αντικαταστήστε τα προεπιλεγμένα \latintext templates \greektext προσθέτοντας τα δικά σας μονοπάτια
+		στο \latintext TypoScript setup:
+
+			\latintext\begin{lstlisting}
+				lib.fluidContent.templateRootPaths.50 = EXT:site_example/Resources/Private/Templates/
+				lib.fluidContent.partialRootPaths.50 = EXT:site_example/Resources/Private/Partials/
+				lib.fluidContent.layoutRootPaths.50 = EXT:site_example/Resources/Private/Layouts/
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		8b1cceaa-5649c9d4-a617d2e1-e32fe260
+% LTXE-SLIDE-ORIGIN:	d25f0c05-31c928e4-e7439714-d87f883b English
+% LTXE-SLIDE-ORIGIN:	04cd65d3-e013813d-d2eac450-7d3a79a8 German
+% LTXE-SLIDE-TITLE:		Fluid-based Content Elements Introduced (3)
+% LTXE-SLIDE-REFERENCE:	Feature-38732-Fluid-basedContentElementsIntroduced.rst
+% LTXE-SLIDE-REFERENCE:	Important-67954-MigrateCTypesTextImageAndTextpicToTextmedia.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{\greektext Ριζικές Αλλαγές}
+	\framesubtitle{\greektext Στοιχεία Περιεχομένου βασισμένα σε \latintext Fluid (3)}
+
+	\begin{itemize}
+
+		\item \greektext Μετακινήστε από την \latintext \textit{CSS Styled Content} \greektext στην \latintext \textit{Fluid-based Content Elements}:
+
+			\begin{itemize}
+
+				\item \greektext Απεγκαταστήστε την επέκταση \latintext\texttt{css\_styled\_content}
+
+				\item \greektext εγκαταστήστε την επέκταση \latintext \texttt{fluid\_styled\_content}
+
+				\item \greektext Χρησιμοποιήστε τον \latintext Upgrade Wizard \greektext στο \latintext Install Tool \greektext
+				για να μετακινήσετε τα Στοιχεία Περιεχομένου \latintext
+					\texttt{text}, \texttt{image} \greektext και \latintext \texttt{textpic} \greektext στα \latintext \texttt{textmedia}
+
+			\end{itemize}
+	\end{itemize}
+
+	\vspace{1.3cm}
+
+	\begingroup
+		\color{red}
+			\small
+				\underline{\greektext Σημείωση:} Η \latintext \textit{"Fluid-based Content Elements"}
+				\greektext βρίσκεται ακόμα σε αρχικό στάδιο και ριζικές αλλαγές είναι δυνατό να συμβούν
+				μέχρι το \latintext TYPO3 CMS 7 LTS.
+				\greektext Επίσης, μερικά \latintext conflicts \greektext σχετικά με την \latintext \textit{CSS Styled Content}
+				\greektext πιθανόν να υπάρχουν ακόμα.
+			\normalsize
+	\endgroup
+
+\end{frame}
+
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		af431bc1-38d01b3f-4cba87f9-1b26f92e
+% LTXE-SLIDE-ORIGIN:	89b8c8c2-3a458bcf-5d61b025-6b4fb470 English
+% LTXE-SLIDE-ORIGIN:	8807e1a0-2b3fadac-ac842970-b85e5130 German
+% LTXE-SLIDE-TITLE:		Add SELECTmmQuery method to DatabaseConnection
+% LTXE-SLIDE-REFERENCE:	Feature-19494-AddSELECTmmQueryMethodToDatabaseConnection.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{\greektext Ριζικές Αλλαγές}
+	\framesubtitle{\greektext Μέθοδος \latintext SELECTmmQuery}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item \greektext Η νέα μέθοδος \latintext \texttt{SELECT\_mm\_query} \greektext έχει προστεθεί στην κλάση
+		 \latintext \texttt{DatabaseConnection}
+
+		\item \greektext Έχει εξαχθεί από το \latintext \texttt{exec\_SELECT\_mm\_query} \greektext για να διαχωρίσει
+		το «χτίσιμο» και την εκτέλεση των \latintext M:M queries.
+
+		\item \greektext Αυτό καθιστά δυνατό το «χτίσιμο» \latintext query \greektext στο αφηρημένο επίπεδο
+		  της βάσης δεδομένων
+
+			\latintext\begin{lstlisting}
+				$query = SELECT_mm_query('*', 'table1', 'table1_table2_mm', 'table2', 'AND table1.uid = 1',
+				'', 'table1.title DESC');
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		dfaafdac-81c3bc35-9d835440-ba9171a1
+% LTXE-SLIDE-ORIGIN:	f2c4f1a9-6cd020c0-518650d6-2a31d0de English
+% LTXE-SLIDE-ORIGIN:	398fdcb2-1cc9a862-42e59a09-e4ed65ba German
+% LTXE-SLIDE-TITLE:		Scheduler task to optimize database tables
+% LTXE-SLIDE-REFERENCE:	Feature-25341-SchedulerTaskToOptimizeDatabaseTables.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{\greektext Ριζικές Αλλαγές}
+	\framesubtitle{\greektext Βελτιστοποίηση Πινάκων της Βάσης Δεδομένων σε \latintext MySQL}
+
+	\begin{itemize}
+
+		\item \greektext Νέο χρονοπρογραμματισμένο \latintext task \greektext για το «τρέξιμο» της εντολής \latintext MySQL
+		 \texttt{OPTIMIZE TABLE} \greektext σε επιλεγμένους πίνακες της Β.Δ.
+
+		\item \greektext Αυτή η εντολή αναδιοργανώνει τον φυσικό χώρο αποθήκευσης των δεδομένων πινάκων και των σχετικών
+		δεδομένων ευρετηρίου για να μειώσει το χώρο αποθήκ. και να βελτιώσει την αποδοτικότητα \latintext I/O
+
+		\item \greektext Υποστηρίζονται οι ακόλουθοι τύποι πινάκων:\newline
+			\latintext\texttt{MyISAM}, \texttt{InnoDB} \greektext και \latintext\texttt{ARCHIVE}
+
+		\item \greektext Η χρήση αυτού του \latintext task \greektext με \latintext DBAL \greektext και άλλα
+		\latintext DBMS \greektext\underline{δεν} υποστηρίζεται
+			λόγω του ότι οι εντολές που χρησιμοποιούνται είναι μόνο για \latintext MySQL
+
+	\end{itemize}
+
+	% Note to translators: if this does not fit on one slide, you could try to change
+	% \small to \smaller or shorten the sentences below or the bullet points above.
+
+	\begingroup
+		\color{red}
+			\smaller
+				\underline{\greektext Σημείωση:} \greektext η βελτιστοποίηση πινάκων είναι μία εντατική \latintext I/O \greektext διεργασία.
+				Επίσης, στην \latintext MySQL < 5.6.17 \greektext η διεργασία κλειδώνει τους πίνακες για όσο «τρέχει»,
+				το όποιο μπορεί να επηρεάσει το \latintext website.
+			\normalsize
+	\endgroup
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		b6505a70-d32b81c9-ab8e835f-9db31e5b
+% LTXE-SLIDE-ORIGIN:	f0da3ed6-ab7b2518-402338db-a1842865 English
+% LTXE-SLIDE-ORIGIN:	f9cbeb69-d08efdaf-a8c00d48-353f667e German
+% LTXE-SLIDE-TITLE:		Improved handling of online media (1)
+% LTXE-SLIDE-REFERENCE:	Feature-61799-ImprovedHandlingOfOnlineMedia.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{\greektext Ριζικές Αλλαγές}
+	\framesubtitle{\greektext Χειρισμός των \latintext Online \greektext Μέσων (1)}
+
+	\begin{itemize}
+
+		\item \greektext Τα εξωτερικά μέσα \latintext (online media) \greektext υποστηρίζονται εκ προεπιλογής τώρα
+
+		\item \greektext Ως παραδείγματα, η υποστήριξη των βίντεο \latintext YouTube \greektext και \latintext Vimeo \greektext έχει υλοποιηθεί στον πυρήνα
+
+		\item \greektext Οι πόροι μπορούν να προστεθούν ως \latintext URLs \greektext χρησιμοποιώντας το στοιχείο περιεχομένου \latintext \textbf{"Text \& Media"},
+			\greektext για παράδειγμα
+
+		\item \greektext Η αντίστοιχη \latintext helper \greektext κλάση φέρνει τα \latintext data \greektext και παρέχει μία εικόνα
+		που θα χρησιμοποιηθεί ως προεπισκόπηση αν είναι διαθέσιμη
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		a98121c2-0423056f-641073bb-a20e2366
+% LTXE-SLIDE-ORIGIN:	485f95a8-a9ec5940-e9aa7322-688630cb English
+% LTXE-SLIDE-ORIGIN:	76e87d6a-cd1ebbf9-9a4d49ec-49cc569f German
+% LTXE-SLIDE-TITLE:		Improved handling of online media (2)
+% LTXE-SLIDE-REFERENCE:	Feature-61799-ImprovedHandlingOfOnlineMedia.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{\greektext Ριζικές Αλλαγές}
+	\framesubtitle{\greektext Χειρισμός των \latintext Online \greektext Μέσων (2)}
+
+	\greektext Οι ακόλουθες συντάξεις \latintext URL \greektext είναι δυνατές:
+	\vspace{0.4cm}
+
+	\latintext\begin{columns}[T]
+		\begin{column}{.52\textwidth}
+			\smaller
+				\tabto{0.2cm}\textbf{\underline{YouTube:}}\newline
+				\tabto{0.2cm}\texttt{youtu.be/<code>}\newline
+				\tabto{0.2cm}\texttt{www.youtube.com/watch?v=<code>}\newline
+				\tabto{0.2cm}\texttt{www.youtube.com/v/<code>}\newline
+				\tabto{0.2cm}\texttt{www.youtube-nocookie.com/v/<code>}\newline
+				\tabto{0.2cm}\texttt{www.youtube.com/embed/<code>}\newline
+		\end{column}
+		\begin{column}{.48\textwidth}
+			\vspace{-0.25cm}\smaller
+				\textbf{\underline{Vimeo:}}\newline
+				\texttt{vimeo.com/<code>}\newline
+				\texttt{player.vimeo.com/video/<code>}\newline
+		\end{column}
+	\end{columns}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		9e7958b7-12245b92-2cfdc80e-1989b8eb
+% LTXE-SLIDE-ORIGIN:	dc79335c-d9e51543-ff5759e0-5005bff8 English
+% LTXE-SLIDE-ORIGIN:	aef8746a-e1babbc9-4dd74eec-cf379dae German
+% LTXE-SLIDE-TITLE:		Improved handling of online media (3)
+% LTXE-SLIDE-REFERENCE:	Feature-61799-ImprovedHandlingOfOnlineMedia.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{\greektext Ριζικές Αλλαγές}
+	\framesubtitle{\greektext Χειρισμός των \latintext Online \greektext Μέσων (3)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item \greektext Η πρόσβαση στους πόρους χρησιμοποιώντας \latintext Fluid \greektext μπορεί να επιτευχθεί ως εξής:
+
+		\latintext\begin{lstlisting}
+			<!-- enable js api and set no-cookie support for YouTube videos -->
+			<f:media file="{file}" additionalConfig="{enablejsapi:1, 'no-cookie': true}" ></f:media>
+
+			<!-- show title and uploader for YouTube and Vimeo before video starts playing -->
+			<f:media file="{file}" additionalConfig="{showinfo:1}" ></f:media>
+		\end{lstlisting}
+
+		\item \greektext Επιλογές προσαρμοσμένης διαμόρφωσης για βίντεο \latintext YouTube:\newline
+			\small
+				\latintext\texttt{autoplay}, \texttt{controls}, \texttt{loop}, \texttt{enablejsapi}, \texttt{showinfo}, \texttt{no-cookie}
+			\normalsize
+
+		\item \greektext Επιλογές προσαρμοσμένης διαμόρφωσης για βίντεο \latintext Vimeo:\newline
+			\small
+				\latintext\texttt{autoplay}, \texttt{loop}, \texttt{showinfo}
+			\normalsize
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		3df749b1-703a0ae6-ac1f573a-1ff0409b
+% LTXE-SLIDE-ORIGIN:	2b41f269-eaa80c0c-89bcd0f0-ee66248b English
+% LTXE-SLIDE-ORIGIN:	9ed71aaa-a7615392-78f0ac0c-f9bd7400 German
+% LTXE-SLIDE-TITLE:		Improved handling of online media (4)
+% LTXE-SLIDE-REFERENCE:	Feature-61799-ImprovedHandlingOfOnlineMedia.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{\greektext Ριζικές Αλλαγές}
+	\framesubtitle{\greektext Χειρισμός των \latintext Online \greektext Μέσων (4)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item \greektext Για να εγγραφείτε στην δική σας υπηρεσία \latintext online media, \greektext θα χρειαστείτε
+			\latintext\small\texttt{OnlineMediaHelper}\normalsize\space \greektext κλάση που υλοποιεί την
+			\latintext\small\texttt{OnlineMediaHelperInterface}\normalsize\space \greektext και μια κλάση
+			\latintext\small\texttt{FileRenderer}\normalsize\space \greektext που υλοποιεί την
+			\latintext\small\texttt{FileRendererInterface}\normalsize\space
+
+			\latintext\begin{lstlisting}
+				// register your own online video service (the used key is also the bind file extension name)
+				$GLOBALS['TYPO3_CONF_VARS']['SYS']['OnlineMediaHelpers']['myvideo'] =
+				  \MyCompany\Myextension\Helpers\MyVideoHelper::class;
+
+				$rendererRegistry = \TYPO3\CMS\Core\Resource\Rendering\RendererRegistry::getInstance();
+				$rendererRegistry->registerRendererClass(
+				  \MyCompany\Myextension\Rendering\MyVideoRenderer::class
+				);
+
+				// register an custom mime-type for your videos
+				$GLOBALS['TYPO3_CONF_VARS']['SYS']['FileInfo']['fileExtensionToMimeType']['myvideo'] =
+				  'video/myvideo';
+
+				// register your custom file extension as allowed media file
+				$GLOBALS['TYPO3_CONF_VARS']['SYS']['mediafile_ext'] .= ',myvideo';
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		67ff82dd-5d0ca79f-94c1ed75-70dea761
+% LTXE-SLIDE-ORIGIN:	0d9d73fc-2a68f137-f5ff5876-74aeef2b English
+% LTXE-SLIDE-ORIGIN:	c675e3a8-9a429b0b-61a4a603-d5b0740f German
+% LTXE-SLIDE-TITLE:		Unified Backend Routing
+% LTXE-SLIDE-REFERENCE:	Feature-65493-BackendRouting.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{\greektext Ριζικές Αλλαγές}
+	\framesubtitle{\greektext Δρομολόγηση στο \latintext Backend}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item \greektext Μία νέα συνιστώσα δρομολόγησης έχει προστεθεί στο \latintext
+		TYPO3 backend \greektext η οποία διαχειρίζεται τη διευθέτηση των διάφορων κλήσεων/δομοστοιχείων μέσα στο
+		\latintext TYPO3 CMS
+
+		\item \greektext Οι διαδρομές μπορούν να οριστούν στην ακόλουθη κλάση:\newline
+			\small
+				\latintext\texttt{Configuration/Backend/Routes.php}
+			\normalsize
+
+			\latintext\begin{lstlisting}
+				return [
+				  'myRouteIdentifier' => [
+				    'path' => '/document/edit',
+				    'controller' => Acme\MyExtension\Controller\MyExampleController::class . '::methodToCall'
+				  ]
+				];
+			\end{lstlisting}
+
+		\item \greektext Η κληθείσα μέθοδος περιέχει αντικείμενα αιτήματος και απόκρισης συμβατά με \latintext PSR-7:
+
+			\latintext\begin{lstlisting}
+				public function methodToCall(ServerRequestInterface $request, ResponseInterface $response) {
+				  ...
+				}
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		c03d6bf9-23947e87-998c1c3f-b007bbd7
+% LTXE-SLIDE-ORIGIN:	a38b3e30-a34a3bb1-ee94992a-1c91db32 English
+% LTXE-SLIDE-ORIGIN:	df56086a-498ae937-9b2bf393-a95828f3 German
+% LTXE-SLIDE-TITLE:		Autoload definition can be provided in ext_emconf.php
+% LTXE-SLIDE-REFERENCE:	Feature-68700-AutoloadDefinitionCanBeProvidedInExt_emconfphp.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{\greektext Ριζικές Αλλαγές}
+	\framesubtitle{\greektext Ορισμός Αυτόματης Φόρτωσης στο \latintext \texttt{ext\_emconf.php}}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item \greektext Οι επεκτάσεις μπορούν τώρα να παρέχουν έναν ή περισσότερους \latintext PSR-4 \greektext ορισμούς
+		στο αρχείο \latintext \texttt{ext\_emconf.php}
+
+		\item \greektext Αυτό ήταν ήδη δυνατόν στο \latintext \texttt{composer.json}, \greektext αλλά με
+		αυτό το νέο χαρακτηριστικό,
+			οι προγραμματιστές επεκτάσεων δε χρειάζεται πια να παρέχουν ένα αρχείο \latintext composer \greektext
+			για αυτό το σκοπό
+
+			\latintext\begin{lstlisting}
+				$EM_CONF[$_EXTKEY] = array (
+				  'title' => 'Extension Skeleton for TYPO3 CMS 7',
+				  ...
+				'autoload' =>
+				  array(
+				    'psr-4' => array(
+				      'Helhum\\ExtScaffold\\' => 'Classes'
+				    )
+				  )
+				);
+			\end{lstlisting}
+
+			\small
+				(\greektext προτεινόμενος τρόπος για την εγγραφή κλάσεων στην \latintext TYPO3)
+			\normalsize
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		8d446a0f-3e99e452-c2424ed7-adf45768
+% LTXE-SLIDE-ORIGIN:	6d370930-d24dd6c2-54e2330d-b873a914 English
+% LTXE-SLIDE-ORIGIN:	137a9fca-b6558571-346141d2-9304a223 German
+% LTXE-SLIDE-TITLE:		Icon-Factory (1)
+% LTXE-SLIDE-REFERENCE:	Feature-68741-IntroduceNewIconFactoryAsBaseForReplaceTheIconSkinningAPI.rst
+% LTXE-SLIDE-REFERENCE:	Feature-69095-IntroduceIconStateForIconFactory.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{\greektext Ριζικές Αλλαγές}
+	\framesubtitle{\greektext Νέος Παραγωγός Εικονιδίων (1)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\smaller\ttfamily}
+
+	\begin{itemize}
+
+		\item \greektext Η λογική της χρήσης εικονιδίων, μεγεθών εικονιδίων και \latintext overlays \greektext (επικαλύψεων) εικονιδίων
+		είναι τώρα συγκεντρωμένη μέσα στην κλάση \latintext \texttt{IconFactory}
+
+		\item \greektext Ο νέος παραγωγός θα αντικαταστήσει σταδιακά το \latintext API \greektext εικονιδίων
+
+		\item \greektext Όλα τα εικονίδια του πυρήνα θα εγγραφούν άμεσα στην κλάση \latintext \texttt{IconRegistry}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{\greektext Ριζικές Αλλαγές}
+	\framesubtitle{\greektext Νέος Παραγωγός Εικονιδίων (2)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\smaller\ttfamily}
+
+	\begin{itemize}
+
+		\item \greektext Οι επεκτάσεις πρέπει να χρησιμοποιούν την \latintext \texttt{IconRegistry::registerIcon()} \greektext για να παρακάμψουν
+		υπάρχοντα εικονίδια ή για να προσθέσουν επιπλέον εικονίδια στον παραγωγό εικονιδίων:
+
+			\latintext \begin{lstlisting}
+				IconRegistry::registerIcon(
+				  $identifier,
+				  $iconProviderClassName,
+				  array $options = array()
+				);
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		c219e18e-0905703b-cad35a69-730b7274
+% LTXE-SLIDE-ORIGIN:	4e9f1524-c3c04972-bf6bd14b-19193ab2 English
+% LTXE-SLIDE-ORIGIN:	6b59b4c7-21a7ff5c-4e67b53d-e4509355 German
+% LTXE-SLIDE-TITLE:		Icon-Factory (2)
+% LTXE-SLIDE-REFERENCE:	Feature-68741-IntroduceNewIconFactoryAsBaseForReplaceTheIconSkinningAPI.rst
+% LTXE-SLIDE-REFERENCE:	Feature-69095-IntroduceIconStateForIconFactory.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{\greektext Ριζικές Αλλαγές}
+	\framesubtitle{\greektext Νέος Παραγωγός Εικονιδίων (3)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item \greektext Ο πυρήνας του \latintext TYPO3 CMS \greektext υλοποιεί 3 κλάσεις παροχείς εικονιδίων:\newline
+			\smaller
+				\latintext\texttt{BitmapIconProvider}, \texttt{FontawesomeIconProvider} \greektext και \latintext \texttt{SvgIconProvider}
+			\normalsize
+
+		\item \greektext Παράδειγμα χρήσης:
+
+			\latintext\begin{lstlisting}
+				$iconFactory = GeneralUtility::makeInstance(IconFactory::class);
+				$iconFactory->getIcon(
+				  $identifier,
+				  Icon::SIZE_SMALL,
+				  $overlay,
+				  IconState::cast(IconState::STATE_DEFAULT)
+				)->render();
+			\end{lstlisting}
+
+		\item \greektext Έγκυρες τιμές για \latintext \texttt{Icon::SIZE\_...} \greektext είναι:\newline
+			\latintext\small\texttt{SIZE\_SMALL}, \texttt{SIZE\_DEFAULT} \greektext και \latintext \texttt{SIZE\_LARGE}\normalsize
+			\vspace{0.4cm}
+
+		\item \greektext Έγκυρες τιμές για \latintext \texttt{Icon::STATE\_...} \greektext είναι:\newline
+			\latintext\small\texttt{STATE\_DEFAULT} \greektext και \latintext \texttt{STATE\_DISABLED}\normalsize
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		b921348a-a9e1d825-8b530c1d-f404f888
+% LTXE-SLIDE-ORIGIN:	ffa90088-571dcf20-3d315854-a05814da English
+% LTXE-SLIDE-ORIGIN:	21a7eeb5-b4c7ff5c-b53de450-4e679355 German
+% LTXE-SLIDE-TITLE:		Icon-Factory (3)
+% LTXE-SLIDE-REFERENCE:	Feature-68741-IntroduceNewIconFactoryAsBaseForReplaceTheIconSkinningAPI.rst
+% LTXE-SLIDE-REFERENCE:	Feature-69095-IntroduceIconStateForIconFactory.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{\greektext Ριζικές Αλλαγές}
+	\framesubtitle{\greektext Νέος Παραγωγός Εικονιδίων (4)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item \greektext Ο πυρήνας του \latintext TYPO3 CMS \greektext παρέχει έναν \latintext Fluid ViewHelper \greektext ο οποίος διευκολύνει
+		τη χρήση εικονιδίων μέσα σε μία \latintext Fluid view:
+
+			\latintext\begin{lstlisting}
+				{namespace core = TYPO3\CMS\Core\ViewHelpers}
+
+				<core:icon identifier="my-icon-identifier"></core:icon>
+
+				<!-- use the "small" size if none given ->
+				<core:icon identifier="my-icon-identifier"></core:icon>
+				<core:icon identifier="my-icon-identifier" size="large"></core:icon>
+				<core:icon identifier="my-icon-identifier" overlay="overlay-identifier"></core:icon>
+
+				<core:icon identifier="my-icon-identifier" size="default" overlay="overlay-identifier">
+				</core:icon>
+
+				<core:icon identifier="my-icon-identifier" size="large" overlay="overlay-identifier">
+				</core:icon>
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		a96548cc-99bb2583-6048a9d3-cdab8c1a
+% LTXE-SLIDE-ORIGIN:	10739ce3-88cfb3f6-d8364643-424cbf3c English
+% LTXE-SLIDE-ORIGIN:	d9de708f-474f2f36-c104b01c-0d23a352 German
+% LTXE-SLIDE-TITLE:		Signal for pre processing linkvalidator records
+% LTXE-SLIDE-REFERENCE:	Feature-52217-SignalForPreProcessingLinkvalidatorRecords.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{\greektext Ριζικές Αλλαγές}
+	\framesubtitle{\greektext Άγκιστρα \latintext (hooks) \greektext και Σήματα}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item \greektext Ένα νέο σήμα έχει προστεθεί στόν \latintext LinkValidator, \greektext το οποίο επιτρέπει
+		επιπλέον επεξεργασία μετά την οριστικοποίηση μιας συγκεκριμένης εγγραφής\newline
+			\small
+				(\greektext π.χ. λήψη δεδομένων περιεχομένου από διαμόρφωση \latintext plugin \greektext σε εγγραφή)
+			\normalsize
+
+		\item \greektext Εγγραφή του σήματος στο αρχείο \latintext \texttt{ext\_localconf.php}:
+
+			\latintext\begin{lstlisting}
+				$signalSlotDispatcher = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(
+				  \TYPO3\CMS\Extbase\SignalSlot\Dispatcher::class
+				);
+
+				$signalSlotDispatcher->connect(
+				  \TYPO3\CMS\Linkvalidator\LinkAnalyzer::class,
+				  'beforeAnalyzeRecord',
+				  \Vendor\Package\Slots\RecordAnalyzerSlot::class,
+				  'beforeAnalyzeRecord'
+				);
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		0307a08a-7578a16b-b668c104-5535f562
+% LTXE-SLIDE-ORIGIN:	8b50edb3-2363f2a9-3120a711-db8b6ede English
+% LTXE-SLIDE-ORIGIN:	bcb8ef73-b8669a17-102da209-5f5c9adc German
+% LTXE-SLIDE-TITLE:		Replaced JumpURL features with hooks (1)
+% LTXE-SLIDE-REFERENCE:	Breaking-52156-ReplaceJumpUrlWithHooks.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{\greektext Ριζικές Αλλαγές}
+	\framesubtitle{\greektext Η \latintext JumpUrl \greektext ως Επέκταση Συστήματος (1)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item \greektext Η παραγωγή και ο χειρισμός των \latintext JumpURLs \greektext έχει μετακινηθεί
+		σε μία νέα επέκταση συστήματος \latintext \texttt{jumpurl}
+
+		\item \greektext Νέα άγκιστρα έχουν εισαχθεί, τα οποία επιτρέπουν την παραγωγή και τον χειρισμό ειδικών \latintext (custom)
+		 URL (\greektext βλ. επόμενη διαφάνεια)
+
+	\end{itemize}
+
+	\breakingchange
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		c978dc8f-96bfc888-1a2f76ab-0a92e606
+% LTXE-SLIDE-ORIGIN:	68003b46-065b81f8-5206141c-77a35b88 English
+% LTXE-SLIDE-ORIGIN:	ecb8fef3-69b86a17-02da2109-9adc5f5c German
+% LTXE-SLIDE-TITLE:		Replaced JumpURL features with hooks (2)
+% LTXE-SLIDE-REFERENCE:	Breaking-52156-ReplaceJumpUrlWithHooks.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{\greektext Ριζικές Αλλαγές}
+	\framesubtitle{\greektext Η \latintext JumpUrl \greektext ως Επέκταση Συστήματος (2)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item \greektext Άγκιστρο 1: χειρισμός των \latintext\textbf{URLs} \greektext κατά την παραγωγή συνδέσμων
+
+			\latintext\begin{lstlisting}
+				$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['urlProcessing']['urlHandlers']
+				  ['myext_myidentifier']['handler'] = \Company\MyExt\MyUrlHandler::class;
+
+				// class needs to implement the UrlHandlerInterface:
+				class MyUrlHandler implements \TYPO3\CMS\Frontend\Http\UrlHandlerInterface {
+				  ...
+				}
+			\end{lstlisting}
+
+		\item \greektext Άγκιστρο 2: χειρισμός των \latintext\textbf{URLs}
+
+			\latintext\begin{lstlisting}
+				$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['urlProcessing']['urlProcessors']
+				  ['myext_myidentifier']['processor'] = \Company\MyExt\MyUrlProcessor::class;
+
+				// class needs to implement the UrlProcessorInterface:
+				class MyUrlProcessor implements \TYPO3\CMS\Frontend\Http\UrlProcessorInterface {
+				  ...
+				}
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		cc03136e-0b4809a8-3d0c76e0-6c0e780f
+% LTXE-SLIDE-ORIGIN:	ff50feed-0f2dfe5a-1f960c51-e493d3b0 English
+% LTXE-SLIDE-ORIGIN:	08a70f0f-528daf11-ee485c29-d9707f25 German
+% LTXE-SLIDE-TITLE:		Colored Output for CLI Calls on Errors
+% LTXE-SLIDE-REFERENCE:	Feature-67056-AddOptionToDisableMoveButtonsTCAGroupType.rst
+% LTXE-SLIDE-REFERENCE:	Feature-67875-OverrideCategoryRegistryEntry.rst
+% LTXE-SLIDE-REFERENCE:	Feature-68804-ColoredOutputForCLI-relevantErrorMessages.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{\greektext Ριζικές Αλλαγές}
+	\framesubtitle{\greektext Διεπαφή Γραμμής Εντολών \latintext (CLI)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item \greektext Η κλήση του \latintext \texttt{typo3/cli\_dispatch.phpsh} \greektext μέσω της γραμμής εντολών
+		δείχνει τώρα ένα έγχρωμο μήνυμα, αν ένα άκυρο ή μη \latintext CLI \greektext κλειδί δωθεί ως πρώτη παράμετρος
+
+		\item \greektext Οι ελεγκτές εντολών του \latintext Extbase \greektext μπορούν τώρα να βρίσκονται σε
+		αυθαίρετους υποφακέλους μέσα στον φάκελο \latintext \texttt{Command}
+
+		\item \greektext Παράδειγμα:\newline
+
+			\greektext Ο ελεγκτής στο αρχείο:\newline
+			\latintext\smaller\texttt{my\_ext/Classes/Command/Hello/WorldCommandController.php}\normalsize\newline
+			\greektext ... μπορεί να κληθεί μέσω \latintext CLI:\newline
+			\latintext\smaller\texttt{typo3/cli\_dispatch.sh extbase my\_ext:hello:world <arguments>}\normalsize
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		7c872dab-c4fc90b2-97cb0cfd-0ea1f87f
+% LTXE-SLIDE-ORIGIN:	df540c68-edd41657-8854e46a-a716dccb English
+% LTXE-SLIDE-ORIGIN:	a708daf1-e48f525c-7010fe7f-2529d9e4 German
+% LTXE-SLIDE-TITLE:		Miscellaneous (1)
+% LTXE-SLIDE-REFERENCE:	Feature-68804-ColoredOutputForCLI-relevantErrorMessages.rst
+% LTXE-SLIDE-REFERENCE:	Feature-69512-SupportTyposcriptFilesAsTextFileType.rst
+% LTXE-SLIDE-REFERENCE:	Feature-69543-IntroducedGLOBALSTYPO3_CONF_VARSSYSmediafile_ext.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{\greektext Ριζικές Αλλαγές}
+	\framesubtitle{\greektext Διάφορα (1)}
+
+	\begin{itemize}
+
+		\item \greektext Τα κουμπιά μετακίνησης του \latintext TCA \greektext τύπου \latintext \texttt{group} \greektext
+		μπορούν τώρα να απενεργοποιηθούν κατηγορηματικά χρησιμοποιώντας την επιλογή \latintext \texttt{hideMoveIcons = TRUE}
+
+		\item \greektext Η μέθοδος \latintext \texttt{makeCategorizable} \greektext έχει επεκταθεί με μία νέα παράμετρο
+		 \latintext \texttt{override} \greektext για να θέσει μία νέα διαμόρφωση κατηγορίας για έναν ήδη εγγεγραμμένο συνδυασμό
+		 πίνακα/πεδίου
+
+		\item \greektext Παράδειγμα:
+
+			\latintext\begin{lstlisting}
+				\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::makeCategorizable(
+				  'css_styled_content', 'tt_content', 'categories', array(), TRUE
+				);
+			\end{lstlisting}
+
+			\small
+				\greektext Η τελευταία παράμετρος (\greektext εδώ: \latintext\texttt{TRUE}) \greektext επιβάλλει την παράκαμψη
+				 (η προεπιλεγμένη τιμή είναι \latintext \texttt{FALSE}).
+			\normalsize
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		da76573c-ebb2565c-1dcc0c79-45597a19
+% LTXE-SLIDE-ORIGIN:	5a6db8b0-ff039479-8ba12ed0-d50d8a0f English
+% LTXE-SLIDE-ORIGIN:	d52d6418-554d801f-352b85cb-54046d28 German
+% LTXE-SLIDE-TITLE:		Miscellaneous (2)
+% LTXE-SLIDE-REFERENCE:	Feature-69730-IntroduceUniqueIdGenerator.rst
+% LTXE-SLIDE-REFERENCE:	Important-68758-CommandControllersAllowedInSubfolders.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{\greektext Ριζικές Αλλαγές}
+	\framesubtitle{\greektext Διάφορα (2)}
+
+	% decrease font size for code listing
+	%\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item \greektext Μία νέα συνάρτηση παράγει ένα μοναδικό \latintext ID
+
+			\latintext\begin{lstlisting}
+				$uniqueId = \TYPO3\CMS\Core\Utility\StringUtility::getUniqueId('Prefix');
+			\end{lstlisting}
+
+		\item \greektext Ο τύπος αρχείου \latintext \texttt{.typoscript} \greektext έχει προστεθεί
+		στη λίστα των έγκυρων αρχείων τύπου \latintext plain text
+
+		\item \greektext Νέα επιλογή διαμόρφωσης καθορίζει επεκτάσεις αρχείων από
+		αρχεία μέσων τεστ
+
+			\latintext\begin{lstlisting}
+				$GLOBALS['TYPO3_CONF_VARS']['SYS']['mediafile_ext'] =
+				  'gif,jpg,jpeg,bmp,png,pdf,svg,ai,mov,avi';
+			\end{lstlisting}
+
+	\end{itemize}
+
+	\breakingchange
+
+\end{frame}
+
+% ------------------------------------------------------------------------------

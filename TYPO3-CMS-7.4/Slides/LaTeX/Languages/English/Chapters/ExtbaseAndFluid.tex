@@ -1,0 +1,131 @@
+% ------------------------------------------------------------------------------
+% TYPO3 CMS 7.4 - What's New - Chapter "Extbase & Fluid" (English Version)
+%
+% @author	Michael Schams <schams.net>
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		http://typo3.org/download/release-notes/whats-new/
+% @language	English
+% ------------------------------------------------------------------------------
+% LTXE-CHAPTER-UID:		d1a9ab65-989c4bc7-f84807fd-d96febe7
+% LTXE-CHAPTER-NAME:	Extbase & Fluid
+% ------------------------------------------------------------------------------
+
+\section{Extbase \& Fluid}
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+
+	\begin{center}\huge{Chapter 5:}\end{center}
+	\begin{center}\huge{\color{typo3darkgrey}\textbf{Extbase \& Fluid}}\end{center}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		235ca4ed-fafe968a-814d4bd4-a8f936d0
+% LTXE-SLIDE-ORIGIN:	7b7e03da-55cc30d6-8f375c39-c82ffc4f German
+% LTXE-SLIDE-TITLE:		Feature #66070: Configure anchor for pagination widget
+% LTXE-SLIDE-REFERENCE:	Feature-66070-ConfigureSectionForPaginationWidget.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+	\framesubtitle{Anchor for Pagination Widget}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item This new feature allows to add a key \texttt{section} to the configuration of a
+			Fluid pagination widget
+
+		\item The anchor gets appended to every link of the pagination widget
+
+		\item The following code adds an anchor \texttt{\#archive}:
+
+			\begin{lstlisting}
+				<f:widget.paginate objects="{plantpestWarnings}" as="paginatedWarnings"
+				  configuration="{section: 'archive', itemsPerPage: 10, insertAbove: 0, insertBelow: 1,
+				  maximumNumberOfLinks: 10}">
+
+				   [...]
+
+				</f:widget.paginate>
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		db9ef18b-234cf92c-ef6869a5-248692f4
+% LTXE-SLIDE-ORIGIN:	3356cd43-6aa02ac1-54fd276d-0c509286 German
+% LTXE-SLIDE-TITLE:		Feature #68022: Added base date attribute to DateViewHelper
+% LTXE-SLIDE-REFERENCE:	Feature-68022-AddedBaseDateAttributeToDateViewHelper.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+	\framesubtitle{Attribute \texttt{base} for DateViewHelper}
+
+	% decrease font size for code listing
+	%\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item DateViewHelper has been extended by an optional attribute named \texttt{base}
+		\item The attribute can be used to calculate relative time specification for dates
+		\item If the date is a DateTime object, \texttt{base} is ignored
+		\item The following example returns "2016", if \texttt{dateObject} is a date in 2017:
+
+			\begin{lstlisting}
+				<f:format.date format="Y" base="{dateObject}">-1 year</f:format.date>
+			\end{lstlisting}
+
+		\small
+			(see \href{http://www.php.net/manual/en/datetime.formats.relative.php}{PHP documentation} for a list of valid values)
+		\normalsize
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		aa476541-0e34625d-a79996ee-ecbf2e62
+% LTXE-SLIDE-ORIGIN:	097a17c3-6c43ed7b-3f2db1ff-35b37660 German
+% LTXE-SLIDE-TITLE:		Breaking #67890: Redesign FluidTemplateDataProcessorInterface to DataProcessorInterface
+% LTXE-SLIDE-REFERENCE:	Breaking-67890-RedesignFluidTemplateDataProcessorInterfaceToDataProcessorInterface.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+	\framesubtitle{Option \texttt{dataProcessing} for FLUIDTEMPLATE}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item In TYPO3 CMS 7.3, option \texttt{dataProcessing} for cObject \texttt{FLUIDTEMPLATE} has been introduced
+
+		\item Its \texttt{FluidTemplateDataProcessorInterface} has been refactored to \texttt{DataProcessorInterface},
+			which also affects method \texttt{process()}
+
+			\begin{lstlisting}
+				public function process(
+				  ContentObjectRenderer $cObj,
+				  array $contentObjectConfiguration,
+				  array $processorConfiguration,
+				  array $processedData
+				);
+			\end{lstlisting}
+
+	\end{itemize}
+
+	\breakingchange
+
+\end{frame}
+
+% ------------------------------------------------------------------------------

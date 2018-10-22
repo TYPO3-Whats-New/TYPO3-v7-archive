@@ -1,0 +1,300 @@
+% ------------------------------------------------------------------------------
+% TYPO3 CMS 7.5 - What's New - Chapter "Extbase & Fluid" (Italian Version)
+%
+% @author	Michael Schams <schams.net>
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		http://typo3.org/download/release-notes/whats-new/
+% @language	Italian
+% ------------------------------------------------------------------------------
+% LTXE-CHAPTER-UID:		c9b2e403-e06bb691-ce202054-149c5089
+% LTXE-CHAPTER-NAME:	Extbase & Fluid
+% ------------------------------------------------------------------------------
+
+\section{Extbase \& Fluid}
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+
+	\begin{center}\huge{Capitolo 4:}\end{center}
+	\begin{center}\huge{\color{typo3darkgrey}\textbf{Extbase \& Fluid}}\end{center}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		d8a8b8d3-5cdcbfbf-67c34a5c-d047444b
+% LTXE-SLIDE-ORIGIN:	8bf4a04e-9453b098-84fa7616-1df8ea8f English
+% LTXE-SLIDE-ORIGIN:	7528691a-d33af3f4-edab28ae-ba7c8016 German
+% LTXE-SLIDE-TITLE:		Severity-filtering for FlashMessageQueue
+% LTXE-SLIDE-REFERENCE:	Feature-7098-SeverityFilteringForFlashMessageQueue.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+	\framesubtitle{Filtro di gravità per FlashMessageQueue}
+
+	\begin{itemize}
+
+		\item In TYPO3 CMS < 7.5, solamente \underline{tutti} i messagggi del FlashMessageQueue possono essere
+			recuperati e/o rimossi
+
+		\item In TYPO3 CMS >= 7.5, può essere fatto per uno specifico livello di gravità:
+
+			\begin{lstlisting}
+				FlashMessageQueue::getAllMessages($severity);
+				FlashMessageQueue::getAllMessagesAndFlush($severity);
+				FlashMessageQueue::removeAllFlashMessagesFromSession($severity);
+				FlashMessageQueue::clear($severity);
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		700b2d7d-bebde46e-ce426f3a-96fd76e9
+% LTXE-SLIDE-ORIGIN:	1728dca6-0c88a636-5dc7cc00-dfa3266f English
+% LTXE-SLIDE-ORIGIN:	484e03e4-cb7828c2-8bf31f48-cabf004a German
+% LTXE-SLIDE-TITLE:		Query support for BETWEEN added
+% LTXE-SLIDE-REFERENCE:	Feature-47812-QuerySupportForBETWEENAdded.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+	\framesubtitle{Aggiunto il supporto per le query "\texttt{between}"}
+
+	\begin{itemize}
+
+		\item E' stato aggiunto il supporto di \texttt{between} nell'oggetto Extbase Query
+
+		\item Non ci sono miglioramenti di prestazioni per il fatto che DBMS converte internamente
+			"\texttt{between}": \texttt{min <= expr AND expr <= max}
+
+		\item La nuova funzionalità Extbase feature replica il comportamento del DBMS creando una condizione
+			\texttt{AND} logica, per poter lavorare con tutti i DBMS
+
+			\begin{lstlisting}
+				$query->matching(
+				  $query->between('uid', 3, 5)
+				);
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		b05b130f-6bdcf389-a5c89efa-5af95447
+% LTXE-SLIDE-ORIGIN:	0f2d87b1-c907b8a6-44612e51-e84e6490 English
+% LTXE-SLIDE-ORIGIN:	12b78f4c-7291d788-ea865da7-e6501a2e German
+% LTXE-SLIDE-TITLE:		Added support for multiple FlashMessage queues
+% LTXE-SLIDE-REFERENCE:	Feature-64726-UsingArbitraryFlashmessageQueues.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+	\framesubtitle{Coda multipla dei FlashMessage}
+
+	\begin{itemize}
+
+		\item Ora è possibile realizzare FlashMessageQueues multipli:
+
+			\begin{lstlisting}
+				$queueIdentifier = 'myQueue';
+				$this->controllerContext->getFlashMessageQueue($queueIdentifier);
+			\end{lstlisting}
+
+		\item Gestione usando Fluid:
+
+			\begin{lstlisting}
+				<f:flashMessages queueIdentifier="myQueue" ></f:flashMessages>
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		cfad3e95-f47b69d6-8f1a5043-f5c3d293
+% LTXE-SLIDE-ORIGIN:	6915482b-a7f5bd30-f04b3dc6-d94a5f2a English
+% LTXE-SLIDE-ORIGIN:	2f1002c1-6bde766c-3b1ad500-ab9ccf0c German
+% LTXE-SLIDE-TITLE:		Introduced MediaViewHelper (1)
+% LTXE-SLIDE-REFERENCE:	Feature-66366-IntroducedMediaViewHelper.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+	\framesubtitle{Media ViewHelper (1)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Al fine di rendere semplice l'uso di video, audio e tutti gli altri tipi di file con
+			una classe Renderer registrata nel frontend, è stato creato \texttt{MediaViewHelper}
+
+		\item Per prima cosa \texttt{MediaViewHelper} verifica se è presente un Renderer per il determinato
+			 file - se no, torna indietro e crea un tag immagine
+
+		\item Esempio:
+
+			\begin{lstlisting}
+				<code title="Image Object">
+				  <f:media file="{file}" width="400" height="375" ></f:media>
+				</code>
+
+				<output>
+				  <img alt="alt set in image record" src="fileadmin/_processed_/323223424.png"
+				    width="396" height="375" />
+				</output>
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		01de414c-8f986b3b-812a75f5-b7953b0d
+% LTXE-SLIDE-ORIGIN:	8bd8314d-631b7ae9-3102867f-804046fa English
+% LTXE-SLIDE-ORIGIN:	73fe507d-772b6011-7457429b-4039dd5c German
+% LTXE-SLIDE-TITLE:		Introduced MediaViewHelper (2)
+% LTXE-SLIDE-REFERENCE:	Feature-66366-IntroducedMediaViewHelper.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+	\framesubtitle{Media ViewHelper (2)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Esempio (continua):
+
+			\begin{lstlisting}
+				<code title="MP4 Video Object">
+				  <f:media file="{file}" width="400" height="375" ></f:media>
+				</code>
+
+				<output>
+				  <video width="400" height="375" controls>
+				    <source src="fileadmin/user_upload/my-video.mp4" type="video/mp4">
+				  </video>
+				</output>
+
+				<code title="MP4 Video Object with loop and autoplay option set">
+				  <f:media file="{file}" width="400" height="375"
+				    additionalConfig="{loop: '1', autoplay: '1'}" ></f:media>
+				</code>
+
+				<output>
+				  <video width="400" height="375" controls loop>
+				    <source src="fileadmin/user_upload/my-video.mp4" type="video/mp4">
+				  </video>
+				</output>
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		a100e5a0-84bb231a-d253f293-34405420
+% LTXE-SLIDE-ORIGIN:	5d858cf5-81f4cf18-1b13e093-6a00c98a English
+% LTXE-SLIDE-ORIGIN:	2abe5d2e-c1c7e93b-c86559da-81196fdb German
+% LTXE-SLIDE-TITLE:		Adopt form to support the Extbase/ Fluid MVC stack (1)
+% LTXE-SLIDE-REFERENCE:	Feature-69401-AdoptFormToSupportTheExtbaseFluidMVCStack.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+	\framesubtitle{Estensione di sistema \texttt{form} (1)}
+
+	\begin{itemize}
+
+		\item L'estensione di sistema \texttt{form} (compreso il modello di dati personalizzati,
+			la logica di controllo, validazione di proprietà, viste e templating) è stato adottato per gestire
+			lo stack MVC di Extbase/Fluid
+
+		\item Questo consente una migliore personalizzazione e controllo del comportamento generato 
+			e la segnalazione semplicemente modificando i template Fluid o utilizzando una propria
+			logica personalizzata per viewhelper
+
+		\item Ogni elemento usa un proprio Partial, che può essere configurato anche 
+			con l'opzione TypoScript \texttt{partialPath = ...}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		4a799d94-27341eb7-45c90e17-f21774e8
+% LTXE-SLIDE-ORIGIN:	20c7837c-5b841f21-fb3ead22-265aebe4 English
+% LTXE-SLIDE-ORIGIN:	d45facb0-73989d92-ffbc7c2b-46f583ba German
+% LTXE-SLIDE-TITLE:		Adopt form to support the Extbase/ Fluid MVC stack (2)
+% LTXE-SLIDE-REFERENCE:	Feature-69401-AdoptFormToSupportTheExtbaseFluidMVCStack.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+	\framesubtitle{Estensione di sistema \texttt{form} (2)}
+
+	\begin{itemize}
+
+		\item Sono stati creati i tre seguenti ViewHelpers:
+
+			\begin{itemize}
+				\item \texttt{AggregateSelectOptionsViewHelper} (for optgroup tags)
+				\item \texttt{SelectViewHelper} (for optgroup tags)
+				\item \texttt{PlainMailViewHelper} (to render plain text mails)
+			\end{itemize}
+
+		\item In aggiunta, ci sono tre Views:
+
+			\begin{itemize}
+				\item \texttt{show} (the form itself)
+				\item \texttt{confirmation} (the confirmation page)
+				\item \texttt{postProcessor}/\texttt{mail} (the email)
+			\end{itemize}
+
+		\item Il path di template e la visibilità dei campi possono essere personalizzati
+			individualmente per ogni View
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		86d9ddae-6435e797-16a58090-dab3735d
+% LTXE-SLIDE-ORIGIN:	20b68c91-1b501686-f97f7b55-0822d9d1 English
+% LTXE-SLIDE-ORIGIN:	cd99ea8c-e6234f0f-caf559ed-c3f825c0 German
+% LTXE-SLIDE-TITLE:		Add annotation for CLI only commands
+% LTXE-SLIDE-REFERENCE:	Feature-68746-AddAnnotationForCLIOnlyCommands.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+	\framesubtitle{Annotazioni \texttt{@cli}}
+
+	\begin{itemize}
+
+		\item Usando la nuova annotazione \texttt{@cli}, un comando in un
+			CommandController di Extbase può essere usato solo come CLI-command
+
+		\item Questo comando è escluso dalla lista dei comandi dello scheduler
+
+		\item Ad esempio i comandi come \texttt{extbase:help:help}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------

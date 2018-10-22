@@ -1,0 +1,222 @@
+% ------------------------------------------------------------------------------
+% TYPO3 CMS 7.5 - What's New - Chapter "Deprecated Functions" (German Version)
+%
+% @author	Patrick Lobacher <patrick@lobacher.de> and Michael Schams <schams.net>
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		http://typo3.org/download/release-notes/whats-new/
+% @language	German
+% ------------------------------------------------------------------------------
+% LTXE-CHAPTER-UID:		29c0406a-c25fb446-757b26da-de76b4e4
+% LTXE-CHAPTER-NAME:	Deprecated Functions
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		63ae9afb-0d3e0159-ce9ce90a-ea70ed1b
+% LTXE-SLIDE-TITLE:		Deprecation #68128: GeneralUtility slash-related methods
+% LTXE-SLIDE-REFERENCE:	Deprecation-68128-GeneralUtilitySlash-relatedMethods.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Veraltete/Entfernte Funktionen}
+	\framesubtitle{Slash-Methoden in GeneralUtility}
+
+	\begin{itemize}
+
+		\item Innerhalb der Klasse \texttt{GeneralUtility} wurden folgende Methoden als
+			\textbf{deprecated} deklariert:
+
+			\begin{itemize}
+				\item \texttt{GeneralUtility::addSlashesOnArray()}
+				\item \texttt{GeneralUtility::stripSlashesOnArray()}
+				\item \texttt{GeneralUtility::slashArray()}
+			\end{itemize}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		2c09a1fa-e9531d1f-c7b2f44b-0369461d
+% LTXE-SLIDE-TITLE:		Deprecation #68804: CLI-related constants and methods
+% LTXE-SLIDE-REFERENCE:	Deprecation-68804-CLI-relatedConstantsAndMethods.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Veraltete/Entfernte Funktionen}
+	\framesubtitle{CLI Konstanten und Methoden}
+
+	% decrease font size for code listing
+	%\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Die Logik hinsichtlich Optionen bei CLI-basierten Skripts wurde an den \texttt{CliRequestHandler} übergeben
+
+		\item Daher gilt folgende Methode als \textbf{deprecated}:
+
+			\begin{lstlisting}
+				BackendUserAuthentication->checkCLIuser()
+			\end{lstlisting}
+
+		\item Folgende Konstanten und globale Parameter sind nun ebenfalls \textbf{deprecated}:
+
+			\begin{lstlisting}
+				const TYPO3_cliKey
+				const TYPO3_cliInclude
+				$GLOBALS['MCONF']['name']
+				$GLOBALS['temp_cliScriptPath']
+				$GLOBALS['temp_cliKey']
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		562af58e-1ed24f11-fbeabef5-63e4c70f
+% LTXE-SLIDE-TITLE:		Deprecation #69057: Deprecate IconUtility and move methods into IconFactory
+% LTXE-SLIDE-REFERENCE:	Deprecation-69057-DeprecateIconUtilityAndMoveMethodsIntoIconFactory.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Veraltete/Entfernte Funktionen}
+	\framesubtitle{IconUtility}
+
+	% decrease font size for code listing
+	%\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Die Klasse \texttt{IconUtility} gilt ab sofort als \textbf{deprecated}.\newline
+			Einige der Methoden wurden zur \texttt{IconFactory} verschoben:
+
+			\begin{lstlisting}
+				IconUtility::skinImg()
+				IconUtility::getIcon()
+				IconUtility::getSpriteIcon()
+				IconUtility::getSpriteIconForFile()
+				IconUtility::getSpriteIconForRecord()
+				IconUtility::getSpriteIconForResource()
+				IconUtility::getSpriteIconClasses()
+			\end{lstlisting}
+
+		\item Ebenso wurde folgender PageTSconfig-Schlüssel als \textbf{deprecated} markiert:
+
+			\begin{lstlisting}
+				mod.wizards.newContentElement.wizardItems.*.elements.*.icon
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		f1b71550-3b7786c0-61c6d8c8-8b880c3c
+% LTXE-SLIDE-TITLE:		Deprecation #69262: Move marker substitution functionality to own class
+% LTXE-SLIDE-REFERENCE:	Deprecation-69262-MoveMarkerSubstitutionFunctionalityToOwnClass.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Veraltete/Entfernte Funktionen}
+	\framesubtitle{Veraltete \texttt{HtmlParser}-Methoden}
+
+	% decrease font size for code listing
+	%\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Die Marker-Ersetzungsfunktionalität wurde verschoben von\newline
+			\texttt{core/Classes/Html/HtmlParser.php}\newline
+			zur eigenen Klasse\newline
+			\texttt{core/Classes/Service/MarkerBasedTemplateService.php}
+
+		\item Daher sind folgende Methoden \textbf{deprecated} und werden in TYPO3 CMS Version 8 entfernt:
+
+			\begin{lstlisting}
+				HtmlParser::getSubpart()
+				HtmlParser::substituteSubpart()
+				HtmlParser::substituteSubpartArray()
+				HtmlParser::substituteMarker()
+				HtmlParser::substituteMarkerArray()
+				HtmlParser::substituteMarkerAndSubpartArrayRecursive()
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		adeafcfb-76cdfdb9-ea459432-0c3863f5
+% LTXE-SLIDE-TITLE:		Deprecation #69401: Adopt form to support the Extbase/ Fluid MVC stack
+% LTXE-SLIDE-REFERENCE:	Deprecation-69401-AdoptFormToSupportTheExtbaseFluidMVCStack.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Veraltete/Entfernte Funktionen}
+	\framesubtitle{Änderung in Form Extension}
+
+	\begin{itemize}
+
+		\item Die System-Extension \texttt{form} basiert nun auf Extbase/Fluid
+
+		\item Daher ist folgender TypoScript-Code veraltet, da man die Eigenschaft \texttt{layout}
+			nicht mehr verwenden sollte:
+
+			\begin{lstlisting}
+				10 = FORM
+				10 {
+				  layout {
+				    containerWrap = <div><elements /></div>
+				    elementWrap = <div><element /></div>
+				  }
+				}
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		bda2c3ea-2ff3b7f6-dd6977e6-6cf87469
+% LTXE-SLIDE-TITLE:		Deprecated ViewHelper and Methods
+% LTXE-SLIDE-REFERENCE:	Deprecation-69535-DeprecateTYPO3CMSFluidViewHelpersBeButtonsIconViewHelper.rst
+% LTXE-SLIDE-REFERENCE:	Important-69531-RemoveSpriteManagerIconViewHelper.rst
+% LTXE-SLIDE-REFERENCE:	Deprecation-69568-VariousFormEngineRelatedMethods.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Veraltete/Entfernte Funktionen}
+	\framesubtitle{Veraltete ViewHelper und Methoden}
+
+	% decrease font size for code listing
+	%\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Folgende ViewHelper wurden als \textbf{deprecated} markiert und sollten daher nicht mehr verwendet werden:
+
+			\begin{lstlisting}
+				\TYPO3\CMS\Fluid\ViewHelpers\Be\Buttons\IconViewHelper
+				\TYPO3\CMS\Backend\ViewHelpers\SpriteManagerIconViewHelper
+			\end{lstlisting}
+
+		\item Die folgenden Methoden wurden als \textbf{deprecated} markiert und sollten daher nicht mehr verwendet werden:
+
+			\begin{lstlisting}
+				BackendUtility::getExcludeFields()
+				BackendUtility::getExplicitAuthFieldValues()
+				BackendUtility::getSystemLanguages()
+				BackendUtility::getRegisteredFlexForms()
+				BackendUtility::exec_foreign_table_where_query()
+				BackendUtility::replaceMarkersInWhereClause()
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------

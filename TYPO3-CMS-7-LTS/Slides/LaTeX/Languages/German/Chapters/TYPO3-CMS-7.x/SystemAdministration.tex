@@ -1,0 +1,152 @@
+% ------------------------------------------------------------------------------
+% TYPO3 CMS 7 LTS - What's New - Chapter "System Administration" (English Version)
+%
+% @author	Michael Schams <schams.net>
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		http://typo3.org/download/release-notes/whats-new/
+% @language	English
+% ------------------------------------------------------------------------------
+% LTXE-CHAPTER-UID:		xxxxxxxx-xxxxxxxx-xxxxxxxx-xxxxxxxx
+% LTXE-CHAPTER-NAME:	System Administration
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		a0327db8-b4a9bd42-f32515d0-87296684
+% LTXE-SLIDE-ORIGIN:	5d8adc7d-af29cb46-4acd2255-27362935 German
+% LTXE-SLIDE-TITLE:		System Requirements
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{Introduction}
+	\framesubtitle{System Requirements}
+
+	\begin{itemize}
+		\item PHP*:\tabto{2.2cm}v5.5.0 - v5.6.x
+		\item MySQL:\tabto{2.2cm}v5.5.x - v5.6.x (no strict mode)
+		\item Speicherplatz:\tabto{2.2cm}min 200 MB
+		\item PHP Einstellungen:
+
+			\begin{itemize}
+				\item memory\_limit >= 128M
+				\item max\_execution\_time >= 240s
+				\item max\_input\_vars >= 1500
+				\item die Compile-Option \texttt{-}\texttt{-disable-ipv6} darf \underline{nicht} verwendet werden
+			\end{itemize}
+
+		\item Das Backend benötigt IE >= 9 oder einen anderen modernen Browser
+
+	\end{itemize}
+
+	\vspace{0.8cm}
+
+	*) Weitere Details: \href{http://typo3.org/news/article/php-minimum-requirements-for-typo3-cms-7/}{PHP - minimale Requirements für TYPO3 CMS 7}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		63decc15-57478e30-70c7ae99-27abd3c2
+% LTXE-SLIDE-ORIGIN:	3b01edfd-6f06e241-2670b2ad-1b598b4e German
+% LTXE-SLIDE-TITLE:		Installation
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{Introduction}
+	\framesubtitle{Installation (Klassisch)}
+
+	\begin{itemize}
+		\item Offizielle Installations-Prodezur unter Linux/Mac OS X\newline
+			(DocumentRoot z.B. \texttt{/var/www/site/htdocs}):
+
+			\begin{lstlisting}
+				$ cd /var/www/site
+				$ wget --content-disposition get.typo3.org/7.6
+				$ tar xzf typo3_src-7.6.0.tar.gz
+				$ cd htdocs
+				$ ln -s ../typo3_src-7.6.0 typo3_src
+				$ ln -s typo3_src/index.php
+				$ ln -s typo3_src/typo3
+				$ touch FIRST_INSTALL
+			\end{lstlisting}
+
+		\item Symbolische Links unter Microsoft Windows:
+
+			\begin{itemize}
+				\item Verwendung von \texttt{junction} unter Windows XP/2000
+				\item Verwendung von \texttt{mklink} unter Windows Vista und Windows 7
+			\end{itemize}
+
+	\end{itemize}
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		xxxxxxxx-xxxxxxxx-xxxxxxxx-xxxxxxxx
+% LTXE-SLIDE-TITLE:		Installation using Composer
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{Introduction}
+	\framesubtitle{Installation (mittels Composer)}
+
+	\begin{itemize}
+
+		\item Offizielle Installations-Prodezur mittels \href{https://getcomposer.org/}{Composer}\newline
+			(DocumentRoot z.B. \texttt{/var/www/site/htdocs/web}):
+
+			\begin{lstlisting}
+				$ cd /var/www/site
+				$ curl -s https://getcomposer.org/installer | php
+				$ php composer.phar create-project typo3/cms-base-distribution \
+				    htdocs
+				$ touch htdocs/web/FIRST_INSTALL
+			\end{lstlisting}
+
+		\item \texttt{dev-master} anhängen, für den aktuellen Entwicklungszweig:
+
+			\begin{lstlisting}
+				$ php composer.phar create-project typo3/cms-base-distribution \
+				    htdocs dev-master
+			\end{lstlisting}
+
+		\item Weitere Details:
+
+			\begin{itemize}
+				\item \url{https://composer.typo3.org}
+				\item \url{https://wiki.typo3.org/Composer}
+			\end{itemize}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		4dbfb1f2-70930473-ec804474-1c2ac93a
+% LTXE-SLIDE-ORIGIN:	22ce445c-fe028a61-d11c8f8c-510270d3 German
+% LTXE-SLIDE-TITLE:		Upgrade to TYPO3 CMS 7
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{Introduction}
+	\framesubtitle{Upgrade auf TYPO3 CMS 7 LTS}
+
+	\begin{itemize}
+		\item Upgrade ist nur von TYPO3 CMS 6.2 LTS oder einem der 7.x Sprint Releases möglich
+		\item TYPO3 CMS < 6.2 sollte zunächst auf TYPO3 CMS 6.2 LTS aktualisiert werden
+	\end{itemize}
+
+	\begin{itemize}
+
+		\item Upgrade Instruktionen:\newline
+			\smaller\url{https://wiki.typo3.org/Upgrade#Upgrading_to_7}\normalsize
+		\item Offizieller TYPO3 Guide "TYPO3 Installation and Upgrading":
+			\smaller\url{http://docs.typo3.org/typo3cms/InstallationGuide}\normalsize
+		\item Generelles Vorgehen:
+			\begin{itemize}
+				\item Check der minimalen System Requirements \small(PHP, MySQL, etc.)
+				\item Untersuchung \textbf{deprecation\_*.log} in der alten TYPO3 Instanz
+				\item Aktualisierung aller Extensions auf die neueste Version
+				\item Deployment der neuen Sources + Install Tool -> Upgrade Wizard
+				\item Untersuchung des Startup Moduls für Backend Users (optional)
+			\end{itemize}
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------

@@ -1,0 +1,189 @@
+% ------------------------------------------------------------------------------
+% TYPO3 CMS 7.5 - What's New - Chapter "Introduction" (German Version)
+%
+% @author	Patrick Lobacher <patrick@lobacher.de> and Michael Schams <schams.net>
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		http://typo3.org/download/release-notes/whats-new/
+% @language	German
+% ------------------------------------------------------------------------------
+% LTXE-CHAPTER-UID:		3a84d600-9fb67dda-31c4af65-dd7a4af5
+% LTXE-CHAPTER-NAME:	Introduction
+% ------------------------------------------------------------------------------
+
+\section{Einführung}
+\begin{frame}[fragile]
+	\frametitle{Einführung}
+
+	\begin{center}\huge{Einführung}\end{center}
+	\begin{center}\huge{\color{typo3darkgrey}\textbf{(Die Fakten)}}\end{center}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		f1ea1041-2b6b2b81-f54b45c0-84265d6a
+% LTXE-SLIDE-TITLE:		TYPO3 CMS 7.5 - Die Fakten
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{Einführung}
+	\framesubtitle{TYPO3 CMS 7.5 - Die Fakten}
+
+	\begin{itemize}
+		\item Veröffentlichungsdatum: 29. September 2015
+		\item Releasetyp: "Sprint Release"
+		\item Vision: Embrace, Innovate, Deliver
+		\item Hauptfokus: Finalization
+	\end{itemize}
+
+	\begin{figure}
+		\includegraphics[width=0.95\linewidth]{Introduction/typo3cms75-banner.jpg}
+	\end{figure}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		5d8adc7d-af29cb46-4acd2255-27362935
+% LTXE-SLIDE-TITLE:		System Requirements
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{Einführung}
+	\framesubtitle{Systemvoraussetzungen}
+
+	\begin{itemize}
+		\item PHP*:\tabto{3cm}v5.5.0 - v5.6.x
+		\item MySQL:\tabto{3cm}v5.5.x - v5.6.x (no strict mode)
+		\item Festplattenplatz:\tabto{3cm}mindestens 200 MB
+		\item PHP Einstellungen:
+
+			\begin{itemize}
+				\item memory\_limit >= 128M
+				\item max\_execution\_time >= 240s
+				\item PHP Kompilierungsoption \texttt{--disable-ipv6} darf \underline{nicht} aktiviert sein
+			\end{itemize}
+
+		\item Backend benötigt IE >= 9 oder jeden anderen modernen Browser
+
+	\end{itemize}
+
+	\vspace{1cm}
+
+	*) weitere Details: \href{http://typo3.org/news/article/php-minimum-requirements-for-typo3-cms-7/}{PHP Minimum Requirements for TYPO3 CMS 7}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		6cad14bf-08874e74-1dd85333-e5c43a08
+% LTXE-SLIDE-TITLE:		Development And Release Timeline
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{Einführung}
+	\framesubtitle{Release-Zyklus}
+
+	\begin{figure}
+		\includegraphics[width=0.90\linewidth]{Introduction/ReleaseAgenda.png}
+	\end{figure}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		387f7aeb-53ab533f-95427547-3aa76412
+% LTXE-SLIDE-TITLE:		TYPO3 CMS Roadmap
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{Einführung}
+	\framesubtitle{TYPO3 CMS Roadmap}
+
+	Voraussichtliche Veröffentlichungen und deren Hauptfokus:
+
+	\begin{itemize}
+		\item v7.0 \tabto{1.1cm}02/Dez/2014\tabto{3.4cm}Backend Overhaul Vol 1
+		\item v7.1 \tabto{1.1cm}24/Feb/2015\tabto{3.4cm}Core Cleanup \& Streamlining
+		\item v7.2 \tabto{1.1cm}28/Apr/2015\tabto{3.4cm}Frontend
+		\item v7.3 \tabto{1.1cm}16/Jun/2015\tabto{3.4cm}Package Ecosystem, Composer
+		\item v7.4 \tabto{1.1cm}04/Aug/2015\tabto{3.4cm}Backend Overhaul Vol 2
+
+		\item
+			\begingroup
+				\color{typo3orange}
+					v7.5 \tabto{1.1cm}29/Sep/2015\tabto{3.4cm}Finalization
+			\endgroup
+
+		\item v7 LTS \tabto{1.1cm}Okt/Nov/2015\tabto{3.4cm}\textbf{TYPO3 CMS 7 LTS} (Long Term Release)
+	\end{itemize}
+
+	\smaller
+		\url{https://typo3.org/typo3-cms/roadmap/}\newline
+		\url{http://typo3.org/news/article/embrace-and-innovate-typo3-cms-7/}
+	\normalsize
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		3b01edfd-6f06e241-2670b2ad-1b598b4e
+% LTXE-SLIDE-TITLE:		Installation
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{Einführung}
+	\framesubtitle{Installation}
+
+	\begin{itemize}
+		\item Empfohlene Installationsschritte unter Linux/Mac OS X\newline
+			(DocumentRoot ist beispielsweise \texttt{/var/www/site/htdocs}):
+		\begin{lstlisting}
+			$ cd /var/www/site
+			$ wget --content-disposition get.typo3.org/7.5
+			$ tar xzf typo3_src-7.5.0.tar.gz
+			$ cd htdocs
+			$ ln -s ../typo3_src-7.5.0 typo3_src
+			$ ln -s typo3_src/index.php
+			$ ln -s typo3_src/typo3
+			$ touch FIRST_INSTALL
+		\end{lstlisting}
+
+		\item Symbolische Links unter Microsoft Windows:
+
+			\begin{itemize}
+				\item unter Windows XP/2000 kann \texttt{junction} benutzt werden
+				\item unter Windows Vista und Windows 7 kann \texttt{mklink} benutzt werden
+			\end{itemize}
+
+	\end{itemize}
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		22ce445c-fe028a61-d11c8f8c-510270d3
+% LTXE-SLIDE-TITLE:		Upgrade to TYPO3 CMS 7
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{Einführung}
+	\framesubtitle{Upgrade zu TYPO3 CMS 7}
+
+	\begin{itemize}
+		\item Upgrades nur von TYPO3 CMS 6.2 LTS möglich
+		\item TYPO3 CMS < 6.2 sollte man erst auf TYPO3 CMS 6.2 LTS aktualisieren
+	\end{itemize}
+
+	\begin{itemize}
+
+		\item Upgrade-Anleitung:\newline
+			\smaller\url{http://wiki.typo3.org/Upgrade#Upgrading_to_7.5}\normalsize
+		\item Offizielles TYPO3 Guide "TYPO3 Installation and Upgrading":
+			\smaller\url{http://docs.typo3.org/typo3cms/InstallationGuide}\normalsize
+		\item Generelles Vorgehen:
+			\begin{itemize}
+				\item Prüfen, ob Mindestvoraussetzungen erfüllt sind \small(PHP, MySQL, etc.)
+				\item Das \textbf{deprecation\_*.log} der TYPO3 Instanz durchsehen
+				\item Sämtliche Extensions auf den aktuellsten Stand bringen
+				\item Neuen TYPO3 Quellcode entpacken und im Install Tool den Upgrade Wizard ausführen
+				\item Startup Modul von Backend Benutzern überprüfen (optional)
+			\end{itemize}
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------

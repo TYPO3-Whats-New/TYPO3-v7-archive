@@ -1,0 +1,151 @@
+% ------------------------------------------------------------------------------
+% TYPO3 CMS 7.1 - What's New - Chapter "Extbase & Fluid" (Serbian Version)
+%
+% @author	Michael Schams <schams.net>
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		http://typo3.org/download/release-notes/whats-new/
+% @language	Serbian
+% ------------------------------------------------------------------------------
+% LTXE-CHAPTER-UID:		7b0b9a18-6df803cd-8b5e7778-87e587d9
+% LTXE-CHAPTER-NAME:	Chapter: Extbase & Fluid
+% ------------------------------------------------------------------------------
+
+\section{Extbase i Fluid}
+\begin{frame}[fragile]
+	\frametitle{Extbase i Fluid}
+
+	\begin{center}\huge{Poglavlje 4:}\end{center}
+	\begin{center}\huge{\color{typo3darkgrey}\textbf{Extbase i Fluid}}\end{center}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		98f2dc6a-0e836e21-aa66a525-3fa8db78
+% LTXE-SLIDE-ORIGIN:	dcd42ada-3bbb7cb1-a32f6fd0-025036bf English
+% LTXE-SLIDE-TITLE:		PaginateViewHelper
+% LTXE-SLIDE-REFERENCE:	Feature-34944-PaginateHandleNonQueryResultObjects.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Extbase i Fluid}
+	\framesubtitle{PaginateViewHelper}
+
+	\begin{itemize}
+
+		\item Od TYPO3 CMS 7.1, PaginateViewHelper prihvata i sledece tipove
+
+			\begin{itemize}
+				\item \texttt{QueryResultInterface}
+				\item \texttt{ObjectStorage}
+				\item \texttt{ArrayAccess}
+				\item \texttt{array}
+			\end{itemize}
+
+		\item Primer:
+
+			\begin{lstlisting}
+				<f:widget.paginate objects="{blogs}" as="paginatedBlogs">
+				  <f:for each="{paginatedBlogs}" as="blog">
+				    <h4>{blog.title}</h4>
+				  </f:for>
+				</f:widget.paginate>
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		1804864d-9b6bda31-e7b72bca-6eb93aad
+% LTXE-SLIDE-ORIGIN:	bff3466a-fc0faf7d-466a0f7b-79ad4c18 English
+% LTXE-SLIDE-TITLE:		ContainerViewHelper loads RequireJS modules
+% LTXE-SLIDE-REFERENCE:	Feature-63913-AllowRequireJsModulesForContainerViewHelper.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Extbase i Fluid}
+	\framesubtitle{ContainerViewHelper ucitava RequireJS module}
+
+	\begin{itemize}
+
+		\item ContainerViewHelper moze ucitati RequireJS module uz pomoc \texttt{includeRequireJsModules} atributa
+
+		\item Primer:
+
+			\begin{lstlisting}
+				<f:be.container pageTitle="Extension Module" loadJQuery="true"
+				  includeRequireJsModules="{
+				    0:'TYPO3/CMS/Extension/Module1',
+				    1:'TYPO3/CMS/Extension/Module2',
+				    2:'TYPO3/CMS/Extension/Module3',
+				    3:'TYPO3/CMS/Extension/Module4'
+				  }" >
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		97bd06b5-c142aaae-282685b6-94f82ca3
+% LTXE-SLIDE-ORIGIN:	5f4b177c-9a6847e1-d807cb68-16bffd06 English
+% LTXE-SLIDE-TITLE:		Methode has() in ObjectAccess
+% LTXE-SLIDE-REFERENCE:	Feature-56529-SupportHasInArrayObject.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Extbase i Fluid}
+	\framesubtitle{Metoda \texttt{has()} u ObjectAccess}
+
+	\begin{itemize}
+
+		\item U Fluid-u \texttt{object.property} i \texttt{object.isProperty} vec podrzavaju sledece metode
+
+			\begin{itemize}
+				\item \texttt{isProperty()}
+				\item \texttt{getProperty()}
+			\end{itemize}
+
+		\item Novo od TYPO3 CMS 7.1: \texttt{hasProperty()}
+		\item Poziva metod \texttt{\$object->hasProperty()}\newline
+			ako se \texttt{object.hasProperty} koristi u Fluid-u
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		dd86248d-f6422fea-8ad574ee-3c2bda51
+% LTXE-SLIDE-ORIGIN:	dacadcbe-2190f355-dc506bba-4276dede English
+% LTXE-SLIDE-TITLE:		Upload multiple files with FormUpload-ViewHelper
+% LTXE-SLIDE-REFERENCE:	Feature-47666-AttributeMulitpleForFormUploadViewhelper.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Extbase i Fluid}
+	\framesubtitle{Postavljanje vise fajlova sa FormUpload-ViewHelper}
+
+	\begin{itemize}
+
+		\item FormUpload-Viewhelper podrzava novi atribut \texttt{multiple}, koji dozvoljava opciju postavljanja vise fajlova u isto vreme
+
+			\begin{lstlisting}
+				<f:form.upload property="files" multiple="multiple" />
+			\end{lstlisting}
+
+			\vspace{0.2cm}
+
+			\begingroup
+				\color{red}
+					Napomena: developeri treba da pripreme dolaznu vrednost za mapiranje po propertiju tako sto ce napisati svoj TypeConverter
+			\endgroup
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------

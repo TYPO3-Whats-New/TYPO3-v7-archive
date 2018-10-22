@@ -1,0 +1,194 @@
+% ------------------------------------------------------------------------------
+% TYPO3 CMS 7.6 - What's New - Chapter "Extbase & Fluid" (English Version)
+%
+% @author	Patrick Lobacher <patrick@lobacher.de> and Michael Schams <schams.net>
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		http://typo3.org/download/release-notes/whats-new/
+% @language	English
+% ------------------------------------------------------------------------------
+% LTXE-CHAPTER-UID:		cfcf5377-f3e96f39-d1ba01e9-2f341646
+% LTXE-CHAPTER-NAME:	Extbase & Fluid
+% ------------------------------------------------------------------------------
+
+\section{Extbase \& Fluid}
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+
+	\begin{center}\huge{Capítulo 4:}\end{center}
+	\begin{center}\huge{\color{typo3darkgrey}\textbf{Extbase \& Fluid}}\end{center}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		4700f757-95285519-419f23a1-30a859db
+% LTXE-SLIDE-ORIGIN:	9cd3fb74-276172d0-d6b3f387-3d2bd20f English
+% LTXE-SLIDE-ORIGIN:	78012a67-036705de-daefb092-e87adffa German
+% LTXE-SLIDE-TITLE:		Relations to the same table in Extbase
+% LTXE-SLIDE-REFERENCE:	Feature-27057-RelationsToTheSameTableInExtbase.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+	\framesubtitle{Mismas Relaciones de Tablas}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Ahora es posible usar un modelo de dominio donde se conecta un objeto
+			a otro objecto de la misma clase directamente
+
+			\begin{lstlisting}
+				namespace \Vendor\Extension\Domain\Model;
+				class A {
+				  /**
+				   * @var \Vendor\Extension\Domain\Model\A
+				   */
+				  protected $parent;
+				}
+			\end{lstlisting}
+
+			\begin{lstlisting}
+				namespace \Vendor\Extension\Domain\Model;
+				class A {
+				  /**
+				   * @var \Vendor\Extension\Domain\Model\B
+				   */
+				  protected $x;
+
+				  /**
+				   * @var \Vendor\Extension\Domain\Model\B
+				   */
+				  protected $y;
+				}
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		4602293b-d0e6c48d-bd4c30ec-9da692eb
+% LTXE-SLIDE-ORIGIN:	12b7dd4a-73b912f7-e5d1cefa-e3c8386d English
+% LTXE-SLIDE-ORIGIN:	0c279898-ab69247f-502eb397-6817d02b German
+% LTXE-SLIDE-TITLE:		Added absolute url option to uri.image and image viewHelper
+% LTXE-SLIDE-REFERENCE:	Feature-64286-AddedAbsoluteUrlOptionToUriimageAndImageViewHelper.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+	\framesubtitle{Opción \texttt{absolute} para Image-ViewHelpers}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Nueva opción \texttt{absolute} fuerza \texttt{ImageViewhelper} y
+			\texttt{Uri/ImageViewHelper} para tener como salida una URL \textbf{absoluta}
+
+		\item Ejemplo 1 (\texttt{ImageViewhelper}):
+
+			\begin{lstlisting}
+				<f:image image="{file}" width="400" height="375" absolute="1" ></f:image>
+
+				// Output
+				<img alt="alt set in image record"
+				  src="http://example.com/fileadmin/_processed_/323223424.png"
+				  width="400" height="375" />
+			\end{lstlisting}
+
+		\item Ejemplo 2 (\texttt{Uri/ImageViewHelper}):
+
+			\begin{lstlisting}
+				<f:uri.image image="{file}" width="400" height="375" absolute="1" ></f:uri>
+
+				// Output
+				http://example.com/fileadmin/_processed_/323223424.png
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		5f7472f2-9fa3ae4b-d6c5cef0-9bc651d4
+% LTXE-SLIDE-ORIGIN:	666331cd-80241eb3-4da880c4-7c9ee834 English
+% LTXE-SLIDE-ORIGIN:	b880b0d8-83956e2a-0a594f16-7f4eb357 German
+% LTXE-SLIDE-TITLE:		ViewHelper to strip whitespace between HTML tags
+% LTXE-SLIDE-REFERENCE:	Feature-70170-ViewHelperToStripWhitespaceBetweenHTMLTags.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+	\framesubtitle{Escapar Espacio en blanco entre Etiquetas HTML}
+
+	\begin{itemize}
+
+		\item Nuevo ViewHelper \texttt{spaceless} elimina espacios redundantes entre etiquetas HTML
+			mientras preserva el espacio que puede haber dentro de etiquetas HTML:
+
+			\begin{lstlisting}
+				<f:spaceless>
+				<div>
+				    <div>
+				        <div>text
+
+				text</div>
+				</div>
+				</div>
+			\end{lstlisting}
+
+		\item Salida:
+
+			\begin{lstlisting}
+				<div><div><div>text
+
+				text</div></div></div>
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		b19aae5c-5d7eb551-ff42bce2-315d324f
+% LTXE-SLIDE-ORIGIN:	cc4b2591-896d4885-92b8e0d7-35adac7e English
+% LTXE-SLIDE-ORIGIN:	84d3095f-75b5a68a-b9591a53-f34d8ecb German
+% LTXE-SLIDE-TITLE:		Respect rootLevel configuration in extbase queries
+% LTXE-SLIDE-REFERENCE:	Breaking-63406-RespectRootlevelConfigurationinExtbaseQueries.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+	\framesubtitle{Configuración RootLevel}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\small\ttfamily}
+
+	\begin{itemize}
+
+		\item El RootLevel de una tabla puede configurarse en TCA ahora\newline
+			\small(esto define dónde los registros de una tabla pueden encontrarse en el sistema)\normalsize
+
+			\begin{itemize}
+				\item \texttt{0}: sólo árbol de páginas
+				\item \texttt{1}: en la página raíz sólo (PID 0)
+				\item \texttt{-1}: tanto la página raíz como el árbol de páginas
+			\end{itemize}
+
+		\item Configuración TCA:\newline
+			\tiny
+				\texttt{\$GLOBALS['TCA']['tx\_myext\_domain\_model\_record']['ctrl']['rootLevel'] = -1;}
+			\normalsize
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------

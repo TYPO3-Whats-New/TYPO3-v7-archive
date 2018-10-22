@@ -1,0 +1,542 @@
+% ------------------------------------------------------------------------------
+% TYPO3 CMS 7.1 - What's New - Chapter "In-Depth Changes" (English Version)
+%
+% @author	Michael Schams <schams.net>
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		http://typo3.org/download/release-notes/whats-new/
+% @language	English
+% ------------------------------------------------------------------------------
+% LTXE-CHAPTER-UID:		7cb2d402-105890ae-a1632623-719adbb6
+% LTXE-CHAPTER-NAME:	In-Depth Changes
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		505c827e-aab9a39a-612d0288-bb873878
+% LTXE-SLIDE-ORIGIN:	98562dbe-2ac63acf-850f529d-d841184f
+% LTXE-SLIDE-TITLE:		Maximum chars in text element
+% LTXE-SLIDE-REFERENCE:	Feature-24906-MaxForTextElement.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{In-Depth Changes}
+	\framesubtitle{TCA: Maximum chars in text element}
+
+	\begin{itemize}
+		\item TCA type \texttt{text} now supports the HTML5 attribute \texttt{maxlength}
+			to restrict the length of a text (note: line breaks are usually counted as two
+			characters)
+
+			\begin{lstlisting}
+				'teaser' => array(
+				  'label' => 'Teaser',
+				  'config' => array(
+				    'type' => 'text',
+				    'cols' => 60,
+				    'rows' => 2,
+				    'max' => '30' // <-- maxlength
+				  )
+				),
+			\end{lstlisting}
+
+			Please note, that not every browser supports this attribute.\newline
+			See \href{http://www.w3schools.com/tags/att_textarea_maxlength.asp}{Browser Support List} for details.
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		a3d28e8d-6d40bc8f-f60bb05f-d9e31bba
+% LTXE-SLIDE-ORIGIN:	9d8b2068-b9a0388e-d0164eca-75b36cfc
+% LTXE-SLIDE-TITLE:		New SplFileInfo implementation
+% LTXE-SLIDE-REFERENCE:	Feature-60019-SplFileInfo-MimeTypeGuesser-hook.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{In-Depth Changes}
+	\framesubtitle{New SplFileInfo implementation}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\smaller\ttfamily}
+
+	\begin{itemize}
+
+		\item New class:
+			\texttt{TYPO3\textbackslash
+				CMS\textbackslash
+				Core\textbackslash
+				Type\textbackslash
+				File\textbackslash
+				FileInfo}
+
+		\item This class extends class \texttt{SplFileInfo}, which allows fetching meta information from files
+
+			\begin{lstlisting}
+				$fileIdentifier = '/tmp/foo.html';
+				$fileInfo = GeneralUtility::makeInstance(
+				  \TYPO3\CMS\Core\Type\File\FileInfo::class,
+				  $fileIdentifier
+				);
+				echo $fileInfo->getMimeType(); // output: text/html
+			\end{lstlisting}
+
+		\item Custom implementations can use the following hook:
+
+			\begin{lstlisting}
+				$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']
+				  [\TYPO3\CMS\Core\Type\File\FileInfo::class]['mimeTypeGuessers']
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		5351c635-145cc752-9c930534-3a8b4e50
+% LTXE-SLIDE-ORIGIN:	3251f500-ded46a65-2699d563-566a4f73
+% LTXE-SLIDE-TITLE:		UserFunc in TCA Display Condition
+% LTXE-SLIDE-REFERENCE:	Feature-62944-UserFuncAsDisplayCond.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{In-Depth Changes}
+	\framesubtitle{UserFunc in TCA Display Condition}
+
+	\begin{itemize}
+		\item userFunc \texttt{displayCondition} makes it possible to check on any imaginable condition or state
+		\item If a situation can not be evaluated with any of the existing checks, developers
+			can developer their own user function\newline
+			(return \texttt{TRUE/FALSE} to show/hide appropriate TCA field)
+
+			\begin{lstlisting}
+				$GLOBALS['TCA']['tt_content']['columns']['bodytext']['displayCond'] =
+				  'USER:Vendor\\Example\\User\\ElementConditionMatcher->
+				    checkHeaderGiven:any:more:information';
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		3ba78d86-ca95152a-5b7e29c9-7e6593da
+% LTXE-SLIDE-ORIGIN:	3dddcb93-c5051364-5dd104cf-91d3d312
+% LTXE-SLIDE-TITLE:		API for Twitter Bootstrap modals (1)
+% LTXE-SLIDE-REFERENCE:	Feature-63729-ApiForBootstrapModals.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{In-Depth Changes}
+	\framesubtitle{API for Twitter Bootstrap modals (1)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\smaller\ttfamily}
+
+	\begin{itemize}
+
+		\item Two new API methods to create/remove modal popups:
+			\begin{itemize}
+				\item \texttt{TYPO3.Modal.confirm(title, content, severity, buttons)}
+				\item \texttt{TYPO3.Modal.dismiss()}
+			\end{itemize}
+
+		\item Options \texttt{title} and \texttt{content} are required
+		\item Options \texttt{buttons.text} and \texttt{buttons.trigger} are also required, if \texttt{buttons} is used
+
+		\item Example 1:
+
+			\begin{lstlisting}
+				TYPO3.Modal.confirm(
+				  'The title of the modal',         // title
+				  'This the the body of the modal', // content
+				  TYPO3.Severity.warning            // severity
+				);
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		ca95152a-5b7e29c9-7e6593da-3ba78d86
+% LTXE-SLIDE-TITLE:		API for Twitter Bootstrap modals (2)
+% LTXE-SLIDE-REFERENCE:	Feature-63729-ApiForBootstrapModals.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{In-Depth Changes}
+	\framesubtitle{API for Twitter Bootstrap modals (2)}
+
+	\begin{itemize}
+
+		\item Example 2:
+
+		\begin{lstlisting}
+			TYPO3.Modal.confirm('Warning', 'You may break the internet!',
+			  TYPO3.Severity.warning,
+			  [
+			    {
+			      text: 'Break it',
+			      active: true,
+			      trigger: function() { ... }
+			    },
+			    {
+			      text: 'Abort!',
+			      trigger: function() {
+			        TYPO3.Modal.dismiss();
+			      }
+			    }
+			  ]
+			);
+		\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		4e7489f8-bced2d21-6e6b87d3-2700d161
+% LTXE-SLIDE-ORIGIN:	67217c57-ae040632-18d9a261-9511c8ba
+% LTXE-SLIDE-TITLE:		JavaScript Storage API (1)
+% LTXE-SLIDE-REFERENCE:	Feature-64031-JavaScript-Storage-API.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{In-Depth Changes}
+	\framesubtitle{JavaScript Storage API (1)}
+
+	\begin{itemize}
+		\item Accessing the BE user configuration (\texttt{\$BE\_USER->uc}) can be handled
+			in JavaScript by using simple key-value pairs
+		\item Additionally, HTML5's \href{http://www.w3.org/TR/webstorage/}{localStorage}
+			can be used to store data in the user's browser (client-side)
+
+		\item Two new global TYPO3 objects:
+			\begin{itemize}
+				\item \texttt{top.TYPO3.Storage.Client}
+				\item \texttt{top.TYPO3.Storage.Persistent}
+			\end{itemize}
+
+		\item Each object has the following API methods:
+			\begin{itemize}
+				\item \texttt{get(key)}: fetch data
+				\item \texttt{set(key,value)}: write data
+				\item \texttt{isset(key)}: check, if key is already used
+				\item \texttt{clear()}: empty all storage data
+			\end{itemize}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		bced2d21-6e6b87d3-2700d161-4e7489f8
+% LTXE-SLIDE-TITLE:		JavaScript Storage API (2)
+% LTXE-SLIDE-REFERENCE:	Feature-64031-JavaScript-Storage-API.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{In-Depth Changes}
+	\framesubtitle{JavaScript Storage API (2)}
+
+	\begin{itemize}
+		\item Example:
+			\begin{lstlisting}
+				// get value of key 'startModule'
+				var value = top.TYPO3.Storage.Persistent.get('startModule');
+
+				// write value 'web_info' as key 'start_module'
+				top.TYPO3.Storage.Persistent.set('startModule', 'web_info');
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		62879554-fac9feac-89f11d0e-afeefc65
+% LTXE-SLIDE-ORIGIN:	e4b94e64-a89869ea-73ee6633-4aff9457
+% LTXE-SLIDE-TITLE:		Inline Rendering of Checkboxes
+% LTXE-SLIDE-REFERENCE:	Feature-64190-FormEngineCheckboxElement.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{In-Depth Changes}
+	\framesubtitle{Inline Rendering of Checkboxes}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Checkbox setting \texttt{inline} for "cols" can be used to render checkboxes
+			directly next to each other to reduce the amount of space used
+
+		\begin{lstlisting}
+			'weekdays' => array(
+			  'label' => 'Weekdays',
+			  'config' => array(
+			    'type' => 'check',
+			    'items' => array(
+			      array('Mo', ''),
+			      array('Tu', ''),
+			      array('We', ''),
+			      array('Th', ''),
+			      array('Fr', ''),
+			      array('Sa', ''),
+			      array('Su', '')
+			    ),
+			    'cols' => 'inline'
+			  )
+			),
+			...
+		\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		75519e56-b1721347-754a017e-ac5d5e03
+% LTXE-SLIDE-ORIGIN:	df8d2f0e-8ace1645-27d698d0-5f6dcbc0
+% LTXE-SLIDE-TITLE:		Content Object Registration
+% LTXE-SLIDE-REFERENCE:	Feature-64386-ContentObjectRegistration.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{In-Depth Changes}
+	\framesubtitle{Content Object Registration}
+
+	\begin{itemize}
+
+		\item New global option to register and/or extend/overwrite cObjects such as
+			\texttt{TEXT} has been introduced
+
+		\item A list of all available cObjects is available as:
+
+			\begin{lstlisting}
+				$GLOBALS['TYPO3_CONF_VARS']['FE']['ContentObjects']
+			\end{lstlisting}
+
+		\item Example: register a new cObject \texttt{EXAMPLE}
+
+			\begin{lstlisting}
+				$GLOBALS['TYPO3_CONF_VARS']['FE']['ContentObjects']['EXAMPLE'] =
+				  Vendor\MyExtension\ContentObject\ExampleContentObject::class;
+			\end{lstlisting}
+
+		\item The registered class must be a subclass of
+			\small
+				\texttt{TYPO3\textbackslash
+					CMS\textbackslash
+					Frontend\textbackslash
+					ContentObject\textbackslash
+					AbstractContentObject}
+			\normalsize
+
+		\item Store your class in directory\newline
+			\small
+				\texttt{typo3conf/myextension/Classes/ContentObject/}
+			\normalsize\newline
+			to be prepared for future autoload mechanisms
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		2a4acfc9-da01c536-7ff147af-7cd94754
+% LTXE-SLIDE-ORIGIN:	13f6a349-523c0cbb-89ecb2cf-3f7a8723
+% LTXE-SLIDE-TITLE:		Hooks and Signals (1)
+% LTXE-SLIDE-REFERENCE:	Feature-52131-HookForPageRepositoryInit.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{In-Depth Changes}
+	\framesubtitle{Hooks and Signals (1)}
+
+	\begin{itemize}
+
+		\item New hook has been added to the end of \texttt{PageRepository->init()},
+			which allows to influence the visibility of pages
+
+		\item Register the hook as follows:
+			\begin{lstlisting}
+				$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']
+				   [\TYPO3\CMS\Frontend\Page\PageRepository::class]['init']
+			\end{lstlisting}
+
+		\item The hook class must implement the following interface:
+			\begin{lstlisting}
+				\TYPO3\CMS\Frontend\Page\PageRepositoryInitHookInterface
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		da01c536-7ff147af-7cd94754-2a4acfc9
+% LTXE-SLIDE-TITLE:		Hooks and Signals (2)
+% LTXE-SLIDE-REFERENCE: Feature-58929-FooterHookInPageLayoutView.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{In-Depth Changes}
+	\framesubtitle{Hooks and Signals (2)}
+
+	\begin{itemize}
+
+		\item New hook has been added to the PageLayoutView to manipulate the rendering
+			of the footer of a content element.
+
+		\item Example:
+			\begin{lstlisting}
+				$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']
+				  ['cms/layout/class.tx_cms_layout.php']['tt_content_drawFooter'];
+			\end{lstlisting}
+
+		\item The hook class must implement the following interface:
+			\begin{lstlisting}
+				\TYPO3\CMS\Backend\View\PageLayoutViewDrawFooterHookInterface
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		babf7cab-2216fff5-9bf5848c-f76386df
+% LTXE-SLIDE-ORIGIN:	0f857f32-560cf5ef-229a1552-aea8fab5
+% LTXE-SLIDE-TITLE:		Hooks and Signals (3)
+% LTXE-SLIDE-REFERENCE: Feature-61725-AddHookToBackendUtilityCountVersionsOfRecordsOnPage.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{In-Depth Changes}
+	\framesubtitle{Hooks and Signals (3)}
+
+	\begin{itemize}
+
+		\item New hook has been added as a post processor of
+			\small
+				\texttt{BackendUtility::countVersionsOfRecordsOnPage}
+			\normalsize
+
+		\item This can be used to visualize workspace states in the page tree for example
+		\item Register the hook as follows:
+
+			\begin{lstlisting}
+				$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']
+				  ['t3lib/class.t3lib_befunc.php']['countVersionsOfRecordsOnPage'][] =
+				  'My\Package\HookClass->hookMethod';
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		2216fff5-9bf5848c-f76386df-babf7cab
+% LTXE-SLIDE-TITLE:		Hooks and Signals (4)
+% LTXE-SLIDE-REFERENCE:	Feature-61711-SignalAtVeryEndOfDataPreprocessorFetchRecord.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{In-Depth Changes}
+	\framesubtitle{Hooks and Signals (4)}
+
+	\begin{itemize}
+
+		\item New signal has been added to the end of method \texttt{DataPreprocessor::fetchRecord()}
+		\item This can be used to manipulate array \texttt{regTableItems\_data} for example,
+			in order to display manipulated data in TCEForms
+
+			\begin{lstlisting}
+				$this->getSignalSlotDispatcher()->dispatch(
+				  \TYPO3\CMS\Backend\Form\DataPreprocessor::class,
+				  'fetchRecordPostProcessing',
+				  array($this)
+				);
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		016bf36a-e935e00f-54bfa8f7-d0d2c16d
+% LTXE-SLIDE-ORIGIN:	57bfcbd7-e3cb5918-cd4541a6-19c34d78
+% LTXE-SLIDE-TITLE:		Hooks and Signals (5)
+% LTXE-SLIDE-REFERENCE:	Feature-62960-SignalForMailerInitialization.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{In-Depth Changes}
+	\framesubtitle{Hooks and Signals (5)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item New signal has been added, that allows for additional processing upon
+			initialization of a mailer object, e.g. registering a Swift Mailer plugin
+
+			\begin{lstlisting}
+				$signalSlotDispatcher = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(
+				  \TYPO3\CMS\Extbase\SignalSlot\Dispatcher::class
+				);
+
+				$signalSlotDispatcher->connect(
+				  \TYPO3\CMS\Core\Mail\Mailer::class,
+				  'postInitializeMailer',
+				  \Vendor\Package\Slots\MailerSlot::class,
+				  'registerPlugin'
+				);
+		\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		e935e00f-54bfa8f7-d0d2c16d-016bf36a
+% LTXE-SLIDE-TITLE:		Multiple UID in PageRepository::getMenu()
+% LTXE-SLIDE-REFERENCE: Feature-64257-MultipleUidInPageRepositoryGetMenu.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{In-Depth Changes}
+	\framesubtitle{Multiple UID in \texttt{PageRepository::getMenu()}}
+
+	\begin{itemize}
+
+
+		\item Method \texttt{PageRepository::getMenu()} accepts arrays now, in order to
+			define multiple root pages
+
+			\begin{lstlisting}
+				$pageRepository = new \TYPO3\CMS\Frontend\Page\PageRepository();
+				$pageRepository->init(FALSE);
+				$rows = $pageRepository->getMenu(array(2, 3));
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------

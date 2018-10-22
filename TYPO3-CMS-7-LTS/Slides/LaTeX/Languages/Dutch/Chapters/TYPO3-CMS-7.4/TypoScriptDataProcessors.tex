@@ -1,0 +1,408 @@
+% ------------------------------------------------------------------------------
+% TYPO3 CMS 7.4 - What's New - Chapter "TypoScript Data Processors" (English Version)
+%
+% @author	Michael Schams <schams.net>
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		http://typo3.org/download/release-notes/whats-new/
+% @language	English
+% ------------------------------------------------------------------------------
+% LTXE-CHAPTER-UID:		c12ee814-839a93b0-c35138aa-688d84fd
+% LTXE-CHAPTER-NAME:	TypoScript Data Processors
+% ------------------------------------------------------------------------------
+
+\section{TSconfig \& TypoScript: Data Processors}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		7a7c4aa3-cc82be60-d2097a5d-ba14e7db
+% LTXE-SLIDE-ORIGIN:	093a9669-ea06d193-c4f990b9-329ebf9b English
+% LTXE-SLIDE-ORIGIN:	73029207-22e86360-370a7baa-f6abe0c8 German
+% LTXE-SLIDE-TITLE:		Feature: #67658 - Introduce DataProcessors
+% LTXE-SLIDE-REFERENCE:	Feature-67658-IntroduceDataProcessorsForSplittingValues.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{TypoScript Data Processors}
+	\framesubtitle{Introductie Data Processors}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item De volgende Data Processors zijn nieuw. Ze bieden een flexibele afhandeling van kommagescheiden lijsten, array's, bestanden, enz.:
+
+			\begin{itemize}
+				\item \texttt{SplitProcessor}
+				\item \texttt{CommaSeparatedValueProcessor}
+				\item \texttt{FilesProcessor}
+				\item \texttt{GalleryProcessor}
+				\item \texttt{DatabaseQueryProcessor}
+			\end{itemize}
+
+		\item Zie:
+			\texttt{TYPO3\textbackslash
+				CMS\textbackslash
+				Frontend\textbackslash
+				DataProcessing}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		0187050c-84373afb-06b68efd-753804fe
+% LTXE-SLIDE-ORIGIN:	c77c07c9-47dc7fca-c98a4b9a-8582e3b3 English
+% LTXE-SLIDE-ORIGIN:	a3886ad1-c35410c2-44630a18-6a98dfa6 German
+% LTXE-SLIDE-TITLE:		Feature: #67658 - SplitProcessor
+% LTXE-SLIDE-REFERENCE:	Feature-67658-IntroduceDataProcessorsForSplittingValues.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{TypoScript Data Processors}
+	\framesubtitle{De \texttt{SplitProcessor}}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item De "SplitProcessor" zorgt voor het splitsen op een scheidingsteken naar een array:
+
+			\begin{lstlisting}
+				page.10 = FLUIDTEMPLATE
+				page.10.file = EXT:site_default/Resources/Private/Template/Default.html
+				page.10.dataProcessing.2 = TYPO3\CMS\Frontend\DataProcessing\SplitProcessor
+				page.10.dataProcessing.2 {
+				  if.isTrue.field = bodytext
+				  delimiter = ,
+				  fieldName = bodytext
+				  removeEmptyEntries = 1
+				  filterIntegers = 1
+				  filterUnique = 1
+				  as = keywords
+				}
+			\end{lstlisting}
+
+		\item Mogelijke toepassing in Fluid:
+
+			\begin{lstlisting}
+				<f:for each="{keywords}" as="keyword">
+				  <li>Keyword: {keyword}</li>
+				</f:for>
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		a9fa8d0c-52fe8426-c97775d3-280b2ade
+% LTXE-SLIDE-ORIGIN:	7057a94e-e3bdd575-c4fd9cdf-f9690b04 English
+% LTXE-SLIDE-ORIGIN:	c2272a2c-2d27b8ce-6b172e55-30ccbe34 German
+% LTXE-SLIDE-TITLE:		Feature: #67658 - CommaSeparatedValueProcessor (1)
+% LTXE-SLIDE-REFERENCE:	Feature-67658-IntroduceDataProcessorsForSplittingValues.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{TypoScript Data Processors}
+	\framesubtitle{De \texttt{CommaSeparatedValueProcessor} (1)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item De "CommaSeparatedValueProcessor" splitst waarden op een scheidingsteken naar een tweedimensionale array:
+
+			\begin{lstlisting}
+				page.10 = FLUIDTEMPLATE
+				page.10.file = EXT:site_default/Resources/Private/Template/Default.html
+				page.10.dataProcessing.4 = TYPO3\CMS\Frontend\DataProcessing\CommaSeparatedValueProcessor
+				page.10.dataProcessing.4 {
+				  if.isTrue.field = bodytext
+				  fieldName = bodytext
+				  fieldDelimiter = |
+				  fieldEnclosure =
+				  maximumColumns = 2
+				  as = table
+				}
+			\end{lstlisting}
+
+		\item Handig om CSV-bestanden te gebruiken of bijvoorbeeld \texttt{tt\_content} data van het CType "table"
+
+			\vspace{0.2cm}
+			\small
+				Voorbeeld volgt op volgende pagina
+			\normalsize
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		1107e6a9-67ffbfd5-88466994-fd8a5eb3
+% LTXE-SLIDE-ORIGIN:	a3133675-b3a6a744-59c470b3-6a5348c7 English
+% LTXE-SLIDE-ORIGIN:	be3430cc-6b172a2c-b8ce2d27-2e55c227 German
+% LTXE-SLIDE-TITLE:		Feature: #67658 - CommaSeparatedValueProcessor (2)
+% LTXE-SLIDE-REFERENCE:	Feature-67658-IntroduceDataProcessorsForSplittingValues.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{TypoScript Data Processors}
+	\framesubtitle{De \texttt{CommaSeparatedValueProcessor} (2)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Mogelijke toepassing in Fluid:
+
+			\begin{lstlisting}
+				<table>
+				  <f:for each="{table}" as="columns">
+				    <tr>
+				      <f:for each="{columns}" as="column">
+				        <td>
+				          {column}
+				        </td>
+				      </f:for>
+				    <tr>
+				  </f:for>
+				</table>
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		9f502802-8fe380fe-ebb6a70c-40c04fed
+% LTXE-SLIDE-ORIGIN:	c5bbdde9-1ab95545-65d21bce-332c2d11 English
+% LTXE-SLIDE-ORIGIN:	09e5e821-ffca91f9-0d4f3bac-85bfc17b German
+% LTXE-SLIDE-TITLE:		Feature: #67662 - DataProcessor for files (1)
+% LTXE-SLIDE-REFERENCE:	Feature-67662-DataProcessorForFiles.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{TypoScript Data Processors}
+	\framesubtitle{De \texttt{FilesProcessor} (1)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item De "FilesProcessor" behandelt referenties naar bestanden, bestanden of bestanden in een map of verzameling
+			om ze in de frontend te kunnen gebruiken
+
+			\begin{lstlisting}
+				tt_content.image.20 = FLUIDTEMPLATE
+				tt_content.image.20 {
+				  file = EXT:myextension/Resources/Private/Templates/ContentObjects/Image.html
+				  dataProcessing.10 = TYPO3\CMS\Frontend\DataProcessing\FilesProcessor
+				  dataProcessing.10 {
+				    references.fieldName = image
+				    references.table = tt_content
+				    files = 21,42
+				    collections = 13,14
+				    folders = 1:introduction/images/,1:introduction/posters/
+				    folders.recursive = 1
+				    sorting = description
+				    sorting.direction = descending
+				    as = myfiles
+				  }
+				}
+			\end{lstlisting}
+
+			\small
+				Voorbeeld volgt op volgende pagina
+			\normalsize
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		0a7c6c47-436d57d4-3c97b608-9490c147
+% LTXE-SLIDE-ORIGIN:	aebad6d6-cf790b17-d385fe19-b48a6016 English
+% LTXE-SLIDE-ORIGIN:	ffca91f9-e82109e5-0d4f3bac-85bfc17b German
+% LTXE-SLIDE-TITLE:		Feature: #67662 - DataProcessor for files (2)
+% LTXE-SLIDE-REFERENCE:	Feature-67662-DataProcessorForFiles.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{TypoScript Data Processors}
+	\framesubtitle{De \texttt{FilesProcessor} (2)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Mogelijke toepassing in Fluid:
+
+			\begin{lstlisting}
+				<ul>
+				  <f:for each="{myfiles}" as="file">
+				    <li>
+				      <a href="{file.publicUrl}">{file.name}</a>
+				    </li>
+				  </f:for>
+				</ul>
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		f67ab800-d646b70a-18524201-a976d6da
+% LTXE-SLIDE-ORIGIN:	cb6f86cd-767463a3-fff3c768-a6b6755b English
+% LTXE-SLIDE-ORIGIN:	4e375ebd-6c1cb855-d9f32eac-bfb1754e German
+% LTXE-SLIDE-TITLE:		Feature: #67663 - Introduce DataProcessor for media galleries
+% LTXE-SLIDE-REFERENCE:	Feature-67663-IntroduceDataProcessorForMediaGalleries.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{TypoScript Data Processors}
+	\framesubtitle{De \texttt{GalleryProcessor}}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		% Note for translators: make sure, the following bullet point does not exceed ONE line.
+		% If it wraps and uses two lines, the code example below does not fit on the page.
+		% If not avoidable, split the content and create a second slide for the code.
+
+		\item De "GalleryProcessor" geeft de max grootte van een reeks bestanden
+
+			\begin{lstlisting}
+				tt_content.text_media.20 = FLUIDTEMPLATE
+				tt_content.image.20 {
+				  file = EXT:myextension/Resources/Private/Templates/ContentObjects/Image.html
+				  dataProcessing {
+				    10 = TYPO3\CMS\Frontend\DataProcessing\FilesProcessor
+				    20 = TYPO3\CMS\Frontend\DataProcessing\GalleryProcessor
+				    20 {
+				      filesProcessedDataKey = files
+				      mediaOrientation.field = imageorient
+				      numberOfColumns.field = imagecols
+				      equalMediaHeight.field = imageheight
+				      equalMediaWidth.field = imagewidth
+				      maxGalleryWidth = 1000
+				      maxGalleryWidthInText = 1000
+				      columnSpacing = 0
+				      borderEnabled.field = imageborder
+				      borderWidth = 0
+				      borderPadding = 10
+				      as = gallery
+				    }
+				  }
+				}
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		599db258-e95f7656-92efa176-0cbe94f6
+% LTXE-SLIDE-ORIGIN:	61607e79-8b231b33-2b9cc07d-ada762f3 English
+% LTXE-SLIDE-ORIGIN:	773e4cfa-a49bd28b-fe31681a-eae68427 German
+% LTXE-SLIDE-TITLE:		Feature: #68094 - Database Query DataProcessor
+% LTXE-SLIDE-REFERENCE:	Feature-68094-DatabaseQueryDataProcessor.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{TypoScript Data Processors}
+	\framesubtitle{De \texttt{DatabaseQueryProcessor} (1)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item De "DatabaseQueryProcessor" haalt gegevens uit de database op
+
+			\begin{lstlisting}
+				tt_content.mycontent.20 = FLUIDTEMPLATE
+				tt_content.mycontent.20 {
+				  file = EXT:myextension/Resources/Private/Templates/ContentObjects/MyContent.html
+				  dataProcessing.10 = TYPO3\CMS\Frontend\DataProcessing\DatabaseQueryProcessor
+				  dataProcessing.10 {
+				    if.isTrue.field = records
+				    table = tt_address
+				    colPos = 1
+				    pidInList = 13,14
+				    as = myrecords
+				    dataProcessing {
+				      10 = TYPO3\CMS\Frontend\DataProcessing\FilesProcessor
+				      10 {
+				        references.fieldName = image
+				      }
+				    }
+				  }
+				}
+			\end{lstlisting}
+
+			% Note for translators: make sure, the following sentence appears on the slide.
+			% If the bullet point above wraps and uses two lines, the code example becomes too
+			% long and pushes the sentence off the slide. If not avoidable, simply remove the
+			% sentence (our readers will realize that there is a code example on the next slide).
+
+			\vspace{-0.2cm}
+			\small
+				Voorbeeld volgt op volgende pagina
+			\normalsize
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		7fe86c58-d736397a-5b8f6754-30fb33f4
+% LTXE-SLIDE-ORIGIN:	ee266111-2964afae-9cfcfd3f-3264b90b English
+% LTXE-SLIDE-ORIGIN:	bd28ba49-e42ae687-68fe311a-cfa773e4 German
+% LTXE-SLIDE-TITLE:		Feature: #68094 - Database Query DataProcessor
+% LTXE-SLIDE-REFERENCE:	Feature-68094-DatabaseQueryDataProcessor.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{TypoScript Data Processors}
+	\framesubtitle{De \texttt{DatabaseQueryProcessor} (2)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Mogelijke toepassing in Fluid:
+
+			\begin{lstlisting}
+				<ul>
+				  <f:for each="{myrecords}" as="record">
+				    <li>
+				      <f:image image="{record.files.0}" ></f:image>
+				      <a href="{record.data.www}">{record.data.first_name} {record.data.last_name}</a>
+				    </li>
+				  </f:for>
+				</ul>
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------

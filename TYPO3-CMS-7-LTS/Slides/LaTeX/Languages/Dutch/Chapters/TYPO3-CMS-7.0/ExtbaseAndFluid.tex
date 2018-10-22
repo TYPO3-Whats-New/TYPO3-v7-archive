@@ -1,0 +1,171 @@
+% ------------------------------------------------------------------------------
+% TYPO3 CMS 7.0 - What's New - Chapter "Extbase & Fluid" (English Version)
+%
+% @author	Michael Schams <schams.net>
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		http://typo3.org/download/release-notes/whats-new/
+% @language	English
+% ------------------------------------------------------------------------------
+% LTXE-CHAPTER-UID:		a29e81c2-4eca3bd2-ad237a3f-bfbe66ab
+% LTXE-CHAPTER-NAME:	Extbase & Fluid
+% ------------------------------------------------------------------------------
+
+\section{Extbase \& Fluid}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		6ee00c0e-3db4d4a7-26bc079e-fda9c1c1
+% LTXE-SLIDE-ORIGIN:	aba42e5a-136183fe-58e36ebd-bfab3106 English
+% LTXE-SLIDE-TITLE:		Template Path Fallback
+% LTXE-SLIDE-REFERENCE:	http://forge.typo3.org/issues/61361
+% LTXE-SLIDE-REFERENCE:	http://forge.typo3.org/issues/39868
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+	\framesubtitle{Alternatief pad voor sjabloon}
+
+	\lstset{
+		basicstyle=\tiny\ttfamily
+	}
+
+	\begin{itemize}
+		\item \texttt{Fluid Standalone View} en het TypoScript-objekt \texttt{FLUIDTEMPLATE} ondersteunen alternatieve paden voor sjablonen
+
+			\begin{lstlisting}
+				page.10 = FLUIDTEMPLATE
+				page.10.file = EXT:myextension/Resources/Private/Templates/Main.html
+				page.10.partialRootPaths {
+				  10 = EXT:myextension/Resources/Private/Partials
+				  20 = EXT:fallback/Resources/Private/Partials
+				}
+			\end{lstlisting}
+
+		\item Als de nieuwe en oude opties gebruikt worden (bijv. \texttt{partialRootPaths} and \texttt{partialRootPath}),
+			wordt het pad op de eerste positie van de optie (index = 0) gebruikt.
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		c1d0e730-03e1a1a2-3cb2e9be-caf5647b
+% LTXE-SLIDE-ORIGIN:	8deb15a5-bff46e9f-ad676c73-427ca720 English
+% LTXE-SLIDE-TITLE:		Typolink ViewHelper
+% LTXE-SLIDE-REFERENCE:	https://forge.typo3.org/issues/59396
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+	\framesubtitle{Typolink-ViewHelper}
+
+	\lstset{
+		basicstyle=\tiny\ttfamily
+	}
+
+	\begin{itemize}
+		\item Een nieuwe Typolink-ViewHelper accepteert een \texttt{typolink}-tekenreeks zoals gemaakt door de Link-wizard en de RTE
+
+			\begin{lstlisting}
+				<f:link.typolink parameter="{link}" target="_blank" class="ico-class" title="some title" additionalAttributes="{type:'button'}">
+			\end{lstlisting}
+
+			\texttt{link} kan bevatten:
+			\begin{lstlisting}
+				42 _blank - "Dit is de titel van de link" &foo=bar
+			\end{lstlisting}
+
+			Uitvoer:
+			\begin{lstlisting}
+				<a href="index.php?id=42&foo=bar" title="Dit is de titel" target="_blank" class="ico-class" type="button">
+			\end{lstlisting}
+
+			Let op: alleen \texttt{parameter} is vereist, rest is optioneel
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		778a5efa-68ebbed1-d08328c9-cf296436
+% LTXE-SLIDE-ORIGIN:	143bb339-be7e8e0b-e354de35-3591d05a English
+% LTXE-SLIDE-TITLE:		Generic data-* Attribute
+% LTXE-SLIDE-REFERENCE:	https://forge.typo3.org/issues/61351
+% ------------------------------------------------------------------------------
+
+
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+	\framesubtitle{Algemene data-*-attribuut}
+
+%	\lstset{
+%		basicstyle=\tiny\ttfamily
+%	}
+
+	\begin{itemize}
+		\item Alle ViewHelpers die HTML tags produceren ondersteunen de HTML5 \texttt{data-*} attribuut
+		\item Een array doorgegeven als \texttt{data} wordt omgezet en de sleutel/waarde combinaties vormen het attribuut:
+			\texttt{data-\begingroup\color{typo3orange}key\endgroup
+				="\begingroup\color{typo3orange}value\endgroup
+				"}\newline
+
+			Voorbeeld:
+			\begin{lstlisting}
+				<f:form.textfield data="{foo: 'bar', baz: 'foos'}" />
+			\end{lstlisting}
+
+			Uitvoer:
+			\begin{lstlisting}
+				<input data-foo="bar" data-baz="foos" ... />
+			\end{lstlisting}
+		
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		11db3730-6aa6875e-454ee261-f5ff54f7
+% LTXE-SLIDE-ORIGIN:	c5e5ddfc-f68f277a-3e0bb2b1-623f3e49 English
+% LTXE-SLIDE-TITLE:		Class Tag Values Via Reflection
+% LTXE-SLIDE-REFERENCE:	https://forge.typo3.org/issues/60822
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+	\framesubtitle{Waarden van klasse-tags via reflectie}
+
+	\lstset{
+		basicstyle=\tiny\ttfamily
+	}
+
+	\begin{itemize}
+		\item Extbase Reflection Service kan de tags en annotaties teruggeven die toegevoegd zijn aan een klasse\newline
+
+			Voorbeeld:
+			\begin{lstlisting}
+				/**
+				 * @EenKlasseAnnotatie Een waarde
+				 */
+				class MyClass {
+				}
+			\end{lstlisting}
+
+			Annotatie te benaderen via:
+			\begin{lstlisting}
+				$service = new \TYPO3\CMS\Extbase\Reflection\ReflectionService();
+
+				// Geeft alle tags en hun waarden waarmee de betreffende klasse is getagt
+				$classValues = $service->getClassTagsValues('MyClass');
+
+				// Geeft de waardes van de gespecificeerde klasse-tag
+				$classValue = $service->getClassTagValue('MyClass', 'EenKlasseAnnotatie');
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------

@@ -1,0 +1,219 @@
+% ------------------------------------------------------------------------------
+% TYPO3 CMS 7.0 - What's New - Chapter "TypoScript" (English Version)
+%
+% @author	Michael Schams <schams.net>
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		http://typo3.org/download/release-notes/whats-new/
+% @language	English
+% ------------------------------------------------------------------------------
+% LTXE-CHAPTER-UID:		8ca51a26-174e47a4-c9321443-37caf28c
+% LTXE-CHAPTER-NAME:	TypoScript
+% ------------------------------------------------------------------------------
+
+\section{TSconfig \& TypoScript}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		4e11c84b-c70aab50-69aaa2c7-3e9a13ef
+% LTXE-SLIDE-ORIGIN:	c65cc12d-2f8c9d53-37d6577f-8a2f8357 English
+% LTXE-SLIDE-TITLE:		TSconfig Available to Link Checkers
+% LTXE-SLIDE-REFERENCE:	https://forge.typo3.org/issues/54518
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+	\framesubtitle{TSConfig beschikbaar voor linkvalidatoren}
+
+	\begin{itemize}
+		\item TSconfig-configuratie wordt gelezen
+
+			\begin{itemize}
+				\item of vanuit de backend (als Linkvalidator wordt gebruikt)
+				\item of vanuit de configuratie van de taakplanner
+			\end{itemize}
+
+		\item Voorbeeld: TSconfig, die kan worden gelezen door Linkchecker:
+
+			\lstinline!mod.linkvalidator.mychecker.myvar = 1!
+
+		\item TSconfig is dan beschikbaar als \texttt{\$this->tsConfig}
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		6f44d70b-75e06bf4-b0297b0f-d3a4460a
+% LTXE-SLIDE-ORIGIN:	1d38328d-a7245bbe-1b380ab3-88ea4885 English
+% LTXE-SLIDE-TITLE:		Linkcheck: Report Deleted Records
+% LTXE-SLIDE-REFERENCE:	https://forge.typo3.org/issues/54519
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+	\framesubtitle{Linkcontrole: Raportage verwijderde records}
+
+	\begin{itemize}
+		\item In TYPO3 CMS < 7.0 waarschuwt linkhandler alleen over links naar niet-bestaande of verwijderde records
+		\item Sinds TYPO3 CMS >=  7.0 schakelt de volgende TSconfig-instelling een waarschuwing in als links wijzen naar uitgeschakelde records
+
+			\lstinline!mod.linkvalidator.linkhandler.reportHiddenRecords = 1!
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		e12de111-6c0ab5dc-8ec48e4d-7ae61018
+% LTXE-SLIDE-ORIGIN:	a27d2c0a-410cbfc8-50f176e2-027ce416 English
+% LTXE-SLIDE-TITLE:		RTE: Multiple CSS Classes Per Style
+% LTXE-SLIDE-REFERENCE:	https://forge.typo3.org/issues/51905
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+	\framesubtitle{RTE: meerdere CSS-klassen per stijl}
+
+	\begin{itemize}
+		\item Moderne frameworks zoals Twitter Bootstrap vereisen meerdere CSS-klassen per HTML tag\newline
+			\small Bijvoorbeeld: \texttt{<a class="btn btn-danger">Pas op</a>}\normalsize
+		\item Meerdere CSS-klassen worden nu ondersteund waardoor redacteuren maar één stijl hoeven te kiezen
+
+			\begin{lstlisting}
+				RTE.classes.[ *classname* ] {
+				  .requires = lijst met CSS-klassen
+				}
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		9000242f-1e42e904-3cbad951-7bcc6f6e
+% LTXE-SLIDE-ORIGIN:	e11a6c09-1eb3eaf7-6cebbee9-febef6ba English
+% LTXE-SLIDE-TITLE:		RTE: Configure CSS Class As Not-Selectable
+% LTXE-SLIDE-REFERENCE:	https://forge.typo3.org/issues/58122
+% LTXE-SLIDE-REFERENCE:	https://forge.typo3.org/issues/51905
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+	\framesubtitle{RTE: CSS-klasse als niet-selecteerbaar instellen}
+
+	\begin{itemize}
+		\item CSS-klassen kunnen nu als "niet-selecteerbaar" ingesteld worden
+
+			\begin{lstlisting}
+				// waarde "1" betekent: klas is selecteerbaar
+				// waarde "0" maakt het niet-selecteerbaar
+				RTE.classes.[ *classname* ] {
+				  .selectable = 1
+				}
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		60bd2b3d-9d38929d-7e034804-9a247666
+% LTXE-SLIDE-ORIGIN:	e607c36f-e1be31da-05ace0c5-991e6e42 English
+% LTXE-SLIDE-TITLE:		RTE: Include Multiple CSS Files
+% LTXE-SLIDE-REFERENCE:	https://forge.typo3.org/issues/50039
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+	\framesubtitle{RTE: meerdere CSS-bestanden insluiten}
+
+	\begin{itemize}
+		\item Er kunnen meerdere CSS-bestanden ingesloten worden
+
+			\begin{lstlisting}
+				RTE.default.contentCSS {
+				  file1 = fileadmin/rte_stylesheet1.css
+				  file2 = fileadmin/rte_stylesheet2.css
+				}
+			\end{lstlisting}
+
+		\item Als niets ingesteld wordt is de standaard:\newline
+			\texttt{typo3/sysext/rtehtmlarea/res/contentcss/default.css}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		ee825eb2-4e06bd8a-27fdda30-54d28cd8
+% LTXE-SLIDE-ORIGIN:	c9d0ad7d-2c5aee11-79878250-9e8ce110 English
+% LTXE-SLIDE-TITLE:		Exception Handling When cObjects Are Rendered (1)
+% LTXE-SLIDE-REFERENCE:	https://forge.typo3.org/issues/47919
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+	\framesubtitle{Afhandeling exceptie wanneer cObject-en worden gerenderd (1)}
+
+	\begin{itemize}
+		\item In TYPO3 CMS < 7.0 breekt de foutmelding als die ontstaat bij het renderen van inhoudsobjecten (bijv. \texttt{USER}) de hele frontend
+		\item Sinds TYPO3 CMS >= 7.0 is afhandeling van excepties toegevoegd waarmee een bericht afgebeeld kan worden in plaats van het foute cObject
+	\end{itemize}
+
+%	*TODO* it would be so nice, if someone could create a screenshot of this scenario!
+%
+%	\begin{figure}\vspace*{-0.3cm}
+%		\includegraphics[width=0.90\linewidth]{TypoScript/cObjectExceptionHandling.png}
+%	\end{figure}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		28313dae-c6c48c42-c7762748-4ee8d79c
+% LTXE-SLIDE-ORIGIN:	1132ffa6-a06b7448-0b59e149-a28c2d43 English
+% LTXE-SLIDE-TITLE:		Exception Handling When cObjects Are Rendered (2)
+% LTXE-SLIDE-REFERENCE:	https://forge.typo3.org/issues/47919
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+	\framesubtitle{Afhandeling exceptie wanneer cObject-en worden gerenderd (2)}
+	
+	\lstset{
+		basicstyle=\tiny\ttfamily
+	}
+	
+	\begin{lstlisting}
+		# standaard exceptie-afhandeling (actief in context "production")
+		config.contentObjectExceptionHandler = 1
+
+		# configuratie van een klasse voor exceptie-afhandeling
+		config.contentObjectExceptionHandler =
+		  TYPO3\CMS\Frontend\ContentObject\Exception\ProductionExceptionHandler
+
+		# eigen foutmelding (toon willekeurige foutcode)
+		config.contentObjectExceptionHandler.errorMessage = Oeps, dat ging fout. Code: %s
+
+		# configuratie van exceptiecodes die niet afgehandeld worden
+		tt_content.login.20.exceptionHandler.ignoreCodes.10 = 1414512813
+
+		# deactivatie van exceptie-afhandeling voor specifieke plug-ins of inhoudobjecten
+		tt_content.login.20.exceptionHandler = 0
+
+		# ignoreCodes en errorMessage kunnen globaal ingesteld worden...
+		config.contentObjectExceptionHandler.errorMessage = Oeps, er ging iets fout. Code: %s
+		config.contentObjectExceptionHandler.ignoreCodes.10 = 1414512813
+
+		# ...of lokaal voor specifieke inhoudsobjecten
+		tt_content.login.20.exceptionHandler.errorMessage = Oeps, er ging iets fout. Code: %s
+		tt_content.login.20.exceptionHandler.ignoreCodes.10 = 1414512813
+	\end{lstlisting}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------

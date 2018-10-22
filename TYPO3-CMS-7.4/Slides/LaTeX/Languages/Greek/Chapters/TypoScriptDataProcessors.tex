@@ -1,0 +1,431 @@
+% ------------------------------------------------------------------------------
+% TYPO3 CMS 7.4 - What's New - Chapter "\greektext Επεξεργαστές Δεδομένων \latintext TypoScript" (Greek Version)
+%
+% @author	Angeliki Plati <ag.plati@gmail.com>
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		http://typo3.org/download/release-notes/whats-new/
+% @language	English
+% ------------------------------------------------------------------------------
+% LTXE-CHAPTER-UID:		c12ee814-839a93b0-c35138aa-688d84fd
+% LTXE-CHAPTER-NAME:	\greektext Επεξεργαστές Δεδομένων \latintext TypoScript
+% ------------------------------------------------------------------------------
+
+\section{TSconfig \& TypoScript: \greektext Επεξεργαστές Δεδομένων}
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript: \greektext Επεξεργαστές Δεδομένων}
+
+	\begin{center}\huge{\greektext Κεφάλαιο 3:}\end{center}
+	\begin{center}\huge{\color{typo3darkgrey}\textbf{TSconfig \& TypoScript: \greektext Επεξεργαστές Δεδομένων}}\end{center}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		42b87afc-e60826dd-56cc7d21-fc72f7a6
+% LTXE-SLIDE-ORIGIN:	093a9669-ea06d193-c4f990b9-329ebf9b English
+% LTXE-SLIDE-ORIGIN:	73029207-22e86360-370a7baa-f6abe0c8 German
+% LTXE-SLIDE-TITLE:		Feature: #67658 - Introduce DataProcessors
+% LTXE-SLIDE-REFERENCE:	Feature-67658-IntroduceDataProcessorsForSplittingValues.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{\greektext Επεξεργαστές Δεδομένων \latintext TypoScript}
+	\framesubtitle{\greektext Εισαγωγή στους Επεξεργαστές Δεδομένων}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item \greektext Οι ακόλουθοι Επεξεργαστές Δεδομένων έχουν τώρα εισαχθεί, οι οποίοι επιτρέπουν
+		 την ευέλικτη επεξεργασία λιστών που περιλαμβάνουν διαχωρισμό με κόμματα, πίνακες, αρχεία, κτλ:
+
+			\latintext \begin{itemize}
+				\item \texttt{SplitProcessor}
+				\item \texttt{CommaSeparatedValueProcessor}
+				\item \texttt{FilesProcessor}
+				\item \texttt{GalleryProcessor}
+				\item \texttt{DatabaseQueryProcessor}
+			\end{itemize}
+
+		\item \greektext Βλέπε.:
+			\latintext \texttt{TYPO3\textbackslash
+				CMS\textbackslash
+				Frontend\textbackslash
+				DataProcessing}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		cf73563d-c53499c5-a6967334-e7972d2d
+% LTXE-SLIDE-ORIGIN:	c77c07c9-47dc7fca-c98a4b9a-8582e3b3 English
+% LTXE-SLIDE-ORIGIN:	a3886ad1-c35410c2-44630a18-6a98dfa6 German
+% LTXE-SLIDE-TITLE:		Feature: #67658 - SplitProcessor
+% LTXE-SLIDE-REFERENCE:	Feature-67658-IntroduceDataProcessorsForSplittingValues.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{\greektext Επεξεργαστές Δεδομένων \latintext TypoScript}
+	\framesubtitle{\greektext Ο Επεξεργαστής \latintext \texttt{SplitProcessor}}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item \greektext Ο \latintext "SplitProcessor" \greektext επιτρέπει τον διαχωρισμό τιμών
+		που είναι χωρισμένες με έναν οριοθέτη μέσα σε ένα πίνακα
+
+			\latintext \begin{lstlisting}
+				page.10 = FLUIDTEMPLATE
+				page.10.file = EXT:site_default/Resources/Private/Template/Default.html
+				page.10.dataProcessing.2 = TYPO3\CMS\Frontend\DataProcessing\SplitProcessor
+				page.10.dataProcessing.2 {
+				  if.isTrue.field = bodytext
+				  delimiter = ,
+				  fieldName = bodytext
+				  removeEmptyEntries = 1
+				  filterIntegers = 1
+				  filterUnique = 1
+				  as = keywords
+				}
+			\end{lstlisting}
+
+		\item \greektext Πιθανή χρήση στο \latintext Fluid:
+
+			\latintext \begin{lstlisting}
+				<f:for each="{keywords}" as="keyword">
+				  <li>Keyword: {keyword}</li>
+				</f:for>
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		966228c5-21780ffb-34baa6e5-38b7f81a
+% LTXE-SLIDE-ORIGIN:	7057a94e-e3bdd575-c4fd9cdf-f9690b04 English
+% LTXE-SLIDE-ORIGIN:	c2272a2c-2d27b8ce-6b172e55-30ccbe34 German
+% LTXE-SLIDE-TITLE:		Feature: #67658 - CommaSeparatedValueProcessor (1)
+% LTXE-SLIDE-REFERENCE:	Feature-67658-IntroduceDataProcessorsForSplittingValues.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{\greektext Επεξεργαστές Δεδομένων \latintext TypoScript}
+	\framesubtitle{\greektext Ο Επεξεργαστής \latintext \texttt{CommaSeparatedValueProcessor} (1)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item \greektext O \latintext "CommaSeparatedValueProcessor" \greektext διαχωρίζει τιμές
+            που είναι χωρισμένες με έναν οριοθέτη μέσα σε έναν δισδιάστατο πίνακα:
+
+			\latintext \begin{lstlisting}
+				page.10 = FLUIDTEMPLATE
+				page.10.file = EXT:site_default/Resources/Private/Template/Default.html
+				page.10.dataProcessing.4 = TYPO3\CMS\Frontend\DataProcessing\CommaSeparatedValueProcessor
+				page.10.dataProcessing.4 {
+				  if.isTrue.field = bodytext
+				  fieldName = bodytext
+				  fieldDelimiter = |
+				  fieldEnclosure =
+				  maximumColumns = 2
+				  as = table
+				}
+			\end{lstlisting}
+
+		\item \greektext Είναι χρήσιμος στην επεξεργασία αρχείων \latintext CSV \greektext για παράδειγμα ή σε συλλογές δεδομένων
+		 \latintext \texttt{tt\_content} \greektext του \latintext CType "table"
+
+			\vspace{0.2cm}
+			\small
+				\greektext Βλέπε παράδειγμα χρήσης στο \latintext Fluid \greektext στην ακόλουθη διαφάνεια
+			\normalsize
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		a152fd73-62ee4231-671147a4-4cf92e97
+% LTXE-SLIDE-ORIGIN:	a3133675-b3a6a744-59c470b3-6a5348c7 English
+% LTXE-SLIDE-ORIGIN:	be3430cc-6b172a2c-b8ce2d27-2e55c227 German
+% LTXE-SLIDE-TITLE:		Feature: #67658 - CommaSeparatedValueProcessor (2)
+% LTXE-SLIDE-REFERENCE:	Feature-67658-IntroduceDataProcessorsForSplittingValues.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{\greektext Επεξεργαστές Δεδομένων \latintext TypoScript}
+	\framesubtitle{\greektext Ο Επεξεργαστής \latintext \texttt{CommaSeparatedValueProcessor} (2)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item \greektext Πιθανή χρήση στο \latintext Fluid:
+
+			\latintext \begin{lstlisting}
+				<table>
+				  <f:for each="{table}" as="columns">
+				    <tr>
+				      <f:for each="{columns}" as="column">
+				        <td>
+				          {column}
+				        </td>
+				      </f:for>
+				    <tr>
+				  </f:for>
+				</table>
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		d37f9f23-48a100de-468f57ab-cf96dc49
+% LTXE-SLIDE-ORIGIN:	c5bbdde9-1ab95545-65d21bce-332c2d11 English
+% LTXE-SLIDE-ORIGIN:	09e5e821-ffca91f9-0d4f3bac-85bfc17b German
+% LTXE-SLIDE-TITLE:		Feature: #67662 - DataProcessor for files (1)
+% LTXE-SLIDE-REFERENCE:	Feature-67662-DataProcessorForFiles.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{\greektext Επεξεργαστές Δεδομένων \latintext TypoScript}
+	\framesubtitle{\greektext Ο Επεξεργαστής \latintext \texttt{FilesProcessor} (1)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item \greektext Ο \latintext "FilesProcessor" \greektext αναλύει αναφορές αρχείων, αρχεία, ή αρχεία σε φάκελο
+		ή συλλογή που θα χρησιμοποιηθούν ως \latintext frontend output
+
+			\latintext \begin{lstlisting}
+				tt_content.image.20 = FLUIDTEMPLATE
+				tt_content.image.20 {
+				  file = EXT:myextension/Resources/Private/Templates/ContentObjects/Image.html
+				  dataProcessing.10 = TYPO3\CMS\Frontend\DataProcessing\FilesProcessor
+				  dataProcessing.10 {
+				    references.fieldName = image
+				    references.table = tt_content
+				    files = 21,42
+				    collections = 13,14
+				    folders = 1:introduction/images/,1:introduction/posters/
+				    folders.recursive = 1
+				    sorting = description
+				    sorting.direction = descending
+				    as = myfiles
+				  }
+				}
+			\end{lstlisting}
+
+			\small
+				\greektext Βλέπε παράδειγμα χρήσης στο \latintext Fluid \greektext στην ακόλουθη διαφάνεια
+			\normalsize
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		7cee9b81-68bd48e4-6819a144-bdffeb50
+% LTXE-SLIDE-ORIGIN:	aebad6d6-cf790b17-d385fe19-b48a6016 English
+% LTXE-SLIDE-ORIGIN:	ffca91f9-e82109e5-0d4f3bac-85bfc17b German
+% LTXE-SLIDE-TITLE:		Feature: #67662 - DataProcessor for files (2)
+% LTXE-SLIDE-REFERENCE:	Feature-67662-DataProcessorForFiles.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{\greektext Επεξεργαστές Δεδομένων \latintext TypoScript}
+	\framesubtitle{\greektext Ο Επεξεργαστής \latintext \texttt{FilesProcessor} (2)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item \greektext Πιθανή χρήση στο \latintext Fluid:
+
+			\latintext \begin{lstlisting}
+				<ul>
+				  <f:for each="{myfiles}" as="file">
+				    <li>
+				      <a href="{file.publicUrl}">{file.name}</a>
+				    </li>
+				  </f:for>
+				</ul>
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		3dcb1bca-d2e20bf4-8a2bb68c-1f321ac2
+% LTXE-SLIDE-ORIGIN:	cb6f86cd-767463a3-fff3c768-a6b6755b English
+% LTXE-SLIDE-ORIGIN:	4e375ebd-6c1cb855-d9f32eac-bfb1754e German
+% LTXE-SLIDE-TITLE:		Feature: #67663 - Introduce DataProcessor for media galleries
+% LTXE-SLIDE-REFERENCE:	Feature-67663-IntroduceDataProcessorForMediaGalleries.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{\greektext Επεξεργαστές Δεδομένων \latintext TypoScript}
+	\framesubtitle{\greektext Ο Επεξεργαστής \latintext \texttt{GalleryProcessor} (1)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item \greektext Ο \latintext "GalleryProcessor" \greektext υπολογίζει το μέγιστο
+		μέγεθος των στοιχείων \latintext "assets" \greektext των συλλογών αρχείων
+
+	\end{itemize}
+
+\end{frame}
+
+
+
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{\greektext Επεξεργαστές Δεδομένων \latintext TypoScript}
+	\framesubtitle{\greektext Ο Επεξεργαστής \latintext \texttt{GalleryProcessor} (2)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily,xleftmargin=.25in}
+
+			\latintext \begin{lstlisting}
+				tt_content.text_media.20 = FLUIDTEMPLATE
+				tt_content.image.20 {
+				  file = EXT:myextension/Resources/Private/Templates/ContentObjects/Image.html
+				  dataProcessing {
+				    10 = TYPO3\CMS\Frontend\DataProcessing\FilesProcessor
+				    20 = TYPO3\CMS\Frontend\DataProcessing\GalleryProcessor
+				    20 {
+				      filesProcessedDataKey = files
+				      mediaOrientation.field = imageorient
+				      numberOfColumns.field = imagecols
+				      equalMediaHeight.field = imageheight
+				      equalMediaWidth.field = imagewidth
+				      maxGalleryWidth = 1000
+				      maxGalleryWidthInText = 1000
+				      columnSpacing = 0
+				      borderEnabled.field = imageborder
+				      borderWidth = 0
+				      borderPadding = 10
+				      as = gallery
+				    }
+				  }
+				}
+			\end{lstlisting}
+
+\end{frame}
+% ------------------------------------------------------------------------------
+
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		45bb2519-238b0c52-c22d3c5a-2604c5ae
+% LTXE-SLIDE-ORIGIN:	61607e79-8b231b33-2b9cc07d-ada762f3 English
+% LTXE-SLIDE-ORIGIN:	773e4cfa-a49bd28b-fe31681a-eae68427 German
+% LTXE-SLIDE-TITLE:		Feature: #68094 - Database Query DataProcessor
+% LTXE-SLIDE-REFERENCE:	Feature-68094-DatabaseQueryDataProcessor.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{\greektext Επεξεργαστές Δεδομένων \latintext TypoScript}
+	\framesubtitle{\greektext Ο Επεξεργαστής \latintext \texttt{DatabaseQueryProcessor} (1)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item \greektext Ο \latintext "DatabaseQueryProcessor" \greektext
+		μπορεί να χρησιμοποιηθεί για την προσκόμιση δεδομένων από τη βάση δεδομένων
+
+			\latintext \begin{lstlisting}
+				tt_content.mycontent.20 = FLUIDTEMPLATE
+				tt_content.mycontent.20 {
+				  file = EXT:myextension/Resources/Private/Templates/ContentObjects/MyContent.html
+				  dataProcessing.10 = TYPO3\CMS\Frontend\DataProcessing\DatabaseQueryProcessor
+				  dataProcessing.10 {
+				    if.isTrue.field = records
+				    table = tt_address
+				    colPos = 1
+				    pidInList = 13,14
+				    as = myrecords
+				    dataProcessing {
+				      10 = TYPO3\CMS\Frontend\DataProcessing\FilesProcessor
+				      10 {
+				        references.fieldName = image
+				      }
+				    }
+				  }
+				}
+			\end{lstlisting}
+
+			% Note for translators: make sure, the following sentence appears on the slide.
+			% If the bullet point above wraps and uses two lines, the code example becomes too
+			% long and pushes the sentence off the slide. If not avoidable, simply remove the
+			% sentence (our readers will realize that there is a code example on the next slide).
+
+			\vspace{-0.2cm}
+			\small
+				\greektext Βλέπε παράδειγμα χρήσης στο \latintext Fluid \greektext στην ακόλουθη διαφάνεια
+			\normalsize
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		43319b8b-4b532348-53d11fd7-1c0053ab
+% LTXE-SLIDE-ORIGIN:	ee266111-2964afae-9cfcfd3f-3264b90b English
+% LTXE-SLIDE-ORIGIN:	bd28ba49-e42ae687-68fe311a-cfa773e4 German
+% LTXE-SLIDE-TITLE:		Feature: #68094 - Database Query DataProcessor
+% LTXE-SLIDE-REFERENCE:	Feature-68094-DatabaseQueryDataProcessor.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{\greektext Επεξεργαστές Δεδομένων \latintext TypoScript}
+	\framesubtitle{\greektext Ο Επεξεργαστής \latintext \texttt{DatabaseQueryProcessor} (2)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item \greektext Πιθανή χρήση στο \latintext Fluid:
+
+			\latintext \begin{lstlisting}
+				<ul>
+				  <f:for each="{myrecords}" as="record">
+				    <li>
+				      <f:image image="{record.files.0}" ></f:image>
+				      <a href="{record.data.www}">{record.data.first_name} {record.data.last_name}</a>
+				    </li>
+				  </f:for>
+				</ul>
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------

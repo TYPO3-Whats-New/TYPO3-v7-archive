@@ -1,0 +1,818 @@
+% ------------------------------------------------------------------------------
+% TYPO3 CMS 7.5 - What's New - Chapter "In-Depth Changes" (Italian Version)
+%
+% @author	Michael Schams <schams.net>
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		http://typo3.org/download/release-notes/whats-new/
+% @language	Italian
+% ------------------------------------------------------------------------------
+% LTXE-CHAPTER-UID:		b8f1c138-2fb2f5ce-15d1ffc0-e80171e2
+% LTXE-CHAPTER-NAME:	In-Depth Changes
+% ------------------------------------------------------------------------------
+
+\section{Modifiche rilevanti}
+\begin{frame}[fragile]
+	\frametitle{Modifiche rilevanti}
+
+	\begin{center}\huge{Capitolo 3:}\end{center}
+	\begin{center}\huge{\color{typo3darkgrey}\textbf{Modifiche rilevanti}}\end{center}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		7588a07b-b33185de-c11a7717-b2a2937b
+% LTXE-SLIDE-ORIGIN:	16e557e2-fa6a5035-5b28d66e-27c0c626 English
+% LTXE-SLIDE-ORIGIN:	03be70bc-886235ca-10f0cef5-6b33fe60 German
+% LTXE-SLIDE-TITLE:		Fluid-based Content Elements Introduced (1)
+% LTXE-SLIDE-REFERENCE:	Feature-38732-Fluid-basedContentElementsIntroduced.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Modifiche rilevanti}
+	\framesubtitle{Elementi di contenuto basati su Fluid (1)}
+
+	\begin{itemize}
+
+		\item Una nuova estensione di sistema \textbf{"Elementi di contenuto basati su Fluid"} è stata realizzata
+
+		\item I template Fluid sono usati per renderizzare gli elementi di contenuto al posto di TypoScript
+
+		\item In futuro, ad un certo punto, potrà essere una alternativa a \textit{CSS Styled Content}
+
+		\item Includere in ordine i seguenti template statici per usare questa funzionalità:
+
+			\begin{itemize}
+				\item Content Elements (\texttt{fluid\_styled\_content})
+				\item Content Elements CSS (optional) (\texttt{fluid\_styled\_content})
+			\end{itemize}
+
+	\end{itemize}
+
+\end{frame}
+
+
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		3242b445-452e9af0-2a70c0d1-960bffb2
+% LTXE-SLIDE-ORIGIN:	d8383008-e3bbb7e2-91720bea-3b93db62 English
+% LTXE-SLIDE-ORIGIN:	bb7124ec-4658414b-757ca8ca-f0addee3 German
+% LTXE-SLIDE-TITLE:		Fluid-based Content Elements Introduced (2)
+% LTXE-SLIDE-REFERENCE:	Feature-38732-Fluid-basedContentElementsIntroduced.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Modifiche rilevanti}
+	\framesubtitle{Elementi di contenuto basati su Fluid (2)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Inoltre, il seguente template PageTSconfig deve essere aggiunto alle proprietà di pagina:\newline
+			\small
+				\texttt{Fluid-based Content Elements (fluid\_styled\_content)}
+			\normalsize
+
+		\item Sovrascrivi i modelli predefiniti con i nuovi percorsi nel setup TypoScript:
+
+			\begin{lstlisting}
+				lib.fluidContent.templateRootPaths.50 = EXT:site_example/Resources/Private/Templates/
+				lib.fluidContent.partialRootPaths.50 = EXT:site_example/Resources/Private/Partials/
+				lib.fluidContent.layoutRootPaths.50 = EXT:site_example/Resources/Private/Layouts/
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		c12c0883-12fadbbc-906c5dae-97212ae9
+% LTXE-SLIDE-ORIGIN:	d25f0c05-31c928e4-e7439714-d87f883b English
+% LTXE-SLIDE-ORIGIN:	04cd65d3-e013813d-d2eac450-7d3a79a8 German
+% LTXE-SLIDE-TITLE:		Fluid-based Content Elements Introduced (3)
+% LTXE-SLIDE-REFERENCE:	Feature-38732-Fluid-basedContentElementsIntroduced.rst
+% LTXE-SLIDE-REFERENCE:	Important-67954-MigrateCTypesTextImageAndTextpicToTextmedia.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Modifiche rilevanti}
+	\framesubtitle{Elementi di contenuto basati su Fluid (3)}
+
+	\begin{itemize}
+
+		\item Migrazione da \textit{CSS Styled Content} a \textit{Fluid-based Content Elements}:
+
+			\begin{itemize}
+
+				\item Disinstalla l'estensione \texttt{css\_styled\_content}
+
+				\item installa l'estensione \texttt{fluid\_styled\_content}
+
+				\item Usa l'Upgrade Wizard nell'Install Tool per migrare gli elementi di contenuto
+					\texttt{text}, \texttt{image} e \texttt{textpic} a \texttt{textmedia}
+
+			\end{itemize}
+	\end{itemize}
+
+	\vspace{1.4cm}
+
+	\begingroup
+		\color{red}
+			\small
+				\underline{Nota:} \textit{"Gli elementi di contenuto basati su Fluid"} sono ancora ad uno stato iniziale
+				e modifiche impattanti sono possibili prima di TYPO3 CMS 7 LTS.
+				Anche alcuni conflitti riguardanti \textit{CSS Styled Content} possono essere ancora presenti.
+			\normalsize
+	\endgroup
+
+\end{frame}
+
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		98424ea6-7036e41a-b2f2e37d-cbc7e6ff
+% LTXE-SLIDE-ORIGIN:	89b8c8c2-3a458bcf-5d61b025-6b4fb470 English
+% LTXE-SLIDE-ORIGIN:	8807e1a0-2b3fadac-ac842970-b85e5130 German
+% LTXE-SLIDE-TITLE:		Add SELECTmmQuery method to DatabaseConnection
+% LTXE-SLIDE-REFERENCE:	Feature-19494-AddSELECTmmQueryMethodToDatabaseConnection.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Modifiche rilevanti}
+	\framesubtitle{Metodo SELECTmmQuery}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Il nuovo metodo \texttt{SELECT\_mm\_query} è stato aggiunto alla classe \texttt{DatabaseConnection}
+
+		\item Estratto da \texttt{exec\_SELECT\_mm\_query} per separare la costruzione e l'esecuzione
+			di query M:M.
+
+		\item Ciò permette l'utilizzo della costruzione di query nello strato di astrazione del database
+
+			\begin{lstlisting}
+				$query = SELECT_mm_query('*', 'table1', 'table1_table2_mm', 'table2', 'AND table1.uid = 1',
+				'', 'table1.title DESC');
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		43d9f610-96c61fa5-db6e9433-faa90069
+% LTXE-SLIDE-ORIGIN:	f2c4f1a9-6cd020c0-518650d6-2a31d0de English
+% LTXE-SLIDE-ORIGIN:	398fdcb2-1cc9a862-42e59a09-e4ed65ba German
+% LTXE-SLIDE-TITLE:		Scheduler task to optimize database tables
+% LTXE-SLIDE-REFERENCE:	Feature-25341-SchedulerTaskToOptimizeDatabaseTables.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Modifiche rilevanti}
+	\framesubtitle{Ottimizzazione delle tabelle nel database MySQL}
+
+	\begin{itemize}
+
+		\item Un nuovo task dello scheduler esegue il comando MySQL \texttt{OPTIMIZE TABLE}
+			sulle tabelle del database selezionate
+
+		\item Questo comando riorganizza l'archiviazione fisica dei dati della tabella e degli
+			indici associati per ridurre lo spazio di archiviazione e migliorare l'efficienza I/O
+
+		\item Sono supportate i seguenti tipi di tabelle:\newline
+			\texttt{MyISAM}, \texttt{InnoDB} e \texttt{ARCHIVE}
+
+		\item L'uso di questa funzionalità \underline{non} è supportata con DBAL e altri DBMS
+			perchè si tratta di comandi specifici usati da MySQL
+
+	\end{itemize}
+
+	% Note to translators: if this does not fit on one slide, you could try to change
+	% \small to \smaller or shorten the sentences below or the bullet points above.
+
+	\begingroup
+		\color{red}
+			\small
+				\underline{Nota:} l'ottimizzazione delle tabelle è un processo intensivo di I/O.
+				Anche in MySQL < 5.6.17 il processo blocca le tabelle durante il funzionamento,
+				e questo può avere impatti sul sito.
+			\normalsize
+	\endgroup
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		cb419f67-01c7c164-cb0a4c15-ba2517f2
+% LTXE-SLIDE-ORIGIN:	f0da3ed6-ab7b2518-402338db-a1842865 English
+% LTXE-SLIDE-ORIGIN:	f9cbeb69-d08efdaf-a8c00d48-353f667e German
+% LTXE-SLIDE-TITLE:		Improved handling of online media (1)
+% LTXE-SLIDE-REFERENCE:	Feature-61799-ImprovedHandlingOfOnlineMedia.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Modifiche rilevanti}
+	\framesubtitle{Manipolazione di Media Online (1)}
+
+	\begin{itemize}
+
+		\item Ora i media remoti (online media) sono supportati di base 
+
+		\item Ad esempio, il supporto a video YouTube e Vimeo è implementata nel core
+
+		\item Le risorse possono essere aggiunte con un URL usando l'elemento di contenuto \textbf{"Text \& Media"}
+			per esempio
+
+		\item Un helper class recupera i metadati e fornisce un immagine, se disponibile, che sarà usata come anteprima
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		794574ff-81fcb5c0-c53a0a46-93eed4df
+% LTXE-SLIDE-ORIGIN:	485f95a8-a9ec5940-e9aa7322-688630cb English
+% LTXE-SLIDE-ORIGIN:	76e87d6a-cd1ebbf9-9a4d49ec-49cc569f German
+% LTXE-SLIDE-TITLE:		Improved handling of online media (2)
+% LTXE-SLIDE-REFERENCE:	Feature-61799-ImprovedHandlingOfOnlineMedia.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Modifiche rilevanti}
+	\framesubtitle{Manipolazione di Media Online (2)}
+
+	Sono possibili le seguenti sintassi di URL:
+	\vspace{0.4cm}
+
+	\begin{columns}[T]
+		\begin{column}{.52\textwidth}
+			\smaller
+				\tabto{0.2cm}\textbf{\underline{YouTube:}}\newline
+				\tabto{0.2cm}\texttt{youtu.be/<code>}\newline
+				\tabto{0.2cm}\texttt{www.youtube.com/watch?v=<code>}\newline
+				\tabto{0.2cm}\texttt{www.youtube.com/v/<code>}\newline
+				\tabto{0.2cm}\texttt{www.youtube-nocookie.com/v/<code>}\newline
+				\tabto{0.2cm}\texttt{www.youtube.com/embed/<code>}\newline
+		\end{column}
+		\begin{column}{.48\textwidth}
+			\vspace{-0.25cm}\smaller
+				\textbf{\underline{Vimeo:}}\newline
+				\texttt{vimeo.com/<code>}\newline
+				\texttt{player.vimeo.com/video/<code>}\newline
+		\end{column}
+	\end{columns}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		64308aa1-a6706661-54b76627-b17bd09d
+% LTXE-SLIDE-ORIGIN:	dc79335c-d9e51543-ff5759e0-5005bff8 English
+% LTXE-SLIDE-ORIGIN:	aef8746a-e1babbc9-4dd74eec-cf379dae German
+% LTXE-SLIDE-TITLE:		Improved handling of online media (3)
+% LTXE-SLIDE-REFERENCE:	Feature-61799-ImprovedHandlingOfOnlineMedia.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Modifiche rilevanti}
+	\framesubtitle{Manipolazione di Media Online (3)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item L'accesso alle risorse con Fluid può essere fatto come di seguito:
+
+		\begin{lstlisting}
+			<!-- enable js api and set no-cookie support for YouTube videos -->
+			<f:media file="{file}" additionalConfig="{enablejsapi:1, 'no-cookie': true}" ></f:media>
+
+			<!-- show title and uploader for YouTube and Vimeo before video starts playing -->
+			<f:media file="{file}" additionalConfig="{showinfo:1}" ></f:media>
+		\end{lstlisting}
+
+		\item Opzioni per configurazioni personalizzate di video YouTube:\newline
+			\small
+				\texttt{autoplay}, \texttt{controls}, \texttt{loop}, \texttt{enablejsapi}, \texttt{showinfo}, \texttt{no-cookie}
+			\normalsize
+
+		\item Opzioni per configurazioni personalizzate di video Vimeo:\newline
+			\small
+				\texttt{autoplay}, \texttt{loop}, \texttt{showinfo}
+			\normalsize
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		2cefa546-61fac09f-17827f9a-4ab9c5ac
+% LTXE-SLIDE-ORIGIN:	2b41f269-eaa80c0c-89bcd0f0-ee66248b English
+% LTXE-SLIDE-ORIGIN:	9ed71aaa-a7615392-78f0ac0c-f9bd7400 German
+% LTXE-SLIDE-TITLE:		Improved handling of online media (4)
+% LTXE-SLIDE-REFERENCE:	Feature-61799-ImprovedHandlingOfOnlineMedia.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Modifiche rilevanti}
+	\framesubtitle{Manipolazione di Media Online (4)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Per registrare il proprio servizio di media online, sono necesasri una classe
+			\small\texttt{OnlineMediaHelper}\normalsize\space che implementa
+			\small\texttt{OnlineMediaHelperInterface}\normalsize\space e una classe
+			\small\texttt{FileRenderer}\normalsize\space che implementa
+			\small\texttt{FileRendererInterface}\normalsize\space
+
+			\begin{lstlisting}
+				// registrare il proprio servizio di video online (la chiave usata e anche il nome dell'estensione del file di bind)
+				$GLOBALS['TYPO3_CONF_VARS']['SYS']['OnlineMediaHelpers']['myvideo'] =
+				  \MyCompany\Myextension\Helpers\MyVideoHelper::class;
+
+				$rendererRegistry = \TYPO3\CMS\Core\Resource\Rendering\RendererRegistry::getInstance();
+				$rendererRegistry->registerRendererClass(
+				  \MyCompany\Myextension\Rendering\MyVideoRenderer::class
+				);
+
+				// registrare un mime-type personalizzato per i tuoi video
+				$GLOBALS['TYPO3_CONF_VARS']['SYS']['FileInfo']['fileExtensionToMimeType']['myvideo'] =
+				  'video/myvideo';
+
+				// registrare la tua estensione personalizzata come media file autorizzato
+				$GLOBALS['TYPO3_CONF_VARS']['SYS']['mediafile_ext'] .= ',myvideo';
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		a3fc2da1-83b9fd70-a0e00271-e8b70782
+% LTXE-SLIDE-ORIGIN:	0d9d73fc-2a68f137-f5ff5876-74aeef2b English
+% LTXE-SLIDE-ORIGIN:	c675e3a8-9a429b0b-61a4a603-d5b0740f German
+% LTXE-SLIDE-TITLE:		Unified Backend Routing
+% LTXE-SLIDE-REFERENCE:	Feature-65493-BackendRouting.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Modifiche rilevanti}
+	\framesubtitle{Backend Routing}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Un nuovo componente di routing è stato aggiunto al backend di TYPO3 che gestisce 
+			l'indirizzamento delle diverse chiamate/moduli in TYPO3 CMS
+
+		\item Le routes possono essere registrati nelle seguenti classi:\newline
+			\small
+				\texttt{Configuration/Backend/Routes.php}
+			\normalsize
+
+			\begin{lstlisting}
+				return [
+				  'myRouteIdentifier' => [
+				    'path' => '/document/edit',
+				    'controller' => Acme\MyExtension\Controller\MyExampleController::class . '::methodToCall'
+				  ]
+				];
+			\end{lstlisting}
+
+		\item Il metodo chiamato contiente oggetti di richiesta e risposta compatibile PSR-7:
+
+			\begin{lstlisting}
+				public function methodToCall(ServerRequestInterface $request, ResponseInterface $response) {
+				  ...
+				}
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		3fd91166-1c9f6782-6ea9b811-82cef5a9
+% LTXE-SLIDE-ORIGIN:	a38b3e30-a34a3bb1-ee94992a-1c91db32 English
+% LTXE-SLIDE-ORIGIN:	df56086a-498ae937-9b2bf393-a95828f3 German
+% LTXE-SLIDE-TITLE:		Autoload definition can be provided in ext_emconf.php
+% LTXE-SLIDE-REFERENCE:	Feature-68700-AutoloadDefinitionCanBeProvidedInExt_emconfphp.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Modifiche rilevanti}
+	\framesubtitle{Definizione Autoload in \texttt{ext\_emconf.php}}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Le estensioni possono fornire una o più definizioni PSR-4 nel file \texttt{ext\_emconf.php} 
+
+		\item Questo era già possibile in \texttt{composer.json}, ma con questa nuova funzionalità,
+			gli sviluppatori di estensioni non devono fornire più un file composer
+
+			\begin{lstlisting}
+				$EM_CONF[$_EXTKEY] = array (
+				  'title' => 'Extension Skeleton for TYPO3 CMS 7',
+				  ...
+				'autoload' =>
+				  array(
+				    'psr-4' => array(
+				      'Helhum\\ExtScaffold\\' => 'Classes'
+				    )
+				  )
+				);
+			\end{lstlisting}
+
+			\small
+				(questa è la nuova modalità raccomandata per registrare classi in TYPO3)
+			\normalsize
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		34ce2e3b-e02f0c38-0ea0ec8a-4174d848
+% LTXE-SLIDE-ORIGIN:	6d370930-d24dd6c2-54e2330d-b873a914 English
+% LTXE-SLIDE-ORIGIN:	137a9fca-b6558571-346141d2-9304a223 German
+% LTXE-SLIDE-TITLE:		Icon-Factory (1)
+% LTXE-SLIDE-REFERENCE:	Feature-68741-IntroduceNewIconFactoryAsBaseForReplaceTheIconSkinningAPI.rst
+% LTXE-SLIDE-REFERENCE:	Feature-69095-IntroduceIconStateForIconFactory.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Modifiche rilevanti}
+	\framesubtitle{Nuova gestione icone (1)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\smaller\ttfamily}
+
+	\begin{itemize}
+
+		\item La logica per lavorare con le icone, la loro dimensione e il loro overlays sono gestite
+			nella nuova classe \texttt{IconFactory}
+
+		\item La nuova gestione delle icone andrà a sostituire le vecchie API gradualmente
+
+		\item Tutte le icone del core saranno registrate direttamente nella classe \texttt{IconRegistry} 
+
+		\item Le estensioni devono usare \texttt{IconRegistry::registerIcon()} per sovrascrivere le icone
+			esistenti o aggiungere nuove icone alla gestione:
+
+			\begin{lstlisting}
+				IconRegistry::registerIcon(
+				  $identifier,
+				  $iconProviderClassName,
+				  array $options = array()
+				);
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		18b0b276-5287e205-631dec27-722c41c2
+% LTXE-SLIDE-ORIGIN:	4e9f1524-c3c04972-bf6bd14b-19193ab2 English
+% LTXE-SLIDE-ORIGIN:	6b59b4c7-21a7ff5c-4e67b53d-e4509355 German
+% LTXE-SLIDE-TITLE:		Icon-Factory (2)
+% LTXE-SLIDE-REFERENCE:	Feature-68741-IntroduceNewIconFactoryAsBaseForReplaceTheIconSkinningAPI.rst
+% LTXE-SLIDE-REFERENCE:	Feature-69095-IntroduceIconStateForIconFactory.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Modifiche rilevanti}
+	\framesubtitle{Nuova gestione icone (2)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Il core di TYPO3 CMS implementa tre classi di archivi icone:\newline
+			\smaller
+				\texttt{BitmapIconProvider}, \texttt{FontawesomeIconProvider} e \texttt{SvgIconProvider}
+			\normalsize
+
+		\item Esempio di uso:
+
+			\begin{lstlisting}
+				$iconFactory = GeneralUtility::makeInstance(IconFactory::class);
+				$iconFactory->getIcon(
+				  $identifier,
+				  Icon::SIZE_SMALL,
+				  $overlay,
+				  IconState::cast(IconState::STATE_DEFAULT)
+				)->render();
+			\end{lstlisting}
+
+		\item Valori validi per \texttt{Icon::SIZE\_...} sono:\newline
+			\small\texttt{SIZE\_SMALL}, \texttt{SIZE\_DEFAULT} e \texttt{SIZE\_LARGE}\normalsize
+			\vspace{0.4cm}
+
+		\item Valori validi per \texttt{Icon::STATE\_...} sono:\newline
+			\small\texttt{STATE\_DEFAULT} and \texttt{STATE\_DISABLED}\normalsize
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		b86ec310-186c322a-6a7d0573-8c371c0e
+% LTXE-SLIDE-ORIGIN:	ffa90088-571dcf20-3d315854-a05814da English
+% LTXE-SLIDE-ORIGIN:	21a7eeb5-b4c7ff5c-b53de450-4e679355 German
+% LTXE-SLIDE-TITLE:		Icon-Factory (3)
+% LTXE-SLIDE-REFERENCE:	Feature-68741-IntroduceNewIconFactoryAsBaseForReplaceTheIconSkinningAPI.rst
+% LTXE-SLIDE-REFERENCE:	Feature-69095-IntroduceIconStateForIconFactory.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Modifiche rilevanti}
+	\framesubtitle{Nuova gestione icone (3)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Il core TYPO3 CMS fornisce un ViewHelper di Fluid che rende semplice l'uso di icone in una view di Fluid:
+
+			\begin{lstlisting}
+				{namespace core = TYPO3\CMS\Core\ViewHelpers}
+
+				<core:icon identifier="my-icon-identifier"></core:icon>
+
+				<!-- use the "small" size if none given ->
+				<core:icon identifier="my-icon-identifier"></core:icon>
+				<core:icon identifier="my-icon-identifier" size="large"></core:icon>
+				<core:icon identifier="my-icon-identifier" overlay="overlay-identifier"></core:icon>
+
+				<core:icon identifier="my-icon-identifier" size="default" overlay="overlay-identifier">
+				</core:icon>
+
+				<core:icon identifier="my-icon-identifier" size="large" overlay="overlay-identifier">
+				</core:icon>
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		4a6b3ca7-faf30fe8-f284ef8e-0f93d479
+% LTXE-SLIDE-ORIGIN:	10739ce3-88cfb3f6-d8364643-424cbf3c English
+% LTXE-SLIDE-ORIGIN:	d9de708f-474f2f36-c104b01c-0d23a352 German
+% LTXE-SLIDE-TITLE:		Signal for pre processing linkvalidator records
+% LTXE-SLIDE-REFERENCE:	Feature-52217-SignalForPreProcessingLinkvalidatorRecords.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Modifiche rilevanti}
+	\framesubtitle{Hooks e Signals}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Nuovi signal sono stati aggiunti a LinkValidator, che permette l'aggiunta di
+			un processo di inizializzazione di un specifico record\newline
+			\small
+				(es. ottenere i dati di contenuto da una configurazione di plugin in un record)
+			\normalsize
+
+		\item Registrazione del signal nel file \texttt{ext\_localconf.php}:
+
+			\begin{lstlisting}
+				$signalSlotDispatcher = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(
+				  \TYPO3\CMS\Extbase\SignalSlot\Dispatcher::class
+				);
+
+				$signalSlotDispatcher->connect(
+				  \TYPO3\CMS\Linkvalidator\LinkAnalyzer::class,
+				  'beforeAnalyzeRecord',
+				  \Vendor\Package\Slots\RecordAnalyzerSlot::class,
+				  'beforeAnalyzeRecord'
+				);
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		17f4cc53-0670071e-ab01ef08-b0991afd
+% LTXE-SLIDE-ORIGIN:	8b50edb3-2363f2a9-3120a711-db8b6ede English
+% LTXE-SLIDE-ORIGIN:	bcb8ef73-b8669a17-102da209-5f5c9adc German
+% LTXE-SLIDE-TITLE:		Replaced JumpURL features with hooks (1)
+% LTXE-SLIDE-REFERENCE:	Breaking-52156-ReplaceJumpUrlWithHooks.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Modifiche rilevanti}
+	\framesubtitle{JumpUrl come estensione di systema (1)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item La creazione e gestione di JumpURLs sono state spostate nella nuova estensione di sistema \texttt{jumpurl}
+
+		\item Nuovi hook sono stati creati per permettere la creazione personalizzata e gestione di URL (vedi pagina seguente)
+
+	\end{itemize}
+
+	\breakingchange
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		34a05447-bc32a023-db009b1f-d0bb4a35
+% LTXE-SLIDE-ORIGIN:	68003b46-065b81f8-5206141c-77a35b88 English
+% LTXE-SLIDE-ORIGIN:	ecb8fef3-69b86a17-02da2109-9adc5f5c German
+% LTXE-SLIDE-TITLE:		Replaced JumpURL features with hooks (2)
+% LTXE-SLIDE-REFERENCE:	Breaking-52156-ReplaceJumpUrlWithHooks.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Modifiche rilevanti}
+	\framesubtitle{JumpUrl come estensione di systema (2)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Hook 1: gestione di \textbf{URL} durante la generazione del link
+
+			\begin{lstlisting}
+				$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['urlProcessing']['urlHandlers']
+				  ['myext_myidentifier']['handler'] = \Company\MyExt\MyUrlHandler::class;
+
+				// la classe deve implementare UrlHandlerInterface:
+				class MyUrlHandler implements \TYPO3\CMS\Frontend\Http\UrlHandlerInterface {
+				  ...
+				}
+			\end{lstlisting}
+
+		\item Hook 2: gestione di \textbf{link}
+
+			\begin{lstlisting}
+				$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['urlProcessing']['urlProcessors']
+				  ['myext_myidentifier']['processor'] = \Company\MyExt\MyUrlProcessor::class;
+
+				// la classe deve implementare UrlProcessorInterface:
+				class MyUrlProcessor implements \TYPO3\CMS\Frontend\Http\UrlProcessorInterface {
+				  ...
+				}
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		4a8c233b-9a79803e-00bd43fe-1d1e8ca0
+% LTXE-SLIDE-ORIGIN:	ff50feed-0f2dfe5a-1f960c51-e493d3b0 English
+% LTXE-SLIDE-ORIGIN:	08a70f0f-528daf11-ee485c29-d9707f25 German
+% LTXE-SLIDE-TITLE:		Colored Output for CLI Calls on Errors
+% LTXE-SLIDE-REFERENCE:	Feature-67056-AddOptionToDisableMoveButtonsTCAGroupType.rst
+% LTXE-SLIDE-REFERENCE:	Feature-67875-OverrideCategoryRegistryEntry.rst
+% LTXE-SLIDE-REFERENCE:	Feature-68804-ColoredOutputForCLI-relevantErrorMessages.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Modifiche rilevanti}
+	\framesubtitle{Command Line Interface (CLI)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Chiamando \texttt{typo3/cli\_dispatch.phpsh} via linea di comando viene mostrato un
+			messaggio colorato di errore se il primo parametro non è una chiave CLI o è mancante
+
+		\item I command controller di Extbase possono essere inseriti in cartelle arbitrarie all'interno della directory
+			\texttt{Command} 
+
+		\item Esempio:\newline
+
+			Controller nel file:\newline
+			\smaller\texttt{my\_ext/Classes/Command/Hello/WorldCommandController.php}\normalsize\newline
+			...può essere chiamata via CLI:\newline
+			\smaller\texttt{typo3/cli\_dispatch.sh extbase my\_ext:hello:world <argomento>}\normalsize
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		4f79050d-afd4cafa-55dacc27-dd8b0efa
+% LTXE-SLIDE-ORIGIN:	df540c68-edd41657-8854e46a-a716dccb English
+% LTXE-SLIDE-ORIGIN:	a708daf1-e48f525c-7010fe7f-2529d9e4 German
+% LTXE-SLIDE-TITLE:		Miscellaneous (1)
+% LTXE-SLIDE-REFERENCE:	Feature-68804-ColoredOutputForCLI-relevantErrorMessages.rst
+% LTXE-SLIDE-REFERENCE:	Feature-69512-SupportTyposcriptFilesAsTextFileType.rst
+% LTXE-SLIDE-REFERENCE:	Feature-69543-IntroducedGLOBALSTYPO3_CONF_VARSSYSmediafile_ext.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Modifiche rilevanti}
+	\framesubtitle{Varie (1)}
+
+	\begin{itemize}
+
+		\item I bottoni di spostamento di tipo TCA \texttt{group} possono essere
+			disattivati usando l'opzione \texttt{hideMoveIcons = TRUE}
+
+		\item Il metodo \texttt{makeCategorizable} è stato esteso con il nuovo parametro
+			\texttt{override} per impostare una nuova configurazione di categoria per la combinazione
+			di campi/tabelle già registrati
+
+		\item Esempio:
+
+			\begin{lstlisting}
+				\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::makeCategorizable(
+				  'css_styled_content', 'tt_content', 'categories', array(), TRUE
+				);
+			\end{lstlisting}
+
+			\small
+				L'ultimo parametro (qui: \texttt{TRUE}) forza override (valore di default è \texttt{FALSE}).
+			\normalsize
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		3512d8ad-6d63a727-0b0ca6f7-e34c316b
+% LTXE-SLIDE-ORIGIN:	5a6db8b0-ff039479-8ba12ed0-d50d8a0f English
+% LTXE-SLIDE-ORIGIN:	d52d6418-554d801f-352b85cb-54046d28 German
+% LTXE-SLIDE-TITLE:		Miscellaneous (2)
+% LTXE-SLIDE-REFERENCE:	Feature-69730-IntroduceUniqueIdGenerator.rst
+% LTXE-SLIDE-REFERENCE:	Important-68758-CommandControllersAllowedInSubfolders.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Modifiche rilevanti}
+	\framesubtitle{Varie (2)}
+
+	% decrease font size for code listing
+	%\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item La nuova funziona genera un ID univoco
+
+			\begin{lstlisting}
+				$uniqueId = \TYPO3\CMS\Core\Utility\StringUtility::getUniqueId('Prefix');
+			\end{lstlisting}
+
+		\item Il file di tipo \texttt{.typoscript} è stato aggiunto alla lista dei file di testo validi
+
+		\item La nuova opzione di configurazione definisce le estensioni dei file media
+
+			\begin{lstlisting}
+				$GLOBALS['TYPO3_CONF_VARS']['SYS']['mediafile_ext'] =
+				  'gif,jpg,jpeg,bmp,png,pdf,svg,ai,mov,avi';
+			\end{lstlisting}
+
+	\end{itemize}
+
+	\breakingchange
+
+\end{frame}
+
+% ------------------------------------------------------------------------------

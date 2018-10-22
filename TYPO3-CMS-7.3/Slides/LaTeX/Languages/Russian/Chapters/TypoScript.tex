@@ -1,0 +1,225 @@
+% ------------------------------------------------------------------------------
+% TYPO3 CMS 7.3 - What's New - Chapter "TypoScript" (English Version)
+%
+% @author	Michael Schams <schams.net>
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		http://typo3.org/download/release-notes/whats-new/
+% @language	English
+% ------------------------------------------------------------------------------
+% LTXE-CHAPTER-UID:		e8cc33e1-d7bdb74f-0421b75f-7be06b19
+% LTXE-CHAPTER-NAME:	TypoScript
+% ------------------------------------------------------------------------------
+
+\section{TSconfig и TypoScript}
+\begin{frame}[fragile]
+	\frametitle{TSconfig и TypoScript}
+
+	\begin{center}\huge{Глава 2:}\end{center}
+	\begin{center}\huge{\color{typo3darkgrey}\textbf{TSconfig и TypoScript}}\end{center}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		2885c017-e20f8e05-33a35200-f1c648bf
+% LTXE-SLIDE-ORIGIN:	f8419191-d59094a8-01e156a1-908dac0f English
+% LTXE-SLIDE-ORIGIN:	56b025e6-cf380b11-c9d1c009-0b548d6a German
+% LTXE-SLIDE-TITLE:		Feature #63561: Add TypoScript stdWrap strtotime
+% LTXE-SLIDE-REFERENCE:	Feature-63561-AddTypoScriptStdWrapStrtotime.rst
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{TSconfig и TypoScript}
+	\framesubtitle{Новая функция stdWrap \texttt{strtotime}}
+
+	\begin{itemize}
+
+		\item Новое свойство TypoScript stdWrap \texttt{strtotime} позволяет преобразовывать
+			форматированные даты в Unix timestamps, например, для вычисления дат
+
+		\item Воспринимаются значения \texttt{1} или любая строка времени, используемая в виде
+			первого аргумента функции PHP \texttt{strtotime()}
+
+			\begin{lstlisting}
+				date_as_timestamp = TEXT
+				date_as_timestamp {
+				  value = 2015-04-15
+				  strtotime = 1
+				}
+
+				next_weekday = TEXT
+				next_weekday {
+				  data = GP:selected_date
+				  strtotime = + 2 weekdays
+				  strftime = %Y-%m-%d
+				}
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		281fc498-811bde96-9a7da91f-f27c389c
+% LTXE-SLIDE-ORIGIN:	687af5fc-b201bac6-e4ad678b-392fb9f8 English
+% LTXE-SLIDE-ORIGIN:	c5dbf3c7-655fc6e4-227a3bf6-f5d89fb1 German
+% LTXE-SLIDE-TITLE:		Feature #65250: TypoScript condition add GPmerged
+% LTXE-SLIDE-REFERENCE:	Feature-65250-TypoScriptConditionAddGPmerged.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{TSconfig и TypoScript}
+	\framesubtitle{\texttt{GPmerged} в Условиях}
+
+	\begin{itemize}
+
+		\item Если в условиях TypoScript использовать переменные \text{GP}, то возвращена будет лишь \text{POST}
+			переменная, в случае, если запрос содержит и \text{POST}, \underline{и}
+			\text{GET} переменные.
+
+		\item Новый параметр \texttt{GPmerged} объединяет оба метода и возвращает результат
+
+			\begin{lstlisting}
+				[globalVar = GPmerged:tx_demo|foo = 1]
+				  page.90 = TEXT
+				  page.90.value = DEMO
+				[global]
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		2bc9ee1b-ba523ef3-a263c5fb-a3e5173b
+% LTXE-SLIDE-ORIGIN:	2901d1f6-3d8e9a15-ad0268f1-4e30c04b English
+% LTXE-SLIDE-ORIGIN:	05b2f338-7bcb651f-a4cebabd-2c677a20 German
+% LTXE-SLIDE-TITLE:		Feature #66697: Add uppercamelcase and lowercamelcase to stdWrap.case
+% LTXE-SLIDE-REFERENCE:	Feature-66697-AddUppercamelcaseAndLowercamelcaseToStdWrap.case.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{TSconfig и TypoScript}
+	\framesubtitle{Новые параметры для \texttt{stdWrap.case}}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Параметры \texttt{uppercamelcase} и \texttt{lowercamelcase} добавлены 
+			к \texttt{stdWrap.case}
+
+		\item Пример:
+
+			\begin{lstlisting}
+				tt_content = CASE
+				tt_content {
+				  key.field = CType
+				  my_custom_ctype =< lib.userContent
+				  my_custom_ctype {
+				    file = EXT:site_base/Resources/Private/Templates/SomeOtherTemplate.html
+				    settings.extraParam = 1
+				  }
+				  default =< lib.userContent
+				  default {
+				    file = TEXT
+				    file.field = CType
+				    file.stdWrap.case = uppercamelcase
+				    file.wrap = EXT:site_base/Resources/Private/Templates/|.html
+				  }
+				}
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		018a1ba0-4988ff5f-5fb9a6d3-8279e064
+% LTXE-SLIDE-ORIGIN:	72bacec0-2fa0303b-33c4c4d6-a3bc0857 English
+% LTXE-SLIDE-ORIGIN:	cd745fc5-b8bd6483-ba1cf2a5-0ebf4310 German
+% LTXE-SLIDE-TITLE:		Feature #66698: Add integrity property to JavaScript files (1)
+% LTXE-SLIDE-REFERENCE:	Feature-66698-AddIntegrityPropertyToJavaScriptFiles.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{TSconfig и TypoScript}
+	\framesubtitle{Для файлов JavaScript добавлено свойство \texttt{integrity} (1)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Свойство \texttt{integrity} добавлено при включении файлов JavaScript для
+			указания SRI и возможности верификации ресурсов\newline
+			(SRI: Sub-Resource Integrity, смотрите следующий слайд)
+
+		\item Это применимо к свойствам TypoScript PAGE \texttt{page.includeJSLibs},
+			\texttt{page.includeJSFooterlibs}, \texttt{ includeJS} и
+			\texttt{includeJSFooter}
+
+		\item Пример:
+
+			\begin{lstlisting}
+				page {
+				  includeJS {
+				    jQuery = https://code.jquery.com/jquery-1.11.3.min.js
+				    jquery.external = 1
+				    jQuery.disableCompression = 1
+				    jQuery.excludeFromConcatenation = 1
+				    jQuery.integrity = sha256-7LkWEzqTdpEfELxcZZlS6wAx5Ff13zZ83lYO2/ujj7g=
+				  }
+				}
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		2b6f3034-64d3af93-e9468377-a1d3a88f
+% LTXE-SLIDE-ORIGIN:	bf190d17-80b961a2-a0c001d4-6ee48dfe English
+% LTXE-SLIDE-ORIGIN:	b8bd6483-cd745fc5-ba1cf2a5-0ebf4310 German
+% LTXE-SLIDE-TITLE:		Feature #66698: Add integrity property to JavaScript files (2)
+% LTXE-SLIDE-REFERENCE:	Feature-66698-AddIntegrityPropertyToJavaScriptFiles.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{TSconfig и TypoScript}
+	\framesubtitle{Для файлов JavaScript добавлено свойство \texttt{integrity} (2)}
+
+	% decrease font size for code listing
+	%\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item SRI — это спецификация W3C, позволяющая разработчикам убедиться, что
+			расположенные на сторонних серверах ресурсы не были подделаны, для чего используется
+
+		\item Создание хешей целостности:
+
+			\begin{itemize}
+				\item Параметр 1: \url{https://srihash.org}
+				\item Параметр 2: использование следующей команды shell
+			\end{itemize}
+
+			\begin{lstlisting}
+				cat FILENAME.js | openssl dgst -sha256 -binary | openssl enc -base64 -A
+			\end{lstlisting}
+
+		\item Подробнее:
+
+			\begin{itemize}
+				\item \url{http://www.w3.org/TR/SRI/}
+			\end{itemize}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------

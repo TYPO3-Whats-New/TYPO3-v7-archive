@@ -1,0 +1,294 @@
+% ------------------------------------------------------------------------------
+% TYPO3 CMS 7.5 - What's New - Chapter "Extbase & Fluid" (Serbian Version)
+%
+% @author	Michael Schams <schams.net>
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		http://typo3.org/download/release-notes/whats-new/
+% @language	Serbian
+% ------------------------------------------------------------------------------
+% LTXE-CHAPTER-UID:		c9b2e403-e06bb691-ce202054-149c5089
+% LTXE-CHAPTER-NAME:	Extbase & Fluid
+% ------------------------------------------------------------------------------
+
+\section{Extbase i Fluid}
+\begin{frame}[fragile]
+	\frametitle{Extbase i Fluid}
+
+	\begin{center}\huge{Poglavlje 4:}\end{center}
+	\begin{center}\huge{\color{typo3darkgrey}\textbf{Extbase i Fluid}}\end{center}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		48cc41a6-9a809142-ad8c93ea-9bb6fb4f
+% LTXE-SLIDE-ORIGIN:	8bf4a04e-9453b098-84fa7616-1df8ea8f English
+% LTXE-SLIDE-ORIGIN:	7528691a-d33af3f4-edab28ae-ba7c8016 German
+% LTXE-SLIDE-TITLE:		Severity-filtering for FlashMessageQueue
+% LTXE-SLIDE-REFERENCE:	Feature-7098-SeverityFilteringForFlashMessageQueue.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Extbase i Fluid}
+	\framesubtitle{Stroze filtriranje za FlashMessageQueue}
+
+	\begin{itemize}
+
+		\item U TYPO3 CMS < 7.5, \underline{sve} poruke iz FlashMessageQueue mogle biti samo dohvacene i/ili uklonjene
+
+		\item U TYPO3 CMS >= 7.5, ovo meze da se uradi za odredjen nivo storgoce:
+
+			\begin{lstlisting}
+				FlashMessageQueue::getAllMessages($severity);
+				FlashMessageQueue::getAllMessagesAndFlush($severity);
+				FlashMessageQueue::removeAllFlashMessagesFromSession($severity);
+				FlashMessageQueue::clear($severity);
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		ad2fe9f0-aba51ea3-c5040897-3c6aacb1
+% LTXE-SLIDE-ORIGIN:	1728dca6-0c88a636-5dc7cc00-dfa3266f English
+% LTXE-SLIDE-ORIGIN:	484e03e4-cb7828c2-8bf31f48-cabf004a German
+% LTXE-SLIDE-TITLE:		Query support for BETWEEN added
+% LTXE-SLIDE-REFERENCE:	Feature-47812-QuerySupportForBETWEENAdded.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Extbase i Fluid}
+	\framesubtitle{Dodata podrska za upit "\texttt{between}"}
+
+	\begin{itemize}
+
+		\item Podrska za \texttt{between} je dodata za Extbase query objekat
+
+		\item Ne postoji poboljsanje performansi jer je DBMS vec interno konvertovao
+			"\texttt{between}" u: \texttt{min <= expr AND expr <= max}
+
+		\item Ova nova Extbase opcija kopira ponasanje DBMS' gradjenjem logickih 
+			\texttt{AND} uslova, tako da ovo radi na svim DBMS
+
+			\begin{lstlisting}
+				$query->matching(
+				  $query->between('uid', 3, 5)
+				);
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		d80d6078-39020aa3-64148248-32f076ee
+% LTXE-SLIDE-ORIGIN:	0f2d87b1-c907b8a6-44612e51-e84e6490 English
+% LTXE-SLIDE-ORIGIN:	12b78f4c-7291d788-ea865da7-e6501a2e German
+% LTXE-SLIDE-TITLE:		Added support for multiple FlashMessage queues
+% LTXE-SLIDE-REFERENCE:	Feature-64726-UsingArbitraryFlashmessageQueues.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Extbase i Fluid}
+	\framesubtitle{Visestruki FlashMessage Queues}
+
+	\begin{itemize}
+
+		\item Sada je moguce implementirati vise FlashMessageQueues:
+
+			\begin{lstlisting}
+				$queueIdentifier = 'myQueue';
+				$this->controllerContext->getFlashMessageQueue($queueIdentifier);
+			\end{lstlisting}
+
+		\item Pristup koristeci Fluid radi na sledeci nacin::
+
+			\begin{lstlisting}
+				<f:flashMessages queueIdentifier="myQueue" ></f:flashMessages>
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		b7e5778d-9467c582-05f6f8d8-475fcd1f
+% LTXE-SLIDE-ORIGIN:	6915482b-a7f5bd30-f04b3dc6-d94a5f2a English
+% LTXE-SLIDE-ORIGIN:	2f1002c1-6bde766c-3b1ad500-ab9ccf0c German
+% LTXE-SLIDE-TITLE:		Introduced MediaViewHelper (1)
+% LTXE-SLIDE-REFERENCE:	Feature-66366-IntroducedMediaViewHelper.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Extbase i Fluid}
+	\framesubtitle{Media ViewHelper (1)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Da bi se lako prikazali video, audio ili neki drugi tipovi fajlova sa registrovanom
+			Renderer klasom za korisnicki interfejs, implementiran je \texttt{MediaViewHelper}
+
+		\item \texttt{MediaViewHelper} prvo proverava da li je prisutan Renderer za dati fajl - 
+			ako nije, rendera se podrazumevani image tag
+
+		\item Primeri:
+
+			\begin{lstlisting}
+				<code title="Image Object">
+				  <f:media file="{file}" width="400" height="375" ></f:media>
+				</code>
+
+				<output>
+				  <img alt="alt set in image record" src="fileadmin/_processed_/323223424.png"
+				    width="396" height="375" />
+				</output>
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		97f71647-405e8f87-5bf3c02b-c7e5d15a
+% LTXE-SLIDE-ORIGIN:	8bd8314d-631b7ae9-3102867f-804046fa English
+% LTXE-SLIDE-ORIGIN:	73fe507d-772b6011-7457429b-4039dd5c German
+% LTXE-SLIDE-TITLE:		Introduced MediaViewHelper (2)
+% LTXE-SLIDE-REFERENCE:	Feature-66366-IntroducedMediaViewHelper.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Extbase i Fluid}
+	\framesubtitle{Media ViewHelper (2)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Primeri (nastavak):
+
+			\begin{lstlisting}
+				<code title="MP4 Video Object">
+				  <f:media file="{file}" width="400" height="375" ></f:media>
+				</code>
+
+				<output>
+				  <video width="400" height="375" controls>
+				    <source src="fileadmin/user_upload/my-video.mp4" type="video/mp4">
+				  </video>
+				</output>
+
+				<code title="MP4 Video Object with loop and autoplay option set">
+				  <f:media file="{file}" width="400" height="375"
+				    additionalConfig="{loop: '1', autoplay: '1'}" ></f:media>
+				</code>
+
+				<output>
+				  <video width="400" height="375" controls loop>
+				    <source src="fileadmin/user_upload/my-video.mp4" type="video/mp4">
+				  </video>
+				</output>
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		f07d2fde-70eac16f-bcf7cd91-5c83f4e8
+% LTXE-SLIDE-ORIGIN:	5d858cf5-81f4cf18-1b13e093-6a00c98a English
+% LTXE-SLIDE-ORIGIN:	2abe5d2e-c1c7e93b-c86559da-81196fdb German
+% LTXE-SLIDE-TITLE:		Adopt form to support the Extbase/ Fluid MVC stack (1)
+% LTXE-SLIDE-REFERENCE:	Feature-69401-AdoptFormToSupportTheExtbaseFluidMVCStack.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Extbase i Fluid}
+	\framesubtitle{Sistemsko prosirenje \texttt{form} (1)}
+
+	\begin{itemize}
+
+		\item Sistemsko prosirenje \texttt{form} (ukljucuje jedinstveni data model, kontroler, logiku, validaciju osobina, prikaze i sablone) je unapredjeno da podrzava Extbase/Fluid MVC 
+
+		\item Ovo omogucava bolje upravljanje i kontrolu ponasanja i izgleda jednostavnim izmenama u Fluid sablonima ili koriscenjem spostvenih view helper-a
+
+		\item Svaki element forme koristi svoje parsale, koji mogu da se konfigurisu putem 
+			TypoScript opcije \texttt{partialPath = ...}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		b5407f66-6d65abac-444d303e-0b806d95
+% LTXE-SLIDE-ORIGIN:	20c7837c-5b841f21-fb3ead22-265aebe4 English
+% LTXE-SLIDE-ORIGIN:	d45facb0-73989d92-ffbc7c2b-46f583ba German
+% LTXE-SLIDE-TITLE:		Adopt form to support the Extbase/ Fluid MVC stack (2)
+% LTXE-SLIDE-REFERENCE:	Feature-69401-AdoptFormToSupportTheExtbaseFluidMVCStack.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Extbase i Fluid}
+	\framesubtitle{Sistemsko prosirenje \texttt{form} (2)}
+
+	\begin{itemize}
+
+		\item Postoje sledeca nova tri ViewHelper-a:
+
+			\begin{itemize}
+				\item \texttt{AggregateSelectOptionsViewHelper} (za optgroup tagove)
+				\item \texttt{SelectViewHelper} (za optgroup tagove)
+				\item \texttt{PlainMailViewHelper} (za ispisivanje mejlova kao obican tekst)
+			\end{itemize}
+
+		\item Kao dodatak, tu su i tri View-a::
+
+			\begin{itemize}
+				\item \texttt{show} (sama forma)
+				\item \texttt{confirmation} (potvrdna strana)
+				\item \texttt{postProcessor}/\texttt{mail} (email)
+			\end{itemize}
+
+		\item Putanje sablona i vidljivost polja mogu se podesavati za svaki View posebno
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		9f2742c5-59462295-f844af3a-a197e030
+% LTXE-SLIDE-ORIGIN:	20b68c91-1b501686-f97f7b55-0822d9d1 English
+% LTXE-SLIDE-ORIGIN:	cd99ea8c-e6234f0f-caf559ed-c3f825c0 German
+% LTXE-SLIDE-TITLE:		Add annotation for CLI only commands
+% LTXE-SLIDE-REFERENCE:	Feature-68746-AddAnnotationForCLIOnlyCommands.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Extbase i Fluid}
+	\framesubtitle{Anotacija \texttt{@cli}}
+
+	\begin{itemize}
+
+		\item Koristeci novu anotaciju \texttt{@cli}, komande u Extbase CommandController 
+			mogu se oznaciti kao samo CLI komande
+
+		\item Ove komande se ne uzimaju u obzir u selekciji komandi scheduler-a
+
+		\item Na primer, tipicno koriscenje je koriscenje komande kao sto je \texttt{extbase:help:help} 
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------

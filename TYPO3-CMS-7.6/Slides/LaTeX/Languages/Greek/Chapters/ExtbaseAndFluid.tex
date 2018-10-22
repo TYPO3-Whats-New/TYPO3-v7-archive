@@ -1,0 +1,216 @@
+% ------------------------------------------------------------------------------
+% TYPO3 CMS 7.6 - What's New - Chapter "Extbase & Fluid" (Greek Version)
+%
+% @author	Angeliki Plati <ag.plati@gmail.com>
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		http://typo3.org/download/release-notes/whats-new/
+% @language	Greek
+% ------------------------------------------------------------------------------
+% LTXE-CHAPTER-UID:		cfcf5377-f3e96f39-d1ba01e9-2f341646
+% LTXE-CHAPTER-NAME:	Extbase & Fluid
+% ------------------------------------------------------------------------------
+
+\section{Extbase \& Fluid}
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+
+	\begin{center}\huge{\greektext Κεφάλαιο 4:}\end{center}
+	\begin{center}\huge{\color{typo3darkgrey}\textbf{Extbase \& Fluid}}\end{center}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		a4f001c8-ffb9a9f7-e54c5a2c-81349c79
+% LTXE-SLIDE-ORIGIN:	9cd3fb74-276172d0-d6b3f387-3d2bd20f English
+% LTXE-SLIDE-ORIGIN:	78012a67-036705de-daefb092-e87adffa German
+% LTXE-SLIDE-TITLE:		Relations to the same table in Extbase
+% LTXE-SLIDE-REFERENCE:	Feature-27057-RelationsToTheSameTableInExtbase.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+	\framesubtitle{\greektext Συσχετίσεις Ίδιων Πινάκων (1)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item \greektext Είναι τώρα δυνατό να χρησιμοποιηθεί ένα μοντέλο \latintext
+		domain, \greektext όπου ένα αντικείμενο είναι συνδεδεμένο με ένα άλλο της ίδιας κλάσης, απευθείας
+
+			\latintext\begin{lstlisting}
+				namespace \Vendor\Extension\Domain\Model;
+				class A {
+				  /**
+				   * @var \Vendor\Extension\Domain\Model\A
+				   */
+				  protected $parent;
+				}
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+	\framesubtitle{\greektext Συσχετίσεις Ίδιων Πινάκων (2)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item \greektext ... Συνέχεια
+
+			\latintext\begin{lstlisting}
+				namespace \Vendor\Extension\Domain\Model;
+				class A {
+				  /**
+				   * @var \Vendor\Extension\Domain\Model\B
+				   */
+				  protected $x;
+
+				  /**
+				   * @var \Vendor\Extension\Domain\Model\B
+				   */
+				  protected $y;
+				}
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		6ca32c0f-060f226f-0504c69c-2b0c0db5
+% LTXE-SLIDE-ORIGIN:	12b7dd4a-73b912f7-e5d1cefa-e3c8386d English
+% LTXE-SLIDE-ORIGIN:	0c279898-ab69247f-502eb397-6817d02b German
+% LTXE-SLIDE-TITLE:		Added absolute url option to uri.image and image viewHelper
+% LTXE-SLIDE-REFERENCE:	Feature-64286-AddedAbsoluteUrlOptionToUriimageAndImageViewHelper.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+	\framesubtitle{\greektext Επιλογή \latintext \texttt{absolute} \greektext για τους
+	\latintext ViewHelpers \greektext Εικόνας}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item \greektext Η νέα επιλογή \latintext \texttt{absolute} \greektext «εξαναγκάζει» τον \latintext
+		 \texttt{ImageViewhelper} \greektext και τον \latintext
+			\texttt{Uri/ImageViewHelper} \greektext να "δώσουν" ένα \textbf{απόλυτο} \latintext URL
+
+		\item \greektext Παράδειγμα 1 \latintext(\texttt{ImageViewhelper}):
+
+			\latintext\begin{lstlisting}
+				<f:image image="{file}" width="400" height="375" absolute="1" ></f:image>
+
+				// Output
+				<img alt="alt set in image record"
+				  src="http://example.com/fileadmin/_processed_/323223424.png"
+				  width="400" height="375" />
+			\end{lstlisting}
+
+		\item \greektext Παράδειγμα 2 \latintext(\texttt{Uri/ImageViewHelper}):
+
+			\latintext\begin{lstlisting}
+				<f:uri.image image="{file}" width="400" height="375" absolute="1" ></f:uri>
+
+				// Output
+				http://example.com/fileadmin/_processed_/323223424.png
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		f40fa43c-840cc6b6-a2dfdf9a-25ba52e0
+% LTXE-SLIDE-ORIGIN:	666331cd-80241eb3-4da880c4-7c9ee834 English
+% LTXE-SLIDE-ORIGIN:	b880b0d8-83956e2a-0a594f16-7f4eb357 German
+% LTXE-SLIDE-TITLE:		ViewHelper to strip whitespace between HTML tags
+% LTXE-SLIDE-REFERENCE:	Feature-70170-ViewHelperToStripWhitespaceBetweenHTMLTags.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+	\framesubtitle{\greektext Αφαίρεση Κενών μεταξύ των \latintext HTML Tags}
+
+	\begin{itemize}
+
+		\item \greektext Νέος \latintext ViewHelper \latintext\texttt{spaceless} \greektext
+		αφαιρεί τα περιττά κενά μεταξύ των \latintext HTML tags \greektext
+		ενώ διατηρεί τα κενά που μπορεί να βρίσκονται μέσα στα \latintext  HTML tags:
+
+			\latintext\begin{lstlisting}
+				<f:spaceless>
+				<div>
+				    <div>
+				        <div>text
+
+				text</div>
+				</div>
+				</div>
+			\end{lstlisting}
+
+		\item \greektext Έξοδος:
+
+			\latintext\begin{lstlisting}
+				<div><div><div>text
+
+				text</div></div></div>
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		deb0b1dd-7a87ca0c-e1ba7891-72d0faf0
+% LTXE-SLIDE-ORIGIN:	cc4b2591-896d4885-92b8e0d7-35adac7e English
+% LTXE-SLIDE-ORIGIN:	84d3095f-75b5a68a-b9591a53-f34d8ecb German
+% LTXE-SLIDE-TITLE:		Respect rootLevel configuration in extbase queries
+% LTXE-SLIDE-REFERENCE:	Breaking-63406-RespectRootlevelConfigurationinExtbaseQueries.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+	\framesubtitle{\greektext Διαμόρφωση \latintext RootLevel}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\small\ttfamily}
+
+	\begin{itemize}
+
+		\item \greektext Το \latintext RootLevel \greektext ενός πίνακα μπορεί να διαμορφωθεί
+		τώρα στο \latintext TCA \newline
+			\small(\greektext αυτό καθορίζει το που μπορούν να βρεθούν
+			οι εγγραφές ενός πίνακα στο σύστημα)\normalsize
+
+			\begin{itemize}
+				\item \texttt{0}: \greektext μόνο στο δέντρο σελίδων
+				\item \texttt{1}: \greektext μόνο στη σελίδα της ρίζας \latintext (PID 0)
+				\item \texttt{-1}: \greektext και στα δύο, σελίδα ρίζας και δέντρο σελίδων
+			\end{itemize}
+
+		\item \greektext διαμόρφωση \latintext TCA:\newline
+			\tiny
+				\latintext\texttt{\$GLOBALS['TCA']['tx\_myext\_domain\_model\_record']['ctrl']['rootLevel'] = -1;}
+			\normalsize
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------

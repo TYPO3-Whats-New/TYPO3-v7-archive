@@ -1,0 +1,126 @@
+% ------------------------------------------------------------------------------
+% TYPO3 CMS 7.2 - What's New (English Version)
+%
+% @author	Michael Schams <michael@schams.net>
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		http://typo3.org/download/release-notes/whats-new/
+% @language	English
+% ------------------------------------------------------------------------------
+
+% change the default aspect ratio and frame size
+% \documentclass[aspectratio=43]{beamer}
+%
+% specify vertical top alignment globally by the [t] class option:
+% \documentclass[t]{beamer}
+%
+% for single frames, use the same option locally:
+% \begin{frame}[t] ... \end{frame}
+
+\documentclass[t]{beamer}
+
+% suppress navigation bar
+\beamertemplatenavigationsymbolsempty
+
+\mode<presentation>
+{
+	\usetheme{typo3slides}
+}
+
+% global variables
+\title{TYPO3 CMS 7.2 - обновления}
+\subtitle{Нововведения, изменения и исправления}
+\author{
+	\centerline{Авторы:}
+	\centerline{Patrick Lobacher b Michael Schams}
+}
+
+\date{\today}
+
+\begin{document}
+
+% select TYPO3 Share font
+\sharefont
+
+% ------------------------------------------------------------------------------
+% LTXE-CHAPTER-TITLEPAGE
+% ------------------------------------------------------------------------------
+
+\begingroup
+	\setbeamercolor{normal text}{fg=white,bg=typo3orange}
+	\setbeamercolor{title}{fg=white}
+	\setbeamercolor{author}{fg=white}
+	\setbeamertemplate{footline}[default]
+	\begin{frame}
+		\titlepage
+	\end{frame}
+\endgroup
+
+% ------------------------------------------------------------------------------
+% LTXE-CHAPTER-TABLEOFCONTENTS
+% ------------------------------------------------------------------------------
+
+\section*{TYPO3 CMS 7.2 - обновления}
+\begin{frame}[fragile]
+	\frametitle{Обзор глав}
+	\framesubtitle{Обзор глав}
+
+	\begin{multicols}{2}
+		\tableofcontents
+	\end{multicols}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-CHAPTERS-START
+% LTXE-CHAPTER-INCLUDE:	16517900-07a67f43-fe9f3e35-7e924788
+% ------------------------------------------------------------------------------
+
+\include{Chapters/Introduction}
+
+% ------------------------------------------------------------------------------
+% LTXE-CHAPTER-INCLUDE:	93899f32-8efb477e-ed6973d2-b679bd8e
+% ------------------------------------------------------------------------------
+
+\include{Chapters/BackendUserInterface}
+
+% ------------------------------------------------------------------------------
+% LTXE-CHAPTER-INCLUDE:	12518a77-2b90a173-4e3f8420-485e0497
+% ------------------------------------------------------------------------------
+
+\include{Chapters/TypoScript}
+
+% ------------------------------------------------------------------------------
+% LTXE-CHAPTER-INCLUDE:	e28087f2-4bffcc7b-3c685cca-579f18a8
+% ------------------------------------------------------------------------------
+
+\include{Chapters/InDepthChanges}
+
+% ------------------------------------------------------------------------------
+% LTXE-CHAPTER-INCLUDE:	7895b9cc-5939ed80-62e6d9b9-bcb40d5e
+% ------------------------------------------------------------------------------
+
+\include{Chapters/ExtbaseAndFluid}
+
+% ------------------------------------------------------------------------------
+% LTXE-CHAPTER-INCLUDE:	d2a8bce4-b4f96306-c1f769df-3dc9f8fd
+% ------------------------------------------------------------------------------
+
+\include{Chapters/DeprecatedRemovedFunctions}
+
+% ------------------------------------------------------------------------------
+% LTXE-CHAPTER-INCLUDE:	5905120e-90222c51-bb7911e3-aa403d07
+% ------------------------------------------------------------------------------
+
+\include{Chapters/SourcesAndAuthors}
+
+% ------------------------------------------------------------------------------
+% LTXE-CHAPTER-INCLUDE:	131c439e-f6b6d265-c072e46f-9d45df23
+% *** DO NOT INCLUDE THIS CHAPTER IN FINAL VERSION! ***
+% ------------------------------------------------------------------------------
+
+%\include{Chapters/TestChapter}
+
+% ------------------------------------------------------------------------------
+% LTXE-CHAPTERS-END
+% ------------------------------------------------------------------------------
+\end{document}

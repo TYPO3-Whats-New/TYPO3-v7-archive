@@ -1,0 +1,99 @@
+% ------------------------------------------------------------------------------
+% TYPO3 CMS 7.2 - What's New - Chapter "Extbase & Fluid" (English Version)
+%
+% @author	Michael Schams <schams.net>
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		http://typo3.org/download/release-notes/whats-new/
+% @language	English
+% ------------------------------------------------------------------------------
+% LTXE-CHAPTER-UID:		7895b9cc-5939ed80-62e6d9b9-bcb40d5e
+% LTXE-CHAPTER-NAME:	Chapter: Extbase & Fluid
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		44467f9a-abe64946-3da2bf4c-5bd094eb
+% LTXE-SLIDE-TITLE:		Introduce callouts to replace content alerts
+% LTXE-SLIDE-REFERENCE:	Feature-66077-IntroduceCalloutsToReplaceContentAlerts.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+	\framesubtitle{Callouts vs. FlashMessages}
+
+	\begin{itemize}
+
+		\item Callouts (content info boxes) replace FlashMessages in several places
+			in the backend to display context information
+
+		\item This required a new Fluid ViewHelper \texttt{be.infobox}:
+
+			\begin{lstlisting}
+				<f:be.infobox title="Message title">
+				   your box content
+				</f:be.infobox>
+
+				<f:be.infobox
+				   title="Message title"
+				   message="your box content"
+				   state="-2"
+				   iconName="check"
+				   disableIcon="TRUE" />
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		b5ee213c-b04df592-d31ed084-b94e0f58
+% LTXE-SLIDE-TITLE:		FormatCaseViewHelper
+% LTXE-SLIDE-REFERENCE: Feature-58621-FormatCaseViewHelper.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+	\framesubtitle{format.case ViewHelper}
+
+	\begin{itemize}
+
+		\item New ViewHelper \texttt{format.case} changes casing of strings:
+			\begin{itemize}
+				\item \texttt{upper}: transforms a string to "UPPERCASE"
+				\item \texttt{lower}: transforms a string to "lowercase"
+				\item \texttt{capital}: transforms a string to its first letter upper-cased
+				\item \texttt{uncapital}: transforms a string to its first letter lower-cased
+			\end{itemize}
+
+		\item For example:
+
+			\begin{lstlisting}
+				// transforms to "SOME TEXT WITH MIXED CASE"
+				<f:format.case>Some TeXt WiTh miXed cAse</f:format.case>
+
+				// transforms to "SomeString"
+				<f:format.case mode="capital">someString</f:format.case>
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		586287f8-fa46da57-a201e1bf-87532889
+% LTXE-SLIDE-TITLE:		Skip cache hash for URIs to non-cacheable actions
+% LTXE-SLIDE-REFERENCE:	Breaking-60272-SkipCacheHashForUrisToNonCacheableActions.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+	\framesubtitle{Miscellaneous}
+
+	\begin{itemize}
+
+		\item Parameter \texttt{cHash} is not added to action URIs if the current
+			request is not cached and the target action is not cacheable
+
+	\end{itemize}
+
+\end{frame}

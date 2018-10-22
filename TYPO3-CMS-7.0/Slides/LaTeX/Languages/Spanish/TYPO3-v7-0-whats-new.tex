@@ -1,0 +1,130 @@
+% ------------------------------------------------------------------------------
+% TYPO3 CMS 7.0 - What's New (Spanish Version)
+%
+% @author	Michael Schams <schams.net>
+% @author	Michel Mix <mmix@autistici.org>
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		http://typo3.org/download/release-notes/whats-new/
+% @language	Spanish
+% ------------------------------------------------------------------------------
+
+% change the default aspect ratio and frame size
+% \documentclass[aspectratio=43]{beamer}
+%
+% specify vertical top alignment globally by the [t] class option:
+% \documentclass[t]{beamer}
+%
+% for single frames, use the same option locally:
+% \begin{frame}[t] ... \end{frame}
+
+\documentclass[t]{beamer}
+
+% suppress navigation bar
+\beamertemplatenavigationsymbolsempty
+
+\mode<presentation>
+{
+	\usetheme{typo3slides}
+}
+
+% global variables
+\title{TYPO3 CMS 7.0 - Qué hay Nuevo}
+\subtitle{Resumen de las nuevas características, cambios y mejoras}
+\author{
+	\centerline{Creado por:}
+	\centerline{Patrick Lobacher y Michael Schams}
+	\vspace{0.4cm}
+	\centerline{Traducción en Español por:}
+	\centerline{Michel Mix}
+}
+
+\date{\today}
+
+\begin{document}
+
+% select TYPO3 Share font
+\sharefont
+
+% ------------------------------------------------------------------------------
+% Title Page
+% ------------------------------------------------------------------------------
+
+\begingroup
+	\setbeamercolor{normal text}{fg=white,bg=typo3orange}
+	\setbeamercolor{title}{fg=white}
+	\setbeamercolor{author}{fg=white}
+	\setbeamertemplate{footline}[default]
+	\begin{frame}
+		\titlepage
+	\end{frame}
+\endgroup
+
+% ------------------------------------------------------------------------------
+% Table of Contents
+% ------------------------------------------------------------------------------
+
+% between two frames: use \newpage (not \clearpage!) to force a column break:
+% \addtocontents{toc}{\newpage}
+
+\section*{TYPO3 CMS 7.0 - Qué hay Nuevo}
+\begin{frame}[fragile]
+	\frametitle{Resumen de Capítulos}
+	\framesubtitle{Resumen de Capítulos}
+
+	\begin{multicols}{2}
+		\tableofcontents
+	\end{multicols}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% Chapter: Introduction
+% ------------------------------------------------------------------------------
+
+\include{Chapters/Introduction}
+
+% ------------------------------------------------------------------------------
+% Chapter 1: Backend User Interface
+% ------------------------------------------------------------------------------
+
+\include{Chapters/BackendUserInterface}
+
+% ------------------------------------------------------------------------------
+% Chapter 2: TypoScript
+% ------------------------------------------------------------------------------
+
+\include{Chapters/TypoScript}
+
+% ------------------------------------------------------------------------------
+% Chapter 3: In-Depth Changes
+% ------------------------------------------------------------------------------
+
+\include{Chapters/InDepthChanges}
+
+% ------------------------------------------------------------------------------
+% Chapter 4: Extbase & Fluid
+% ------------------------------------------------------------------------------
+
+\include{Chapters/ExtbaseAndFluid}
+
+% ------------------------------------------------------------------------------
+% Chapter 5: Deprecated and Removed Functions
+% ------------------------------------------------------------------------------
+
+\include{Chapters/DeprecatedRemovedFunctions}
+
+% ------------------------------------------------------------------------------
+% Chapter 6: Sources and Authors
+% ------------------------------------------------------------------------------
+
+\include{Chapters/SourcesAndAuthors}
+
+% ------------------------------------------------------------------------------
+% Chapter: Test/Example Chapter
+% *** DO NOT INCLUDE THIS CHAPTER IN FINAL VERSION! ***
+% ------------------------------------------------------------------------------
+
+%\include{Chapters/TestChapter}
+
+% ------------------------------------------------------------------------------
+\end{document}

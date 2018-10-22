@@ -1,0 +1,427 @@
+% ------------------------------------------------------------------------------
+% TYPO3 CMS 7.3 - What's New - Chapter "Extbase & Fluid" (Greek Version)
+%
+% @author	Angeliki Plati <ag.plati@gmail.com>
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		http://typo3.org/download/release-notes/whats-new/
+% @language	Greek
+% ------------------------------------------------------------------------------
+% LTXE-CHAPTER-UID:		ba9bf9d9-564d719b-a45c6394-358e2ef2
+% LTXE-CHAPTER-NAME:	Chapter: Extbase & Fluid
+% ------------------------------------------------------------------------------
+
+\section{Extbase \& Fluid}
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+
+	\begin{center}\huge{\greektext Κεφάλαιο 4:}\end{center}
+	\begin{center}\huge{\color{typo3darkgrey}\textbf{Extbase \& Fluid}}\end{center}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		74c219b9-cfdd4da6-9636f064-64caeffc
+% LTXE-SLIDE-ORIGIN:	5d89ef1b-822aec7b-91faf04c-562236d0 English
+% LTXE-SLIDE-ORIGIN:	b5ee213c-b04df592-d31ed084-b94e0f58 German
+% LTXE-SLIDE-TITLE:		Feature #62242: ActionMenuItemGroupViewHelper (1)
+% LTXE-SLIDE-REFERENCE:	Feature-62242-ActionMenuItemGroupViewHelper.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+	\framesubtitle{ActionMenuItemGroupViewHelper (1)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item \greektext Χρησιμοποιώντας αυτόν τον \latintext ViewHelper, \greektext τα γκρουπς επιλογών μπορούν να χρησιμοποιηθούν στο \latintext backend \greektext πεδίο επιλογής,
+			που καθορίζει το ποια είναι η επιλεγμένη ενέργεια
+
+		\item \greektext Παράδειγμα:
+			\latintext\begin{lstlisting}
+				<f:be.menus.actionMenu>
+				  <f:be.menus.actionMenuItem label="Default: Welcome" controller="Default" action="index" />
+				  <f:be.menus.actionMenuItem label="Community: get in touch" controller="Community"
+				    action="index" />
+				  <f:be.menus.actionMenuItemGroup label="Information">
+				    <f:be.menus.actionMenuItem label="PHP Information" controller="Information"
+				      action="listPhpInfo" />
+				    <f:be.menus.actionMenuItem label="Documentation" controller="Information"
+				      action="documentation" />
+				    <f:be.menus.actionMenuItem label="Hooks" controller="Information" action="hooks" />
+				    <f:be.menus.actionMenuItem label="Signals" controller="Information" action="signals" />
+				    <f:be.menus.actionMenuItem label="XClasses" controller="Information" action="xclass" />
+				  </f:be.menus.actionMenuItemGroup>
+				</f:be.menus.actionMenu>
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		4dbca5c5-86eb5ab1-f8633069-a4208772
+% LTXE-SLIDE-ORIGIN:	c5a36e6f-c177e6e6-18628419-eaf4b653 English
+% LTXE-SLIDE-ORIGIN:	b04df592-d31ed084-b94e0f58-b5ee213c German
+% LTXE-SLIDE-TITLE:		Feature #62242: ActionMenuItemGroupViewHelper (2)
+% LTXE-SLIDE-REFERENCE:	Feature-62242-ActionMenuItemGroupViewHelper.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+	\framesubtitle{ActionMenuItemGroupViewHelper (2)}
+
+	\begin{itemize}
+		\item \greektext Παράδειγμα πάνω στα αποτελέσματα της προηγούμενης διαφάνειας στην εικόνα που ακολουθεί:
+	\end{itemize}
+
+	\latintext\begin{figure}
+		\includegraphics[width=0.3\linewidth]{ExtbaseFluid/62242.png}
+	\end{figure}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		72f57af6-e46ebadc-d6937ec4-e7c35644
+% LTXE-SLIDE-ORIGIN:	ea102c24-20cdb8de-eb67260a-af2a6967 English
+% LTXE-SLIDE-ORIGIN:	44467f9a-abe64946-3da2bf4c-5bd094eb German
+% LTXE-SLIDE-TITLE:		Feature/Breaking #63453: Template support for FlashMessagesViewHelper
+% LTXE-SLIDE-REFERENCE:	Feature-63453-TemplateSupportForFlashMessagesViewHelper.rst
+% LTXE-SLIDE-REFERENCE:	Breaking-63453-ChangedRenderingOfFlashMessagesViewHelper.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+	\framesubtitle{\greektext Υποστήριξη \latintext Template \greektext από τον \latintext FlashMessagesViewHelper}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item \greektext Ο \latintext\texttt{FlashMessagesViewHelper} \greektext υποστηρίζει πλέον \latintext templates
+
+		\item \greektext Η νέα παράμετρος \latintext\texttt{as} \greektext επιτρέπει τον προσδιορισμό ονόματος μιας μεταβλητής, η οποία μπορεί να χρησιμοποιηθεί στα \q{στοιχεία-παιδιά} του \latintext ViewHelper \greektext για την πρόσβαση στα \latintext flash messages
+
+		\greektext\item Παράδειγμα:
+
+			\latintext\begin{lstlisting}
+				<f:flashMessages as="flashMessages">
+				  <ul class="myFlashMessages">
+				    <f:for each="{flashMessages}" as="flashMessage">
+				      <li class="alert {flashMessage.class}">
+				        <h4>{flashMessage.title}</h4>
+				        <span class="fancy-icon">{flashMessage.message}</span>
+				      </li>
+				    </f:for>
+				  </ul>
+				</f:flashMessages>
+			\end{lstlisting}
+
+		\item\greektext Σημείωση: η επιλογή \latintext\texttt{renderMode} \greektext είναι τώρα κατηργημένη
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		f7fa87cf-a5f442c7-71eb7ff5-7a51e1ef
+% LTXE-SLIDE-ORIGIN:	3f5a8c27-78ff086f-99844ec0-a5e2d74a English
+% LTXE-SLIDE-ORIGIN:	ec0810a7-c987f58a-9c42904e-8b7e0eba German
+% LTXE-SLIDE-TITLE:		Feature #66111: Add TemplateRootPaths support to cObject FLUIDTEMPLATE (1)
+% LTXE-SLIDE-REFERENCE:	Feature-66111-AddTemplaterootpathsSupportToCobjectFluidtemplate.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+	\framesubtitle{\greektext Νέες Ιδιότητες του \latintext cObject \texttt{FLUIDTEMPLATE} (1)}
+
+	\begin{itemize}
+
+		\item \greektext Το \latintext cObject \texttt{FLUIDTEMPLATE} \greektext έχει επεκταθεί με τα
+			\latintext\texttt{templateRootPaths} \greektext και \latintext\texttt{templateName}
+
+		\item \greektext Είναι δυνατό να τεθεί ένα όνομα \latintext template \greektext και όταν το \latintext template \greektext αυτό γίνει \latintext "rendered", \greektext το όνομα χρησιμοποιείται μαζί με τη μορφοποίηση που έχει τεθεί για να βρεθεί το \latintext template \greektext στο δοσμένο \latintext
+			\texttt{templateRootPaths}
+
+		\item \greektext Τα \latintext\texttt{templateRootPaths} \greektext ακολουθούν την ίδια λογική επαναφοράς όπως
+			\latintext\texttt{layoutRootPath} \greektext και \latintext\texttt{partialRootPath}
+
+			\begin{itemize}
+				\latintext\item templateName: string/stdWrap
+				\item templateRootPaths: \greektext πίνακας μονοπατιών των αρχείων με υποστήριξη του προθέματος \latintext "EXT:"
+			\end{itemize}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		e06f2d22-1d62a898-e9c431ee-31212426
+% LTXE-SLIDE-ORIGIN:	90d6213a-883bc8d8-9c60e454-fac818a6 English
+% LTXE-SLIDE-ORIGIN:	ec0810a7-c987f58a-9c42904e-8b7e0eba German
+% LTXE-SLIDE-TITLE:		Feature #66111: Add TemplateRootPaths support to cObject FLUIDTEMPLATE (2)
+% LTXE-SLIDE-REFERENCE:	Feature-66111-AddTemplaterootpathsSupportToCobjectFluidtemplate.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+	\framesubtitle{\greektext Νέες Ιδιότητες του \latintext cObject \texttt{FLUIDTEMPLATE} (2)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item \greektext Παράδειγμα \latintext TypoScript:
+
+			\latintext\begin{lstlisting}
+				lib.stdContent = FLUIDTEMPLATE
+				lib.stdContent {
+				  templateName = TEXT
+				  templateName.stdWrap {
+				    cObject = TEXT
+				    cObject {
+				      data = levelfield:-2,backend_layout_next_level,slide
+				      override.field = backend_layout
+				      split {
+				        token = frontend__
+				        1.current = 1
+				        1.wrap = |
+				      }
+				    }
+				    ifEmpty = Default
+				  }
+				  templateRootPaths {
+				    10 = EXT:frontend/Resources/Private/Templates
+				    20 = EXT:sitemodification/Resources/Private/Templates
+				  }
+				}
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		94cd5117-5bf1f5ab-9ff5ceb5-2955a021
+% LTXE-SLIDE-ORIGIN:	227004ec-e3e23728-e01cd083-cab72f98 English
+% LTXE-SLIDE-ORIGIN:	5d3c259c-f79dd1fe-4f272783-a63cf715 German
+% LTXE-SLIDE-TITLE:		Feature #66269: Fluid: Remove ViewHelper xmlns-attributes and specified html tag (1)
+% LTXE-SLIDE-REFERENCE:	Feature-66269-FluidRemoveViewHelperXmlnsAttributesAndSpecifiedHtmlTag.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+	\framesubtitle{\greektext Αφαίρεση των \latintext\texttt{xmlns}-\greektextΠαραμέτρων και των \latintext HTML Tags (1)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item \greektext Με την χρήση των \latintext\texttt{xmlns:*} \greektext παραμέτρων που συμπεριλαμβάνουν
+		\latintext ViewHelpers, \greektext είναι δυνατό να υπάρξει \latintext IDE \greektext υποστήριξη για \latintext Fluid templates.
+			\greektext Το πρόβλημα είναι ότι οι παράμετροι \latintext\texttt{xmlns:*} \greektext και το αντίστοιχο \latintext tag \greektext επίσης θα εμφανιστούν, το οποίο συνήθως δεν ειναι επιθυμητό.
+
+		\item \greektext Ο εναλλακτικός τρόπος αντιμετώπισης είναι να χρησιμοποιηθούν \latintext sections, \greektext αλλά αυτή η λύση είναι αντιπαραγωγική και μη διαθέσιμη σε όλα τα \latintext layouts. \greektext Προκαλεί επίσης παραπάνω επεξεργαστική επιβάρυνση.
+
+	\end{itemize}
+
+\end{frame}
+
+
+
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+	\framesubtitle{\greektext Αφαίρεση των \latintext\texttt{xmlns}-\greektextΠαραμέτρων και των \latintext HTML Tags (2)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item \greektext Οι \latintext\texttt{xmlns:*} \greektext παράμετροι για έγκυρα \latintext ViewHelper namespaces \greektext θα αφαιρούνται τώρα πρίν την εμφάνιση, αν έχεουν την αλόλουθη σύνταξη:
+			\latintext\small\texttt{http://typo3.org/ns/<phpNamespace>}\normalsize\newline
+			(\greektext Οι \latintext\texttt{xmlns} \greektext παράμετροι για μη έγκυρα \latintext ViewHelper namespaces \greektext έχουν διατηρηθεί)
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		4895fd28-6d0f8cae-880a7ec1-61fc7439
+% LTXE-SLIDE-ORIGIN:	78a19608-9b89498f-d9a26bb5-11fb53c8 English
+% LTXE-SLIDE-ORIGIN:	27834f27-5d3c259c-f79dd1fe-a63cf715 German
+% LTXE-SLIDE-TITLE:		Feature #66269: Fluid: Remove ViewHelper xmlns-attributes and specified html tag (2)
+% LTXE-SLIDE-REFERENCE:	Feature-66269-FluidRemoveViewHelperXmlnsAttributesAndSpecifiedHtmlTag.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+	\framesubtitle{\greektext Αφαίρεση των \latintext\texttt{xmlns}-\greektextΠαραμέτρων και των \latintext HTML Tags (3)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item \greektext Συμπεριλάβετε τα \latintext ViewHelper namespaces \greektext στο \latintext HTML tag \greektext και την παράμετρο
+			\latintext\texttt{data-namespace-typo3-fluid="true"} \greektext για να αποφύγετε την απόδοση \latintext (rendering) \greektext ολόκληρου του \latintext HTML tag
+
+			\latintext\begin{lstlisting}
+				<html data-namespace-typo3-fluid="true"
+				  xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+				  xmlns:n="http://typo3.org/ns/GeorgRinger/News/ViewHelpers">
+
+				  <f:if condition="{newsItem.title}">
+				    <f:then>
+				      <n:titleTag>{newsItem.title}</n:titleTag>
+				    </f:then>
+				    <f:else>
+				      <n:titleTag>News-Detail</n:titleTag>
+				    </f:else>
+				  </f:if>
+
+				</html>
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		1f5a65bf-e2923477-6168ea6f-26fc56d7
+% LTXE-SLIDE-ORIGIN:	a1ef516c-669ded34-a2a6d664-f4d82d94 English
+% LTXE-SLIDE-ORIGIN:	f79dd1fe-4f272783-a63cf715-5d3c259c German
+% LTXE-SLIDE-TITLE:		Feature #66709: Add TemplateRootPaths support to Fluid/View/StandaloneView
+% LTXE-SLIDE-REFERENCE:	Feature-66709-AddTemplateRootPathsSupportToFluidViewStandaloneView.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+	\framesubtitle{\greektext Νέες Μέθοδοι στην \latintext Fluid-StandaloneView}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item \greektext Η \latintext StandaloneView \greektext έχει επεκταθεί τώρα με τα
+			\latintext\texttt{setTemplateRootPaths(\$templatePaths)} \greektext και
+			\latintext\texttt{setTemplate(\$templateName, \$throwException = TRUE)}
+
+		\item \greektext Ίδια λειτουργικότητα με το \latintext cObject \texttt{FLUIDTEMPLATE}
+
+		\item \greektext Παράδειγμα (απόδοση ενός \latintext email template):
+
+			\latintext\begin{lstlisting}
+				$view = GeneralUtility::makeInstance(StandaloneView::class);
+				$view->setLayoutRootPaths(array(GeneralUtility::getFileAbsFileName(
+				  'EXT:my_extension/Resources/Private/Layouts')));
+				$view->setPartialRootPaths(array(GeneralUtility::getFileAbsFileName(
+				  'EXT:my_extension/Resources/Private/Partials')));
+				$view->setTemplateRootPaths(array(GeneralUtility::getFileAbsFileName(
+				  'EXT:my_extension/Resources/Private/Templates')));
+				$view->setTemplate('Email/Notification');
+				$emailBody = $view->render();
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		5d625a9a-6366f3b4-110882e1-1a0133f5
+% LTXE-SLIDE-ORIGIN:	95baf76c-31fd3f59-e0f9a716-5a5cc8cb English
+% LTXE-SLIDE-ORIGIN:	f79da63cf-7834f272-d1fe715-5d3c259c German
+% LTXE-SLIDE-TITLE:		Feature #66907: Add Data Processing to FLUIDTEMPLATE content object (1)
+% LTXE-SLIDE-REFERENCE:	Feature-66907-AddDataProcessingToFluidTemplateContentObject.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+	\framesubtitle{\greektext Επεξεργασία Δεδομένων για το \latintext\texttt{FLUIDTEMPLATE} cObject (1)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\smaller\ttfamily}
+
+	\begin{itemize}
+
+		\item \greektext Το \latintext cObject \texttt{FLUIDTEMPLATE} \greektext έχει επεκταθεί με  \latintext\texttt{dataProcessing}
+
+		\item \greektext Αυτή η ρύθμιση μπορεί να χρησιμοποιηθεί για την προσθήκη ενός η περισσοτέρων επεξεργαστών για να χειριστούν την \latintext \texttt{\$data} \greektext μεταβλητή του προσωρινά εμφανιζόμενου \latintext cObject\newline
+			(\greektext π.χ. \latintext\texttt{tt\_content} \greektext ή \latintext\texttt{page})
+
+		\item \greektext Ο επεξεργαστής πρέπει να υλοποιεί τη διεπαφή \latintext
+			\texttt{FluidTemplateDataProcessorInterface} \greektext και να περιέχει την ακόλουθη μέθοδο:
+
+			\latintext\begin{lstlisting}
+				function process(array &$data, array $processorConfiguration,
+				  array $configuration, StandaloneView $view) {
+				    [...]
+				}
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		17554328-a2df43f5-e6a842a1-8c913cdb
+% LTXE-SLIDE-ORIGIN:	34ef94b7-988b06b4-78e81c3a-81e45590 English
+% LTXE-SLIDE-ORIGIN:	4f272783-a63cf715-5d3c259c-f79dd1fe German
+% LTXE-SLIDE-TITLE:		Feature #66907: Add Data Processing to FLUIDTEMPLATE content object (2)
+% LTXE-SLIDE-REFERENCE:	Feature-66907-AddDataProcessingToFluidTemplateContentObject.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+	\framesubtitle{\greektext Επεξεργασία Δεδομένων για το \latintext\texttt{FLUIDTEMPLATE} cObject (2)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item \greektext Παράδειγμα:
+
+			\latintext\begin{lstlisting}
+				my_custom_ctype = FLUIDTEMPLATE
+				my_custom_ctype {
+				  templateRootPaths {
+				    10 = EXT:your_extension_key/Resources/Private/Templates
+				  }
+				  templateName = CustomName
+				  settings {
+				    extraParam = 1
+				  }
+				  dataProcessing {
+				    1 = Vendor\YourExtensionKey\DataProcessing\MyFirstCustomProcessor
+				    2 = AnotherVendor\AnotherExtensionKey\DataProcessing\MySecondCustomProcessor
+				    2 {
+				      options {
+				        myOption = SomeValue
+				      }
+				    }
+				  }
+				}
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------

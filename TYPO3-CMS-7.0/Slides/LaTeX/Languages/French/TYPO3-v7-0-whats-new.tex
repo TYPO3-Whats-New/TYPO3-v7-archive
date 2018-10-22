@@ -1,0 +1,126 @@
+% ------------------------------------------------------------------------------
+% TYPO3 CMS 7.0 - What's New (French Version)
+%
+% @author	Michael Schams <schams.net>
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		http://typo3.org/download/release-notes/whats-new/
+% @language	French
+% ------------------------------------------------------------------------------
+
+% change the default aspect ratio and frame size
+% \documentclass[aspectratio=43]{beamer}
+%
+% specify vertical top alignment globally by the [t] class option:
+% \documentclass[t]{beamer}
+%
+% for single frames, use the same option locally:
+% \begin{frame}[t] ... \end{frame}
+
+\documentclass[t]{beamer}
+
+% suppress navigation bar
+\beamertemplatenavigationsymbolsempty
+
+\mode<presentation>
+{
+	\usetheme{typo3slides}
+}
+
+% global variables
+\title{TYPO3 CMS 7.0 - What's New}
+\subtitle{Summary of the new features, changes and improvements}
+\author{
+	\centerline{Created by:}
+	\centerline{Patrick Lobacher and Michael Schams}
+}
+
+\date{\today}
+
+\begin{document}
+
+% select TYPO3 Share font
+\sharefont
+
+% ------------------------------------------------------------------------------
+% Title Page
+% ------------------------------------------------------------------------------
+
+\begingroup
+	\setbeamercolor{normal text}{fg=white,bg=typo3orange}
+	\setbeamercolor{title}{fg=white}
+	\setbeamercolor{author}{fg=white}
+	\setbeamertemplate{footline}[default]
+	\begin{frame}
+		\titlepage
+	\end{frame}
+\endgroup
+
+% ------------------------------------------------------------------------------
+% Table of Contents
+% ------------------------------------------------------------------------------
+
+% between two frames: use \newpage (not \clearpage!) to force a column break:
+% \addtocontents{toc}{\newpage}
+
+\section*{TYPO3 CMS 7.0 - What's New}
+\begin{frame}[fragile]
+	\frametitle{Chapter Overview}
+	\framesubtitle{Chapter Overview}
+
+	\begin{multicols}{2}
+		\tableofcontents
+	\end{multicols}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-CHAPTER-INCLUDE:		6bbed66a-d4619c18-69b7e10f-dcfa082b
+% ------------------------------------------------------------------------------
+
+\include{Chapters/Introduction}
+
+% ------------------------------------------------------------------------------
+% LTXE-CHAPTER-INCLUDE:		80e0f63a-a45b6e05-31bf3819-ec16b640
+% ------------------------------------------------------------------------------
+
+\include{Chapters/BackendUserInterface}
+
+% ------------------------------------------------------------------------------
+% LTXE-CHAPTER-INCLUDE:		011e07a7-412479f9-6401fbee-782a2234
+% ------------------------------------------------------------------------------
+
+\include{Chapters/TypoScript}
+
+% ------------------------------------------------------------------------------
+% LTXE-CHAPTER-INCLUDE:		7dbba622-d0b0f444-d9c6f013-e2d3c91e
+% ------------------------------------------------------------------------------
+
+\include{Chapters/InDepthChanges}
+
+% ------------------------------------------------------------------------------
+% LTXE-CHAPTER-INCLUDE:		7826a338-42ccb6e4-55b61794-93115705
+% ------------------------------------------------------------------------------
+
+\include{Chapters/ExtbaseAndFluid}
+
+% ------------------------------------------------------------------------------
+% LTXE-CHAPTER-INCLUDE:		dfc465f8-09e8126b-797db703-9e2de1b5
+% ------------------------------------------------------------------------------
+
+\include{Chapters/DeprecatedRemovedFunctions}
+
+% ------------------------------------------------------------------------------
+% LTXE-CHAPTER-INCLUDE:		73e4d7ca-abc9cdd2-268cb2e6-7117f5d8
+% ------------------------------------------------------------------------------
+
+\include{Chapters/SourcesAndAuthors}
+
+% ------------------------------------------------------------------------------
+% LTXE-CHAPTER-INCLUDE:		c7266a2c-204b71a6-250bfbf4-7092e2d4
+% *** DO NOT INCLUDE THIS CHAPTER IN FINAL VERSION! ***
+% ------------------------------------------------------------------------------
+
+%\include{Chapters/TestChapter}
+
+% ------------------------------------------------------------------------------
+\end{document}

@@ -1,0 +1,215 @@
+% ------------------------------------------------------------------------------
+% TYPO3 CMS 7.0 - What's New - Chapter "TypoScript" (English Version)
+%
+% @author	Michael Schams <schams.net>
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		http://typo3.org/download/release-notes/whats-new/
+% @language	English
+% ------------------------------------------------------------------------------
+% LTXE-CHAPTER-UID:		c3cd19da-d5f7f767-f98edab9-f0a2ef33
+% LTXE-CHAPTER-NAME:	TypoScript
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		c65cc12d-2f8c9d53-37d6577f-8a2f8357
+% LTXE-SLIDE-ORIGIN:	xxxxxxxx-xxxxxxxx-xxxxxxxx-xxxxxxxx
+% LTXE-SLIDE-TITLE:		TSconfig Available to Link Checkers
+% LTXE-SLIDE-REFERENCE:	https://forge.typo3.org/issues/54518
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+	\framesubtitle{TSConfig Available to Link Checkers}
+
+	\begin{itemize}
+		\item TSconfig configuration is read
+
+			\begin{itemize}
+				\item either from the backend (if Linkvalidator is used)
+				\item or from the scheduler task configuration
+			\end{itemize}
+
+		\item Example: TSconfig, which can be read by Linkchecker:
+
+			\lstinline!mod.linkvalidator.mychecker.myvar = 1!
+
+		\item TSconfig is then available as \texttt{\$this->tsConfig}
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		1d38328d-a7245bbe-1b380ab3-88ea4885
+% LTXE-SLIDE-ORIGIN:	xxxxxxxx-xxxxxxxx-xxxxxxxx-xxxxxxxx
+% LTXE-SLIDE-TITLE:		Linkcheck: Report Deleted Records
+% LTXE-SLIDE-REFERENCE:	https://forge.typo3.org/issues/54519
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+	\framesubtitle{Linkcheck: Report Deleted Records}
+
+	\begin{itemize}
+		\item In TYPO3 CMS < 7.0, linkhandler warned about links to non-existing or deleted records only
+		\item Since TYPO3 CMS >=  7.0, the following TSconfig setting enables a warning, if links point to disabled records:
+
+			\lstinline!mod.linkvalidator.linkhandler.reportHiddenRecords = 1!
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		a27d2c0a-410cbfc8-50f176e2-027ce416
+% LTXE-SLIDE-ORIGIN:	xxxxxxxx-xxxxxxxx-xxxxxxxx-xxxxxxxx
+% LTXE-SLIDE-TITLE:		RTE: Multiple CSS Classes Per Style
+% LTXE-SLIDE-REFERENCE:	https://forge.typo3.org/issues/51905
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+	\framesubtitle{RTE: Multiple CSS Classes Per Style}
+
+	\begin{itemize}
+		\item Modern frameworks such as Twitter Bootstrap require multiple CSS classes per HTML tag\newline
+			\small For example: \texttt{<a class="btn btn-danger">Alert</a>}\normalsize
+		\item Multiple CSS classes are now supported, which means, editors need to select one style only
+
+			\begin{lstlisting}
+				RTE.classes.[ *classname* ] {
+				  .requires = list of CSS classes
+				}
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		e11a6c09-1eb3eaf7-6cebbee9-febef6ba
+% LTXE-SLIDE-ORIGIN:	xxxxxxxx-xxxxxxxx-xxxxxxxx-xxxxxxxx
+% LTXE-SLIDE-TITLE:		RTE: Configure CSS Class As Not-Selectable
+% LTXE-SLIDE-REFERENCE:	https://forge.typo3.org/issues/58122
+% LTXE-SLIDE-REFERENCE:	https://forge.typo3.org/issues/51905
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+	\framesubtitle{RTE: Configure CSS Class As Not-Selectable}
+
+	\begin{itemize}
+		\item It is now possible to configure CSS classes as "not-selectable"
+
+			\begin{lstlisting}
+				// value "1" means, class is selectable
+				// value "0" makes it not-selectable
+				RTE.classes.[ *classname* ] {
+				  .selectable = 1
+				}
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		e607c36f-e1be31da-05ace0c5-991e6e42
+% LTXE-SLIDE-ORIGIN:	xxxxxxxx-xxxxxxxx-xxxxxxxx-xxxxxxxx
+% LTXE-SLIDE-TITLE:		RTE: Include Multiple CSS Files
+% LTXE-SLIDE-REFERENCE:	https://forge.typo3.org/issues/50039
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+	\framesubtitle{RTE: Include Multiple CSS Files}
+
+	\begin{itemize}
+		\item It is now possible to include multiple CSS files
+
+			\begin{lstlisting}
+				RTE.default.contentCSS {
+				  file1 = fileadmin/rte_stylesheet1.css
+				  file2 = fileadmin/rte_stylesheet2.css
+				}
+			\end{lstlisting}
+
+		\item Without defining any CSS stylesheet files the default is:\newline
+			\texttt{typo3/sysext/rtehtmlarea/res/contentcss/default.css}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		c9d0ad7d-2c5aee11-79878250-9e8ce110
+% LTXE-SLIDE-ORIGIN:	xxxxxxxx-xxxxxxxx-xxxxxxxx-xxxxxxxx
+% LTXE-SLIDE-TITLE:		Exception Handling When cObjects Are Rendered (1)
+% LTXE-SLIDE-REFERENCE:	https://forge.typo3.org/issues/47919
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+	\framesubtitle{Exception Handling When cObjects Are Rendered (1)}
+
+	\begin{itemize}
+		\item In TYPO3 CMS < 7.0, if an error occurred during the rendering process of content objects (e.g. \texttt{USER}), the error broke the whole frontend
+		\item Since TYPO3 CMS >= 7.0, an exception handling has been implemented, which allows the display of a message instead of the failed cObject
+	\end{itemize}
+
+%	*TODO* it would be so nice, if someone could create a screenshot of this scenario!
+%
+%	\begin{figure}\vspace*{-0.3cm}
+%		\includegraphics[width=0.90\linewidth]{TypoScript/cObjectExceptionHandling.png}
+%	\end{figure}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		1132ffa6-a06b7448-0b59e149-a28c2d43
+% LTXE-SLIDE-ORIGIN:	xxxxxxxx-xxxxxxxx-xxxxxxxx-xxxxxxxx
+% LTXE-SLIDE-TITLE:		Exception Handling When cObjects Are Rendered (2)
+% LTXE-SLIDE-REFERENCE:	https://forge.typo3.org/issues/47919
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+	\framesubtitle{Exception Handling When cObjects Are Rendered (2)}
+
+	\lstset{
+		basicstyle=\tiny\ttfamily
+	}
+
+	\begin{lstlisting}
+		# default exception handler (activated in context "production")
+		config.contentObjectExceptionHandler = 1
+
+		# configuration of a class for the exception handling
+		config.contentObjectExceptionHandler =
+		  TYPO3\CMS\Frontend\ContentObject\Exception\ProductionExceptionHandler
+
+		# customised error message (show random error code)
+		config.contentObjectExceptionHandler.errorMessage = Oops an error occurred. Code: %s
+
+		# configuration of exception codes, which are not dealt with
+		tt_content.login.20.exceptionHandler.ignoreCodes.10 = 1414512813
+
+		# deactivation of exception handling for a specific plugins or content objects
+		tt_content.login.20.exceptionHandler = 0
+
+		# ignoreCodes and errorMessage can be configured globally...
+		config.contentObjectExceptionHandler.errorMessage = Oops an error occurred. Code: %s
+		config.contentObjectExceptionHandler.ignoreCodes.10 = 1414512813
+
+		# ...or locally for individual content objects
+		tt_content.login.20.exceptionHandler.errorMessage = Oops an error occurred. Code: %s
+		tt_content.login.20.exceptionHandler.ignoreCodes.10 = 1414512813
+	\end{lstlisting}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------

@@ -1,0 +1,424 @@
+% ------------------------------------------------------------------------------
+% TYPO3 CMS 7.0 - What's New - Chapter "In-Depth Changes" (Russian Version)
+%
+% @author	Michael Schams <schams.net>
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		http://typo3.org/download/release-notes/whats-new/
+% @language	Russian
+% ------------------------------------------------------------------------------
+% LTXE-CHAPTER-UID:		83efd72e-726e3f4a-bdc483ba-29fc93cc
+% LTXE-CHAPTER-NAME:	In-Depth Changes
+% ------------------------------------------------------------------------------
+
+\section{Глубинные изменения}
+\begin{frame}[fragile]
+	\frametitle{Глубинные изменения}
+
+	\begin{center}\huge{Глава 3:}\end{center}
+	\begin{center}\huge{\color{typo3darkgrey}\textbf{Глубинные изменения}}\end{center}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		8339f399-e5b1a627-e261574e-67268c7f
+% LTXE-SLIDE-ORIGIN:	b47dd2a2-952b3dd2-b9ceecce-ab8630bc English
+% LTXE-SLIDE-TITLE:		Integration of jQuery UI version 1.11.2
+% LTXE-SLIDE-REFERENCE:	https://forge.typo3.org/issues/62916
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Глубинные изменения}
+	\framesubtitle{Интеграция jQuery UI версии 1.11.2}
+
+	\begin{itemize}
+		\item jQuery UI 1.11 поддерживает AMD
+			(\href{http://en.wikipedia.org/wiki/Asynchronous_module_definition}{Asynchronous Module Definition - асинхронное
+			определение модулей}), при этом файлы JavaScript подгружаются по необходимосит (прирост производительности)
+
+    	\item jQuery UI 1.11 заменила jQuery UI 1.10 + Scriptaculous в TYPO3 CMS 7.0
+
+    	\item Включены лишь компоненты core и interaction, что необходимо для замены ExtJS и Scriptaculous
+
+    	\item Виджеты не включаются (кроме тех, что использует Twitter Bootstrap, вроде: DatePicker, Spinner, Dialog, Buttons, Tabs, Tooltip)
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		57e99dba-9806396e-3d1aed40-d74388ec
+% LTXE-SLIDE-ORIGIN:	66a996e1-bcfe7442-d44f59c8-d3495d4e English
+% LTXE-SLIDE-TITLE:		Registry for File Rendering Classes
+% LTXE-SLIDE-REFERENCE:	https://forge.typo3.org/issues/61800
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Глубинные изменения}
+	\framesubtitle{Реестр для классов вывода файлов / File Rendering Classes}
+
+	\lstset{
+		basicstyle=\tiny\ttfamily
+	}
+
+	\begin{itemize}
+		\item Для возможности обработки всех видов медиа файлов, был введён реестр вывода файлов.\newline
+			Это работает следующим образом (например, Video, MPEG, AVI, WAV и т. п.):
+
+		\begin{lstlisting}
+			<?php
+			namespace ...;
+
+			class NameTagRenderer implements FileRendererInterface {
+			  protected $possibleMimeTypes = array('audio/mpeg', 'audio/wav', ...);
+			  public function getPriority() {
+			    return 1; // priority: the higher, the more important (max: 100)
+			  }
+			  public function canRender(FileInterface $file) {
+			    return in_array($file->getMimeType(), $this->possibleMimeTypes, TRUE);
+			  }
+			  public function render(FileInterface $file, $width, $height, array $options = array(), $usedPathsRelativeToCurrentScript = FALSE) {
+			    ...
+
+			    return 'HTML code';
+			  }
+			}
+		\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		bb909873-735523b9-400ae2be-ae1029fc
+% LTXE-SLIDE-ORIGIN:	2c97df27-58f83c0c-2a7532ce-73ba3bd5 English
+% LTXE-SLIDE-TITLE:		TCA: Validate Email Addresses
+% LTXE-SLIDE-REFERENCE:	https://forge.typo3.org/issues/62147
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Глубинные изменения}
+	\framesubtitle{TCA: проверка адресов Email}
+
+	\lstset{
+		basicstyle=\tiny\ttfamily
+	}
+
+	\begin{itemize}
+
+		\item Новая функция "email" проверяет, является ли введённое значение адресом email
+		\item Если проверка не прошла, выводится Flash сообщение
+		\item Example:
+
+		\begin{lstlisting}
+			'emailaddress' => array(
+			  'exclude' => 1,
+			  'label' => 'LLL:EXT:myextension/Resources/Private/Language/locallang_db.xlf:tx_myextension
+		 	  'config' => array(
+			      'type' => 'input',
+			      'size' => 30,
+			      'eval' => 'email,trim'
+			  ),
+			)
+		\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		e79898f4-6ca8cbcc-0a6e5a9d-1db8f7db
+% LTXE-SLIDE-ORIGIN:	08cf25ed-0cba243f-e0738567-598b1534 English
+% LTXE-SLIDE-TITLE:		AbstractCondition For Custom TypoScript Conditions
+% LTXE-SLIDE-REFERENCE:	https://forge.typo3.org/issues/61489
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Глубинные изменения}
+	\framesubtitle{AbstractCondition для пользовательские условий TypoScript}
+
+	\lstset{
+		basicstyle=\tiny\ttfamily
+	}
+
+	\begin{itemize}
+		\item Пользовательские TypoScript условия могут быть получены из AbstractCondition
+
+		\begin{lstlisting}
+			class TestCondition
+			  extends \TYPO3\CMS\Core\Configuration\TypoScript\ConditionMatching\AbstractCondition {
+
+			  public function matchCondition(array $conditionParameters) {
+ 			    if ($conditionParameters[0] === '= 7' && $conditionParameters[1] === '!= 6') {
+			      throw new TestConditionException('All Ok', 1411581139);
+			    }
+			  }
+			}
+		\end{lstlisting}
+
+		\item Соответствующий код TypoScript:
+
+		\begin{lstlisting}
+			[Vendor\Package\TestCondition]
+			[Vendor\Package\TestCondition = 7]
+			[Vendor\Package\TestCondition = 7, != 6]
+		\end{lstlisting}
+
+		\item Доступные операторы определяются в классе
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		cb76234f-9a49c523-0e5a6fb5-359a3be3
+% LTXE-SLIDE-ORIGIN:	c137d1cf-7ce68dbe-8149deb5-19fe62bb English
+% LTXE-SLIDE-TITLE:		Signal for IconUtility HTML tag manipulation
+% LTXE-SLIDE-REFERENCE:	https://forge.typo3.org/issues/61289
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Глубинные изменения}
+	\framesubtitle{Сигнал для манипуляций с тегами HTML для IconUtility}
+
+	\lstset{
+		basicstyle=\tiny\ttfamily
+	}
+
+	\begin{itemize}
+
+		\item Новый сигнал для манипуляций с тегами HTML IconUtility HTML для спрайта значков:
+
+		\begin{lstlisting}
+			dispatch(
+			  'TYPO3\\CMS\\Backend\\Utility\\IconUtility',
+			  'buildSpriteHtmlIconTag',
+			  array($tagAttributes, $innerHtml, $tagName)
+			);
+		\end{lstlisting}
+
+		\item Вызов метода:
+
+		\begin{lstlisting}
+			TYPO3\CMS\Backend\Utility\IconUtility\buildSpriteHtmlIconTag
+		\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		266fd108-dd944a04-f1eaf9f1-4927721c
+% LTXE-SLIDE-ORIGIN:	6713b880-9410d0a5-ef04d276-7bb989ba English
+% LTXE-SLIDE-TITLE:		Add Signal Slots to SoftReferenceIndex
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Глубинные изменения}
+	\framesubtitle{Добавление слота сигналов к SoftReferenceIndex}
+
+	\lstset{
+		basicstyle=\tiny\ttfamily
+	}
+
+	\begin{itemize}
+		\item
+			\smaller
+				Два новых слота сигналов обслуживают вызовы в SoftReferenceIndex:
+			\normalsize
+
+		\begin{lstlisting}
+			protected function emitGetTypoLinkParts(
+			  $linkHandlerFound, $finalTagParts, $linkHandlerKeyword, $linkHandlerValue) {
+			  return $this->getSignalSlotDispatcher()->dispatch(
+			    get_class($this),
+			    'getTypoLinkParts',
+			    array($linkHandlerFound, $finalTagParts, $linkHandlerKeyword, $linkHandlerValue)
+			  );
+			}
+			protected function emitSetTypoLinkPartsElement(
+			  $linkHandlerFound, $tLP, $content, $elements, $idx, $tokenID) {
+			  return $this->getSignalSlotDispatcher()->dispatch(
+			    get_class($this),
+			    'setTypoLinkPartsElement',
+			    array($linkHandlerFound, $tLP, $content, $elements, $idx, $tokenID, $this)
+			  );
+			}
+		\end{lstlisting}
+
+		\item
+			\smaller
+				Вызывается в:
+			\normalsize
+
+			\begin{lstlisting}
+				TYPO3\CMS\Core\Database\SoftReferenceIndex->findRef_typolink
+				TYPO3\CMS\Core\Database\SoftReferenceIndex->getTypoLinkParts
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		1c05ba9d-edde9c0c-16fc57ad-30f32e0c
+% LTXE-SLIDE-ORIGIN:	d743b8cf-4924c9ca-7e1d330c-3b101461 English
+% LTXE-SLIDE-TITLE:		afterPersistObjetct Signal Slot
+% LTXE-SLIDE-REFERENCE:	https://forge.typo3.org/issues/59986
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Глубинные изменения}
+	\framesubtitle{afterPersistObjetct слот сигнала}
+
+	\lstset{
+		basicstyle=\tiny\ttfamily
+	}
+
+	\begin{itemize}
+
+		\item Новый слот сигнала afterPersistObject маячит для корня совокупности после сохранения всех остальных объектов
+
+			\begin{lstlisting}
+				protected function emitAfterPersistObjectSignal(DomainObjectInterface $object) {
+				  $this->signalSlotDispatcher->dispatch(__CLASS__, 'afterPersistObject', array($object));
+				}
+			\end{lstlisting}
+
+		\item Вызывается в:
+
+			\begin{lstlisting}
+				TYPO3\CMS\Extbase\Persistence\Generic\Backend->persistObject
+			\end{lstlisting}
+
+		\item Тот же сигнал маячит в методе persistObject класса AbstractBackend во Flow
+
+	\end{itemize}
+
+\end{frame}                                                 
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		9ecb6873-845481c5-94e9905f-6876c391
+% LTXE-SLIDE-ORIGIN:	17ea6530-0ec1ad3e-8e7d9d24-1d5b64aa English
+% LTXE-SLIDE-TITLE:		Signal in loadBaseTca
+% LTXE-SLIDE-REFERENCE:	https://forge.typo3.org/issues/57863
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Глубинные изменения}
+	\framesubtitle{Сигнал в loadBaseTca}
+
+	\lstset{
+		basicstyle=\tiny\ttfamily
+	}
+
+	\begin{itemize}
+		\item Для улучшения производительности в контексте внутреннего интерфейса, сейчас возможно закешировать весь TCA (а не
+		только его части)
+
+		\begin{lstlisting}
+			protected function emitTcaIsBeingBuiltSignal(array $tca) {
+			  list($tca) = static::getSignalSlotDispatcher()->dispatch(
+			    __CLASS__,
+			    'tcaIsBeingBuilt',
+			    array($tca)
+			  );
+			  $GLOBALS['TCA'] = $tca;
+			}
+		\end{lstlisting}
+
+		\item Вызывается в:
+
+			\begin{lstlisting}
+				TYPO3\CMS\Core\Utility\ExtensionManagementUtility\Backend->buildBaseTcaFromSingleFiles
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}  
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		4a3723ca-bff3f723-c0799594-d5fb120f
+% LTXE-SLIDE-ORIGIN:	2fd6c25c-5f7952da-1406b74c-e0ff5e67 English
+% LTXE-SLIDE-TITLE:		API to Add Cached TCA Changes
+% LTXE-SLIDE-REFERENCE:	https://forge.typo3.org/issues/57942
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Глубинные изменения}
+	\framesubtitle{API для добавления кешируемых изменений TCA}
+
+	\begin{itemize}
+		\item PHP файлы в \texttt{extkey/Configuration/TCA/Overrides/}
+			выполняются сразу после построения кеша TCA
+
+		\item Эти файлы предназначены лишь для кода управления TCA,\newline
+			вроде: \texttt{addTCAColumns} или \texttt{addToAllTCATypes}
+
+		\item Это даёт прирост производительности для внутреннего интерфейса, так как расширения стартуют используя эти файлы
+
+	\end{itemize}
+
+\end{frame} 
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		500e1bd7-3985b35f-e904c19b-1667d657
+% LTXE-SLIDE-ORIGIN:	89fbd845-3952a157-98d97fc4-4244a2d4 English
+% LTXE-SLIDE-TITLE:		Read-only File Mounts
+% LTXE-SLIDE-REFERENCE:	https://forge.typo3.org/issues/49391
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Глубинные изменения}
+	\framesubtitle{Точки монтирования с правами исключительно на чтение}
+
+	\begin{itemize}
+
+		\item Точки монтирования можно настроить как "read only" (снова)
+		\item Это было возможно в TYPO3 CMS 4.x, но незаметно исчезло в 6.x
+		\item Пример: добавить папку "test" хранилища UID 3 в виде точки монтирования только для чтения в Список файлов и
+		Проводник по элементам.\newline
+
+			\smaller\texttt{options.folderTree.altElementBrowserMountPoints = 3:/test}\normalsize\newline
+
+			Если хранишища не настроено, подразумевается что папка находится в хранилище по умолчанию.
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		a5ee284d-2094086d-3c0f05de-9aef8ac1
+% LTXE-SLIDE-ORIGIN:	b964bc6b-27cd32e7-bda8cc3e-8bea33ca English
+% LTXE-SLIDE-TITLE:		Miscellaneous
+% LTXE-SLIDE-REFERENCE:	https://forge.typo3.org/issues/62993
+% LTXE-SLIDE-REFERENCE:	https://forge.typo3.org/issues/61185
+% LTXE-SLIDE-REFERENCE:	https://forge.typo3.org/issues/58365
+% LTXE-SLIDE-REFERENCE:	https://forge.typo3.org/issues/59830
+% LTXE-SLIDE-REFERENCE:	https://forge.typo3.org/issues/62857
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Глубинные изменения}
+	\framesubtitle{Разное}
+
+	\begin{itemize}
+		\item jQuery обновлена с версии 1.11.0 на 1.11.1
+		\item Datatables было обновлено с версии 1.9.4 на 1.10.2
+		\item Некоторые старые, не используемые переменные были удалены из \texttt{EM\_CONF}
+		\item Значки расширений теперь имеют формат SVG (\texttt{ext\_icon.svg})
+		\item Теперь передача неверного eID идентификатора приводит к исключению
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------

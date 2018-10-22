@@ -1,0 +1,771 @@
+% ------------------------------------------------------------------------------
+% TYPO3 CMS 7.2 - What's New - Chapter "In-Depth Changes" (English Version)
+%
+% @author	Michael Schams <schams.net>
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		http://typo3.org/download/release-notes/whats-new/
+% @language	English
+% ------------------------------------------------------------------------------
+% LTXE-CHAPTER-UID:		e28087f2-4bffcc7b-3c685cca-579f18a8
+% LTXE-CHAPTER-NAME:	In-Depth Changes
+% ------------------------------------------------------------------------------
+
+\section{Korenite promene}
+\begin{frame}[fragile]
+	\frametitle{Korenite promene}
+
+	\begin{center}\huge{Poglavlje 3:}\end{center}
+	\begin{center}\huge{\color{typo3darkgrey}\textbf{Korenite promene}}\end{center}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		8b4938da-94d79196-2536596b-7e7e746c
+% LTXE-SLIDE-ORIGIN:	547708aa-92282fd1-6c27d618-4f13f86b English
+% LTXE-SLIDE-TITLE:		Add SVG support
+% LTXE-SLIDE-REFERENCE:	Feature-50136-AddSVGSupport.rst
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{Korenite promene}
+	\framesubtitle{SVG podrska u osnovi (Core)}
+
+	\begin{itemize}
+		\item TYPO3 CMS osnova sada podrzava SVG slike ("Scalable Vector Graphics")
+
+		\item Nakon menjanja velicine SVG slike rekord se sa izracunatim novim dimenzijama cuva se u
+		\texttt{sys\_file\_processedfile} umesto da se pravi novi preradjeni fajl \newline
+			\small(izuzetak ukoliko je slika dalje obradjivana npr. secenje slike).\normalsize.
+
+		\item Uveden je alternativni nacin za utvrdjivanje velicina SVG-a ukoliko ImageMagick/GraphicsMagick ne moze da utvrdi velicinu slike. U ovom slucaju cita se sadrzaj XML fajla.
+
+		\item SVG je takodje dodat na listu validnih formata slika:\newline
+			\texttt{\$GLOBALS['TYPO3\_CONF\_VARS']['GFX']['imagefile\_ext']}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		8d5d6e00-28dbeff0-e3799f2f-ff173fcd
+% LTXE-SLIDE-ORIGIN:	bd03e141-3842b75e-8a44920f-a8c139e5 English
+% LTXE-SLIDE-TITLE:		Add count methods and sort functionality to FAL drivers
+% LTXE-SLIDE-REFERENCE:	Breaking-56746-AddCountMethodsAndSortFunctionalityToFalDrivers.rst
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{Korenite promene}
+	\framesubtitle{Prosirenje FAL Driver-a}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item Kako bi se poboljsao rad fajl liste kada prikazuje (udaljena) "skladista" 
+			FAL driver bi trebalo da bude u mogucnosti da sortira, premesta redosled kao i da odredi broj fajlova/foldera.
+			Dodata su dva nova parametra \texttt{sort} i \texttt{sortRev} koja ce ovo omoguciti:
+
+			\begin{lstlisting}
+				public function getFilesInFolder($folderIdentifier, $start = 0, $numberOfItems = 0,
+				  $recursive = FALSE, array $filenameFilterCallbacks = array(), $sort = '', $sortRev = FALSE);
+
+				public function getFoldersInFolder($folderIdentifier, $start = 0, $numberOfItems = 0,
+				  $recursive = FALSE, array $folderNameFilterCallbacks = array(), $sort = '', $sortRev = FALSE);
+			\end{lstlisting}
+
+		\item Dodatno, implementirana su dva dodatna metoda:
+
+			\begin{lstlisting}
+				public function getFilesInFolderCount($folderIdentifier, $recursive = FALSE,
+				  array $filenameFilterCallbacks = array());
+
+				public function getFoldersInFolderCount($folderIdentifier, $recursive = FALSE,
+				  array $folderNameFilterCallbacks = array());
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		5ff9eeeb-06b02c7b-18779612-9fc0d176
+% LTXE-SLIDE-ORIGIN:	d0df6060-4b8d33a9-69adad59-422e9ada English
+% LTXE-SLIDE-TITLE:		Introduce Backend Routing (1)
+% LTXE-SLIDE-REFERENCE:	commit a08ce7238e583d1962edfe998e04c7d9c3d7c2ae
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{Korenite promene}
+	\framesubtitle{Routing API za administratorski interfejs(1)}
+
+	\begin{itemize}
+		\item Implementiran je Routing API za administratorski interfejs koji upravlja ulaznim tackama
+		\item Inspirisan Symfony Routing Framework-om, ovaj API veoma kompatibilan\newline
+			\small(dok TYPO3 koristi samo oko 20\% u ovom momentu)\normalsize
+
+		\item Prakticno, tri klase implementiraju citavu funkcionalnost:
+			\begin{itemize}
+				\item \texttt{class Route}:\tabto{3.6cm}sadrzi detalje o putanjama i opcijama
+				\item \texttt{class Router}:\tabto{3.6cm}API za pravljenje putanja
+				\item \texttt{class UrlGenerator}:\tabto{3.6cm}generise URL
+			\end{itemize}
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		b0657bce-2a183b54-90c92657-a672392f
+% LTXE-SLIDE-ORIGIN:	fe1eec67-bbf31ed9-57b8e83a-3a922f0e English
+% LTXE-SLIDE-TITLE:		Introduce Backend Routing (2)
+% LTXE-SLIDE-REFERENCE:	commit a08ce7238e583d1962edfe998e04c7d9c3d7c2ae
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{Korenite promene}
+	\framesubtitle{Routing API za administratorski interfejs (2)}
+
+	\begin{itemize}
+
+		\item Putanje su definisane u sledecim fajlovima prosirenja:
+			\texttt{Configuration/Backend/Routes.php}\newline
+			(pogledati sistemsko prosirenje \texttt{backend} kao primer)
+
+		\item Dodatni detalji o Routing API za administratorski interfejs mogu se naci na::\newline
+			\small\url{http://wiki.typo3.org/Blueprints/BackendRouting}\normalsize
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		b800afd4-7f34bf87-a1794226-390cd086
+% LTXE-SLIDE-ORIGIN:	9d56ca19-04a98896-ba0a973c-8a16e877 English
+% LTXE-SLIDE-TITLE:		New system extension: mediace
+% LTXE-SLIDE-REFERENCE:	Breaking-64719-MediaContentMovedToSystemExtension.rst
+% LTXE-SLIDE-REFERENCE:	Breaking-65778-MediaWizardProviderMovedToSystemExtension.rst
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{Korenite promene}
+	\framesubtitle{Novo sistemsko prosirenje za media kontent elemente}
+
+	\begin{itemize}
+
+		\item Novo sistemsko prosirenje "\texttt{mediace}" sadrzi sledece cObjects:
+
+			\begin{itemize}
+				\item \texttt{MULTIMEDIA}
+				\item \texttt{MEDIA}
+				\item \texttt{SWFOBJECT}
+				\item \texttt{FLOWPLAYER}
+				\item \texttt{QTOBJECT}
+			\end{itemize}
+
+		\item Elementi sadrzaja \texttt{media} i \texttt{multimedia} takodje su prebaceni u ovo sistemsko prosirenje, kao i "Media Wizard Provider"
+
+		\item Ovo prosirenje \underline{\textbf{nije}} instalirano kao podrazumevano!
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		bf86856a-da4f5645-3e5f2d2d-06b6e7dd
+% LTXE-SLIDE-ORIGIN:	cc63cd98-524ee6df-38430963-f7c7067c English
+% LTXE-SLIDE-TITLE:		Composer vendor directory
+% LTXE-SLIDE-REFERENCE:	Breaking-66001-ComposerVendorDirectoryChanged.rst
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{Korenite promene}
+	\framesubtitle{Lokacija dodatih biblioteka}
+
+	\begin{itemize}
+
+		\item Dodatne biblioteke instalirane preko Composer-a sada se snimaju u folder \texttt{typo3/contrib/vendor} \newline
+			\small
+				(TYPO3 CMS < 7.2: u folder \texttt{Packages/Libraries})
+			\normalsize
+
+		\item Na ovaj nacin TYPO3 CMS se moze zapakovati za objavu bez potrebe da se pakuju \texttt{Packages/} za dodatne biblioteke
+
+		\item Problemi mogu nastati sa instalacijama koje su napravljene preko Composer-a i koriste \texttt{phpunit}
+			ukoliko Composer dependencies nisu obnovljene. Da se ovo ispravi, pozvati:
+
+			\begin{lstlisting}
+				# cd htdocs/
+				# rm -rf typo3/contrib/vendor/ bin/ Packages/Libraries/ composer.lock
+				# composer install
+			\end{lstlisting}
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		043a219b-41cfe224-94558a2e-1310b69c
+% LTXE-SLIDE-ORIGIN:	c9a5288c-f45aac1e-34606612-fdf6ec18 English
+% LTXE-SLIDE-TITLE:		Introduce JavaScript notification API
+% LTXE-SLIDE-REFERENCE:	Feature-66047-IntroduceJavascriptNotificationApi.rst
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{Korenite promene}
+	\framesubtitle{JavaScript obavestenja}
+
+	\begin{itemize}
+
+		\item Implementiran je nov API za JavaScript obavestenja:
+			\begin{lstlisting}
+				// stari i zastareli:
+				top.TYPO3.Flashmessages.display(TYPO3.Severity.notice)
+
+				// novi i jedini ispravan nacin od TYPO3 CMS 7.2:
+				top.TYPO3.Notification.notice(title, message)
+    		\end{lstlisting}
+
+		\item Postoje sledece API funkcije:\newline
+			\small(parametar \texttt{duzina trajanja} je opcionalan i ima podrazumevanu vrednost od 5 sekundi)\normalsize
+			\begin{itemize}
+				\item \normalsize\smaller\texttt{top.TYPO3.Notification.notice(title, message, duration)}\normalsize
+				\item \smaller\texttt{top.TYPO3.Notification.info(title, message, duration)}\normalsize
+				\item \smaller\texttt{top.TYPO3.Notification.success(title, message, duration)}\normalsize
+				\item \smaller\texttt{top.TYPO3.Notification.warning(title, message, duration)}\normalsize
+				\item \smaller\texttt{top.TYPO3.Notification.error(title, message, duration)}\normalsize
+			\end{itemize}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		d6f30d52-84d7b090-a32a820b-dc08675b
+% LTXE-SLIDE-ORIGIN:	b2acb5df-60b9a7dd-35cf697d-2a50d5db English
+% LTXE-SLIDE-TITLE:		System Information Dropdown (1)
+% LTXE-SLIDE-REFERENCE:	Feature-65767-SystemInformationDropdown.rst
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{Korenite promene}
+	\framesubtitle{Sistemske informacije u padajucem meniju (1)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item Prilagodjene informacije sistema mogu da se dodaju u padajuci meni kreiranjem slot-a
+
+		\item Slot se mora registrovati u fajlu \texttt{ext\_localconf.php}:
+
+			\begin{lstlisting}
+				$signalSlotDispatcher = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(
+				  \TYPO3\CMS\Extbase\SignalSlot\Dispatcher::class);
+
+				$signalSlotDispatcher->connect(
+				  \TYPO3\CMS\Backend\Backend\ToolbarItems\SystemInformationToolbarItem::class,
+				  'getSystemInformation',
+				  \Vendor\Extension\SystemInformation\Item::class,
+				  'getItem'
+				);
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		ce1d6388-425fbbc5-8db47c74-3efbf743
+% LTXE-SLIDE-ORIGIN:	e0f13209-22e0ff8c-7ff23bf9-31b1bb52 English
+% LTXE-SLIDE-TITLE:		System Information Dropdown (2)
+% LTXE-SLIDE-REFERENCE:	Feature-65767-SystemInformationDropdown.rst
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{Korenite promene}
+	\framesubtitle{Sistemske informacije u padajucem meniju (2)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Prilagodjene informacije sistema mogu da se dodaju u padajuci meni kreiranjem slot-a
+
+		\item Ovo zahteva klasu \texttt{Item} i njen metod \texttt{getItem()} u fajlu
+			\small
+				\texttt{EXT:extension\textbackslash
+					Classes\textbackslash
+					SystemInformation\textbackslash
+					Item.php}:
+			\normalsize
+
+		\begin{lstlisting}
+			class Item {
+			  public function getItem() {
+			    return array(array(
+			      'title' => 'The title shown on hover',
+			      'value' => 'Description shown in the list',
+			      'status' => SystemInformationHookInterface::STATUS_OK,
+			      'count' => 4,
+			      'icon' => \TYPO3\CMS\Backend\Utility\IconUtility::getSpriteIcon(
+				    'extensions-example-information-icon')
+			    ));
+			  }
+			}
+		\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		6a7aa92f-24626386-fdcf34ea-853be28d
+% LTXE-SLIDE-ORIGIN:	7d27df49-260500ef-0fc78a89-6e80069b English
+% LTXE-SLIDE-TITLE:		System Information Dropdown (3)
+% LTXE-SLIDE-REFERENCE:	Feature-65767-SystemInformationDropdown.rst
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{Korenite promene}
+	\framesubtitle{Sistemske informacije u padajucem meniju (3)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item Ikonica \texttt{extensions-example-information-icon} se mora registrovati u fajlu \texttt{ext\_localconf.php}:
+		\begin{lstlisting}
+			\TYPO3\CMS\Backend\Sprite\SpriteManager::addSingleIcons(
+			  array(
+			    'information-icon' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extRelPath(
+			      $_EXTKEY) . 'Resources/Public/Images/Icons/information-icon.png'
+			    ),
+			   $_EXTKEY
+			);
+		\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		084ab2e7-c8e3ca24-dfba77dd-f11456f5
+% LTXE-SLIDE-ORIGIN:	d7449c27-fd9676cf-d12be80b-c24a4536 English
+% LTXE-SLIDE-TITLE:		System Information Dropdown (4)
+% LTXE-SLIDE-REFERENCE:	Feature-65767-SystemInformationDropdown.rst
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{Korenite promene}
+	\framesubtitle{Sistemske informacije u padajucem meniju (4)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Poruke su prikazane na dnu dropdown menija
+
+		\item Prosirenja mogu obezbediti sopstvene slot-ove da ispisu poruke
+
+		\begin{lstlisting}
+			$signalSlotDispatcher = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(
+			  \TYPO3\CMS\Extbase\SignalSlot\Dispatcher::class);
+
+			$signalSlotDispatcher->connect(
+			  \TYPO3\CMS\Backend\Backend\ToolbarItems\SystemInformationToolbarItem::class,
+			  'loadMessages',
+			  \Vendor\Extension\SystemInformation\Message::class,
+			  'getMessage'
+			);
+		\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		c39cbd99-a64dd8af-7d9e7e08-64015158
+% LTXE-SLIDE-ORIGIN:	ab3b46ce-c7d7a228-7f7888af-4312fcdd English
+% LTXE-SLIDE-TITLE:		System Information Dropdown (5)
+% LTXE-SLIDE-REFERENCE:	Feature-65767-SystemInformationDropdown.rst
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{Korenite promene}
+	\framesubtitle{Sistemske informacije u padajucem meniju (5)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Poruke su prikazane na dnu dropdown menija
+		
+		\item Ovo zahteva klasu \texttt{Message} i njen metod \texttt{getMessage()} u fajlu
+			\small
+				\texttt{EXT:extension\textbackslash
+					Classes\textbackslash
+					SystemInformation\textbackslash
+					Message.php}:
+			\normalsize
+
+		\begin{lstlisting}
+			class Message {
+			  public function getMessage() {
+			    return array(array(
+			      'status' => SystemInformationHookInterface::STATUS_OK,
+			      'text' => 'Something went wrong. Take a look at the reports module.'
+			    ));
+			  }
+			}
+		\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		b4f5a435-db4f0614-b4036b29-fe672189
+% LTXE-SLIDE-ORIGIN:	98e2056a-d165b638-b1a1ee08-206bc15a English
+% LTXE-SLIDE-TITLE:		Add image cropping
+% LTXE-SLIDE-REFERENCE:	Feature-65584-AddImageCropping.rst
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{Korenite promene}
+	\framesubtitle{Opcije konfiguracije za manipulisanje sa slikama (1)}
+
+	\begin{itemize}
+		\item Sledece TypoScript opcije konfiguracije su dostupne:
+			\begin{lstlisting}
+				# disable cropping for all images
+				tt_content.image.20.1.file.crop =
+
+				# override or set cropping for all images
+				# offsetX,offsetY,width,height
+				tt_content.image.20.1.file.crop = 50,50,100,100
+			\end{lstlisting}
+
+		\item Fluid takodje podrzava funkcije secenja:
+			\begin{lstlisting}
+				# disable cropping for all images
+				<f:image image="{imageObject}" crop="" ></f:image>
+
+				# override or set cropping for all images
+				# offsetX,offsetY,width,height
+				<f:image image="{imageObject}" crop="50,50,100,100" ></f:image>
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		279e853b-d5e7d754-36802df0-a3cf6ff0
+% LTXE-SLIDE-ORIGIN:	e9cce085-6c300f1f-010de4ee-2c744704 English
+% LTXE-SLIDE-TITLE:		Add image cropping (2)
+% LTXE-SLIDE-REFERENCE:	Feature-65584-AddImageCropping.rst
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{Korenite promene}
+	\framesubtitle{Opcije konfiguracije za manipulisanje sa slikama (2)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\smaller\ttfamily}
+
+	\begin{itemize}
+		\item TCA takodje ima funkcionalnost secenja slike:
+
+			\begin{itemize}
+				\item Column Type: \texttt{image\_manipulation}
+				\item Config \texttt{file\_field}: string	\tabto{5.6cm}(default: \texttt{uid\_local})
+				\item Config \texttt{enableZoom}: boolean	\tabto{5.6cm}(default: \texttt{FALSE})
+				\item Config \texttt{allowedExtensions}: string\newline
+					(default: \smaller\texttt{\$GLOBALS['TYPO3\_CONF\_VARS']['GFX']['imagefile\_ext']}\small)
+				\item Config \texttt{ratios}: array, default:
+
+					\begin{lstlisting}
+						array(
+						  '1.7777777777777777' => '16:9',
+						  '1.3333333333333333' => '4:3',
+						  '1' => '1:1',
+						  'NaN' => 'Free'
+						)
+					\end{lstlisting}
+			\end{itemize}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		3fc7d2fb-1993d27d-e2bd7c60-e35b236f
+% LTXE-SLIDE-ORIGIN:	ed863269-574e4061-d69f855e-6494c062 English
+% LTXE-SLIDE-TITLE:		Additional params for HTMLparser userFunc
+% LTXE-SLIDE-REFERENCE:	Feature-59712-HtmlParserAdditionalUserFuncParams.rst
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{Korenite promene}
+	\framesubtitle{Dodatni parametri za HTMLparser userFunc}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Dodatni parametri mogu se proslediti metodi userFunc od HTMLparser:
+
+			\begin{lstlisting}
+				myobj = TEXT
+				myobj.value = <a href="/" class="myclass">MyText</a>
+				myobj.HTMLparser.tags.a.fixAttrib.class {
+				  userFunc = Tx\MyExt\Myclass->htmlUserFunc
+				  userFunc.myparam = test
+				}
+			\end{lstlisting}
+
+		\item Pristup ovim parametrima u prosirenju radi se na sledeci nacin:
+
+			\begin{lstlisting}
+				function htmlUserFunc(array $params, HtmlParser $htmlParser) {
+				  // $params['attributeValue'] contains the attribute value "myclass"
+				  // $params['myparam'] is set to "test" in this example
+				  ...
+				}
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		456d2d85-6e6f0111-6aa98b48-2dd82b0c
+% LTXE-SLIDE-ORIGIN:	b04f8d44-fd695c73-b768f3cb-fd6d8643 English
+% LTXE-SLIDE-TITLE:		New Locking API (1)
+% LTXE-SLIDE-REFERENCE:	Feature-47712-NewLockingAPI.rst
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{Korenite promene}
+	\framesubtitle{Locking API (1)}
+
+	\begin{itemize}
+
+		\item Predstavljen je novi Locking API, koji obezbedjuje razlicite locking metode (SimpleFile, Semaphore, ...)
+		\item Locking metoda mora implementirati \small\texttt{LockingStrategyInterface}\normalsize:
+		\begin{lstlisting}
+			$lockFactory = GeneralUtility::makeInstance(LockFactory::class);
+			$locker = $lockFactory->createLocker('someId');
+			$locker->acquire() || die('Could not acquire lock.');
+			...
+			$locker->release();
+		\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		80bae2d0-c8b4c2ab-b19d48a3-195ef4dd
+% LTXE-SLIDE-ORIGIN:	79a00412-c72401e6-4d9667c9-0e15d3f4 English
+% LTXE-SLIDE-TITLE:		New Locking API (2)
+% LTXE-SLIDE-REFERENCE:	Feature-47712-NewLockingAPI.rst
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{Korenite promene}
+	\framesubtitle{Locking API (2)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Neke metode takodje podrzavaju non-blocking locks:
+
+		\begin{lstlisting}
+			$lockFactory = GeneralUtility::makeInstance(LockFactory::class);
+			$locker = $lockFactory->createLocker(
+			  'someId',
+			  LockingStrategyInterface::LOCK_CAPABILITY_SHARED |
+			    LockingStrategyInterface::LOCK_CAPABILITY_NOBLOCK
+			);
+			try {
+			  $result = $locker->acquire(LockingStrategyInterface::LOCK_CAPABILITY_SHARED | LockingStrategyInterface::LOCK_CAPABILITY_NOBLOCK);
+			  catch (\RuntimeException $e) {
+			  if ($e->getCode() === 1428700748) {
+			    // some process owns the lock
+			    // let's do something else meanwhile
+			    ...
+			  }
+			}
+			if ($result) {
+			  $locker->release();
+			}
+		\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		7dccb39f-56826fae-21bbebfe-c572e1ae
+% LTXE-SLIDE-ORIGIN:	108cb4a7-6e006507-c25a91e7-3a867f09 English
+% LTXE-SLIDE-TITLE:		Add signal after extension installation
+% LTXE-SLIDE-REFERENCE:	commit 39e0fd0a2c919da270cb49223433bcf95febbb10
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{Korenite promene}
+	\framesubtitle{Signal nakon instaliranja prosirenja}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Implementiran je novi signal u metodi
+			\smaller
+				\texttt{\textbackslash
+					TYPO3\textbackslash
+					CMS\textbackslash
+					Extensionmanager\textbackslash
+					Utility\textbackslash
+					InstallUtility::install()}
+			\normalsize
+			koji se emituje cim se prosirenje instalira i zavrseni su svi uvozi i unapredjenja
+
+		\begin{lstlisting}
+			// execution
+			$this->emitAfterExtensionInstallSignal($extensionKey);
+
+			// methode
+			protected function emitAfterExtensionInstallSignal($extensionKey) {
+			  $this->signalSlotDispatcher->dispatch(
+			    __CLASS__,
+			    'afterExtensionInstall',
+			    array($extensionKey, $this)
+			  );
+			}
+		\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		dfa45ff7-d352c814-74bf600e-5e36d064
+% LTXE-SLIDE-ORIGIN:	acb1ba95-1a401bef-549072a1-f32263a9 English
+% LTXE-SLIDE-TITLE:		Registry for adding text extractor classes (1)
+% LTXE-SLIDE-REFERENCE:	Feature-36743-FAL-TextExtractorRegistry.rst
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{Korenite promene}
+	\framesubtitle{Registar za izvlacenje teksta (1)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Visestruko izvlacenje teksta se moze registrovati da omoguci rad sa razlicitim tipovima fajlova (na primer Office, PDF files, itd.)
+
+		\item TYPO3 osnova ima ekstraktor za plain text fajlove
+
+		\item Svaka registrovana klasa za izvlacenje teksta mora da implementira \texttt{TextExtractorInterface}
+
+		\item ...i sledece metode:\newline
+			\texttt{canExtractText()}\newline
+			\small
+				proverava da li moze da se izvuce tekst iz izabranog fajla 
+			\normalsize
+			\newline
+			\texttt{extractText()}\newline
+			\small
+				vraca sadrzaj teksta iz fajla kao string
+			\normalsize
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		a00711c4-2918cdda-ea44d7cd-310357c0
+% LTXE-SLIDE-ORIGIN:	acb1ba95-1a401bef-549072a1-f32263a9 English
+% LTXE-SLIDE-TITLE:		Registry for adding text extractor classes (2)
+% LTXE-SLIDE-REFERENCE:	Feature-36743-FAL-TextExtractorRegistry.rst
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{Korenite promene}
+	\framesubtitle{Registar za izvlacenje teksta (2)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Izvlacenje teksta se registruje u \texttt{ext\_localconf.php}:
+
+			\begin{lstlisting}
+				$textExtractorRegistry = \TYPO3\CMS\Core\Resource\TextExtraction\TextExtractorRegistry::getInstance();
+				$textExtractorRegistry->registerTextExtractor(
+				  \TYPO3\CMS\Core\Resource\TextExtraction\PlainTextExtractor::class
+				);
+			\end{lstlisting}
+
+		\item Koristi se na sledeci nacin:
+
+			\begin{lstlisting}
+				$textExtractorRegistry = \TYPO3\CMS\Core\Resource\TextExtraction\TextExtractorRegistry::getInstance();
+				$extractor = $textExtractorRegistry->getTextExtractor($file);
+				if($extractor !== NULL) {
+				  $content = $extractor->extractText($file);
+				}
+			\end{lstlisting}
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		76ef8242-dea86411-649577de-72ef9a42
+% LTXE-SLIDE-ORIGIN:	d9657b5d-5cd56c65-d7266a27-401dd233 English
+% LTXE-SLIDE-TITLE:		Miscellaneous
+% LTXE-SLIDE-REFERENCE:	Feature-66042-WebLibrariesLoadedViaBower.rst
+% LTXE-SLIDE-REFERENCE:	Feature-63703-AddOptionToStopTask.rst
+% LTXE-SLIDE-REFERENCE:	Feature-61463-AllowProcessedFoldersInDifferentStorage.rst
+% LTXE-SLIDE-REFERENCE:	Feature-52693-TSFE-RequestedId.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Korenite promene}
+	\framesubtitle{Razno}
+
+	\begin{itemize}
+
+		\item Web biblioteke (kao sto su Twitter Bootstrap, jQuery, Font Awesome, itd.) koriste
+			"Bower" (\url{http://bower.io}) i vise nisu deo TYPO3 osnove u Git repository-ju\newline
+			\small
+				\texttt{\# bower install}	\tabto{3.4cm}izvrsava instalaciju\newline
+				\texttt{\# bower update}		\tabto{3.4cm}izvrsava unapredjenje\newline
+			\normalsize
+			(fajl \texttt{bower.json} se nalazi u folderu \texttt{Build/})
+
+		\item Scheduler CLI dobio je opciju "\texttt{-s}" da zaustavi pokrenuti task
+
+		\item Folder sa procesuiranim fajlovima od (udaljenog) skladista mzoe biti van skladista (korisno u slucaju read-only skladista)
+
+		\item Sada je moguce vratiti ID originalno trazene strane:
+			\texttt{\$TSFE->getRequestedId()}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------

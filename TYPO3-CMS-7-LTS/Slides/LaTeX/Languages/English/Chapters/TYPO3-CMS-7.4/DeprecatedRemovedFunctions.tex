@@ -1,0 +1,423 @@
+% ------------------------------------------------------------------------------
+% TYPO3 CMS 7.4 - What's New - Chapter "Deprecated Functions" (English Version)
+%
+% @author	Michael Schams <schams.net>
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		http://typo3.org/download/release-notes/whats-new/
+% @language	English
+% ------------------------------------------------------------------------------
+% LTXE-CHAPTER-UID:		052872e9-9f10b97b-dcf0f34b-0bb90d27
+% LTXE-CHAPTER-NAME:	Deprecated Functions
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		685b0aeb-6654ab27-f8128f62-3454735b
+% LTXE-SLIDE-ORIGIN:	ebe40c2e-32da4e43-67f18e6c-866b0496 German
+% LTXE-SLIDE-TITLE:		Deprecation: #67991 - Removed EXT:cms (1)
+% LTXE-SLIDE-REFERENCE:	Deprecation-67991-RemovedExtCms.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Deprecated/Removed Functions}
+	\framesubtitle{System Extension \texttt{cms} Removed (1)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item System extension \texttt{cms} has been removed
+
+		\item Extension developers should review dependency settings in file \texttt{ext\_emconf.php}
+
+			\begin{lstlisting}
+				[...]
+				'constraints' => array(
+				  'depends' => array(
+				    // 'cms' => ' ... ',           <= WRONG!
+				    'typo3' => '7.0.0-7.99.99',
+				  ),
+				),
+				[...]
+			\end{lstlisting}
+
+		\item Most of the functionality has been migrated to system extension \texttt{frontend}
+			(this might require an update of language references, see next slide)
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		ff99fb62-81ad4d10-2367bc34-4985628d
+% LTXE-SLIDE-ORIGIN:	4e4332da-8e6c67f1-0496866b-ebe40c2e German
+% LTXE-SLIDE-TITLE:		Deprecation: #67991 - Removed EXT:cms (2)
+% LTXE-SLIDE-REFERENCE:	Deprecation-67991-RemovedExtCms.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Deprecated/Removed Functions}
+	\framesubtitle{System Extension \texttt{cms} Removed (2)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Required updates of references to language files:
+
+			% hint for translators:
+			% please translate words "old" and "new" in listing below,
+			% but DO NOT USE special characters, like German umlauts, etc.
+			% (special characters inside "lstlisting" break LaTeX).
+
+			\begin{lstlisting}
+				OLD: typo3/sysext/cms/web_info/locallang.xlf
+				NEW: typo3/sysext/frontend/Resources/Private/Language/locallang_webinfo.xlf
+			\end{lstlisting}
+			\vspace{-0.3cm}
+			\begin{lstlisting}
+				OLD: typo3/sysext/cms/locallang_ttc.xlf
+				NEW: typo3/sysext/frontend/Resources/Private/Language/locallang_ttc.xlf
+			\end{lstlisting}
+			\vspace{-0.3cm}
+			\begin{lstlisting}
+				OLD: typo3/sysext/cms/locallang_tca.xlf
+				NEW: typo3/sysext/frontend/Resources/Private/Language/locallang_tca.xlf
+			\end{lstlisting}
+			\vspace{-0.3cm}
+			\begin{lstlisting}
+				OLD: typo3/sysext/cms/layout/locallang_db_new_content_el.xlf
+				NEW: typo3/sysext/backend/Resources/Private/Language/locallang_db_new_content_el.xlf
+			\end{lstlisting}
+			\vspace{-0.3cm}
+			\begin{lstlisting}
+				OLD: typo3/sysext/cms/layout/locallang.xlf
+				NEW: typo3/sysext/backend/Resources/Private/Language/locallang_layout.xlf
+			\end{lstlisting}
+			\vspace{-0.3cm}
+			\begin{lstlisting}
+				OLD: typo3/sysext/cms/layout/locallang_mod.xlf
+				NEW: typo3/sysext/backend/Resources/Private/Language/locallang_mod.xlf
+			\end{lstlisting}
+			\vspace{-0.3cm}
+			\begin{lstlisting}
+				OLD: typo3/sysext/cms/locallang_csh_webinfo.xlf
+				NEW: typo3/sysext/frontend/Resources/Private/Language/locallang_csh_webinfo.xlf
+			\end{lstlisting}
+			\vspace{-0.3cm}
+			\begin{lstlisting}
+				OLD: typo3/sysext/cms/locallang_csh_weblayout.xlf
+				NEW: typo3/sysext/frontend/Resources/Private/Language/locallang_csh_weblayout.xlf
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		e1a896f5-538a7c07-e462c6f0-db80381c
+% LTXE-SLIDE-ORIGIN:	ae6fc887-9aeff493-158130de-3cdbf052 German
+% LTXE-SLIDE-TITLE:		Deprecation: #68074 - Deprecate getPageRenderer() methods
+% LTXE-SLIDE-REFERENCE:	Deprecation-68074-DeprecateGetPageRenderer.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Deprecated/Removed Functions}
+	\framesubtitle{PageRenderer Methods Deprecated}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item The following \texttt{PageRenderer} methods have been classified as \textbf{deprecated}:
+
+			\begin{lstlisting}
+				TYPO3\CMS\Backend\Controller\BackendController::getPageRenderer()
+				TYPO3\CMS\Backend\Template\DocumentTemplate::getPageRenderer()
+				TYPO3\CMS\Backend\Template\FrontendDocumentTemplate::getPageRenderer()
+				TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController::getPageRenderer()
+			\end{lstlisting}
+
+		\item The following code should be used to get an instance of the PageRenderer instead:
+
+			\begin{lstlisting}
+				\TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Page\PageRenderer::class)
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		440429fa-30e8d4b1-4784ea6f-86bc343e
+% LTXE-SLIDE-ORIGIN:	a58c2f4f-3eb806e5-d256078a-70ed73c0 German
+% LTXE-SLIDE-TITLE:		Deprecation #68098 and #68122
+% LTXE-SLIDE-REFERENCE:	Deprecation-68098-GeneralUtilityMethods.rst
+% LTXE-SLIDE-REFERENCE:	Deprecation-68122-GeneralUtilityReadLLfile.rst
+% ------------------------------------------------------------------------------
+% Deprecation: #68098 - Deprecate GeneralUtility methods
+% Deprecation: #68122 - Deprecate GeneralUtility::readLLfile
+
+\begin{frame}[fragile]
+	\frametitle{Deprecated/Removed Functions}
+	\framesubtitle{Deprecated \texttt{GeneralUtility} Methods}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item The following \texttt{GeneralUtility} methods have been classified as \textbf{deprecated}
+			and will be removed in TYPO3 CMS version 8:
+
+			\begin{lstlisting}
+				GeneralUtility::modifyHTMLColor()
+				GeneralUtility::modifyHTMLColorAll()
+				GeneralUtility::isBrokenEmailEnvironment()
+				GeneralUtility::normalizeMailAddress()
+				GeneralUtility::formatForTextarea()
+				GeneralUtility::getThisUrl()
+				GeneralUtility::cleanOutputBuffers()
+				GeneralUtility::readLLfile()
+			\end{lstlisting}
+
+		\item Method \texttt{readLLfile()} can be replaced by the following code:
+
+			\begin{lstlisting}
+				/** @var $languageFactory \TYPO3\CMS\Core\Localization\LocalizationFactory */
+				$languageFactory = GeneralUtility::makeInstance(
+				  \TYPO3\CMS\Core\Localization\LocalizationFactory::class
+				);
+				$languageFactory->getParsedData($fileToParse, $language, $renderCharset, $errorMode);
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		0d77c7a7-fd5da718-210555bf-80e688f0
+% LTXE-SLIDE-ORIGIN:	b0c4d95f-d9fd698f-2d9dfdec-42aaf1af German
+% LTXE-SLIDE-TITLE:		Breaking: #39721 - Prototype.js and Scriptaculous removed
+% LTXE-SLIDE-REFERENCE:	Breaking-39721-PrototypejsAndScriptaculousRemoved.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Deprecated/Removed Functions}
+	\framesubtitle{JavaScript Libraries Removed}
+
+	\begin{itemize}
+
+		\item JavaScript libraries \texttt{prototype.js} and \texttt{scriptaculous} have been removed.
+			As a consequence, the following TypoScript properties do not have any functionality anymore:
+
+			\begin{itemize}
+				\item \texttt{page.javascriptLibs.Prototype}
+				\item \texttt{page.javascriptLibs.Scriptaculous.*}
+			\end{itemize}
+
+		\item Using the following attributes in ViewHelper \texttt{be.container} results in an error:
+			\begin{lstlisting}
+				<f:be.container loadPrototype="false" loadScriptaculous="false" scriptaculousModule="someModule,someOtherModule">
+			\end{lstlisting}
+
+		\item As a replacement, \texttt{jQuery} and \texttt{RequireJS} should be used\newline
+			(which are already loaded in the backend by default)
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		4bb27612-517a802f-3b7a7dae-900630fc
+% LTXE-SLIDE-ORIGIN:	1375cbd0-05287ba0-3235df98-19473bf0 German
+% LTXE-SLIDE-TITLE:		Deprecation: #68183 - typo3/mod.php
+% LTXE-SLIDE-REFERENCE:	Deprecation-68183-Typo3modphp.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Deprecated/Removed Functions}
+	\framesubtitle{Deprecated: \texttt{init.php}, \texttt{mod.php} and \texttt{ajax.php}}
+
+	% decrease font size for code listing
+	%\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item In order to clean up the content of folder \texttt{typo3}, the following files have
+			been marked as \textbf{deprecated}: \texttt{init.php}, \texttt{mod.php} and \texttt{ajax.php}
+
+		\item The following code can be used for Init Entry Points:
+
+			\begin{lstlisting}
+				call_user_func(function() {
+				  $classLoader = require __DIR__ . '/vendor/autoload.php';
+				  (new \TYPO3\CMS\Backend\Http\Application($classLoader))->run();
+				});
+			\end{lstlisting}
+
+		\item The following method call can be used to access \texttt{mod.php}:
+
+			\begin{lstlisting}
+				BackendUtility::getModuleUrl()
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		a09aedae-f4adde91-f6b0d3a8-ada31684
+% LTXE-SLIDE-ORIGIN:	749d4c59-1ec6087a-45020fbd-2f7b8646 German
+% LTXE-SLIDE-TITLE:		Deprecation: #67737 - TCA: Drop additional palette
+% LTXE-SLIDE-REFERENCE:	Deprecation-67737-TcaDropAdditionalPalette.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Deprecated/Removed Functions}
+	\framesubtitle{TCA: Additional Palette Removed}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item String \texttt{showitem} of TCA key \texttt{types} allowed developers to define
+			an additional palette
+
+		\item This has been removed and migrated to the normal palette now
+
+		\item Before:
+
+			\begin{lstlisting}
+				'types' => array(
+				  'aType' => array(
+				    'showitem' => 'aField;aLabel;anAdditionalPaletteName',
+				  ),
+				),
+			\end{lstlisting}
+
+		\item Now:
+
+			\begin{lstlisting}
+				'types' => array(
+				  'aType' => array(
+				    'showitem' => 'aField;aLabel, --palette--;;anAdditionalPaletteName',
+				  ),
+				),
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		e27efa5c-c3999b32-6715dd2f-da8acf1f
+% LTXE-SLIDE-ORIGIN:	6398e32e-7f467ac7-463d9b47-bc0fd47c German
+% LTXE-SLIDE-TITLE:		Breaking: #67577, #67646 and #67824
+% LTXE-SLIDE-REFERENCE: Breaking-67577-RteEnabledFlagHandling.rst
+% LTXE-SLIDE-REFERENCE: Breaking-67646-LibraryInclusionInFrontend.rst
+% LTXE-SLIDE-REFERENCE: Breaking-67824-Typo3ExtFolderRemoved.rst
+% ------------------------------------------------------------------------------
+% Breaking: #67577 - rte_enabled and flag handling
+% Breaking: #67646 - PHP library inclusion in frontend removed
+% Breaking: #67824 - typo3/ext folder removed
+
+\begin{frame}[fragile]
+	\frametitle{Deprecated/Removed Functions}
+	\framesubtitle{Miscellaneous (1)}
+
+	\begin{itemize}
+
+		\item cObjects "Text" and "Text with Images" had a checkbox "RTE enabled" in the past.
+			This has been removed, including the appropriate TCA option \texttt{flag}.
+
+		\item The following TypoScript options to include PHP files have been removed:
+
+			\begin{itemize}
+				\item \texttt{config.includeLibrary}
+				\item \texttt{config.includeLibs}
+			\end{itemize}
+
+		\item Directory \texttt{typo3/ext} has been removed\newline
+			\small
+				(but not the option to use global extensions: the directory can be created manually)
+			\normalsize
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		7b47e35b-9ae0fd9a-13d2db50-ebe93a84
+% LTXE-SLIDE-ORIGIN:	463d9b47-bc0fd47c-6398e32e-7f467ac7 German
+% LTXE-SLIDE-TITLE:		Breaking: #68001
+% LTXE-SLIDE-REFERENCE: Breaking-68001-RemovedExtJSCoreAndExtJSAdapters.rst
+% ------------------------------------------------------------------------------
+% Breaking: #68001 - Removed ExtJS Core and ExtJS Adapters
+% Breaking: #68020 - Dropped DisableBigButtons
+
+\begin{frame}[fragile]
+	\frametitle{Deprecated/Removed Functions}
+	\framesubtitle{Miscellaneous (2)}
+
+	\begin{itemize}
+
+		\item ExtCore (a standalone, slim ExtJS adapter) has been removed, including the following TypoScript options:
+
+			\begin{itemize}
+				\item \texttt{page.javascriptLibs.ExtCore.*}
+				\item \texttt{page.javascriptLibs.ExtJs.*}
+			\end{itemize}
+
+			This also includes the option in the \texttt{<f:be.container>} ViewHelper
+
+		\item So called "BigButtons" ("Edit Page Properties", "Move Page",...) have been removed,
+			including their TSconfig settings \texttt{mod.we\_layout.disableBigButtons}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		8052d34e-ccc2def0-c43053a0-c3c8eba3
+% LTXE-SLIDE-ORIGIN:	d3a774ba-c1fd32c6-099aa85f-96b6a2a2 German
+% LTXE-SLIDE-TITLE:		Breaking: #68020, #68131, #65790 and #67506
+% LTXE-SLIDE-REFERENCE: Breaking-68020-DroppedDisableBigButtons.rst
+% LTXE-SLIDE-REFERENCE: Breaking-68131-StreamlineErrorAndExceptionHandling.rst
+% LTXE-SLIDE-REFERENCE: Deprecation-65790-PagesStoragePidDeprecated.rst
+% LTXE-SLIDE-REFERENCE: Deprecation-67506-DeprecateIconUtilitygetIcon.rst
+% ------------------------------------------------------------------------------
+% Breaking: #68131 - Streamline error and exception handling
+% Deprecation: #65790 - Remove pages.storage_pid and logic
+% Deprecation: #67506 - Deprecate IconUtility::getIcon
+
+\begin{frame}[fragile]
+	\frametitle{Deprecated/Removed Functions}
+	\framesubtitle{Miscellaneous (3)}
+
+	\begin{itemize}
+
+		\item Error- and exception handling can not longer be configured in extensions (e.g. overwritten in
+			\texttt{ext\_localconf.php}), but in files \texttt{LocalConfiguration.php} or
+			\texttt{AdditionalConfiguration.php} only
+
+		\item Field "General Record Storage Page", which contained the storage PID for a page, has been removed.
+			The storage PID must be configured using TypoScript or FlexForms now.
+
+		\item Function \texttt{IconUtility::getIcon()} has been classified as \textbf{deprecated} (use
+			method \texttt{IconUtility::getSpriteIconForRecord()} instead)
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------

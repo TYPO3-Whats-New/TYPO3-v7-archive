@@ -1,0 +1,235 @@
+% ------------------------------------------------------------------------------
+% TYPO3 CMS 7.3 - What's New - Chapter "TypoScript" (English Version)
+%
+% @author	Michael Schams <schams.net>
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		http://typo3.org/download/release-notes/whats-new/
+% @language	English
+% ------------------------------------------------------------------------------
+% LTXE-CHAPTER-UID:		e8cc33e1-d7bdb74f-0421b75f-7be06b19
+% LTXE-CHAPTER-NAME:	TypoScript
+% ------------------------------------------------------------------------------
+
+\section{TSconfig \& TypoScript}
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+
+	\begin{center}\huge{Capítulo 2:}\end{center}
+	\begin{center}\huge{\color{typo3darkgrey}\textbf{TSconfig \& TypoScript}}\end{center}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		63958c14-535a0e7b-689daf78-22cf9843
+% LTXE-SLIDE-ORIGIN:	f8419191-d59094a8-01e156a1-908dac0f English
+% LTXE-SLIDE-ORIGIN:	56b025e6-cf380b11-c9d1c009-0b548d6a German
+% LTXE-SLIDE-TITLE:		Feature #63561: Add TypoScript stdWrap strtotime
+% LTXE-SLIDE-REFERENCE:	Feature-63561-AddTypoScriptStdWrapStrtotime.rst
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+	\framesubtitle{Nueva Función stdWrap \texttt{strtotime} (1)}
+
+	\begin{itemize}
+
+		\item Nueva propiedad TypoScript stdWrap \texttt{strtotime} permite la conversión de
+			fechas formateadas a marcas de tiempo Unix, p.e. para llevar a cabo cálculos de fecha
+
+	\end{itemize}
+
+\end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+	\framesubtitle{Nueva Función stdWrap \texttt{strtotime} (2)}
+
+	\begin{itemize}
+
+		\item Valores válidos son \texttt{1} o cualquier cadena de tiempo que sea usada como el primer
+			argumento de la función PHP \texttt{strtotime()}
+
+			\begin{lstlisting}
+				date_as_timestamp = TEXT
+				date_as_timestamp {
+				  value = 2015-04-15
+				  strtotime = 1
+				}
+
+				next_weekday = TEXT
+				next_weekday {
+				  data = GP:selected_date
+				  strtotime = + 2 weekdays
+				  strftime = %Y-%m-%d
+				}
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		2f0c1a63-2f4d7365-8b8c1523-4dd11eb1
+% LTXE-SLIDE-ORIGIN:	687af5fc-b201bac6-e4ad678b-392fb9f8 English
+% LTXE-SLIDE-ORIGIN:	c5dbf3c7-655fc6e4-227a3bf6-f5d89fb1 German
+% LTXE-SLIDE-TITLE:		Feature #65250: TypoScript condition add GPmerged
+% LTXE-SLIDE-REFERENCE:	Feature-65250-TypoScriptConditionAddGPmerged.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+	\framesubtitle{\texttt{GPmerged} en Condiciones}
+
+	\begin{itemize}
+
+		\item Usar \text{GP} en condiciones TypoScript sólo devuelve la variable
+			\text{POST}, si la petición contiene ambas, las variables \text{POST} \underline{y}
+			\text{GET}
+
+		\item Nueva opción \texttt{GPmerged} fusiona ambos métodos y devuelve el resultado
+
+			\begin{lstlisting}
+				[globalVar = GPmerged:tx_demo|foo = 1]
+				  page.90 = TEXT
+				  page.90.value = DEMO
+				[global]
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		0a861984-24b3cd53-a34fb570-1d076b0a
+% LTXE-SLIDE-ORIGIN:	2901d1f6-3d8e9a15-ad0268f1-4e30c04b English
+% LTXE-SLIDE-ORIGIN:	05b2f338-7bcb651f-a4cebabd-2c677a20 German
+% LTXE-SLIDE-TITLE:		Feature #66697: Add uppercamelcase and lowercamelcase to stdWrap.case
+% LTXE-SLIDE-REFERENCE:	Feature-66697-AddUppercamelcaseAndLowercamelcaseToStdWrap.case.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+	\framesubtitle{Nuevas Opciones para \texttt{stdWrap.case}}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Se han añadido las opciones \texttt{uppercamelcase} y \texttt{lowercamelcase}
+			a \texttt{stdWrap.case}
+
+		\item Ejemplo:
+
+			\begin{lstlisting}
+				tt_content = CASE
+				tt_content {
+				  key.field = CType
+				  my_custom_ctype =< lib.userContent
+				  my_custom_ctype {
+				    file = EXT:site_base/Resources/Private/Templates/SomeOtherTemplate.html
+				    settings.extraParam = 1
+				  }
+				  default =< lib.userContent
+				  default {
+				    file = TEXT
+				    file.field = CType
+				    file.stdWrap.case = uppercamelcase
+				    file.wrap = EXT:site_base/Resources/Private/Templates/|.html
+				  }
+				}
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		664a8503-af8da972-6a1952ea-3b6b349d
+% LTXE-SLIDE-ORIGIN:	72bacec0-2fa0303b-33c4c4d6-a3bc0857 English
+% LTXE-SLIDE-ORIGIN:	cd745fc5-b8bd6483-ba1cf2a5-0ebf4310 German
+% LTXE-SLIDE-TITLE:		Feature #66698: Add integrity property to JavaScript files (1)
+% LTXE-SLIDE-REFERENCE:	Feature-66698-AddIntegrityPropertyToJavaScriptFiles.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+	\framesubtitle{Propiedad \texttt{integrity} Añadida para Ficheros JavaScript (1)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Se ha añadido la propiedad \texttt{integrity} a las inclusiones de ficheros JavaScript para
+			especificar una clave ISS para permitir la verificación del recurso\newline
+			(ISR: Integridad del Sub-Recurso, ver siguiente diapositiva)
+
+		\item Esto afecta a las propiedades de Typoscript PAGE \texttt{page.includeJSLibs},
+			\texttt{page.includeJSFooterlibs}, \texttt{ includeJS} y
+			\texttt{includeJSFooter}
+
+		\item Ejemplo:
+
+			\begin{lstlisting}
+				page {
+				  includeJS {
+				    jQuery = https://code.jquery.com/jquery-1.11.3.min.js
+				    jquery.external = 1
+				    jQuery.disableCompression = 1
+				    jQuery.excludeFromConcatenation = 1
+				    jQuery.integrity = sha256-7LkWEzqTdpEfELxcZZlS6wAx5Ff13zZ83lYO2/ujj7g=
+				  }
+				}
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		a479f793-a5690a46-97cb7c45-5a53812a
+% LTXE-SLIDE-ORIGIN:	bf190d17-80b961a2-a0c001d4-6ee48dfe English
+% LTXE-SLIDE-ORIGIN:	b8bd6483-cd745fc5-ba1cf2a5-0ebf4310 German
+% LTXE-SLIDE-TITLE:		Feature #66698: Add integrity property to JavaScript files (2)
+% LTXE-SLIDE-REFERENCE:	Feature-66698-AddIntegrityPropertyToJavaScriptFiles.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+	\framesubtitle{Propiedad \texttt{integrity} Añadida para Ficheros JavaScript (2)}
+
+	% decrease font size for code listing
+	%\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item ISR es una especificación W3C que permite a los desarrolladores web asegurarse
+			que los recursos alojados en servidores de terceros no han sido manipulados con
+
+		\item Genera hashes de integridad:
+
+			\begin{itemize}
+				\item Opción 1: \url{https://srihash.org}
+				\item Opción 2: use el siguiente comando de shell
+			\end{itemize}
+
+			\begin{lstlisting}
+				cat FILENAME.js | openssl dgst -sha256 -binary | openssl enc -base64 -A
+			\end{lstlisting}
+
+		\item Leer más:
+
+			\begin{itemize}
+				\item \url{http://www.w3.org/TR/SRI/}
+			\end{itemize}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------

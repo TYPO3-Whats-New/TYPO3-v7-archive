@@ -1,0 +1,423 @@
+% ------------------------------------------------------------------------------
+% TYPO3 CMS 7.0 - What's New - Chapter "In-Depth Changes" (English Version)
+%
+% @author	Michael Schams <schams.net>
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		http://typo3.org/download/release-notes/whats-new/
+% @language	English
+% ------------------------------------------------------------------------------
+% LTXE-CHAPTER-UID:		83d831ac-d1e8ba24-a86bb957-c8cef9bb
+% LTXE-CHAPTER-NAME:	In-Depth Changes
+% ------------------------------------------------------------------------------
+
+\section{Korenite promene}
+\begin{frame}[fragile]
+	\frametitle{Korenite promene}
+
+	\begin{center}\huge{Poglavlje 3:}\end{center}
+	\begin{center}\huge{\color{typo3darkgrey}\textbf{Korenite promene}}\end{center}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		11aa91f1-53e861a9-4fae5678-b95ba1bd
+% LTXE-SLIDE-ORIGIN:	b47dd2a2-952b3dd2-b9ceecce-ab8630bc English
+% LTXE-SLIDE-TITLE:		Integration of jQuery UI version 1.11.2
+% LTXE-SLIDE-REFERENCE:	https://forge.typo3.org/issues/62916
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Korenite promene}
+	\framesubtitle{Integracija jQuery UI verzija 1.11.2}
+
+	\begin{itemize}
+		\item jQuery UI 1.11 podrzava AMD
+			(\href{http://en.wikipedia.org/wiki/Asynchronous_module_definition}{Asynchronous Module Definition}),
+			koji ucitava JavaScript fajlove samo kada su potrebni (poboljsanje performansi)
+
+    	\item jQuery UI 1.11 zamenjuje jQuery UI 1.10 + Scriptaculous u TYPO3 CMS 7.0
+
+    	\item Ukljucene su samo osnovne komponente i komponente za interakciju, koje su potrebne kako bi se zamenili ExtJS i Scriptaculous
+
+    	\item Dodaci (widget-i) nisu ukljuceni (osim Twitter Bootstrap dodataka koji se koriste, kao sto su: DatePicker, Spinner, Dialog, Buttons, Tabs, Tooltip)
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		c2a28cc1-6fce4c6e-abd6c8c0-f5dfd819
+% LTXE-SLIDE-ORIGIN:	66a996e1-bcfe7442-d44f59c8-d3495d4e English
+% LTXE-SLIDE-TITLE:		Registry for File Rendering Classes
+% LTXE-SLIDE-REFERENCE:	https://forge.typo3.org/issues/61800
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Korenite promene}
+	\framesubtitle{Registar klasa za renderanje fajlova}
+
+	\lstset{
+		basicstyle=\tiny\ttfamily
+	}
+
+	\begin{itemize}
+		\item Kako bi se mogli renderati svi tipovi fajlova implementiran je registar za renderanje fajlova.\newline
+			Ovo se desava na sledevi nacin (na primer Video, MPEG, AVI, WAV, itd.):
+
+		\begin{lstlisting}
+			<?php
+			namespace ...;
+
+			class NameTagRenderer implements FileRendererInterface {
+			  protected $possibleMimeTypes = array('audio/mpeg', 'audio/wav', ...);
+			  public function getPriority() {
+			    return 1; // priority: the higher, the more important (max: 100)
+			  }
+			  public function canRender(FileInterface $file) {
+			    return in_array($file->getMimeType(), $this->possibleMimeTypes, TRUE);
+			  }
+			  public function render(FileInterface $file, $width, $height, array $options = array(), $usedPathsRelativeToCurrentScript = FALSE) {
+			    ...
+
+			    return 'HTML code';
+			  }
+			}
+		\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		3631fc00-b2f959f2-3955c594-52978fab
+% LTXE-SLIDE-ORIGIN:	2c97df27-58f83c0c-2a7532ce-73ba3bd5 English
+% LTXE-SLIDE-TITLE:		TCA: Validate Email Addresses
+% LTXE-SLIDE-REFERENCE:	https://forge.typo3.org/issues/62147
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Korenite promene}
+	\framesubtitle{TCA: Validacija email adresa}
+
+	\lstset{
+		basicstyle=\tiny\ttfamily
+	}
+
+	\begin{itemize}
+
+		\item Nova funkcija “email” proverava da li je uneta vrednost validna email adresa
+		\item Ukoliko provera ne prodje pojavljuje se poruka
+		\item Primer:
+
+		\begin{lstlisting}
+			'emailaddress' => array(
+			  'exclude' => 1,
+			  'label' => 'LLL:EXT:myextension/Resources/Private/Language/locallang_db.xlf:tx_myextension
+		 	  'config' => array(
+			      'type' => 'input',
+			      'size' => 30,
+			      'eval' => 'email,trim'
+			  ),
+			)
+		\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		7f7a7693-263e5ca7-9a9a9381-a93a17f3
+% LTXE-SLIDE-ORIGIN:	08cf25ed-0cba243f-e0738567-598b1534 English
+% LTXE-SLIDE-TITLE:		AbstractCondition For Custom TypoScript Conditions
+% LTXE-SLIDE-REFERENCE:	https://forge.typo3.org/issues/61489
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Korenite promene}
+	\framesubtitle{AbstractCondition za posebno napisane TypoScript uslove}
+
+	\lstset{
+		basicstyle=\tiny\ttfamily
+	}
+
+	\begin{itemize}
+		\item Prilagodjeni TypoScript uslovi mogu se izvesti iz AbstractCondition-a
+
+		\begin{lstlisting}
+			class TestCondition
+			  extends \TYPO3\CMS\Core\Configuration\TypoScript\ConditionMatching\AbstractCondition {
+
+			  public function matchCondition(array $conditionParameters) {
+ 			    if ($conditionParameters[0] === '= 7' && $conditionParameters[1] === '!= 6') {
+			      throw new TestConditionException('All Ok', 1411581139);
+			    }
+			  }
+			}
+		\end{lstlisting}
+
+		\item Odgovarajuci TypoScript kod:
+
+		\begin{lstlisting}
+			[Vendor\Package\TestCondition]
+			[Vendor\Package\TestCondition = 7]
+			[Vendor\Package\TestCondition = 7, != 6]
+		\end{lstlisting}
+
+		\item Operatori koji bi trebalo da su dostupni, definisani su u klasi
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		2180d5d5-046de6e4-da50c870-a7bf6b8f
+% LTXE-SLIDE-ORIGIN:	c137d1cf-7ce68dbe-8149deb5-19fe62bb English
+% LTXE-SLIDE-TITLE:		Signal for IconUtility HTML tag manipulation
+% LTXE-SLIDE-REFERENCE:	https://forge.typo3.org/issues/61289
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Korenite promene}
+	\framesubtitle{Signal za manipulaciju IconUtility HTML tagovima}
+
+	\lstset{
+		basicstyle=\tiny\ttfamily
+	}
+
+	\begin{itemize}
+
+		\item Novi signal za manipulaciju IconUtility HTML tagovima za sprajt ikonice:
+
+		\begin{lstlisting}
+			dispatch(
+			  'TYPO3\\CMS\\Backend\\Utility\\IconUtility',
+			  'buildSpriteHtmlIconTag',
+			  array($tagAttributes, $innerHtml, $tagName)
+			);
+		\end{lstlisting}
+
+		\item Poziv metoda:
+
+		\begin{lstlisting}
+			TYPO3\CMS\Backend\Utility\IconUtility\buildSpriteHtmlIconTag
+		\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		e98a26a5-53aff64a-a157d9ec-0b6edeaf
+% LTXE-SLIDE-ORIGIN:	6713b880-9410d0a5-ef04d276-7bb989ba English
+% LTXE-SLIDE-TITLE:		Add Signal Slots to SoftReferenceIndex
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Korenite promene}
+	\framesubtitle{Dodati signal slotovi za SoftReferenceIndex}
+
+	\lstset{
+		basicstyle=\tiny\ttfamily
+	}
+
+	\begin{itemize}
+		\item
+			\smaller
+				Dva nova signal slot poziva u SoftReferenceIndex-u:
+			\normalsize
+
+		\begin{lstlisting}
+			protected function emitGetTypoLinkParts(
+			  $linkHandlerFound, $finalTagParts, $linkHandlerKeyword, $linkHandlerValue) {
+			  return $this->getSignalSlotDispatcher()->dispatch(
+			    get_class($this),
+			    'getTypoLinkParts',
+			    array($linkHandlerFound, $finalTagParts, $linkHandlerKeyword, $linkHandlerValue)
+			  );
+			}
+			protected function emitSetTypoLinkPartsElement(
+			  $linkHandlerFound, $tLP, $content, $elements, $idx, $tokenID) {
+			  return $this->getSignalSlotDispatcher()->dispatch(
+			    get_class($this),
+			    'setTypoLinkPartsElement',
+			    array($linkHandlerFound, $tLP, $content, $elements, $idx, $tokenID, $this)
+			  );
+			}
+		\end{lstlisting}
+
+		\item
+			\smaller
+				Pozvani u:
+			\normalsize
+
+			\begin{lstlisting}
+				TYPO3\CMS\Core\Database\SoftReferenceIndex->findRef_typolink
+				TYPO3\CMS\Core\Database\SoftReferenceIndex->getTypoLinkParts
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		74487c2e-4ae27506-6678fd7d-15b12d40
+% LTXE-SLIDE-ORIGIN:	d743b8cf-4924c9ca-7e1d330c-3b101461 English
+% LTXE-SLIDE-TITLE:		afterPersistObjetct Signal Slot
+% LTXE-SLIDE-REFERENCE:	https://forge.typo3.org/issues/59986
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Korenite promene}
+	\framesubtitle{afterPersistObjetct Signal Slot}
+
+	\lstset{
+		basicstyle=\tiny\ttfamily
+	}
+
+	\begin{itemize}
+
+		\item Novi afterPersistObject signal slot se emituje za aggregate root nakon perzistovanja svih ostalih objekata
+
+			\begin{lstlisting}
+				protected function emitAfterPersistObjectSignal(DomainObjectInterface $object) {
+				  $this->signalSlotDispatcher->dispatch(__CLASS__, 'afterPersistObject', array($object));
+				}
+			\end{lstlisting}
+
+		\item Pozvan u:
+
+			\begin{lstlisting}
+				TYPO3\CMS\Extbase\Persistence\Generic\Backend->persistObject
+			\end{lstlisting}
+
+		\item Isti signal se emituje u persistObject metodu u AbstractBackend klasi kod Flow-a
+
+	\end{itemize}
+
+\end{frame}                                                 
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		a66a8e21-3fbb8cf5-7c174668-da6c96ec
+% LTXE-SLIDE-ORIGIN:	17ea6530-0ec1ad3e-8e7d9d24-1d5b64aa English
+% LTXE-SLIDE-TITLE:		Signal in loadBaseTca
+% LTXE-SLIDE-REFERENCE:	https://forge.typo3.org/issues/57863
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Korenite promene}
+	\framesubtitle{Signal u loadBaseTca}
+
+	\lstset{
+		basicstyle=\tiny\ttfamily
+	}
+
+	\begin{itemize}
+		\item Kako bi se poboljsale performanse u kontekstu administratorskog interfejsa,
+			sada kompletni TCA moze da se kesira (ne samo njegovi delovi)
+
+		\begin{lstlisting}
+			protected function emitTcaIsBeingBuiltSignal(array $tca) {
+			  list($tca) = static::getSignalSlotDispatcher()->dispatch(
+			    __CLASS__,
+			    'tcaIsBeingBuilt',
+			    array($tca)
+			  );
+			  $GLOBALS['TCA'] = $tca;
+			}
+		\end{lstlisting}
+
+		\item Poziva se u:
+
+			\begin{lstlisting}
+				TYPO3\CMS\Core\Utility\ExtensionManagementUtility\Backend->buildBaseTcaFromSingleFiles
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}  
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		5a396561-3cd9fa55-45d801bf-4dd240e7
+% LTXE-SLIDE-ORIGIN:	2fd6c25c-5f7952da-1406b74c-e0ff5e67 English
+% LTXE-SLIDE-TITLE:		API to Add Cached TCA Changes
+% LTXE-SLIDE-REFERENCE:	https://forge.typo3.org/issues/57942
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Korenite promene}
+	\framesubtitle{API za dodavanje kesiranih TCA promena}
+
+	\begin{itemize}
+		\item PHP fajlovi u \texttt{extkey/Configuration/TCA/Overrides/}
+			se pozivaju odmah nakon sto je TCA kes izgradjen
+
+		\item Ovi fajlovi mogu sadrzati samo kod koji manipulise TCA-om,\newline
+			kao na primer: \texttt{addTCAColumns} ili \texttt{addToAllTCATypes}
+
+		\item Nakon sto ekstenzije pocnu koristiti ove fajlove, ova opcija povecace performanse korisnickog interfejsa
+
+	\end{itemize}
+
+\end{frame} 
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		ba0e0ea5-32a747c1-5cf69cea-7e7c0f0b
+% LTXE-SLIDE-ORIGIN:	89fbd845-3952a157-98d97fc4-4244a2d4 English
+% LTXE-SLIDE-TITLE:		Read-only File Mounts
+% LTXE-SLIDE-REFERENCE:	https://forge.typo3.org/issues/49391
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Korenite promene}
+	\framesubtitle{Read-only File Mounts}
+
+	\begin{itemize}
+
+		\item File mounts se mogu konfigurisati kao "read only" (ponovo)
+		\item Ovo je vec bilo moguce u  TYPO3 CMS 4.x, ali je izbaceno u 6.x
+		\item Primer: dodati folder "test" skladistu sa UID 3 kao read-only File Mount u File List i Element Browser.\newline
+
+			\smaller\texttt{options.folderTree.altElementBrowserMountPoints = 3:/test}\normalsize\newline
+
+			Ako ni jedno skladiste nije definisano, pretpostavlja se da je folder podrazumevano skladiste.
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		f315c37a-8fa6fc6f-1f5b84d1-66b8adba
+% LTXE-SLIDE-ORIGIN:	b964bc6b-27cd32e7-bda8cc3e-8bea33ca English
+% LTXE-SLIDE-TITLE:		Miscellaneous
+% LTXE-SLIDE-REFERENCE:	https://forge.typo3.org/issues/62993
+% LTXE-SLIDE-REFERENCE:	https://forge.typo3.org/issues/61185
+% LTXE-SLIDE-REFERENCE:	https://forge.typo3.org/issues/58365
+% LTXE-SLIDE-REFERENCE:	https://forge.typo3.org/issues/59830
+% LTXE-SLIDE-REFERENCE:	https://forge.typo3.org/issues/62857
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Korenite promene}
+	\framesubtitle{Razno}
+
+	\begin{itemize}
+		\item jQuery je nadogradjen sa verzije 1.11.0 na verziju 1.11.1
+		\item Datatables su nadogradjene sa verzije 1.9.4 na verziju 1.10.2
+		\item Neke stare, beskorisne promenjive su uklonjene iz \texttt{EM\_CONF}
+		\item Ikonice za prosirenja sada mogu biti u SVG formatu (\texttt{ext\_icon.svg})
+		\item Prosledjivanje pogresnog eID identifikatora sada rezultira izuzetkom
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------

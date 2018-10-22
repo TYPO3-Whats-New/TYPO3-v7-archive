@@ -1,0 +1,164 @@
+% ------------------------------------------------------------------------------
+% TYPO3 CMS 7.3 - What's New - Chapter "Deprecated Functions" (English Version)
+%
+% @author	Michael Schams <schams.net>
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		http://typo3.org/download/release-notes/whats-new/
+% @language	English
+% ------------------------------------------------------------------------------
+% LTXE-CHAPTER-UID:		46065d05-1bec23cb-82793761-dfb7b0b1
+% LTXE-CHAPTER-NAME:	Deprecated Functions
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		909542ad-6c4e7767-0f73f29a-0249cb54
+% LTXE-SLIDE-ORIGIN:	693c1737-af89d78f-84db7a5e-f0a05dea German
+% LTXE-SLIDE-TITLE:		Breaking: #63846 - FormEngine refactoring
+% LTXE-SLIDE-REFERENCE:	Breaking-63846-FormEngineRefactoring.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Deprecated/Removed Functions}
+	\framesubtitle{FormEngine Refactoring}
+
+		\textbf{TCA:}
+
+			\small
+			\begin{itemize}
+
+				\item Options \texttt{\_PADDING}, \texttt{\_VALIGN} and \texttt{DISTANCE}
+					have been removed from
+					\texttt{TCA['aTable']['columns']['aField']['config']['wizards']}
+
+				\item Key \texttt{TCA['aTable']['ctrl']['mainPalette']} has been removed
+
+			\end{itemize}
+
+		\textbf{TSconfig:}
+
+			\small
+			\begin{itemize}
+				\item Keys \texttt{mod.web\_layout.tt\_content.fieldOrder} and
+					\texttt{TCEFORM.aTable.aField.linkTitleToSelf} have been removed
+			\end{itemize}
+
+		\textbf{Hooks:}
+
+			\small
+			\begin{itemize}
+				\item Hooks use key \texttt{type} instead of \texttt{form\_type} now
+				\item Hook \texttt{getSingleFieldClass} has been removed
+			\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		063f16c1-c3d2f376-642e83f2-9d3eaed9
+% LTXE-SLIDE-ORIGIN:	4991d739-1ccd5bde-f424f2fc-47d59881 German
+% LTXE-SLIDE-TITLE:		Breaking - #66429: Remove IdentityMap from persistence
+% LTXE-SLIDE-REFERENCE: Breaking-66429-RemoveIdentityMapFromPersistence.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Deprecated/Removed Functions}
+	\framesubtitle{Removal of \texttt{IdentityMap} from Extbase Persistence}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Class \texttt{IdentityMap} has been removed from Extbase persistence\newline
+			\small(a \texttt{ReflectionException} is thrown if it is still used)\normalsize
+
+		\item Accessing the previously existing \texttt{IdentityMap} properties within
+			\texttt{DataMapper} and \texttt{Repository} will fail now and the creation of
+			\texttt{IdentityMap} instances is not possible anymore
+
+		\item Use "Sessions" persistence instead:
+
+			\begin{lstlisting}
+				$session = GeneralUtility::makeInstance(ObjectManager::class)->get(
+				  \TYPO3\CMS\Extbase\Persistence\Generic\Session::class
+				);
+
+				$session->registerObject($object, $identifier);
+
+				if($session->hasIdentifier($identifier)) {
+				  $object = $session->getObjectByIdentifier($identifier, $className);
+				}
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		068af613-ab320130-00499229-6cb65ee6
+% LTXE-SLIDE-ORIGIN:	dcf8fd4e-879461aa-5bb22ccc-7d50bcff German
+% LTXE-SLIDE-TITLE:		Miscellaneous (1)
+% LTXE-SLIDE-REFERENCE:	Deprecation-65344-ExtTables.rst
+% LTXE-SLIDE-REFERENCE:	Breaking-66906-AutomaticPNGToGIFConversionRemoved.rst
+% LTXE-SLIDE-REFERENCE: Breaking-66997-RemoveSuper-challengedPasswordSecurity.rst
+% LTXE-SLIDE-REFERENCE: Breaking-67204-DatabaseConnectionexec_SELECTgetRowsMayThrowException.rst
+% LTXE-SLIDE-REFERENCE: Deprecation-61829-DbalConfigClassFile.rst
+% LTXE-SLIDE-REFERENCE: Deprecation-66789-DeprecateOptionsInCshViewHelper.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Deprecated/Removed Functions}
+	\framesubtitle{Miscellaneous (1)}
+
+	\begin{itemize}
+
+		\item File \texttt{typo3conf/extTables.php} is deprecated.\newline
+			Use the following file instead:\newline
+			\smaller\texttt{<your\_extension>/Configuration/TCA/Overrides/pages.php}\normalsize
+
+		\item Configuration \texttt{\$TYPO3\_CONF\_VARS[GFX][png\_to\_gif]} has been removed
+
+		\item In TYPO3 CMS installations, which do \underline{not} have extension
+			\texttt{rsaauth} installed, BE login passwords are transferred in plain text now\newline
+			\small(solution: install extension \texttt{rsaauth} or use HTTPS for the BE)\normalsize
+
+		\item Method \texttt{exec\_SELECTgetRows()} validates parameter \texttt{\$uidIndexField} now.
+			If the specified field is not present in the database result, an
+			\texttt{InvalidArgumentException} is thrown.
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		697a7dbb-6f3f402c-13be799d-0115ab4d
+% LTXE-SLIDE-ORIGIN:	38119304-60574ef0-2f5a116c-1c87717f German
+% LTXE-SLIDE-TITLE:		Miscellaneous (2)
+% LTXE-SLIDE-REFERENCE:	Deprecation-67029-DeprecatePageBgImgOption.rst
+% LTXE-SLIDE-REFERENCE: Deprecation-67171-T3editorIsEnabled.rst
+% LTXE-SLIDE-REFERENCE: Breaking-67212-DiscardLegacyClassLoader.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Deprecated/Removed Functions}
+	\framesubtitle{Miscellaneous (2)}
+
+	\begin{itemize}
+
+		\item DBAL option \texttt{config.classFile} has been removed
+
+		\item Options \texttt{iconOnly} and \texttt{styleAttributes} of
+			\texttt{CshViewHelper} are marked as deprecated now
+
+		\item TypoScript option \texttt{page.bgImg} is deprecated now
+
+		\item Method \texttt{isEnabled()} of class \texttt{T3editor} is deprecated now
+
+		\item Old TYPO3 ClassLoader has been removed in favor of Composer ClassLoader
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------

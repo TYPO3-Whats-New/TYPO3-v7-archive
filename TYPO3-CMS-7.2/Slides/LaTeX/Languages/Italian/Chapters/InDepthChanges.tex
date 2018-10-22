@@ -1,0 +1,779 @@
+% ------------------------------------------------------------------------------
+% TYPO3 CMS 7.2 - What's New - Chapter "In-Depth Changes" (English Version)
+%
+% @author	Michael Schams <schams.net>
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		http://typo3.org/download/release-notes/whats-new/
+% @language	English	
+% ------------------------------------------------------------------------------
+% LTXE-CHAPTER-UID:		e28087f2-4bffcc7b-3c685cca-579f18a8
+% LTXE-CHAPTER-NAME:	In-Depth Changes
+% ------------------------------------------------------------------------------
+
+\section{In-Depth Changes}
+\begin{frame}[fragile]
+	\frametitle{Modifiche rilevanti}
+
+	\begin{center}\huge{Capitolo 3:}\end{center}
+	\begin{center}\huge{\color{typo3darkgrey}\textbf{Modifiche rilevanti}}\end{center}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		adeca8be-bc77dd64-0ab16a0e-4a31a69b
+% LTXE-SLIDE-ORIGIN:	547708aa-92282fd1-6c27d618-4f13f86b English
+% LTXE-SLIDE-TITLE:		Add SVG support
+% LTXE-SLIDE-REFERENCE:	Feature-50136-AddSVGSupport.rst
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{Modifiche rilevanti}
+	\framesubtitle{Supporto SVG nel Core}
+
+	\begin{itemize}
+		\item Il core di TYPO3 CMS ora gestisce le immagini SVG ("Scalable Vector Graphics")
+
+		\item Quando un immagine SVG è scalata, un record con le nuove dimensioni calcolate
+			è registrato in \texttt{sys\_file\_processedfile} piuttosto che creare
+			un nuovo file elaborato\newline
+			\small(eccetto nel caso in cui l'immagine è elaborata ulterioramente, es. cropping)\normalsize.
+
+		\item Un fallback è aggiunto per determinare le dimensioni dell'immagine SVG se ImageMagick/GraphicsMagick
+			non può determinare le dimensioni. In questo caso, viene letto il contenuto del file XML.
+
+		\item SVG è stata aggiunta alla lista dei file validi:\newline
+			\texttt{\$GLOBALS['TYPO3\_CONF\_VARS']['GFX']['imagefile\_ext']}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		367a45ce-3d55c263-c00261a4-b65c7669
+% LTXE-SLIDE-ORIGIN:	bd03e141-3842b75e-8a44920f-a8c139e5 English
+% LTXE-SLIDE-TITLE:		Add count methods and sort functionality to FAL drivers
+% LTXE-SLIDE-REFERENCE:	Breaking-56746-AddCountMethodsAndSortFunctionalityToFalDrivers.rst
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{Modifiche rilevanti}
+	\framesubtitle{Estensione del Driver FAL}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item Al fine di migliorare le prestazioni della lista dei file quando mostra storage (remoti)
+			il driver FAL driver deve occuparsi del'ordinamento e determinare il numero di file/directory. 
+			Due nuovi parametri \texttt{sort} e \texttt{sortRev} sono stati aggiunti
+			per permettere che:
+
+			\begin{lstlisting}
+				public function getFilesInFolder($folderIdentifier, $start = 0, $numberOfItems = 0,
+				  $recursive = FALSE, array $filenameFilterCallbacks = array(), $sort = '', $sortRev = FALSE);
+
+				public function getFoldersInFolder($folderIdentifier, $start = 0, $numberOfItems = 0,
+				  $recursive = FALSE, array $folderNameFilterCallbacks = array(), $sort = '', $sortRev = FALSE);
+			\end{lstlisting}
+
+		\item In aggiunta, due nuovi metodi sono stati implementati:
+
+			\begin{lstlisting}
+				public function getFilesInFolderCount($folderIdentifier, $recursive = FALSE,
+				  array $filenameFilterCallbacks = array());
+
+				public function getFoldersInFolderCount($folderIdentifier, $recursive = FALSE,
+				  array $folderNameFilterCallbacks = array());
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		0f1885f4-1f7bee44-e5ac0f93-72e81664
+% LTXE-SLIDE-ORIGIN:	d0df6060-4b8d33a9-69adad59-422e9ada English
+% LTXE-SLIDE-TITLE:		Introduce Backend Routing (1)
+% LTXE-SLIDE-REFERENCE:	commit a08ce7238e583d1962edfe998e04c7d9c3d7c2ae
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{Modifiche rilevanti}
+	\framesubtitle{Backend Routing API (1)}
+
+	\begin{itemize}
+		\item Un Backend Routing API è stato implementato, per gestire gli Entry Points
+		\item Ispirato al Symfony Routing Framework, queste API sono compatibili in larga misura\newline
+			\small(tuttavia TYPO3 usa solamente il 20\% circa in questo punto)\normalsize
+
+		\item Fondamentalmente tre classi implementano la funzionalità:
+			\begin{itemize}
+				\item \texttt{class Route}:\tabto{3.6cm}contiene dettagli sul percorso e opzioni
+				\item \texttt{class Router}:\tabto{3.6cm}API per abbinare il percorso
+				\item \texttt{class UrlGenerator}:\tabto{3.6cm}crea l'URL
+			\end{itemize}
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		f9628236-bf9fb2c8-3d64979f-fbcfbde1
+% LTXE-SLIDE-ORIGIN:	fe1eec67-bbf31ed9-57b8e83a-3a922f0e English
+% LTXE-SLIDE-TITLE:		Introduce Backend Routing (2)
+% LTXE-SLIDE-REFERENCE:	commit a08ce7238e583d1962edfe998e04c7d9c3d7c2ae
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{Modifiche rilevanti}
+	\framesubtitle{Backend Routing API (2)}
+
+	\begin{itemize}
+
+		\item I percorsi sono definiti nel seguente file di un estensione:
+			\texttt{Configuration/Backend/Routes.php}\newline
+			(vedi l'estensioni di sistema \texttt{backend} ad esempio)
+
+		\item Maggiori informazioni al riguardo di Backend Routing API:\newline
+			\small\url{http://wiki.typo3.org/Blueprints/BackendRouting}\normalsize
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		7023dcc3-fca97524-a288949f-e44fad65
+% LTXE-SLIDE-ORIGIN:	9d56ca19-04a98896-ba0a973c-8a16e877 English
+% LTXE-SLIDE-TITLE:		New system extension: mediace
+% LTXE-SLIDE-REFERENCE:	Breaking-64719-MediaContentMovedToSystemExtension.rst
+% LTXE-SLIDE-REFERENCE:	Breaking-65778-MediaWizardProviderMovedToSystemExtension.rst
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{Modifiche rilevanti}
+	\framesubtitle{Nuova estensione di sistema per gli elementi di contenuti multimediali}
+
+	\begin{itemize}
+
+		\item La nuova estensione di sistema "\texttt{mediace}" contiene i seguenti cObjects:
+
+			\begin{itemize}
+				\item \texttt{MULTIMEDIA}
+				\item \texttt{MEDIA}
+				\item \texttt{SWFOBJECT}
+				\item \texttt{FLOWPLAYER}
+				\item \texttt{QTOBJECT}
+			\end{itemize}
+
+		\item Gli elementi di contenuto \texttt{media} e \texttt{multimedia} sono stati spostati 
+			nell'estensione di sistema, come anche il "Media Wizard Provider"
+
+		\item Questa estensione \underline{\textbf{non}} è installata di default!
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		1f70ab8e-fad593fe-a257a4de-ab4bd819
+% LTXE-SLIDE-ORIGIN:	cc63cd98-524ee6df-38430963-f7c7067c English
+% LTXE-SLIDE-TITLE:		Composer vendor directory
+% LTXE-SLIDE-REFERENCE:	Breaking-66001-ComposerVendorDirectoryChanged.rst
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{Modifiche rilevanti}
+	\framesubtitle{Posizione delle librerie di terze parti}
+
+	\begin{itemize}
+
+		\item Le installazioni con Composer di librerie di terze parti sono ora posizionate sotto \texttt{typo3/contrib/vendor}\newline
+			\small
+				(TYPO3 CMS < 7.2: nella directory \texttt{Packages/Libraries})
+			\normalsize
+
+		\item In questo modo il processo di creazione per il rilascio di TYPO3 CMS come archivio zip o tar 
+				può generare un installazione completamente funzionante, senza dover dipendere da \texttt{Packages/} di librerie di terze parti
+
+		\item I problemi possono verificarsi con installazioni fatte via composer e l'uso di \texttt{phpunit}
+			senza dipendenze del composer che è stato completamente rivisto. Per fissare questo, eseguire:
+
+			\begin{lstlisting}
+				# cd htdocs/
+				# rm -rf typo3/contrib/vendor/ bin/ Packages/Libraries/ composer.lock
+				# composer install
+			\end{lstlisting}
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		d561f2f1-9b76bd0d-1e901ba6-7f3991b2
+% LTXE-SLIDE-ORIGIN:	c9a5288c-f45aac1e-34606612-fdf6ec18 English
+% LTXE-SLIDE-TITLE:		Introduce JavaScript notification API
+% LTXE-SLIDE-REFERENCE:	Feature-66047-IntroduceJavascriptNotificationApi.rst
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{Modifiche rilevanti}
+	\framesubtitle{Notifiche JavaScript}
+
+	\begin{itemize}
+
+		\item Sono state implementate delle nuove API per le notifiche via JavaScript:
+			\begin{lstlisting}
+				// vecchio e deprecato:
+				top.TYPO3.Flashmessages.display(TYPO3.Severity.notice)
+
+				// nuovo e unico modo corretto da TYPO3 CMS 7.2:
+				top.TYPO3.Notification.notice(title, message)
+    		\end{lstlisting}
+
+		\item Sono presenti le seguenti funzioni delle API:\newline
+			\small(parameter \texttt{duration} is optional and features a default value of 5 seconds)\normalsize
+			\begin{itemize}
+				\item \normalsize\smaller\texttt{top.TYPO3.Notification.notice(title, message, duration)}\normalsize
+				\item \smaller\texttt{top.TYPO3.Notification.info(title, message, duration)}\normalsize
+				\item \smaller\texttt{top.TYPO3.Notification.success(title, message, duration)}\normalsize
+				\item \smaller\texttt{top.TYPO3.Notification.warning(title, message, duration)}\normalsize
+				\item \smaller\texttt{top.TYPO3.Notification.error(title, message, duration)}\normalsize
+			\end{itemize}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		811f4903-e66d727b-539dacc6-0fd8dd79
+% LTXE-SLIDE-ORIGIN:	b2acb5df-60b9a7dd-35cf697d-2a50d5db English
+% LTXE-SLIDE-TITLE:		System Information Dropdown (1)
+% LTXE-SLIDE-REFERENCE:	Feature-65767-SystemInformationDropdown.rst
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{Modifiche rilevanti}
+	\framesubtitle{Tendina per informazioni di sistema (1)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item Nuove voci su informazioni di sistema possono essere aggiunte alla tendina creando una nuova sezione
+
+		\item La sezione deve essere registrata nel file \texttt{ext\_localconf.php}:
+
+			\begin{lstlisting}
+				$signalSlotDispatcher = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(
+				  \TYPO3\CMS\Extbase\SignalSlot\Dispatcher::class);
+
+				$signalSlotDispatcher->connect(
+				  \TYPO3\CMS\Backend\Backend\ToolbarItems\SystemInformationToolbarItem::class,
+				  'getSystemInformation',
+				  \Vendor\Extension\SystemInformation\Item::class,
+				  'getItem'
+				);
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		73f1cc80-da9fc8a2-5f044263-a90ba71f
+% LTXE-SLIDE-ORIGIN:	e0f13209-22e0ff8c-7ff23bf9-31b1bb52 English
+% LTXE-SLIDE-TITLE:		System Information Dropdown (2)
+% LTXE-SLIDE-REFERENCE:	Feature-65767-SystemInformationDropdown.rst
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{Modifiche rilevanti}
+	\framesubtitle{Tendina per informazioni di sistema (2)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Nuove voci su informazioni di sistema possono essere aggiunte alla tendina creando una nuova sezione
+
+		\item Richiede la classe \texttt{Item} e i metodi \texttt{getItem()} nel file
+			\small
+				\texttt{EXT:extension\textbackslash
+					Classes\textbackslash
+					SystemInformation\textbackslash
+					Item.php}:
+			\normalsize
+
+		\begin{lstlisting}
+			class Item {
+			  public function getItem() {
+			    return array(array(
+			      'title' => 'The title shown on hover',
+			      'value' => 'Description shown in the list',
+			      'status' => SystemInformationHookInterface::STATUS_OK,
+			      'count' => 4,
+			      'icon' => \TYPO3\CMS\Backend\Utility\IconUtility::getSpriteIcon(
+				    'extensions-example-information-icon')
+			    ));
+			  }
+			}
+		\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		1d54e32b-48c6a0ba-efbec558-3b2d446f
+% LTXE-SLIDE-ORIGIN:	7d27df49-260500ef-0fc78a89-6e80069b English
+% LTXE-SLIDE-TITLE:		System Information Dropdown (3)
+% LTXE-SLIDE-REFERENCE:	Feature-65767-SystemInformationDropdown.rst
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{Modifiche rilevanti}
+	\framesubtitle{Tendina per informazioni di sistema (3)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item L'icona \texttt{extensions-example-information-icon} deve essere registrata in \texttt{ext\_localconf.php}:
+		\begin{lstlisting}
+			\TYPO3\CMS\Backend\Sprite\SpriteManager::addSingleIcons(
+			  array(
+			    'information-icon' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extRelPath(
+			      $_EXTKEY) . 'Resources/Public/Images/Icons/information-icon.png'
+			    ),
+			   $_EXTKEY
+			);
+		\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		a7eec3de-505933e1-288c26bd-542d2bce
+% LTXE-SLIDE-ORIGIN:	d7449c27-fd9676cf-d12be80b-c24a4536 English
+% LTXE-SLIDE-TITLE:		System Information Dropdown (4)
+% LTXE-SLIDE-REFERENCE:	Feature-65767-SystemInformationDropdown.rst
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{Modifiche rilevanti}
+	\framesubtitle{Tendina per informazioni di sistema (4)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item I messaggi sono mostrati nella parte bassa della tendina
+
+		\item Le estensioni possono gestire la propria sezione per visualizzare i messaggi:
+
+		\begin{lstlisting}
+			$signalSlotDispatcher = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(
+			  \TYPO3\CMS\Extbase\SignalSlot\Dispatcher::class);
+
+			$signalSlotDispatcher->connect(
+			  \TYPO3\CMS\Backend\Backend\ToolbarItems\SystemInformationToolbarItem::class,
+			  'loadMessages',
+			  \Vendor\Extension\SystemInformation\Message::class,
+			  'getMessage'
+			);
+		\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		3d41164c-bd67609d-3c7bb065-f724b9b5
+% LTXE-SLIDE-ORIGIN:	ab3b46ce-c7d7a228-7f7888af-4312fcdd English
+% LTXE-SLIDE-TITLE:		System Information Dropdown (5)
+% LTXE-SLIDE-REFERENCE:	Feature-65767-SystemInformationDropdown.rst
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{Modifiche rilevanti}
+	\framesubtitle{Tendina per informazioni di sistema (5)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item I messaggi sono mostrati nella parte bassa della tendina
+
+		\item E' richiesta la classe \texttt{Message} e i suoi metodi \texttt{getMessage()} in file
+			\small
+				\texttt{EXT:extension\textbackslash
+					Classes\textbackslash
+					SystemInformation\textbackslash
+					Message.php}:
+			\normalsize
+
+		\begin{lstlisting}
+			class Message {
+			  public function getMessage() {
+			    return array(array(
+			      'status' => SystemInformationHookInterface::STATUS_OK,
+			      'text' => 'Something went wrong. Take a look at the reports module.'
+			    ));
+			  }
+			}
+		\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		f24c780e-3c79324a-5804b099-b8cf24ad
+% LTXE-SLIDE-ORIGIN:	98e2056a-d165b638-b1a1ee08-206bc15a English
+% LTXE-SLIDE-TITLE:		Add image cropping
+% LTXE-SLIDE-REFERENCE:	Feature-65584-AddImageCropping.rst
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{Modifiche rilevanti}
+	\framesubtitle{Opzioni di configurazione per la manipolazione di immagini (1)}
+
+	\begin{itemize}
+		\item Le seguenti opzioni per la configurazione TypoScript sono disponibili:
+			\begin{lstlisting}
+				# disabilita il cropping per tutte le immagini
+				tt_content.image.20.1.file.crop =
+
+				# sovrascrivi o imposta il cropping per tutte le immagini
+				# offsetX,offsetY,width,height
+				tt_content.image.20.1.file.crop = 50,50,100,100
+			\end{lstlisting}
+
+		\item Anche Fluid gestisce la funzione di cropping:
+			\begin{lstlisting}
+				# disabilita il cropping per tutte le immagini
+				<f:image image="{imageObject}" crop="" ></f:image>
+
+				# sovrascrivi o imposta il cropping per tutte le immagini
+				# offsetX,offsetY,width,height
+				<f:image image="{imageObject}" crop="50,50,100,100" ></f:image>
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		01744aff-e4eacd9d-feacd6ea-2f039103
+% LTXE-SLIDE-ORIGIN:	e9cce085-6c300f1f-010de4ee-2c744704 English
+% LTXE-SLIDE-TITLE:		Add image cropping (2)
+% LTXE-SLIDE-REFERENCE:	Feature-65584-AddImageCropping.rst
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{Modifiche rilevanti}
+	\framesubtitle{Opzioni di configurazione per la manipolazione di immagini (2)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\smaller\ttfamily}
+
+	\begin{itemize}
+		\item Anche le funzionalità TCA delle immagini gestiscono il cropping:
+
+			\begin{itemize}
+				\item Column Type: \texttt{image\_manipulation}
+				\item Config \texttt{file\_field}: string	\tabto{5.6cm}(default: \texttt{uid\_local})
+				\item Config \texttt{enableZoom}: boolean	\tabto{5.6cm}(default: \texttt{FALSE})
+				\item Config \texttt{allowedExtensions}: string\newline
+					(default: \smaller\texttt{\$GLOBALS['TYPO3\_CONF\_VARS']['GFX']['imagefile\_ext']}\small)
+				\item Config \texttt{ratios}: array, default:
+
+					\begin{lstlisting}
+						array(
+						  '1.7777777777777777' => '16:9',
+						  '1.3333333333333333' => '4:3',
+						  '1' => '1:1',
+						  'NaN' => 'Free'
+						)
+					\end{lstlisting}
+			\end{itemize}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		b42ad257-5700308d-58cec09f-86332758
+% LTXE-SLIDE-ORIGIN:	ed863269-574e4061-d69f855e-6494c062 English
+% LTXE-SLIDE-TITLE:		Additional params for HTMLparser userFunc
+% LTXE-SLIDE-REFERENCE:	Feature-59712-HtmlParserAdditionalUserFuncParams.rst
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{Modifiche rilevanti}
+	\framesubtitle{Parametri aggiuntivi per la userFunc HTMLparser}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item I parametri aggiuntivi che possono essere gestiti nella userFunc di HTMLparser:
+
+			\begin{lstlisting}
+				myobj = TEXT
+				myobj.value = <a href="/" class="myclass">MyText</a>
+				myobj.HTMLparser.tags.a.fixAttrib.class {
+				  userFunc = Tx\MyExt\Myclass->htmlUserFunc
+				  userFunc.myparam = test
+				}
+			\end{lstlisting}
+
+		\item Accedi a questi parametri da un estensione nel seguente modo:
+
+			\begin{lstlisting}
+				function htmlUserFunc(array $params, HtmlParser $htmlParser) {
+				  // $params['attributeValue'] contains the attribute value "myclass"
+				  // $params['myparam'] is set to "test" in this example
+				  ...
+				}
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		0f769274-a3682920-bd405a24-c881fa60
+% LTXE-SLIDE-ORIGIN:	b04f8d44-fd695c73-b768f3cb-fd6d8643 English
+% LTXE-SLIDE-TITLE:		New Locking API (1)
+% LTXE-SLIDE-REFERENCE:	Feature-47712-NewLockingAPI.rst
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{Modifiche rilevanti}
+	\framesubtitle{Locking API (1)}
+
+	\begin{itemize}
+
+		\item Sono state introdotte delle nuove Locking API, che permettono vari metodi di blocco (SimpleFile, Semaphore, ...)
+		\item Un metodo di blocco deve implementare \small\texttt{LockingStrategyInterface}\normalsize:
+		\begin{lstlisting}
+			$lockFactory = GeneralUtility::makeInstance(LockFactory::class);
+			$locker = $lockFactory->createLocker('someId');
+			$locker->acquire() || die('Could not acquire lock.');
+			...
+			$locker->release();
+		\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		84067030-2d8129d6-9db26d3e-7aeea16c
+% LTXE-SLIDE-ORIGIN:	79a00412-c72401e6-4d9667c9-0e15d3f4 English
+% LTXE-SLIDE-TITLE:		New Locking API (2)
+% LTXE-SLIDE-REFERENCE:	Feature-47712-NewLockingAPI.rst
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{Modifiche rilevanti}
+	\framesubtitle{Locking API (2)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Alcuni metodi gestiscono non-blocking locks:
+
+		\begin{lstlisting}
+			$lockFactory = GeneralUtility::makeInstance(LockFactory::class);
+			$locker = $lockFactory->createLocker(
+			  'someId',
+			  LockingStrategyInterface::LOCK_CAPABILITY_SHARED |
+			    LockingStrategyInterface::LOCK_CAPABILITY_NOBLOCK
+			);
+			try {
+			  $result = $locker->acquire(LockingStrategyInterface::LOCK_CAPABILITY_SHARED | LockingStrategyInterface::LOCK_CAPABILITY_NOBLOCK);
+			  catch (\RuntimeException $e) {
+			  if ($e->getCode() === 1428700748) {
+			    // some process owns the lock
+			    // let's do something else meanwhile
+			    ...
+			  }
+			}
+			if ($result) {
+			  $locker->release();
+			}
+		\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		a811f378-59400e77-2ed3cc5f-e70d2734
+% LTXE-SLIDE-ORIGIN:	108cb4a7-6e006507-c25a91e7-3a867f09 English
+% LTXE-SLIDE-TITLE:		Add signal after extension installation
+% LTXE-SLIDE-REFERENCE:	commit 39e0fd0a2c919da270cb49223433bcf95febbb10
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{Modifiche rilevanti}
+	\framesubtitle{Signal dopo Extension Installation}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Sono stati implementati nuovi signal nei metodi
+			\smaller
+				\texttt{\textbackslash
+					TYPO3\textbackslash
+					CMS\textbackslash
+					Extensionmanager\textbackslash
+					Utility\textbackslash
+					InstallUtility::install()}
+			\normalsize
+			richiamato appena una estensione è stata installata e tutti gli imports/updates
+			eseguiti
+
+		\begin{lstlisting}
+			// execution
+			$this->emitAfterExtensionInstallSignal($extensionKey);
+
+			// methode
+			protected function emitAfterExtensionInstallSignal($extensionKey) {
+			  $this->signalSlotDispatcher->dispatch(
+			    __CLASS__,
+			    'afterExtensionInstall',
+			    array($extensionKey, $this)
+			  );
+			}
+		\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		150601e1-797c26a6-fc446612-93a2640d
+% LTXE-SLIDE-ORIGIN:	acb1ba95-1a401bef-549072a1-f32263a9 English
+% LTXE-SLIDE-TITLE:		Registry for adding text extractor classes (1)
+% LTXE-SLIDE-REFERENCE:	Feature-36743-FAL-TextExtractorRegistry.rst
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{Modifiche rilevanti}
+	\framesubtitle{Registri per estrazione di testo (1)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Vari estrattori di testo possono essere registrati per permettere la gestione
+			di differenti tipi di file (e.g. Office, file PDF, etc.)
+
+		\item Il core di TYPO3 dispone di un estrattore per file di testo
+
+		\item Ogni classe registrata per estrarre testo deve implementare \texttt{TextExtractorInterface}
+
+		\item ...e i seguenti metodi:\newline
+			\texttt{canExtractText()}\newline
+			\small
+				checks if text extraction from the given file is possible
+			\normalsize
+			\newline
+			\texttt{extractText()}\newline
+			\small
+				returns the file's text content as a string
+			\normalsize
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		f7fe7a8f-f7cb5a52-ca3c73cc-9a775a14
+% LTXE-SLIDE-ORIGIN:	acb1ba95-1a401bef-549072a1-f32263a9 English
+% LTXE-SLIDE-TITLE:		Registry for adding text extractor classes (2)
+% LTXE-SLIDE-REFERENCE:	Feature-36743-FAL-TextExtractorRegistry.rst
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{Modifiche rilevanti}
+	\framesubtitle{Registri per estrazione di testo (2)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Gli estrattori di testo vanno registrati nel file \texttt{ext\_localconf.php}:
+
+			\begin{lstlisting}
+				$textExtractorRegistry = \TYPO3\CMS\Core\Resource\TextExtraction\TextExtractorRegistry::getInstance();
+				$textExtractorRegistry->registerTextExtractor(
+				  \TYPO3\CMS\Core\Resource\TextExtraction\PlainTextExtractor::class
+				);
+			\end{lstlisting}
+
+		\item Usa come di seguito:
+
+			\begin{lstlisting}
+				$textExtractorRegistry = \TYPO3\CMS\Core\Resource\TextExtraction\TextExtractorRegistry::getInstance();
+				$extractor = $textExtractorRegistry->getTextExtractor($file);
+				if($extractor !== NULL) {
+				  $content = $extractor->extractText($file);
+				}
+			\end{lstlisting}
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		c55e7853-0a711829-aa05950c-c01958c9
+% LTXE-SLIDE-ORIGIN:	d9657b5d-5cd56c65-d7266a27-401dd233 English
+% LTXE-SLIDE-TITLE:		Miscellaneous
+% LTXE-SLIDE-REFERENCE:	Feature-66042-WebLibrariesLoadedViaBower.rst
+% LTXE-SLIDE-REFERENCE:	Feature-63703-AddOptionToStopTask.rst
+% LTXE-SLIDE-REFERENCE:	Feature-61463-AllowProcessedFoldersInDifferentStorage.rst
+% LTXE-SLIDE-REFERENCE:	Feature-52693-TSFE-RequestedId.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Modifiche rilevanti}
+	\framesubtitle{Varie}
+
+	\begin{itemize}
+
+		\item Le librerie web (ad esempio Twitter Bootstrap, jQuery, Font Awesome, etc.) usano
+			"Bower" (\url{http://bower.io}) e non sono più parti del repository git del core TYPO3\newline
+			\small
+				\texttt{\# bower install}	\tabto{3.4cm}esegue un installazione\newline
+				\texttt{\# bower update}		\tabto{3.4cm}esegue un aggiornamento\newline
+			\normalsize
+			(il file \texttt{bower.json} è posizinato nella directory \texttt{Build/})
+
+		\item Scheduler CLI dispone dell'opzione "\texttt{-s}" per bloccare un task in esecuzione
+
+		\item La gestione di un archivio di directory (remoto) può essere fuori dall'archivio
+			(utile per archivi di sola lettura)
+
+		\item E' possibile disporre dell'ID di pagina delle pagina originariamente richiesta:
+			\texttt{\$TSFE->getRequestedId()}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------

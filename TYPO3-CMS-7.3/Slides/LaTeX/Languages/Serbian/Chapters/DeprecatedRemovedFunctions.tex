@@ -1,0 +1,179 @@
+% ------------------------------------------------------------------------------
+% TYPO3 CMS 7.3 - What's New - Chapter "Deprecated Functions" (English Version)
+%
+% @author	Michael Schams <schams.net>
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		http://typo3.org/download/release-notes/whats-new/
+% @language	English
+% ------------------------------------------------------------------------------
+% LTXE-CHAPTER-UID:		46065d05-1bec23cb-82793761-dfb7b0b1
+% LTXE-CHAPTER-NAME:	Deprecated Functions
+% ------------------------------------------------------------------------------
+
+\section{Zastarele/izbacene funkcije}
+\begin{frame}[fragile]
+	\frametitle{Zastarele/izbacene funkcije}
+
+	\begin{center}\huge{Poglavlje 5:}\end{center}
+	\begin{center}\huge{\color{typo3darkgrey}\textbf{Zastarele/izbacene funkcije}}\end{center}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		565492d8-95ce011d-569d58a4-2ad00b36
+% LTXE-SLIDE-ORIGIN:	909542ad-6c4e7767-0f73f29a-0249cb54 English
+% LTXE-SLIDE-ORIGIN:	693c1737-af89d78f-84db7a5e-f0a05dea German
+% LTXE-SLIDE-TITLE:		Breaking: #63846 - FormEngine refactoring
+% LTXE-SLIDE-REFERENCE:	Breaking-63846-FormEngineRefactoring.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Zastarele/izbacene funkcije}
+	\framesubtitle{Refaktorisanje FormEngine-a}
+
+		\textbf{TCA:}
+
+			\small
+			\begin{itemize}
+
+				\item Opcije \texttt{\_PADDING}, \texttt{\_VALIGN} i \texttt{DISTANCE}
+					su uklonjene iz
+					\texttt{TCA['aTable']['columns']['aField']['config']['wizards']}
+
+				\item Kljuc \texttt{TCA['aTable']['ctrl']['mainPalette']} je uklonjen
+
+			\end{itemize}
+
+		\textbf{TSconfig:}
+
+			\small
+			\begin{itemize}
+				\item Kljuc \texttt{mod.web\_layout.tt\_content.fieldOrder} i
+					\texttt{TCEFORM.aTable.aField.linkTitleToSelf} su uklonjeni
+			\end{itemize}
+
+		\textbf{Hooks:}
+
+			\small
+			\begin{itemize}
+				\item Hooks sada koristi kljuc \texttt{type} umesto \texttt{form\_type} 
+				\item Hook \texttt{getSingleFieldClass} je uklonjen
+			\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		bcca4331-e039473d-f1546c64-9db8daa3
+% LTXE-SLIDE-ORIGIN:	063f16c1-c3d2f376-642e83f2-9d3eaed9 English
+% LTXE-SLIDE-ORIGIN:	4991d739-1ccd5bde-f424f2fc-47d59881 German
+% LTXE-SLIDE-TITLE:		Breaking - #66429: Remove IdentityMap from persistence
+% LTXE-SLIDE-REFERENCE: Breaking-66429-RemoveIdentityMapFromPersistence.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Zastarele/izbacene funkcije}
+	\framesubtitle{Uklanjanje \texttt{IdentityMap} iz Extbase Persistence}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Klasa \texttt{IdentityMap} je uklonjena iz Extbase persistence\newline
+			\small(\texttt{ReflectionException} se baca ukoliko se i dalje koristi)\normalsize
+
+		\item Pokusaj da se pristupi nekada postojecoj \texttt{IdentityMap} osobini unutar 
+			\texttt{DataMapper-a} i \texttt{Repository-ja} bice neuspesan i kreiranje instance
+			\texttt{IdentityMap} vise nije moguce
+
+		\item Koristiti umesto toga "Sessions" persistence:
+
+			\begin{lstlisting}
+				$session = GeneralUtility::makeInstance(ObjectManager::class)->get(
+				  \TYPO3\CMS\Extbase\Persistence\Generic\Session::class
+				);
+
+				$session->registerObject($object, $identifier);
+
+				if($session->hasIdentifier($identifier)) {
+				  $object = $session->getObjectByIdentifier($identifier, $className);
+				}
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		42f4ce6c-4e72bf19-97dd2f8e-106eca81
+% LTXE-SLIDE-ORIGIN:	068af613-ab320130-00499229-6cb65ee6 English
+% LTXE-SLIDE-ORIGIN:	dcf8fd4e-879461aa-5bb22ccc-7d50bcff German
+% LTXE-SLIDE-TITLE:		Miscellaneous (1)
+% LTXE-SLIDE-REFERENCE:	Deprecation-65344-ExtTables.rst
+% LTXE-SLIDE-REFERENCE:	Breaking-66906-AutomaticPNGToGIFConversionRemoved.rst
+% LTXE-SLIDE-REFERENCE: Breaking-66997-RemoveSuper-challengedPasswordSecurity.rst
+% LTXE-SLIDE-REFERENCE: Breaking-67204-DatabaseConnectionexec_SELECTgetRowsMayThrowException.rst
+% LTXE-SLIDE-REFERENCE: Deprecation-61829-DbalConfigClassFile.rst
+% LTXE-SLIDE-REFERENCE: Deprecation-66789-DeprecateOptionsInCshViewHelper.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Zastarele/izbacene funkcije}
+	\framesubtitle{Razno (1)}
+
+	\begin{itemize}
+
+		\item Fajl \texttt{typo3conf/extTables.php} je zastareo.\newline
+			Umesto njega koristiti sledeci fajl:\newline
+			\smaller\texttt{<your\_extension>/Configuration/TCA/Overrides/pages.php}\normalsize
+
+		\item Konfiguracija \texttt{\$TYPO3\_CONF\_VARS[GFX][png\_to\_gif]} je uklonjena
+
+		\item Kod TYPO3 CMS instalacija koje \underline{nemaju} instalirano prosirenje 
+			\texttt{rsaauth}, BE login sifre bice poslate kao obican tekst\newline
+			\small(resenje: instalirati prosirenje \texttt{rsaauth} ili koristiti HTTPS za BE)\normalsize
+
+		\item Metoda \texttt{exec\_SELECTgetRows()} sada validira \texttt{\$uidIndexField} parametar.
+			Ukoliko specificno polje nije prisutno u rezultatu iz baze podataka baca se
+			\texttt{InvalidArgumentException}.
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		a95ee0a6-63717153-1b8db7f8-9b8a833d
+% LTXE-SLIDE-ORIGIN:	697a7dbb-6f3f402c-13be799d-0115ab4d English
+% LTXE-SLIDE-ORIGIN:	38119304-60574ef0-2f5a116c-1c87717f German
+% LTXE-SLIDE-TITLE:		Miscellaneous (2)
+% LTXE-SLIDE-REFERENCE:	Deprecation-67029-DeprecatePageBgImgOption.rst
+% LTXE-SLIDE-REFERENCE: Deprecation-67171-T3editorIsEnabled.rst
+% LTXE-SLIDE-REFERENCE: Breaking-67212-DiscardLegacyClassLoader.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Zastarele/izbacene funkcije}
+	\framesubtitle{Razno (2)}
+
+	\begin{itemize}
+
+		\item DBAL opcija \texttt{config.classFile} je uklonjena
+
+		\item Opcije \texttt{iconOnly} i \texttt{styleAttributes} iz
+			\texttt{CshViewHelper} sada su oznacene kao zastarele
+
+		\item TypoScript opcija \texttt{page.bgImg} je uklonjena
+
+		\item Metoda \texttt{isEnabled()} koja pripada klasi \texttt{T3editor} sada je zastarela
+
+		\item Stari TYPO3 ClassLoader uklonjen je u korist Composer ClassLoader-a
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------

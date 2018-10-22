@@ -1,0 +1,189 @@
+% ------------------------------------------------------------------------------
+% TYPO3 CMS 7.4 - What's New - Chapter "Introduction" (English Version)
+%
+% @author	Michael Schams <schams.net>
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		http://typo3.org/download/release-notes/whats-new/
+% @language	English
+% ------------------------------------------------------------------------------
+% LTXE-CHAPTER-UID:		9dc37b9a-9fad14c3-bf7eabfd-82b83622
+% LTXE-CHAPTER-NAME:	Introduction
+% ------------------------------------------------------------------------------
+
+\section{Introduction}
+\begin{frame}[fragile]
+	\frametitle{Introduction}
+
+	\begin{center}\huge{Introduction}\end{center}
+	\begin{center}\huge{\color{typo3darkgrey}\textbf{The Facts}}\end{center}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		3cc566cf-d7166203-45a36415-7c8e8ebf
+% LTXE-SLIDE-ORIGIN:	5d8622ac-37911548-171bf8ec-5add4ed5 German
+% LTXE-SLIDE-TITLE:		TYPO3 CMS 7.4 - The Facts
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{Introduction}
+	\framesubtitle{TYPO3 CMS 7.4 - The Facts}
+
+	\begin{itemize}
+		\item Release date: 04. August 2015
+		\item Release type: "Sprint Release"
+		\item Vision: Embrace, Innovate, Deliver
+		\item Primary focus: Backend Overhaul Vol 2
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		6746e3bc-a8575d0c-e1681766-d0d78911
+% LTXE-SLIDE-ORIGIN:	9da27f39-55d99c31-9ee9136a-20d96c0e German
+% LTXE-SLIDE-TITLE:		System Requirements
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{Introduction}
+	\framesubtitle{System Requirements}
+
+	\begin{itemize}
+		\item PHP*:\tabto{2.2cm}v5.5.0 - v5.6.x
+		\item MySQL:\tabto{2.2cm}v5.5.x - v5.6.x (no strict mode)
+		\item Disk space:\tabto{2.2cm}min 200 MB
+		\item PHP settings:
+
+			\begin{itemize}
+				\item memory\_limit >= 128M
+				\item max\_execution\_time >= 240s
+				\item compilation option \texttt{--disable-ipv6} must \underline{not} be used
+			\end{itemize}
+
+		\item Backend requires IE >= 9 or any other modern browser
+
+	\end{itemize}
+
+	\vspace{1cm}
+	*) Further details: \href{http://typo3.org/news/article/php-minimum-requirements-for-typo3-cms-7/}{PHP Minimum Requirements for TYPO3 CMS 7}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		081f8b1d-b8f58841-dccf8d1d-148fd25d
+% LTXE-SLIDE-ORIGIN:	dbbfebbe-fb43ddb8-bca9ae69-716b8a0f German
+% LTXE-SLIDE-TITLE:		Development And Release Timeline
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{Introduction}
+	\framesubtitle{Development And Release Timeline}
+
+	\begin{figure}
+		\includegraphics[width=0.90\linewidth]{Introduction/ReleaseAgenda.png}
+	\end{figure}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		a5555bb0-f1f8031f-f271766a-2dbc1b08
+% LTXE-SLIDE-ORIGIN:	e359142e-e7c10774-5d851da9-b26a275b German
+% LTXE-SLIDE-TITLE:		TYPO3 CMS Roadmap
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{Introduction}
+	\framesubtitle{TYPO3 CMS Roadmap}
+
+	Estimated release dates and their primary focus:
+
+	\begin{itemize}
+		\item v7.0 \tabto{1.0cm}02/Dec/2014\tabto{3.4cm}Backend Overhaul Vol 1
+		\item v7.1 \tabto{1.0cm}24/Feb/2015\tabto{3.4cm}Core Cleanup \& Streamlining
+		\item v7.2 \tabto{1.0cm}28/Apr/2015\tabto{3.4cm}Frontend
+		\item v7.3 \tabto{1.0cm}16/Jun/2015\tabto{3.4cm}Package Ecosystem, Composer
+		\item
+			\begingroup
+				\color{typo3orange}
+					v7.4 \tabto{1.0cm}04/Aug/2015\tabto{3.4cm}Backend Overhaul Vol 2
+			\endgroup
+
+		\item v7.5 \tabto{1.0cm}29/Sep/2015\tabto{3.4cm}\textit{(to be determined...)}
+		\item v7.6 \tabto{1.0cm}xx/xxx/2015\tabto{3.4cm}\textbf{TYPO3 CMS 7 LTS} (Long Term Release)
+	\end{itemize}
+
+	\smaller
+		\url{https://typo3.org/typo3-cms/roadmap/}\newline
+		\url{http://typo3.org/news/article/embrace-and-innovate-typo3-cms-7/}
+	\normalsize
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		5ef3ad6d-b72464d3-6a2867a6-298cb382
+% LTXE-SLIDE-ORIGIN:	c8966352-3e5159b9-f0e3ea35-9d4455ef German
+% LTXE-SLIDE-TITLE:		Installation
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{Introduction}
+	\framesubtitle{Installation}
+
+	\begin{itemize}
+		\item Official installation procedure under Linux/Mac OS X\newline
+			(DocumentRoot for example \texttt{/var/www/site/htdocs}):
+		\begin{lstlisting}
+			$ cd /var/www/site
+			$ wget --content-disposition get.typo3.org/7.4
+			$ tar xzf typo3_src-7.4.0.tar.gz
+			$ cd htdocs
+			$ ln -s ../typo3_src-7.4.0 typo3_src
+			$ ln -s typo3_src/index.php
+			$ ln -s typo3_src/typo3
+			$ touch FIRST_INSTALL
+		\end{lstlisting}
+
+		\item Symbolic links under Microsoft Windows:
+
+			\begin{itemize}
+				\item Use \texttt{junction} under Windows XP/2000
+				\item Use \texttt{mlink} under Windows Vista and Windows 7
+			\end{itemize}
+
+	\end{itemize}
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		12551741-9cb07199-fb3614d0-1a242a5f
+% LTXE-SLIDE-ORIGIN:	af099855-2b970b2b-89ed7d02-7219b2b9 German
+% LTXE-SLIDE-TITLE:		Upgrade to TYPO3 CMS 7
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{Introduction}
+	\framesubtitle{Upgrade to TYPO3 CMS 7.x}
+
+	\begin{itemize}
+		\item Upgrades only possible from TYPO3 CMS 6.2 LTS
+		\item TYPO3 CMS < 6.2 should be updated to TYPO3 CMS 6.2 LTS first
+	\end{itemize}
+
+	\begin{itemize}
+
+		\item Upgrade instructions:\newline
+			\smaller\url{http://wiki.typo3.org/Upgrade#Upgrading_to_7.4}\normalsize
+		\item Official TYPO3 guide "TYPO3 Installation and Upgrading":
+			\smaller\url{http://docs.typo3.org/typo3cms/InstallationGuide}\normalsize
+		\item General approach:
+			\begin{itemize}
+				\item Check minimum system requirements \small(PHP, MySQL, etc.)
+				\item Review \textbf{deprecation\_*.log} in old TYPO3 instance
+				\item Update all extensions to the latest version
+				\item Deploy new sources and run Install Tool -> Upgrade Wizard
+				\item Review startup module for backend users (optionally)
+			\end{itemize}
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------

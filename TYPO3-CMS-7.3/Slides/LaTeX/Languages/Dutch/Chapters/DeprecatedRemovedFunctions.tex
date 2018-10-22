@@ -1,0 +1,180 @@
+% ------------------------------------------------------------------------------
+% TYPO3 CMS 7.3 - What's New - Chapter "Deprecated Functions" (English Version)
+%
+% @author	Michael Schams <schams.net>
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		http://typo3.org/download/release-notes/whats-new/
+% @language	English
+% ------------------------------------------------------------------------------
+% LTXE-CHAPTER-UID:		46065d05-1bec23cb-82793761-dfb7b0b1
+% LTXE-CHAPTER-NAME:	Deprecated Functions
+% ------------------------------------------------------------------------------
+
+\section{Deprecated/Verwijderde functies}
+\begin{frame}[fragile]
+	\frametitle{Deprecated/Verwijderde functies}
+
+	\begin{center}\huge{Hoofdstuk 5:}\end{center}
+	\begin{center}\huge{\color{typo3darkgrey}\textbf{Deprecated/Verwijderde functies}}\end{center}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		dfebf53d-6313a3e3-c1e96b6c-8782d877
+% LTXE-SLIDE-ORIGIN:	909542ad-6c4e7767-0f73f29a-0249cb54 English
+% LTXE-SLIDE-ORIGIN:	693c1737-af89d78f-84db7a5e-f0a05dea German
+% LTXE-SLIDE-TITLE:		Breaking: #63846 - FormEngine refactoring
+% LTXE-SLIDE-REFERENCE:	Breaking-63846-FormEngineRefactoring.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Deprecated/Verwijderde functies}
+	\framesubtitle{Herbouw van formulieren voor records}
+
+		\textbf{TCA:}
+
+			\small
+			\begin{itemize}
+
+				\item Opties \texttt{\_PADDING}, \texttt{\_VALIGN} en \texttt{DISTANCE}
+					zijn verwijderd uit
+					\texttt{TCA['aTable']['columns']['aField']['config']['wizards']}
+
+				\item Item \texttt{TCA['aTable']['ctrl']['mainPalette']} is verwijderd
+
+			\end{itemize}
+
+		\textbf{TSconfig:}
+
+			\small
+			\begin{itemize}
+				\item Items \texttt{mod.web\_layout.tt\_content.fieldOrder} en
+					\texttt{TCEFORM.aTable.aField.linkTitleToSelf} zijn verwijderd
+			\end{itemize}
+
+		\textbf{Hooks:}
+
+			\small
+			\begin{itemize}
+				\item Hooks gebruiken item \texttt{type} in plaats van \texttt{form\_type}
+				\item Hook \texttt{getSingleFieldClass} is verwijderd
+			\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		548b3caa-627e3f20-28584a17-bd6c006a
+% LTXE-SLIDE-ORIGIN:	063f16c1-c3d2f376-642e83f2-9d3eaed9 English
+% LTXE-SLIDE-ORIGIN:	4991d739-1ccd5bde-f424f2fc-47d59881 German
+% LTXE-SLIDE-TITLE:		Breaking - #66429: Remove IdentityMap from persistence
+% LTXE-SLIDE-REFERENCE: Breaking-66429-RemoveIdentityMapFromPersistence.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Deprecated/Verwijderde functies}
+	\framesubtitle{\texttt{IdentityMap} verwijderd uit Extbase Persistence}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Klasse \texttt{IdentityMap} is verwijderd uit Extbase persistence\newline
+			\small(bij gebruik wordt een \texttt{ReflectionException} afgevuurd)\normalsize
+
+		\item Het benaderen van de vroegere properties van \texttt{IdentityMap} binnen de
+			\texttt{DataMapper} en \texttt{Repository} zal mislukken en de aanmaak van
+			\texttt{IdentityMap} instanties is niet meer mogelijk
+
+		\item Gebruik "Sessions" persistence in plaats daarvan:
+
+			\begin{lstlisting}
+				$session = GeneralUtility::makeInstance(ObjectManager::class)->get(
+				  \TYPO3\CMS\Extbase\Persistence\Generic\Session::class
+				);
+
+				$session->registerObject($object, $identifier);
+
+				if($session->hasIdentifier($identifier)) {
+				  $object = $session->getObjectByIdentifier($identifier, $className);
+				}
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		dc724790-16fb23bf-a169472f-531e3a88
+% LTXE-SLIDE-ORIGIN:	068af613-ab320130-00499229-6cb65ee6 English
+% LTXE-SLIDE-ORIGIN:	dcf8fd4e-879461aa-5bb22ccc-7d50bcff German
+% LTXE-SLIDE-TITLE:		Miscellaneous (1)
+% LTXE-SLIDE-REFERENCE:	Deprecation-65344-ExtTables.rst
+% LTXE-SLIDE-REFERENCE:	Breaking-66906-AutomaticPNGToGIFConversionRemoved.rst
+% LTXE-SLIDE-REFERENCE: Breaking-66997-RemoveSuper-challengedPasswordSecurity.rst
+% LTXE-SLIDE-REFERENCE: Breaking-67204-DatabaseConnectionexec_SELECTgetRowsMayThrowException.rst
+% LTXE-SLIDE-REFERENCE: Deprecation-61829-DbalConfigClassFile.rst
+% LTXE-SLIDE-REFERENCE: Deprecation-66789-DeprecateOptionsInCshViewHelper.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Deprecated/Verwijderde functies}
+	\framesubtitle{Allerlei (1)}
+
+	\begin{itemize}
+
+		\item Het bestand \texttt{typo3conf/extTables.php} is deprecated.\newline
+			Gebruik in plaats hiervan het bestand:\newline
+			\smaller\texttt{<your\_extension>/Configuration/TCA/Overrides/pages.php}\normalsize
+
+		\item Configuratie \texttt{\$TYPO3\_CONF\_VARS[GFX][png\_to\_gif]} is verwijderd
+
+		\item In TYPO3 CMS installaties, waar de extensie
+			\texttt{rsaauth} \underline{niet} is geïnstalleerd, worden worden wachtwoorden voor de BE aanmelding
+			als tekst verstuurd\newline
+			\small(oplossing: installeer de extensie \texttt{rsaauth} of gebruik HTTPS voor de BE)\normalsize
+
+		\item Methode \texttt{exec\_SELECTgetRows()} validateert de parameter \texttt{\$uidIndexField}.
+			Als het opgegeven veld niet aanwezig is in het resultaat wordt een
+			\texttt{InvalidArgumentException} gegeven.
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		e22924a8-07e58862-a3ef0beb-5f99dae0
+% LTXE-SLIDE-ORIGIN:	697a7dbb-6f3f402c-13be799d-0115ab4d English
+% LTXE-SLIDE-ORIGIN:	38119304-60574ef0-2f5a116c-1c87717f German
+% LTXE-SLIDE-TITLE:		Miscellaneous (2)
+% LTXE-SLIDE-REFERENCE:	Deprecation-67029-DeprecatePageBgImgOption.rst
+% LTXE-SLIDE-REFERENCE: Deprecation-67171-T3editorIsEnabled.rst
+% LTXE-SLIDE-REFERENCE: Breaking-67212-DiscardLegacyClassLoader.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Deprecated/Verwijderde functies}
+	\framesubtitle{Allerlei (2)}
+
+	\begin{itemize}
+
+		\item DBAL optie \texttt{config.classFile} is verwijderd
+
+		\item Opties \texttt{iconOnly} en \texttt{styleAttributes} van
+			\texttt{CshViewHelper} zijn als deprecated aangemerkt
+
+		\item TypoScript optie \texttt{page.bgImg} is deprecated
+
+		\item Methode \texttt{isEnabled()} van klasse \texttt{T3editor} is deprecated
+
+		\item De oude TYPO3 ClassLoader is verwijderd en vervangen door de Composer ClassLoader
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------

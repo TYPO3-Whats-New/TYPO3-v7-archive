@@ -1,0 +1,201 @@
+% ------------------------------------------------------------------------------
+% TYPO3 CMS 7.2 - What's New - Chapter "TypoScript" (Greek Version)
+%
+% @author	Angeliki Plati <ag.plati@gmail.com>
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		http://typo3.org/download/release-notes/whats-new/
+% @language	Greek
+% ------------------------------------------------------------------------------
+% LTXE-CHAPTER-UID:		12518a77-2b90a173-4e3f8420-485e0497
+% LTXE-CHAPTER-NAME:	TypoScript
+% ------------------------------------------------------------------------------
+
+\section{TSconfig \& TypoScript}
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+
+	\begin{center}\huge{\greektext Κεφάλαιο 2:}\end{center}
+	\begin{center}\huge{\color{typo3darkgrey}\textbf{TSconfig \& TypoScript}}\end{center}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		3f60ff01-e1df00f9-667636cf-93c5ea30
+% LTXE-SLIDE-ORIGIN:	56b025e6-cf380b11-c9d1c009-0b548d6a English
+% LTXE-SLIDE-TITLE:		Add flexible preview URL configuration (1)
+% LTXE-SLIDE-REFERENCE:	Feature-66370-AddFlexiblePreviewUrlConfiguration.rst
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+	\framesubtitle{\greektext Ευέλικτη Διαμόρφωση των \latintext URL \greektext Προεπισκόπησης (1)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item \greektext Είναι τώρα δυνατό να διαμορφώσεις τον σύνδεσμο προεπισκόπησης που δημιουργείται για το κουμπί \latintext "save \& view" \greektext στο \latintext backend.
+
+		\item \greektext Μία συνήθης περίπτωση χρήσης είναι οι προεπισκοπήσεις για \latintext blog \greektext ή νέες εγγραφές, μπορείς όμως επίσης να ορίσεις διαφορετικές σελίδες προεπισκόπησης για απλά στοιχεία περιεχομένου.
+
+			\latintext \begin{lstlisting}
+				TCEMAIN.preview {
+				  <table name> {
+				    previewPageId = 123
+				    useDefaultLanguageRecord = 0
+				    fieldToParameterMap {
+				      uid = tx_myext_pi1[showUid]
+				    }
+				    additionalGetParameters {
+				      tx_myext_pi1[special] = HELLO
+				    }
+				  }
+				}
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		50756585-007bd76b-fd09eedf-89f5fed5
+% LTXE-SLIDE-ORIGIN:	6822c376-37649cd8-0acc836a-b856fc61 English
+% LTXE-SLIDE-TITLE:		Add flexible preview URL configuration (2)
+% LTXE-SLIDE-REFERENCE:	Feature-66370-AddFlexiblePreviewUrlConfiguration.rst
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+	\framesubtitle{\greektext Ευέλικτη Διαμόρφωση των \latintext URL \greektext Προεπισκόπησης (2)}
+
+	\begin{itemize}
+		\item \texttt{\latintext previewPageId}:\newline
+			\smaller
+				UID \greektext της σελίδας που θα χρησιμοποιηθεί για την προεπισκόπηση\newline
+				(αν αυτή η ρύθμιση παραληφθεί, θα χρησιμοποιηθεί η τρέχουσα σελίδα)
+			\normalsize
+		\item \texttt{\latintext useDefaultLanguageRecord}:\newline
+			\smaller
+			    \greektext ορίζει αν οι μεταφρασμένες εγγραφές θα χρησιμοποιήσουν το \latintext UID \greektext της προεπιλεγμένης εγγραφής
+				(\greektext αυτό είναι ενεργοποιημένο εκ προεπιλογής, τιμή: 1)
+			\normalsize
+		\item \texttt{\latintext fieldToParameterMap}:\newline
+			\smaller
+				\greektext μία αντιστοίχιση που επιτρέπει την επιλογή πεδίων της εγγραφής που θα συμπεριληφθούν ως \latintext GET-\greektext παράμετροι
+			\normalsize
+		\item \texttt{\latintext additionalGetParameters}:\newline
+			\smaller
+				\greektext επιτρέπει την προσθήκη αυθαίρετων \latintext GET-\greektext παραμέτρων μέχρι και το \latintext override \greektext άλλων
+			\normalsize
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		0aa052a8-ca193622-2db188ea-4e6073d1
+% LTXE-SLIDE-ORIGIN:	c5dbf3c7-655fc6e4-227a3bf6-f5d89fb1 English
+% LTXE-SLIDE-TITLE:
+% LTXE-SLIDE-REFERENCE:	Feature-59646-AddRteConfigurationPropertyButtonsLinkTypePropertiesTargetDefault.rst
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+	\framesubtitle{\greektext Διαμόρφωση του \latintext RTE: \greektext Προκαθορισμένος Στόχος}
+
+	\begin{itemize}
+
+		\item \greektext η ιδιότητα της διαμόρφωσης του \latintext RTE \greektext μπορεί να χρησιμοποιηθεί στο \latintext PageTSconfig \greektext για να ρυθμίσει έναν προεπιλεγμένο στόχο για συνδέσμους ενός συγκεκριμένου τύπου \newline
+
+			\latintext \small
+				\texttt{buttons.link.[}
+				\textit{type}
+				\texttt{].properties.target.default = ...}
+			\normalsize\newline
+
+		\item \greektext Δυνατοί τύποι συνδέσμων είναι:\newline
+			\small
+				(\greektext Περαιτέρω τύποι είναι πιθανό να παρέχονται από επεκτάσεις)
+			\normalsize
+
+			\latintext \begin{itemize}
+				\item \texttt{page}
+				\item \texttt{file}
+				\item \texttt{url}
+				\item \texttt{mail}
+				\item \texttt{spec}
+			\end{itemize}
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		684ddb79-536948e0-9c7e1738-5490073d
+% LTXE-SLIDE-ORIGIN:	fd957580-301e4a0a-ad5325f5-ffa024c3 English
+% LTXE-SLIDE-TITLE:		Strip empty HTML tags in HtmlParser
+% LTXE-SLIDE-REFERENCE:	Feature-20555-StripEmptyHtmlTags.rst
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+	\framesubtitle{\greektext Αφαίρεση των κενών \latintext HTML Tags \greektext με τον \latintext HTMLparser}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item
+			\greektext Μία νέα λειτουργικότητα αναπτύχθηκε στον \latintext HTMLparser, \greektext η οποία επιτρέπει την αφαίρεση κενών \latintext HTML tags
+
+			\latintext \begin{lstlisting}
+				stdWrap {
+				   // afairei ola ta kena HTML tags
+				   HTMLparser.stripEmptyTags = 1
+				   // afairei mono ola ta kena h2 kai h3 tags
+				   HTMLparser.stripEmptyTags.tags = h2, h3
+				}
+
+				RTE.default.proc.entryHTMLparser_db {
+				   stripEmptyTags = 1
+				   stripEmptyTags.tags = p
+				   stripEmptyTags.treatNonBreakingSpaceAsEmpty = 1
+				}
+			\end{lstlisting}
+
+			\underline{\textbf{\greektext Σημ.:}}
+			    \greektext Ο \latintext HTMLparser \greektext αφαιρεί όλα τα άγνωστα \latintext tags \greektext εκ προεπιλογής.\newline
+				\greektext Ως εκ τούτου, ίσως να ήταν χρήσιμο τα \latintext tags \greektext αυτά να διατηρηθούν:\newline
+				\texttt{\latintext HTMLparser.keepNonMatchedTags = 1}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		59207056-d4606cbb-0dccd6e3-5b8295ae
+% LTXE-SLIDE-ORIGIN:	62960e76-c3dca953-fe5a1070-831633fc English
+% LTXE-SLIDE-TITLE:		Miscellaneous
+% LTXE-SLIDE-REFERENCE:	Feature-63040-AddRteConfigurationPropertyButtonsAbbreviationRemoveFieldsets.rst
+% LTXE-SLIDE-REFERENCE:	commit 31c62f9311ee3d33bf792d548cc4a5fac83aa3d0
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+	\framesubtitle{\greektext Διάφορα}
+
+	\begin{itemize}
+		\item \greektext Η νέα ιδιότητα \latintext \texttt{buttons.abbreviation.removeFieldsets} \greektext μπορεί να χρησιμοποιηθεί στο \latintext PageTSconfig \greektext για τη διαμόρφωση του διαλόγου συντόμευσης
+
+			\latintext \begin{lstlisting}
+				# Pithanes times einai:
+				# acronym, definedAcronym, abbreviation, definedAbbreviation
+				buttons.abbreviation.removeFieldsets = acronym,definedAcronym
+			\end{lstlisting}
+
+		\item \greektext Η ιδιότητα \texttt{\latintext inlineLanguageLabel} \greektext του αντικειμένου \texttt{\latintext PAGE} \greektext μπορεί να χειριστεί \texttt{\latintext LLL:} αναφορές, πλέον
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------

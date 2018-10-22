@@ -1,0 +1,205 @@
+% ------------------------------------------------------------------------------
+% TYPO3 CMS 7.2 - What's New - Chapter "TypoScript" (English Version)
+%
+% @author	Michael Schams <schams.net>
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		http://typo3.org/download/release-notes/whats-new/
+% @language	English
+% ------------------------------------------------------------------------------
+% LTXE-CHAPTER-UID:		12518a77-2b90a173-4e3f8420-485e0497
+% LTXE-CHAPTER-NAME:	TypoScript
+% ------------------------------------------------------------------------------
+
+\section{TSconfig i TypoScript}
+\begin{frame}[fragile]
+	\frametitle{TSconfig i TypoScript}
+
+	\begin{center}\huge{Poglavlje 2:}\end{center}
+	\begin{center}\huge{\color{typo3darkgrey}\textbf{TSconfig i TypoScript}}\end{center}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		c42f4349-7386307b-f934df8f-82888f91
+% LTXE-SLIDE-ORIGIN:	56b025e6-cf380b11-c9d1c009-0b548d6a English
+% LTXE-SLIDE-TITLE:		Add flexible preview URL configuration (1)
+% LTXE-SLIDE-REFERENCE:	Feature-66370-AddFlexiblePreviewUrlConfiguration.rst
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{TSconfig i TypoScript}
+	\framesubtitle{Fleksibilna konfiguracija linka za pregled  (1)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Sada je moguce konfigurisati link za pregled koji se generise nakon klika na\newline
+			"save \& view" dugme u administratorskom interfejsu.
+
+		\item Tipicna upotreba je dozvoliti pregled blog rekorda ili rekorda vesti, ali je takodje moguce definisati razlicite preview strane za obicne kontent elemente.
+
+			\begin{lstlisting}
+				TCEMAIN.preview {
+				  <table name> {
+				    previewPageId = 123
+				    useDefaultLanguageRecord = 0
+				    fieldToParameterMap {
+				      uid = tx_myext_pi1[showUid]
+				    }
+				    additionalGetParameters {
+				      tx_myext_pi1[special] = HELLO
+				    }
+				  }
+				}
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		e7f04442-d634c3c6-966d7689-a776df9f
+% LTXE-SLIDE-ORIGIN:	6822c376-37649cd8-0acc836a-b856fc61 English
+% LTXE-SLIDE-TITLE:		Add flexible preview URL configuration (2)
+% LTXE-SLIDE-REFERENCE:	Feature-66370-AddFlexiblePreviewUrlConfiguration.rst
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{TSconfig i TypoScript}
+	\framesubtitle{Fleksibilna konfiguracija linka za pregled (2)}
+
+	\begin{itemize}
+		\item \texttt{previewPageId}:\newline
+			\smaller
+				UID strane koja ce posluziti kao strana za pregled\newline
+				(ukoliko se ovo podesavanje zanemari koristice se trenutna strana)
+			\normalsize
+		\item \texttt{useDefaultLanguageRecord}:\newline
+			\smaller
+				bice definisano ukoliko ce prevedeni rekordi koristiti UID standardnih rekorda\newline
+				(ovo je podrazumevano podesavanje, value: 1)
+			\normalsize
+		\item \texttt{fieldToParameterMap}:\newline
+			\smaller
+				mapiranje koje dozvoljava odabir polja koja ce biti ukljucena u GET-parametre
+			\normalsize
+		\item \texttt{additionalGetParameters}:\newline
+			\smaller
+				dozvoljava dodavanje proizvodnih GET-parametara, cak i premoscavanje drugih
+			\normalsize
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		b959dcf1-44aa0ee6-46cd8b2f-f4213d24
+% LTXE-SLIDE-ORIGIN:	c5dbf3c7-655fc6e4-227a3bf6-f5d89fb1 English
+% LTXE-SLIDE-TITLE:
+% LTXE-SLIDE-REFERENCE:	Feature-59646-AddRteConfigurationPropertyButtonsLinkTypePropertiesTargetDefault.rst
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{TSconfig i TypoScript}
+	\framesubtitle{RTE Konfiguracija: odrediste linkova (target)}
+
+	\begin{itemize}
+
+		\item Nova RTE osobina za konfigurisanje moze se koristiti u PageTSconfig kako bi se konfigurisalo podrazumevano odrediste (target) za linkove datog tipa\newline
+
+			\small
+				\texttt{buttons.link.[}
+				\textit{type}
+				\texttt{].properties.target.default = ...}
+			\normalsize\newline
+
+		\item Moguci tipovi liknova su:\newline
+			\small
+				(prosirenja mogu proizvesti dodatne tipove)
+			\normalsize
+
+			\begin{itemize}
+				\item \texttt{page}
+				\item \texttt{file}
+				\item \texttt{url}
+				\item \texttt{mail}
+				\item \texttt{spec}
+			\end{itemize}
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		d5c2de37-78643b91-f636a214-0d5e4000
+% LTXE-SLIDE-ORIGIN:	fd957580-301e4a0a-ad5325f5-ffa024c3 English
+% LTXE-SLIDE-TITLE:		Strip empty HTML tags in HtmlParser
+% LTXE-SLIDE-REFERENCE:	Feature-20555-StripEmptyHtmlTags.rst
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{TSconfig i TypoScript}
+	\framesubtitle{Uklanjanje praznih HTML tagova pomocu HTMLparser-a}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item Implementirana je nova funkcionalnost u HTMLparser koja dozvoljava uklanjanje praznih HTML tagova
+
+			\begin{lstlisting}
+				stdWrap {
+				   // this removes all empty HTML tags
+				   HTMLparser.stripEmptyTags = 1
+				   // this removes empty h2 and h3 tags only
+				   HTMLparser.stripEmptyTags.tags = h2, h3
+				}
+
+				RTE.default.proc.entryHTMLparser_db {
+				   stripEmptyTags = 1
+				   stripEmptyTags.tags = p
+				   stripEmptyTags.treatNonBreakingSpaceAsEmpty = 1
+				}
+			\end{lstlisting}
+
+			\small
+				\underline{\textbf{Napomena:}}
+				podrazumevano podesavanje HTMLparser-a je da uklanja sve nepoznate tagove.
+				Stoga moze biti korisno zadrzati ih sledecom instrukcijom:\newline
+				\texttt{HTMLparser.keepNonMatchedTags = 1}
+			\normalsize
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		6bc9d3bd-4c19e434-57d6bc8c-3c0dc67d
+% LTXE-SLIDE-ORIGIN:	62960e76-c3dca953-fe5a1070-831633fc English
+% LTXE-SLIDE-TITLE:		Miscellaneous
+% LTXE-SLIDE-REFERENCE:	Feature-63040-AddRteConfigurationPropertyButtonsAbbreviationRemoveFieldsets.rst
+% LTXE-SLIDE-REFERENCE:	commit 31c62f9311ee3d33bf792d548cc4a5fac83aa3d0
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{TSconfig i TypoScript}
+	\framesubtitle{Razno}
+
+	\begin{itemize}
+		\item Nova osobina \texttt{buttons.abbreviation.removeFieldsets} se moze koristiti u
+			PageTSconfig da konfigurise skracenice
+
+			\begin{lstlisting}
+				# Moguce vrednosti su:
+				# acronym, definedAcronym, abbreviation, definedAbbreviation
+				buttons.abbreviation.removeFieldsets = acronym,definedAcronym
+			\end{lstlisting}
+
+		\item Osobina \texttt{inlineLanguageLabel} objekta \texttt{PAGE} sada moze da koristi\newline
+			\texttt{LLL:} reference
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------

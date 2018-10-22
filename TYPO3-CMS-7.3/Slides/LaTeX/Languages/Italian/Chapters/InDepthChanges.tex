@@ -1,0 +1,559 @@
+% ------------------------------------------------------------------------------
+% TYPO3 CMS 7.3 - What's New - Chapter "In-Depth Changes" (English Version)
+%
+% @author	Michael Schams <schams.net>
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		http://typo3.org/download/release-notes/whats-new/
+% @language	English
+% ------------------------------------------------------------------------------
+% LTXE-CHAPTER-UID:		e8cc33e1-d7bdb74f-0421b75f-7be06b19
+% LTXE-CHAPTER-NAME:	In-Depth Changes
+% ------------------------------------------------------------------------------
+
+\section{Modifiche rilevanti}
+\begin{frame}[fragile]
+	\frametitle{Modifiche rilevanti}
+
+	\begin{center}\huge{Capitolo 3:}\end{center}
+	\begin{center}\huge{\color{typo3darkgrey}\textbf{Modifiche rilevanti}}\end{center}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		61b37467-13477a17-98d8123f-ffbba1d5
+% LTXE-SLIDE-ORIGIN:	17eaaa35-2a21b728-4c3488a0-30a7ac7b English
+% LTXE-SLIDE-ORIGIN:	bd03e141-3842b75e-8a44920f-a8c139e5 German
+% LTXE-SLIDE-TITLE:		Feature #59606: Integrate Symfony/Console into CommandController (1)
+% LTXE-SLIDE-REFERENCE:	Feature-59606-IntegrateSymfonyConsoleIntoCommandController.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Modifiche rilevanti}\frametitle{Modifiche rilevanti}
+	\framesubtitle{Integrazione Symfony/Console in CommandController (1)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	Il CommandController ora fa uso internamente di Symfony/Console e fornisce vari metodi:
+
+	\begin{itemize}
+
+		\item \smaller TableHelper
+			\begin{itemize}
+				\item\smaller\texttt{outputTable(\$rows, \$headers = NULL)}
+			\end{itemize}
+
+		\item DialogHelper
+			\begin{itemize}
+				\item\smaller\texttt{select(\$question, \$choices, \$default = NULL, \$multiSelect = false, \$attempts = FALSE)}
+				\item\texttt{ask(\$question, \$default = NULL, array \$autocomplete = array())}
+				\item\texttt{askConfirmation(\$question, \$default = TRUE)}
+				\item\texttt{askHiddenResponse(\$question, \$fallback = TRUE)}
+				\item\texttt{askAndValidate(\$question, \$validator, \$attempts = FALSE, \$default = NULL, array \$autocomplete = NULL)}
+				\item\texttt{askHiddenResponseAndValidate(\$question, \$validator, \$attempts = FALSE, \$fallback = TRUE)}
+			\end{itemize}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		ab6457d6-d409ead0-39a9926f-06911cad
+% LTXE-SLIDE-ORIGIN:	a24edba5-e325709b-54cabffa-5ba42de7 English
+% LTXE-SLIDE-ORIGIN:	3842b75e-8a44920f-a8c139e5-bd03e141 German
+% LTXE-SLIDE-TITLE:		Feature #59606: Integrate Symfony/Console into CommandController (2)
+% LTXE-SLIDE-REFERENCE:	Feature-59606-IntegrateSymfonyConsoleIntoCommandController.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Modifiche rilevanti}
+	\framesubtitle{Integrazione Symfony/Console in CommandController (2)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item \smaller ProgressHelper
+			\begin{itemize}
+				\item \smaller\texttt{progressStart(\$max = NULL)}
+				\item \texttt{progressSet(\$current)}
+				\item \texttt{progressAdvance(\$step = 1)}
+				\item \texttt{progressFinish()}
+			\end{itemize}
+	\end{itemize}
+
+	\smaller
+		(vedi le slide seguenti per esempi di codice)
+	\normalsize
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		3a356fd7-190739a2-4f400aca-98c9e835
+% LTXE-SLIDE-ORIGIN:	26ee64a3-a8f3ef0d-247faf3b-7df91473 English
+% LTXE-SLIDE-ORIGIN:	a8c139e5-8a44920f-3842b75e-bd03e141 German
+% LTXE-SLIDE-TITLE:		Feature #59606: Integrate Symfony/Console into CommandController (3)
+% LTXE-SLIDE-REFERENCE:	Feature-59606-IntegrateSymfonyConsoleIntoCommandController.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{In-Depth Changes}
+	\framesubtitle{Integrazione Symfony/Console in CommandController (3)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+		\begin{lstlisting}
+			<?php
+			namespace Acme\Demo\Command;
+			use TYPO3\CMS\Extbase\Mvc\Controller\CommandController;
+
+			class MyCommandController extends CommandController {
+			  public function myCommand() {
+
+			    // render a table
+			    $this->output->outputTable(array(
+			      array('Bob', 34, 'm'),
+			      array('Sally', 21, 'f'),
+			      array('Blake', 56, 'm')
+			    ),
+			    array('Name', 'Age', 'Gender'));
+
+			    // select
+			    $colors = array('red', 'blue', 'yellow');
+			    $selectedColorIndex = $this->output->select('Please select one color', $colors, 'red');
+			    $this->outputLine('You choose the color %s.', array($colors[$selectedColorIndex]));
+
+			    [...]
+		\end{lstlisting}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		ba03d117-b05870ee-9fe68ad5-6d537327
+% LTXE-SLIDE-ORIGIN:	e7f1a1e9-cabd20ae-78d335fc-3868ca27 English
+% LTXE-SLIDE-ORIGIN:	a8c139e5-8a44920f-3842b75e-bd03e141 German
+% LTXE-SLIDE-TITLE:		Feature #59606: Integrate Symfony/Console into CommandController (4)
+% LTXE-SLIDE-REFERENCE:	Feature-59606-IntegrateSymfonyConsoleIntoCommandController.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Modifiche rilevanti}
+	\framesubtitle{Integrazione Symfony/Console in CommandController (4)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+		\begin{lstlisting}
+			    [...]
+			    // ask
+			    $name = $this->output->ask('What is your name?' . PHP_EOL, 'Bob', array('Bob', 'Sally', 'Blake'));
+			    $this->outputLine('Hello %s.', array($name));
+
+			    // prompt
+			    $likesDogs = $this->output->askConfirmation('Do you like dogs?');
+			    if ($likesDogs) {
+			      $this->outputLine('You do like dogs!');
+			    }
+
+			    // progress
+			    $this->output->progressStart(600);
+			    for ($i = 0; $i < 300; $i ++) {
+			      $this->output->progressAdvance();
+			      usleep(5000);
+			    }
+			    $this->output->progressFinish();
+			  }
+			}
+			?>
+		\end{lstlisting}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		71f4e059-3dd59cb3-b24782c0-beea6e9d
+% LTXE-SLIDE-ORIGIN:	b9b53d17-7e2c0c83-dabec46a-1a756e39 English
+% LTXE-SLIDE-ORIGIN:	9d56ca19-04a98896-ba0a973c-8a16e877 German
+% LTXE-SLIDE-TITLE:		Feature #66669: BE login form API (1)
+% LTXE-SLIDE-REFERENCE:	Feature-66669-BeLoginFormAPI.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Modifiche rilevanti}
+	\framesubtitle{API per Login di Backend (1)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Il login di Backend è stato completamente rifatto e sono state introdotte delle nuove API
+
+		\item Il form OpenID è stato separato ed ora utilizza le nuove API
+			(rendendolo indipendente dalle classi del Core)
+
+		\item Il concetto del nuovo login di backend si basa su "login providers", che possono essere
+			registrati nel file \texttt{ext\_localconf.php} come segue:
+
+			\begin{lstlisting}
+				$GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['backend']['loginProviders'][1433416020] = [
+				  'provider' => \TYPO3\CMS\Backend\LoginProvider\UsernamePasswordLoginProvider::class,
+				  'sorting' => 50,
+				  'icon-class' => 'fa-key',
+				  'label' => 'LLL:EXT:backend/Resources/Private/Language/locallang.xlf:login.link'
+				];
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		bbc3169f-41bb5dd8-821291ba-ff010ccb
+% LTXE-SLIDE-ORIGIN:	c443db74-ed3267f9-a113f486-d586081d English
+% LTXE-SLIDE-ORIGIN:	9889604a-ca199d56-73cba0a9-e8778a16 German
+% LTXE-SLIDE-TITLE:		Feature #66669: BE login form API (2)
+% LTXE-SLIDE-REFERENCE:	Feature-66669-BeLoginFormAPI.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Modifiche rilevanti}
+	\framesubtitle{API per Login di Backend (2)}
+
+	\begin{itemize}
+
+		\item Le opzioni sono definite come di seguito:
+
+			\begin{itemize}
+
+				\item \texttt{provider}:\newline
+					login provider class name, deve essere implementata
+						\texttt{TYPO3\textbackslash
+							CMS\textbackslash
+							Backend\textbackslash
+							LoginProvider\textbackslash
+							LoginProviderInterface}
+
+				\item \texttt{sorting}:\newline
+					ordinamento dei link ai possibili fornitori di login nella schermata di login
+
+				\item \texttt{icon-class}:\newline
+					nome dell'icona font-awesome per il collegamento nella schermata di login
+					
+				\item \texttt{label}:\newline
+					testo del link per il fornitore di login nella schermata di accesso
+			\end{itemize}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		fa758f46-0c41bf5b-dff0cfd0-dbfadc92
+% LTXE-SLIDE-ORIGIN:	66005bf1-6706e6ba-98feeb3f-ac972c3d English
+% LTXE-SLIDE-ORIGIN:	04a98896-ba0a973c-8a16e877-9d56ca19 German
+% LTXE-SLIDE-TITLE:		Feature #66669: BE login form API (3)
+% LTXE-SLIDE-REFERENCE:	Feature-66669-BeLoginFormAPI.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Modifiche rilevanti}
+	\framesubtitle{API per Login di Backend (3)}
+
+	\begin{itemize}
+
+		\item La \texttt{LoginProviderInterface} contiene solamente il metodo\newline
+			\smaller\texttt{public function render(StandaloneView \$view, PageRenderer \$pageRenderer, LoginController \$loginController);}\normalsize
+
+		\item I parametri sono definiti come di seguito:
+
+			\begin{itemize}
+
+				\item \texttt{\$view}:\newline
+					Fluid StandaloneView che definisce la schermata di login. E' necessario impostare
+					il file di template e si possono aggiungere le variabili alla vista secondo le 
+					proprie esigenze.
+
+				\item \texttt{\$pageRenderer}:\newline
+					L'istanza PageRenderer permette di aggiungere risorse JavaScript
+					necessarie.
+
+				\item \texttt{\$loginController}:\newline
+					L'istanza LoginController.
+
+			\end{itemize}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		0b9b0252-97a16f50-7e171f87-33bf11be
+% LTXE-SLIDE-ORIGIN:	dd0c782c-161abebc-ba03f841-6d108444 English
+% LTXE-SLIDE-ORIGIN:	04a98896-ba0a973c-8a16e877-9d56ca19 German
+% LTXE-SLIDE-TITLE:		Feature #66669: BE login form API (4)
+% LTXE-SLIDE-REFERENCE:	Feature-66669-BeLoginFormAPI.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Modifiche rilevanti}
+	\framesubtitle{API per Login di Backend (4)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Il template deve contenere \texttt{<f:layout name="Login">} e
+			\texttt{<f:section name="loginFormFields">} (per i campi del modulo):
+
+			\begin{lstlisting}
+				<f:layout name="Login" />
+				<f:section name="loginFormFields">
+				  <div class="form-group t3js-login-openid-section" id="t3-login-openid_url-section">
+				    <div class="input-group">
+				      <input type="text" id="openid_url"
+				        name="openid_url"
+				        value="{presetOpenId}"
+				        autofocus="autofocus"
+				        placeholder="{f:translate(key: 'openId', extensionName: 'openid')}"
+				        class="form-control input-login t3js-clearable t3js-login-openid-field" />
+				      <div class="input-group-addon">
+				        <span class="fa fa-openid"></span>
+				      </div>
+				    </div>
+				  </div>
+				</f:section>
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		1242f8d5-7f46b66a-60271149-1a7bfabe
+% LTXE-SLIDE-ORIGIN:	2051c5f1-bd00622f-dfcbba05-c329dd60 English
+% LTXE-SLIDE-ORIGIN:	cc63cd98-524ee6df-38430963-f7c7067c German
+% LTXE-SLIDE-TITLE:		Feature #66681: CategoryRegistry: add options to set l10n_mode and l10n_display
+% LTXE-SLIDE-REFERENCE:	Feature-66681-CategoryRegistryAddOptionsToSetL10n_modeAndL10n_display.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Modifiche rilevanti}
+	\framesubtitle{Nuove opzioni per \texttt{CategoryRegistry}}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Il metodo \texttt{CategoryRegistry->addTcaColumn} gestisce le opzioni per impostare
+			\texttt{l10n\_mode} e \texttt{l10n\_display}:
+
+			\begin{lstlisting}
+				\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::makeCategorizable(
+				  $extensionKey,
+				  $tableName,
+				  'categories',
+				  array(
+				    'l10n_mode' => 'string (keyword)',
+				    'l10n_display' => 'list of keywords'
+				  )
+				);
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		24b499e5-a8d9bd1d-cbcd6905-2fd9702a
+% LTXE-SLIDE-ORIGIN:	52d9c9a1-37301644-b52c1658-372774a8 English
+% LTXE-SLIDE-ORIGIN:	c9a5288c-f45aac1e-34606612-fdf6ec18 German
+% LTXE-SLIDE-TITLE:		Feature #66822: Allow Sprites For Backend Modules
+% LTXE-SLIDE-REFERENCE:	Feature-66822-SpriteIconsInBackendModules.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Modifiche rilevanti}
+	\framesubtitle{Sprites nei moduli di Backend}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item I moduli di Backend (i moduli principali come ad esempio "Web" e i sottomoduli come
+			"Filelist") possono ora utilizzare le icone sprites\newline
+			\small
+				(solo le icone sprite conosciute da TYPO3 sono disponibili!)
+			\normalsize
+
+		\item Esempio:
+
+			\begin{lstlisting}
+				\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addModule(
+				  'web',
+				  'layout',
+				  'top',
+				  \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath($_EXTKEY) . 'Modules/Layout/',
+				  array(
+				    'script' => '_DISPATCH',
+				    'access' => 'user,group',
+				    'name' => 'web_layout',
+				    'configuration' => array('icon' => 'module-web'),
+				    'labels' => array(
+				      'll_ref' => 'LLL:EXT:cms/layout/locallang_mod.xlf',
+				    ),
+				  )
+				);
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		3956e5fc-af1f873a-fdbed5d2-70f50582
+% LTXE-SLIDE-ORIGIN:	8d50a473-76b35cf0-4414be81-8efd94f3 English
+% LTXE-SLIDE-ORIGIN:	d9657b5d-5cd56c65-d7266a27-401dd233 German
+% LTXE-SLIDE-TITLE:		Feature #67229: FormEngine NodeFactory API
+% LTXE-SLIDE-REFERENCE:	Feature-67229-FormEngineNodeFactoryApi.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Modifiche rilevanti}
+	\framesubtitle{FormEngine NodeFactory API (1)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Ora è possibile registrare nuovi nodi e sovrascrivere quelli esistenti
+
+		\begin{lstlisting}
+			$GLOBALS['TYPO3_CONF_VARS']['SYS']['formEngine']['nodeRegistry'][1433196792] = array(
+			  'nodeName' => 'input',
+			  'priority' => 40,
+			  'class' => \MyVendor\MyExtension\Form\Element\T3editorElement::class
+			);
+		\end{lstlisting}
+
+		\item L'esempio sopra registra una nuova classe
+			\texttt{MyVendor\textbackslash
+				MyExtension\textbackslash
+				Form\textbackslash
+				Element\textbackslash
+				T3editorElement}
+			che renderizza la classe per il tipo \texttt{input} di TCA, il quale deve implementare l'interfaccia
+			\texttt{TYPO3\textbackslash
+				CMS\textbackslash
+				Backend\textbackslash
+				Form\textbackslash
+				NodeInterface}
+
+		\item La chiave dell'array è lo Unix timestamp della data di quando è stato registrato l'elemento aggiunto
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		260b96ae-95858a00-6108b569-24740af5
+% LTXE-SLIDE-ORIGIN:	94bf7d97-b60d2c04-a1693909-e7397a81 English
+% LTXE-SLIDE-ORIGIN:	5cd56c65-d7266a27-401dd233-d9657b5d German
+% LTXE-SLIDE-TITLE:		Feature #67229: FormEngine NodeFactory API
+% LTXE-SLIDE-REFERENCE:	Feature-67229-FormEngineNodeFactoryApi.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Modifiche rilevanti}
+	\framesubtitle{FormEngine NodeFactory API (2)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Nel caso siano registrati elementi multipli dello stesso tipo, viene utilizzato quello con lapriorità più alta (da 0 a 100)
+
+		\item Un nuovo tipo TCA può essere registrato come segue
+
+		\smaller\textbf{\texttt{TCA}}
+		\begin{lstlisting}
+			'columns' => array(
+			  'bodytext' => array(
+			    'config' => array(
+			      'type' => 'text',
+			      'renderType' => '3dCloud',
+			    ),
+			  ),
+			)
+		\end{lstlisting}
+
+		\smaller\textbf{\texttt{ext\_localconf.php}}
+		\begin{lstlisting}
+			$GLOBALS['TYPO3_CONF_VARS']['SYS']['formEngine']['nodeRegistry'][1433197759] = array(
+			  'nodeName' => '3dCloud',
+			  'priority' => 40,
+			  'class' => \MyVendor\MyExtension\Form\Element\ShowTextAs3dCloudElement::class
+			);
+		\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		0db93595-7b7fae01-c45a3f81-5ab9ba82
+% LTXE-SLIDE-ORIGIN:	818411e6-dd2a7aba-3a7afb94-4e970169 English
+% LTXE-SLIDE-ORIGIN:	d7266a27-401dd233-d9657b5d-5cd56c65 German
+% LTXE-SLIDE-TITLE:		Breaking #62983: postProcessMirrorUrl signal has moved
+% LTXE-SLIDE-REFERENCE:	Breaking-62983-PostProcessMirrorUrlSignalHasMoved.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Modifiche rilevanti}
+	\framesubtitle{Signal \texttt{postProcessMirrorUrl}}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item il segnale \texttt{postProcessMirrorUrl} è stato spostato in una nuova classe
+
+		\breakingchange
+
+		\item Il seguente codice di esempio verifica la versione di TYPO3:
+
+		\begin{lstlisting}
+			$signalSlotDispatcher->connect(
+			  version_compare(TYPO3_version, '7.0', '<')
+			    ? 'TYPO3\\CMS\\Lang\\Service\\UpdateTranslationService'
+			    : 'TYPO3\\CMS\\Lang\\Service\\TranslationService',
+			  'postProcessMirrorUrl',
+			  'Vendor\\Extension\\Slots\\CustomMirror',
+			  'postProcessMirrorUrl'
+			);
+		\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------

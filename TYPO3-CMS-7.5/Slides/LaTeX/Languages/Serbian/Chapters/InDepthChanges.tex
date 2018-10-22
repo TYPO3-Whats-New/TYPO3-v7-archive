@@ -1,0 +1,809 @@
+% ------------------------------------------------------------------------------
+% TYPO3 CMS 7.5 - What's New - Chapter "In-Depth Changes" (Serbian Version)
+%
+% @author	Michael Schams <schams.net>
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		http://typo3.org/download/release-notes/whats-new/
+% @language	Serbian
+% ------------------------------------------------------------------------------
+% LTXE-CHAPTER-UID:		b8f1c138-2fb2f5ce-15d1ffc0-e80171e2
+% LTXE-CHAPTER-NAME:	In-Depth Changes
+% ------------------------------------------------------------------------------
+
+\section{Korenite promene}
+\begin{frame}[fragile]
+	\frametitle{Korenite promene}
+
+	\begin{center}\huge{Poglavlje 3:}\end{center}
+	\begin{center}\huge{\color{typo3darkgrey}\textbf{Korenite promene}}\end{center}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		3845afb2-80dfd7bc-5c792ca4-05b6a6e1
+% LTXE-SLIDE-ORIGIN:	16e557e2-fa6a5035-5b28d66e-27c0c626 English
+% LTXE-SLIDE-ORIGIN:	03be70bc-886235ca-10f0cef5-6b33fe60 German
+% LTXE-SLIDE-TITLE:		Fluid-based Content Elements Introduced (1)
+% LTXE-SLIDE-REFERENCE:	Feature-38732-Fluid-basedContentElementsIntroduced.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Korenite promene}
+	\framesubtitle{Elementi sadrzaja zasnovani na Fluid-u (1)}
+
+	\begin{itemize}
+
+		\item Implementirana je nova sistemska ekstenzija \textbf{"Fluid-based Content Elements"}
+
+		\item Fluid sabloni cesce se koriste se za prikazivanje elemenata sadrzaja od TypoScript-a
+
+		\item U buducnosti moze postati alternativa za \textit{CSS Styled Content}
+
+		\item Kako bi se funkcija mogla koristiti potrebno je ukljuciti sletece staticne sablone:
+
+			\begin{itemize}
+				\item Content Elements (\texttt{fluid\_styled\_content})
+				\item Content Elements CSS (optional) (\texttt{fluid\_styled\_content})
+			\end{itemize}
+
+	\end{itemize}
+
+\end{frame}
+
+
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		926c7af1-403cc5af-16b9a058-db4fff8c
+% LTXE-SLIDE-ORIGIN:	d8383008-e3bbb7e2-91720bea-3b93db62 English
+% LTXE-SLIDE-ORIGIN:	bb7124ec-4658414b-757ca8ca-f0addee3 German
+% LTXE-SLIDE-TITLE:		Fluid-based Content Elements Introduced (2)
+% LTXE-SLIDE-REFERENCE:	Feature-38732-Fluid-basedContentElementsIntroduced.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Korenite promene}
+	\framesubtitle{Elementi sadrzaja zasnovani na Fluid-u (2)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Dodatno, sledeci PageTSconfig sablon mora biti dodat u osobinama strane:\newline
+			\small
+				\texttt{Fluid-based Content Elements (fluid\_styled\_content)}
+			\normalsize
+
+		\item Moguce je pregaziti prodrazumevane sablone dodavanjem sopstvenih putanja u TypoScript podesavanju:
+
+			\begin{lstlisting}
+				lib.fluidContent.templateRootPaths.50 = EXT:site_example/Resources/Private/Templates/
+				lib.fluidContent.partialRootPaths.50 = EXT:site_example/Resources/Private/Partials/
+				lib.fluidContent.layoutRootPaths.50 = EXT:site_example/Resources/Private/Layouts/
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		5b7e25e9-110a5c6b-91a2cb98-e535d360
+% LTXE-SLIDE-ORIGIN:	d25f0c05-31c928e4-e7439714-d87f883b English
+% LTXE-SLIDE-ORIGIN:	04cd65d3-e013813d-d2eac450-7d3a79a8 German
+% LTXE-SLIDE-TITLE:		Fluid-based Content Elements Introduced (3)
+% LTXE-SLIDE-REFERENCE:	Feature-38732-Fluid-basedContentElementsIntroduced.rst
+% LTXE-SLIDE-REFERENCE:	Important-67954-MigrateCTypesTextImageAndTextpicToTextmedia.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Korenite promene}
+	\framesubtitle{Elementi sadrzaja zasnovani na Fluid-u (3)}
+
+	\begin{itemize}
+
+		\item Migriranje iz \textit{CSS Styled Content} u \textit{Fluid-based Content Elements}:
+
+			\begin{itemize}
+
+				\item Deinstalirati prosirenje \texttt{css\_styled\_content}
+
+				\item instalirati prosirenje \texttt{fluid\_styled\_content}
+
+				\item Koristiti Upgrade Wizard u Install Tool-u kako bi se migrirali elementi sadrzaja
+					\texttt{text}, \texttt{image} i \texttt{textpic} u \texttt{textmedia}
+
+			\end{itemize}
+	\end{itemize}
+
+	\vspace{1.4cm}
+
+	\begingroup
+		\color{red}
+			\small
+				\underline{Napomena:} \textit{"Fluid-based Content Elements"} je i dalje u ranoj fazi i velike promene su moguce sve do TYPO3 CMS 7 LTS verzije. Takodje moguce je da postoje neki konflikti koji se ticu \textit{CSS Styled Content}.
+			\normalsize
+	\endgroup
+
+\end{frame}
+
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		41f20827-026bb6f6-60a0b5c5-db9f60be
+% LTXE-SLIDE-ORIGIN:	89b8c8c2-3a458bcf-5d61b025-6b4fb470 English
+% LTXE-SLIDE-ORIGIN:	8807e1a0-2b3fadac-ac842970-b85e5130 German
+% LTXE-SLIDE-TITLE:		Add SELECTmmQuery method to DatabaseConnection
+% LTXE-SLIDE-REFERENCE:	Feature-19494-AddSELECTmmQueryMethodToDatabaseConnection.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Korenite promene}
+	\framesubtitle{SELECTmmQuery metoda}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Nova metoda \texttt{SELECT\_mm\_query} dodata je klasi \texttt{DatabaseConnection}
+
+		\item Izvucena iz \texttt{exec\_SELECT\_mm\_query} da bi odvojila gradjenje i izvrzavanje M:M upita.
+
+		\item Ovo omogucuje upotrebu gradjenja upita u database abstraction layer-u
+
+			\begin{lstlisting}
+				$query = SELECT_mm_query('*', 'table1', 'table1_table2_mm', 'table2', 'AND table1.uid = 1',
+				'', 'table1.title DESC');
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		100b49bf-30cc532f-ca1c2b47-1179ee73
+% LTXE-SLIDE-ORIGIN:	f2c4f1a9-6cd020c0-518650d6-2a31d0de English
+% LTXE-SLIDE-ORIGIN:	398fdcb2-1cc9a862-42e59a09-e4ed65ba German
+% LTXE-SLIDE-TITLE:		Scheduler task to optimize database tables
+% LTXE-SLIDE-REFERENCE:	Feature-25341-SchedulerTaskToOptimizeDatabaseTables.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Korenite promene}
+	\framesubtitle{Optimizacija tabela u MySQL}
+
+	\begin{itemize}
+
+		\item Dodat je novi scheduler task za izvrsavanje MySQL komande \texttt{OPTIMIZE TABLE}
+			na odabranim tabelama baze podataka
+
+		\item Ova komanda reorganizuje fizicki prostor tabele i vezanih indeksa da smanji zauzeti prostor i poboljsa efikasnost I/O
+
+		\item Podrzani su sledeci tipovi tabela:\newline
+			\texttt{MyISAM}, \texttt{InnoDB} i \texttt{ARCHIVE}
+
+		\item Koriscenje ovog task-a sa DBAL i drugim DBMS  \underline{nije} podrzano
+			zbog cinjenice da se koriste samo komande specificne za MySQL 
+
+	\end{itemize}
+
+	% Note to translators: if this does not fit on one slide, you could try to change
+	% \small to \smaller or shorten the sentences below or the bullet points above.
+
+	\begingroup
+		\color{red}
+			\small
+				\underline{Napomena:} optimizacija tabela je intenzivan proces za I/O.
+				Takodje u MySQL < 5.6.17 dok radi, proces zakljucava tabele sto moze uticati na sam web sajt.
+			\normalsize
+	\endgroup
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		4fcb0d2d-244e3ed1-74d4d902-6664e653
+% LTXE-SLIDE-ORIGIN:	f0da3ed6-ab7b2518-402338db-a1842865 English
+% LTXE-SLIDE-ORIGIN:	f9cbeb69-d08efdaf-a8c00d48-353f667e German
+% LTXE-SLIDE-TITLE:		Improved handling of online media (1)
+% LTXE-SLIDE-REFERENCE:	Feature-61799-ImprovedHandlingOfOnlineMedia.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Korenite promene}
+	\framesubtitle{Upravljanje Online Media fajlovima (1)}
+
+	\begin{itemize}
+
+		\item Eksterni mediji (online media) su sada podrzani kao podrazumevani
+
+		\item Kao primeri, podrska za YouTube i Vimeo video je implementirana u osnovu sistema
+
+		\item Na primer, resursi se mogu dodavati kao URL-ovi koriscenjem elementa sadrzaja \textbf{"Text \& Media"}
+
+		\item Odgovarajuca pomocna klasa dohvata meta podatke i snadbeva sliku koja ce se koristiti kao prikaz ako je dostupna
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		c1d75e90-b8b03a84-ebb3fae6-9639dbab
+% LTXE-SLIDE-ORIGIN:	485f95a8-a9ec5940-e9aa7322-688630cb English
+% LTXE-SLIDE-ORIGIN:	76e87d6a-cd1ebbf9-9a4d49ec-49cc569f German
+% LTXE-SLIDE-TITLE:		Improved handling of online media (2)
+% LTXE-SLIDE-REFERENCE:	Feature-61799-ImprovedHandlingOfOnlineMedia.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Korenite promene}
+	\framesubtitle{Upravljanje Online Media fajlovima (2)}
+
+	Moguce su sledece URL sintakse:
+	\vspace{0.4cm}
+
+	\begin{columns}[T]
+		\begin{column}{.52\textwidth}
+			\smaller
+				\tabto{0.2cm}\textbf{\underline{YouTube:}}\newline
+				\tabto{0.2cm}\texttt{youtu.be/<code>}\newline
+				\tabto{0.2cm}\texttt{www.youtube.com/watch?v=<code>}\newline
+				\tabto{0.2cm}\texttt{www.youtube.com/v/<code>}\newline
+				\tabto{0.2cm}\texttt{www.youtube-nocookie.com/v/<code>}\newline
+				\tabto{0.2cm}\texttt{www.youtube.com/embed/<code>}\newline
+		\end{column}
+		\begin{column}{.48\textwidth}
+			\vspace{-0.25cm}\smaller
+				\textbf{\underline{Vimeo:}}\newline
+				\texttt{vimeo.com/<code>}\newline
+				\texttt{player.vimeo.com/video/<code>}\newline
+		\end{column}
+	\end{columns}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		d532a7e5-8e17667a-d7084cc8-55560cdd
+% LTXE-SLIDE-ORIGIN:	dc79335c-d9e51543-ff5759e0-5005bff8 English
+% LTXE-SLIDE-ORIGIN:	aef8746a-e1babbc9-4dd74eec-cf379dae German
+% LTXE-SLIDE-TITLE:		Improved handling of online media (3)
+% LTXE-SLIDE-REFERENCE:	Feature-61799-ImprovedHandlingOfOnlineMedia.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Korenite promene}
+	\framesubtitle{Upravljanje Online Media fajlovima (3)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Pristupanje resursima koristeci Fluid moze se postici na sledeci nacin:
+
+		\begin{lstlisting}
+			<!-- enable js api and set no-cookie support for YouTube videos -->
+			<f:media file="{file}" additionalConfig="{enablejsapi:1, 'no-cookie': true}" ></f:media>
+
+			<!-- show title and uploader for YouTube and Vimeo before video starts playing -->
+			<f:media file="{file}" additionalConfig="{showinfo:1}" ></f:media>
+		\end{lstlisting}
+
+		\item Opcije za konfigurisanje YouTube videa:\newline
+			\small
+				\texttt{autoplay}, \texttt{controls}, \texttt{loop}, \texttt{enablejsapi}, \texttt{showinfo}, \texttt{no-cookie}
+			\normalsize
+
+		\item Opcije za konfigurisanje Vimeo videa:\newline
+			\small
+				\texttt{autoplay}, \texttt{loop}, \texttt{showinfo}
+			\normalsize
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		37c80392-aecfbd04-c866f112-82b52c0f
+% LTXE-SLIDE-ORIGIN:	2b41f269-eaa80c0c-89bcd0f0-ee66248b English
+% LTXE-SLIDE-ORIGIN:	9ed71aaa-a7615392-78f0ac0c-f9bd7400 German
+% LTXE-SLIDE-TITLE:		Improved handling of online media (4)
+% LTXE-SLIDE-REFERENCE:	Feature-61799-ImprovedHandlingOfOnlineMedia.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Korenite promene}
+	\framesubtitle{Upravljanje Online Media fajlovima (4)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Kako bi se registrovao sopstveni online media servis, potrebne su
+			\small\texttt{OnlineMediaHelper}\normalsize\space klasa koja implementira
+			\small\texttt{OnlineMediaHelperInterface}\normalsize\space i
+			\small\texttt{FileRenderer}\normalsize\space klasa koja implementira
+			\small\texttt{FileRendererInterface}\normalsize\space
+
+			\begin{lstlisting}
+				// register your own online video service (the used key is also the bind file extension name)
+				$GLOBALS['TYPO3_CONF_VARS']['SYS']['OnlineMediaHelpers']['myvideo'] =
+				  \MyCompany\Myextension\Helpers\MyVideoHelper::class;
+
+				$rendererRegistry = \TYPO3\CMS\Core\Resource\Rendering\RendererRegistry::getInstance();
+				$rendererRegistry->registerRendererClass(
+				  \MyCompany\Myextension\Rendering\MyVideoRenderer::class
+				);
+
+				// register an custom mime-type for your videos
+				$GLOBALS['TYPO3_CONF_VARS']['SYS']['FileInfo']['fileExtensionToMimeType']['myvideo'] =
+				  'video/myvideo';
+
+				// register your custom file extension as allowed media file
+				$GLOBALS['TYPO3_CONF_VARS']['SYS']['mediafile_ext'] .= ',myvideo';
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		ab47e387-4433c4c4-5ae90e08-f791447b
+% LTXE-SLIDE-ORIGIN:	0d9d73fc-2a68f137-f5ff5876-74aeef2b English
+% LTXE-SLIDE-ORIGIN:	c675e3a8-9a429b0b-61a4a603-d5b0740f German
+% LTXE-SLIDE-TITLE:		Unified Backend Routing
+% LTXE-SLIDE-REFERENCE:	Feature-65493-BackendRouting.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Korenite promene}
+	\framesubtitle{Rutiranje administratorskog interfejsa}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item U administratorski interfejs TYPO3-a je dodata nova komponenta za rutiranje koja upravlja pozivanjem razlicitih klasa/modula u TYPO3 CMS
+
+		\item Rute se mogu definisati kroz sledecu klasu:\newline
+			\small
+				\texttt{Configuration/Backend/Routes.php}
+			\normalsize
+
+			\begin{lstlisting}
+				return [
+				  'myRouteIdentifier' => [
+				    'path' => '/document/edit',
+				    'controller' => Acme\MyExtension\Controller\MyExampleController::class . '::methodToCall'
+				  ]
+				];
+			\end{lstlisting}
+
+		\item Pozvani metod sadrzi PSR-7 kompatibilne request i response objekte:
+
+			\begin{lstlisting}
+				public function methodToCall(ServerRequestInterface $request, ResponseInterface $response) {
+				  ...
+				}
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		a1b6c49e-b2606edf-a30fbd9f-28801c85
+% LTXE-SLIDE-ORIGIN:	a38b3e30-a34a3bb1-ee94992a-1c91db32 English
+% LTXE-SLIDE-ORIGIN:	df56086a-498ae937-9b2bf393-a95828f3 German
+% LTXE-SLIDE-TITLE:		Autoload definition can be provided in ext_emconf.php
+% LTXE-SLIDE-REFERENCE:	Feature-68700-AutoloadDefinitionCanBeProvidedInExt_emconfphp.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Korenite promene}
+	\framesubtitle{Autoload definicije u \texttt{ext\_emconf.php}}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Prosirenja sada mogu obezbediti jednu ili vise PSR-4 definicija u fajlu \texttt{ext\_emconf.php}
+
+		\item Ovo je vec bilo moguce u \texttt{composer.json}, ali sa ovom novom opcijom,
+			programeri prosirenja vise ne moraju samo za ovo da obezbedjuju composer fajl
+
+			\begin{lstlisting}
+				$EM_CONF[$_EXTKEY] = array (
+				  'title' => 'Extension Skeleton for TYPO3 CMS 7',
+				  ...
+				'autoload' =>
+				  array(
+				    'psr-4' => array(
+				      'Helhum\\ExtScaffold\\' => 'Classes'
+				    )
+				  )
+				);
+			\end{lstlisting}
+
+			\small
+				(ovo je novi preporuceni nacin za registrovanje klasa u TYPO3)
+			\normalsize
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		79d086a8-8ade58e5-88c71476-fd8f89d5
+% LTXE-SLIDE-ORIGIN:	6d370930-d24dd6c2-54e2330d-b873a914 English
+% LTXE-SLIDE-ORIGIN:	137a9fca-b6558571-346141d2-9304a223 German
+% LTXE-SLIDE-TITLE:		Icon-Factory (1)
+% LTXE-SLIDE-REFERENCE:	Feature-68741-IntroduceNewIconFactoryAsBaseForReplaceTheIconSkinningAPI.rst
+% LTXE-SLIDE-REFERENCE:	Feature-69095-IntroduceIconStateForIconFactory.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Korenite promene}
+	\framesubtitle{Novi Icon Factory (1)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\smaller\ttfamily}
+
+	\begin{itemize}
+
+		\item Logika za rad sa ikonicama, velicinom ikonica sada je premestena u \texttt{IconFactory}
+
+		\item Novi Icon Factory postepeno ce zameniti stari skinning API
+
+		\item Sve ikonice koje se odnose na osnovu sistema bice direktno registrovane u \texttt{IconRegistry} klasi
+
+		\item Prosirenja moraju koristiti \texttt{IconRegistry::registerIcon()} kako bi pregazila postojece ikonice ili dodale nove u Icon Factory:
+
+			\begin{lstlisting}
+				IconRegistry::registerIcon(
+				  $identifier,
+				  $iconProviderClassName,
+				  array $options = array()
+				);
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		7b570f5b-ee93d642-b5e9cf33-d5134cd7
+% LTXE-SLIDE-ORIGIN:	4e9f1524-c3c04972-bf6bd14b-19193ab2 English
+% LTXE-SLIDE-ORIGIN:	6b59b4c7-21a7ff5c-4e67b53d-e4509355 German
+% LTXE-SLIDE-TITLE:		Icon-Factory (2)
+% LTXE-SLIDE-REFERENCE:	Feature-68741-IntroduceNewIconFactoryAsBaseForReplaceTheIconSkinningAPI.rst
+% LTXE-SLIDE-REFERENCE:	Feature-69095-IntroduceIconStateForIconFactory.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Korenite promene}
+	\framesubtitle{Novi Icon Factory (2)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item TYPO3 CMS osnova implementira tri icon provajder klase:\newline
+			\smaller
+				\texttt{BitmapIconProvider}, \texttt{FontawesomeIconProvider} i \texttt{SvgIconProvider}
+			\normalsize
+
+		\item Primer koriscenja:
+
+			\begin{lstlisting}
+				$iconFactory = GeneralUtility::makeInstance(IconFactory::class);
+				$iconFactory->getIcon(
+				  $identifier,
+				  Icon::SIZE_SMALL,
+				  $overlay,
+				  IconState::cast(IconState::STATE_DEFAULT)
+				)->render();
+			\end{lstlisting}
+
+		\item Validne vrednosti za \texttt{Icon::SIZE\_...} su:\newline
+			\small\texttt{SIZE\_SMALL}, \texttt{SIZE\_DEFAULT} and \texttt{SIZE\_LARGE}\normalsize
+			\vspace{0.4cm}
+
+		\item Validne vrednosti za \texttt{Icon::STATE\_...} su:\newline
+			\small\texttt{STATE\_DEFAULT} and \texttt{STATE\_DISABLED}\normalsize
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		2b8774cb-80f85db2-97add2ce-146f9f2e
+% LTXE-SLIDE-ORIGIN:	ffa90088-571dcf20-3d315854-a05814da English
+% LTXE-SLIDE-ORIGIN:	21a7eeb5-b4c7ff5c-b53de450-4e679355 German
+% LTXE-SLIDE-TITLE:		Icon-Factory (3)
+% LTXE-SLIDE-REFERENCE:	Feature-68741-IntroduceNewIconFactoryAsBaseForReplaceTheIconSkinningAPI.rst
+% LTXE-SLIDE-REFERENCE:	Feature-69095-IntroduceIconStateForIconFactory.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Korenite promene}
+	\framesubtitle{Novi Icon Factory (3)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item TYPO3 CMS osnova obezbedjuje Fluid ViewHelper koji omogucava lako koriscenje ikonica u Fluid-u
+
+			\begin{lstlisting}
+				{namespace core = TYPO3\CMS\Core\ViewHelpers}
+
+				<core:icon identifier="my-icon-identifier"></core:icon>
+
+				<!-- use the "small" size if none given ->
+				<core:icon identifier="my-icon-identifier"></core:icon>
+				<core:icon identifier="my-icon-identifier" size="large"></core:icon>
+				<core:icon identifier="my-icon-identifier" overlay="overlay-identifier"></core:icon>
+
+				<core:icon identifier="my-icon-identifier" size="default" overlay="overlay-identifier">
+				</core:icon>
+
+				<core:icon identifier="my-icon-identifier" size="large" overlay="overlay-identifier">
+				</core:icon>
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		c23c1c38-5213b385-3fab8c2c-6f02d489
+% LTXE-SLIDE-ORIGIN:	10739ce3-88cfb3f6-d8364643-424cbf3c English
+% LTXE-SLIDE-ORIGIN:	d9de708f-474f2f36-c104b01c-0d23a352 German
+% LTXE-SLIDE-TITLE:		Signal for pre processing linkvalidator records
+% LTXE-SLIDE-REFERENCE:	Feature-52217-SignalForPreProcessingLinkvalidatorRecords.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Korenite promene}
+	\framesubtitle{Hooks i Signals}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Novi signal dodat je u LinkValidator, koji dozvoljava dodatno procesuiranje nakon inicijalizacije 
+				specificnog rekorda \newline
+			\small
+				(npr. dobavljanje podataka o sadrzaju iz konfiguracije plugin-a u rekordu)
+			\normalsize
+
+		\item Registrovanje signala u fajlu \texttt{ext\_localconf.php}:
+
+			\begin{lstlisting}
+				$signalSlotDispatcher = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(
+				  \TYPO3\CMS\Extbase\SignalSlot\Dispatcher::class
+				);
+
+				$signalSlotDispatcher->connect(
+				  \TYPO3\CMS\Linkvalidator\LinkAnalyzer::class,
+				  'beforeAnalyzeRecord',
+				  \Vendor\Package\Slots\RecordAnalyzerSlot::class,
+				  'beforeAnalyzeRecord'
+				);
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		9f05a87a-43c5833f-3b4d6544-91d6a28c
+% LTXE-SLIDE-ORIGIN:	8b50edb3-2363f2a9-3120a711-db8b6ede English
+% LTXE-SLIDE-ORIGIN:	bcb8ef73-b8669a17-102da209-5f5c9adc German
+% LTXE-SLIDE-TITLE:		Replaced JumpURL features with hooks (1)
+% LTXE-SLIDE-REFERENCE:	Breaking-52156-ReplaceJumpUrlWithHooks.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Korenite promene}
+	\framesubtitle{JumpUrl kao sistemsko prosirenje (1)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Generisanje i upravljanje JumpURL-ovima premesteno je u novo sistemsko prosirenje \texttt{jumpurl}
+
+		\item Uvedeni su novi hook-ovi koji dozvoljavaju posebno upravljanje i generisanje URL-ova (pogledati sledecu stranu)
+
+	\end{itemize}
+
+	\breakingchange
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		fcb83a30-49e89cbd-468ac6cc-9ccc248c
+% LTXE-SLIDE-ORIGIN:	68003b46-065b81f8-5206141c-77a35b88 English
+% LTXE-SLIDE-ORIGIN:	ecb8fef3-69b86a17-02da2109-9adc5f5c German
+% LTXE-SLIDE-TITLE:		Replaced JumpURL features with hooks (2)
+% LTXE-SLIDE-REFERENCE:	Breaking-52156-ReplaceJumpUrlWithHooks.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Korenite promene}
+	\framesubtitle{JumpUrl kao sistemsko prosirenje (2)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Hook 1: manipulisanje \textbf{URL-ovima} za vreme generisanja linka
+
+			\begin{lstlisting}
+				$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['urlProcessing']['urlHandlers']
+				  ['myext_myidentifier']['handler'] = \Company\MyExt\MyUrlHandler::class;
+
+				// class needs to implement the UrlHandlerInterface:
+				class MyUrlHandler implements \TYPO3\CMS\Frontend\Http\UrlHandlerInterface {
+				  ...
+				}
+			\end{lstlisting}
+
+		\item Hook 2: upravljanje \textbf{linkovima}
+
+			\begin{lstlisting}
+				$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['urlProcessing']['urlProcessors']
+				  ['myext_myidentifier']['processor'] = \Company\MyExt\MyUrlProcessor::class;
+
+				// class needs to implement the UrlProcessorInterface:
+				class MyUrlProcessor implements \TYPO3\CMS\Frontend\Http\UrlProcessorInterface {
+				  ...
+				}
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		319125a6-842f3e8c-b6d4601c-6c31c3cc
+% LTXE-SLIDE-ORIGIN:	ff50feed-0f2dfe5a-1f960c51-e493d3b0 English
+% LTXE-SLIDE-ORIGIN:	08a70f0f-528daf11-ee485c29-d9707f25 German
+% LTXE-SLIDE-TITLE:		Colored Output for CLI Calls on Errors
+% LTXE-SLIDE-REFERENCE:	Feature-67056-AddOptionToDisableMoveButtonsTCAGroupType.rst
+% LTXE-SLIDE-REFERENCE:	Feature-67875-OverrideCategoryRegistryEntry.rst
+% LTXE-SLIDE-REFERENCE:	Feature-68804-ColoredOutputForCLI-relevantErrorMessages.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Korenite promene}
+	\framesubtitle{Command Line Interface (CLI)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Pozivanje \texttt{typo3/cli\_dispatch.phpsh} preko komandne linije sada prikazuje gresku u boji ako je 
+			netacno ili nije dat CLI kljuc kao prvi parametar 
+
+		\item Extbase command controllers sada mogu biti smesteni u proizvoljne podfoldere
+			\texttt{Command} foldera
+
+		\item Primer:\newline
+
+			Controller u fajlu:\newline
+			\smaller\texttt{my\_ext/Classes/Command/Hello/WorldCommandController.php}\normalsize\newline
+			...cmoze biti pozvan putem CLI-a:\newline
+			\smaller\texttt{typo3/cli\_dispatch.sh extbase my\_ext:hello:world <arguments>}\normalsize
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		9b5d15a4-29ec040e-75acc4ab-f34bfa6a
+% LTXE-SLIDE-ORIGIN:	df540c68-edd41657-8854e46a-a716dccb English
+% LTXE-SLIDE-ORIGIN:	a708daf1-e48f525c-7010fe7f-2529d9e4 German
+% LTXE-SLIDE-TITLE:		Miscellaneous (1)
+% LTXE-SLIDE-REFERENCE:	Feature-68804-ColoredOutputForCLI-relevantErrorMessages.rst
+% LTXE-SLIDE-REFERENCE:	Feature-69512-SupportTyposcriptFilesAsTextFileType.rst
+% LTXE-SLIDE-REFERENCE:	Feature-69543-IntroducedGLOBALSTYPO3_CONF_VARSSYSmediafile_ext.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Korenite promene}
+	\framesubtitle{Razno (1)}
+
+	\begin{itemize}
+
+		\item TDugmici za pomeranje TCA tipa \texttt{group} sada mogu biti eksplicitno ugaseni 
+				koriscenjen opcije \texttt{hideMoveIcons = TRUE}
+
+		\item Metoda \texttt{makeCategorizable} prosirena je sa novim parametrom 
+			\texttt{override} kako bi se mogla postaviti nova konfiguracija kategorije za vec registrovanu kombinaciju 
+			tabela/polje
+
+		\item Primer:
+
+			\begin{lstlisting}
+				\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::makeCategorizable(
+				  'css_styled_content', 'tt_content', 'categories', array(), TRUE
+				);
+			\end{lstlisting}
+
+			\small
+				Poslednji parametar (ovde: \texttt{TRUE}) prinudno gazi (odrazumevana vrednost je \texttt{FALSE}).
+			\normalsize
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		f1a57a93-60902d74-ca29baa1-96473db6
+% LTXE-SLIDE-ORIGIN:	5a6db8b0-ff039479-8ba12ed0-d50d8a0f English
+% LTXE-SLIDE-ORIGIN:	d52d6418-554d801f-352b85cb-54046d28 German
+% LTXE-SLIDE-TITLE:		Miscellaneous (2)
+% LTXE-SLIDE-REFERENCE:	Feature-69730-IntroduceUniqueIdGenerator.rst
+% LTXE-SLIDE-REFERENCE:	Important-68758-CommandControllersAllowedInSubfolders.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Korenite promene}
+	\framesubtitle{Razno (2)}
+
+	% decrease font size for code listing
+	%\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Nova funkcija generise jedinstveni ID
+
+			\begin{lstlisting}
+				$uniqueId = \TYPO3\CMS\Core\Utility\StringUtility::getUniqueId('Prefix');
+			\end{lstlisting}
+
+		\item Tip fajla \texttt{.typoscript}  dodat je u listu validnih tekstualnih fajlova
+
+		\item Nova opcija konfiguracije definise ekstenziju fajlova za medija fajlove
+
+			\begin{lstlisting}
+				$GLOBALS['TYPO3_CONF_VARS']['SYS']['mediafile_ext'] =
+				  'gif,jpg,jpeg,bmp,png,pdf,svg,ai,mov,avi';
+			\end{lstlisting}
+
+	\end{itemize}
+
+	\breakingchange
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
